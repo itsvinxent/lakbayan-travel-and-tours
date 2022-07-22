@@ -1,0 +1,162 @@
+.modal-container, .bmodal-container {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.modal-container.show, .bmodal-container.show{
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 100;
+}
+
+.modal,
+.booking-modal,
+.user-modal {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 30px 50px;
+  width: 600px;
+  max-width: 100%;
+  text-align: center;
+  z-index: 100;
+}
+
+.booking-modal, .user-modal{
+  padding: 30px;
+  width: 650px;
+}
+
+.booking-modal h1, .modal h1, .user-modal h1 {
+    /* margin: 0; */
+    font-size: 32px;
+  }
+
+.modal p,
+.booking-modal p {
+  font-size: 14px;
+  opacity: 0.7;
+  padding: 15px 0;
+}
+
+.booking-modal form {
+  /* background-color: #FFFFFF; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  /* flex-direction: column; */
+  margin-bottom: 20px;
+  height: 75%;
+  text-align: center;
+  
+}
+
+.booking-modal input, .user-modal input, 
+.booking-modal select, .user-modal select{
+  background-color: #eee;
+  border: none;
+  padding: 12px 15px;
+  margin: 5px;
+  width: 270px;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+}
+.booking-modal textarea {
+  width: 555px;
+  resize: none;
+  outline: none;
+  background-color: #eee;
+  border: none;
+
+  font-size: 12px;
+  line-height: 1.5em;
+  font-family: "Poppins", sans-serif;
+
+  margin: 5px;
+  padding: 10px;
+}
+
+.modal button, 
+.booking-modal button, 
+.user-modal button {
+  border-radius: 20px;
+	border: none;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+  margin: 0;
+  cursor: pointer;
+  width: 220px;
+  font-family: "Poppins", sans-serif;
+}
+
+.modal button#modalLogin, 
+.booking-modal button#modalLogin,
+.user-modal button#modalLogin {
+  background: linear-gradient(90deg, var(--logo-yellow-dark), var(--first-color), var(--logo-blue-dark));
+  margin-right: 20px;
+}
+
+/* .modal a#modalClose.btn,
+.booking-modal button#modalClose {
+  background-image: linear-gradient(90deg, var(--logo-blue-dark), var(--first-color), var(--logo-yellow-dark));
+} */
+
+.modal .buttons, .booking-modal .buttons, .user-modal .buttons {
+  display: inline-block;
+  padding-top: 10px;
+}
+
+.modal a#modalClose.btn, 
+a#modalBClose.btn,
+a#modalEClose.btn {
+  display: block;
+  position: relative;
+  float: right;
+  top: 0;
+  width: 220px;
+  background-image: linear-gradient(
+    90deg,
+    var(--logo-blue-dark),
+    var(--first-color),
+    var(--logo-yellow-dark)
+  );
+  border-radius: 20px;
+  border: none;
+  text-decoration: none;
+  font-size: 12px;
+  
+  align-items: center;
+	/* padding: 12.5px 50.185px; */
+  padding: 12px 45px;
+  margin-left: 20px;
+  
+  color: white;
+  font-weight: bold;
+  letter-spacing: 1px;
+	text-transform: uppercase;
+  cursor: pointer;
+
+}
+
+a#modalBClose.btn{
+  float: right;
+  top: 0;
+}
+
