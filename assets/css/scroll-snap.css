@@ -1,0 +1,19 @@
+html {
+    /* font-family: sans-serif; */
+	/* scroll-snap-type: mandatory;
+	scroll-snap-points-y: repeat(100vh);
+	scroll-snap-type: y mandatory; */
+	
+	overflow: hidden;
+}
+section {
+	/* height: 85vh; */
+	height: 100vh;
+	/* scroll-snap-align: start; */
+	position: relative;
+	scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+	width: 0;
+}
