@@ -1,0 +1,79 @@
+/* Admin Panel */
+.content-users{
+    margin: 3rem auto;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+  }
+  
+  section#admin-trips .content-users {
+    max-width: 90%;
+    margin: 3rem auto;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+  
+  }
+  
+  .content-users table {
+    text-align: left;
+    /* margin: auto; */
+    border-collapse: collapse;
+    font-size: 1em;
+    font-family: var(--body-font);
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    margin-top: 1rem;
+  }
+  
+  .content-users table thead tr{ 
+    background-color: var(--first-color);
+    color: white;
+  }
+  
+  .content-users th, 
+  .content-users td {
+    padding: 12px 15px;
+  }
+  
+  .content-users tbody tr {
+    border-bottom: 1px solid #DDDDDD;
+  }
+  
+  .content-users tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+  
+  .content-users tbody td a {
+    text-decoration: none;
+    color: red;
+    outline: none;
+    font-size: 20px;
+    margin-left: 5px;
+  }
+  
+  .content-users tbody td button {
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: var(--logo-blue-dark);
+    background: none;
+  }
+  
+  .content-users button.add-btn {
+    background: var(--first-color);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+      border: none;
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 12px 45px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    margin: 0;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+  }

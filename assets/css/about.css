@@ -1,0 +1,138 @@
+/* About Us */
+.about-us .content {
+  margin: 3rem 175px;
+  text-align: justify;
+}
+
+.about-us .content h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.about-us .content p {
+  padding: 10px 0;
+  font-size: 17px;
+}
+
+.about-us .content .center {
+  width: 750px;
+  margin: 1rem auto;
+  display: block;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-us .colored {
+  background-color: #34495e;
+  width: 100%;
+  padding: 1rem 170px;
+  color: white;
+  text-align: justify;
+}
+
+.about-us .colored .mission {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr;
+  margin: 1rem auto;
+  max-width: 80%;
+}
+
+.about-us .colored .goal {
+  display: grid;
+  grid-template-columns: 2fr 0.5fr;
+  margin: 1rem auto;
+  max-width: 80%;
+}
+
+.about-us .colored .mission video,
+.about-us .colored .goal video {
+  width: 400px;
+  border-radius: 10px;
+}
+
+.about-us .colored span {
+  padding: 20px;
+}
+
+.about-us .colored .explore {
+  margin: 2.5rem auto;
+  text-align: center;
+}
+
+.about-us .colored .explore a .btn {
+  background-image: linear-gradient(
+    90deg,
+    var(--logo-yellow-dark),
+    var(--first-color),
+    var(--logo-blue-dark)
+  );
+  border: none;
+  text-decoration: none;
+  font-size: 16px;
+
+  align-items: center;
+  padding: 1rem 3rem;
+
+  color: white;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.about-us .colored .explore a .btn:hover {
+  letter-spacing: 3px;
+  transition: 0.2s;
+}
+
+.about-us h2 {
+  font-size: 2rem;
+  color: var(--logo-yellow-dark);
+}
+
+.about-us h1 {
+  font-size: 2rem;
+}
+
+.about-us .team {
+  width: 80%;
+  margin: 3rem auto;
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.about-us .team .card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.about-us .team .card {
+  background-color: #34495e;
+  padding: 20px;
+  width: 300px;
+  height: 320px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  color: white;
+  background-image: linear-gradient(
+    160deg,
+    var(--logo-yellow-dark),
+    var(--first-color),
+    var(--logo-blue-dark)
+  );
+  box-shadow: 2px 2px 8px 2px #969696;
+  -webkit-box-shadow: 2px 2px 8px 2px #969696;
+}
+
+.about-us .team .card:not(:last-child) {
+  margin-right: 30px;
+}
+
+.about-us .team .card img {
+  width: 200px;
+  margin-top: 10px;
+  border-radius: 10px;
+}

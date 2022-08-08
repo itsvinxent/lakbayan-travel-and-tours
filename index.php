@@ -12,9 +12,11 @@ if(isset($_SESSION['isLoggedIn']) == false) {
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="stylesheet" href="assets/css/scroll-snap.css">
   <link rel="stylesheet" href="assets/css/modal.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/login.css">
+
 
   <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -78,7 +80,6 @@ if(isset($_SESSION['isLoggedIn']) == false) {
           </form>
         </div>
         <div class="form-container sign-in-container">
-
           <form name="sign-in-form" action="backend/auth/signin.php" method="post">
             <h1>Sign in</h1>
             <!-- <div class="social-container">
@@ -89,7 +90,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
             <span>or use your account</span> -->
             <input type="email" name="email" placeholder="Email" required />
             <input type="password" name="password" placeholder="Password" required />
-            <a href="#">Forgot your password?</a>
+            <!-- <a href="#">Forgot your password?</a> -->
             <button type="submit">Sign In</button>
           </form>
         </div>

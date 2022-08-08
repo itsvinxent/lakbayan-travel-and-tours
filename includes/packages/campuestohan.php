@@ -12,8 +12,11 @@ if(isset($_SESSION['isLoggedIn']) == false) {
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../../assets/css/pack-spec.css" />
+  <link rel="stylesheet" href="../../assets/css/slider.css" />
   <link rel="stylesheet" href="../../assets/css/style.css" />
   <link rel="stylesheet" href="../../assets/css/modal.css" />
+  <link rel="stylesheet" href="../../assets/css/footer.css" />
 
   <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -29,7 +32,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
   include '../components/nav.php';
   include '../components/accountModal.php';
   ?>
-
+  
   <section class="packages-pages">
     <div class="banner-half">
       <video src="../../assets/media/falls.mp4" muted loop autoplay preload="auto"></video>

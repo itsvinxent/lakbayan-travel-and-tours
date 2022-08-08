@@ -1,0 +1,101 @@
+/* Destination Specific Pages */
+.destination-pages .content {
+  margin: 0 75px;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  display: grid;
+  grid-template-columns: 2.5fr 0.6fr;
+  grid-gap: 10px;
+}
+
+.loc {
+  font-size: 2rem;
+  margin-left: 75px;
+  margin-bottom: 1rem;
+}
+
+.header {
+  margin-top: 2rem;
+}
+
+.header span {
+  display: inline-block;
+  padding-bottom: 0;
+  vertical-align: middle;
+}
+
+.header span i {
+  font-size: 2rem;
+  margin-left: 75px;
+  margin-right: 20px;
+}
+
+.header a {
+  color: black;
+}
+
+.header a:hover,
+.header span:hover,
+.header i:hover,
+.header p:hover {
+  color: var(--logo-yellow-dark);
+  transition: 0.2s;
+}
+
+/* Right Panel Contents */
+.destination-pages .paragraph {
+  padding-top: 20px;
+  padding-bottom: 30px;
+  margin: auto;
+}
+
+.destination-pages .paragraph p {
+  text-align: justify;
+  margin: 0 20px;
+}
+
+/* Left Panel Contents */
+.destination-pages .left {
+  width: 100%;
+}
+
+.destination-pages .left h3 {
+  padding: 15px 20px;
+  text-align: center;
+  background-color: var(--logo-yellow-dark);
+}
+
+.destination-pages .left .card {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+  height: 120px;
+  margin: 10px 0;
+  background: #34495e;
+  border-radius: 5px;
+  box-shadow: 4px 3px 8px 1px #969696;
+  -webkit-box-shadow: 4px 3px 8px 1px #969696;
+}
+
+.destination-pages .left .card img {
+  height: 120px;
+  width: 150px;
+  padding: 10px;
+  object-fit: cover;
+}
+
+.destination-pages .left .card p {
+  color: white;
+  text-transform: uppercase;
+}
+
+.destination-pages .left .card .dest {
+  padding-top: 10px;
+  padding-right: 5px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.destination-pages .left .card .location {
+  font-size: 13px;
+  padding-right: 5px;
+}

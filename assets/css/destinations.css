@@ -1,0 +1,101 @@
+/* Destinations Page */
+.destinations .card-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 2rem 0;
+}
+
+.destinations .card-container .wrap {
+  width: 30rem;
+  margin: 2rem;
+  background: #fff;
+  overflow: hidden;
+  position: relative;
+  border-radius: 5px;
+}
+
+.destinations .card-container .wrap img {
+  height: 25rem;
+  width: 100%;
+  object-fit: cover;
+  text-align: center;
+  position: relative;
+  -webkit-transition: 0.3s all ease;
+  -o-transition: 0.3s all ease;
+  transition: 0.3s all ease;
+  display: block;
+  bottom: 0;
+}
+
+.destinations .card-container .cap {
+  height: 50%;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(transparent, var(--first-color));
+  padding: 1rem 2rem;
+
+  visibility: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.destinations .wrap:hover .cap {
+  visibility: visible;
+  opacity: 1;
+}
+
+.destinations .wrap:hover img {
+  -webkit-transform: scale(1.08);
+  -ms-transform: scale(1.08);
+  transform: scale(1.08);
+  /* bottom: 20px; */
+}
+
+.destinations .wrap .cap h2 {
+  font-size: 1.75rem;
+  color: var(--first-color-lighter);
+}
+.destinations .wrap .cap h3 {
+  font-size: 2rem;
+  color: var(--first-color-lighter);
+}
+
+.destinations .wrap .cap .rating {
+  font-size: 1rem;
+  color: var(--bright-yellow-crayola);
+}
+
+.destinations .wrap .cap p {
+  font-size: var(--normal-font-size);
+  color: var(--first-color-lighter);
+}
+
+.destinations .wrap .cap .fee {
+  font-size: var(--normal-font-size);
+  color: var(--first-color-lighter);
+  font-weight: var(--font-medium);
+}
+
+.destinations .wrap .cap .btn {
+  background-color: var(--title-color); /* Green */
+  border: none;
+  text-decoration: none;
+  display: inline-block;
+  position: absolute;
+  font-size: 16px;
+  bottom: 1.5rem;
+  right: 1rem;
+
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background-color: var(--body-color);
+  color: var(--first-color);
+  border-radius: 0.5rem;
+  font-weight: var(--font-medium);
+  cursor: pointer;
+}
