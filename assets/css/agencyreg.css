@@ -1,0 +1,124 @@
+/* TABLE OF CONTENTS 
+
+    1. FORM CONTAINER
+
+*/
+
+/*===== GOOGLE FONTS =====*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+:root {
+    --header-height: 3rem;
+    /*========== Colors ==========*/
+    --first-color: #1abc9c;
+    --first-color-light: #26a69a44;
+    --first-color-lighter: #ecf3f2;
+    --title-color: #11443f;
+    --text-color: #5b7b78;
+    --body-color: #f5fffe;
+    --logo-blue-light: #2aa5e8;
+    --logo-yellow-light: #ffcb2a;
+    --logo-blue-dark: #34a5e7;
+    --logo-yellow-dark: #fda32b;
+    /*========== Font and typography ==========*/
+    --body-font: "Poppins", sans-serif;
+    --biggest-font-size: 3rem;
+    --bigger-font-size: 2rem;
+    --big-font-size: 1.25rem;
+    --normal-font-size: 0.938rem;
+    /*========== Font weight ==========*/
+    --font-medium: 500;
+    --font-semi-bold: 600;
+    /*========== z index ==========*/
+    --z-tooltip: 10;
+    --z-fixed: 100;
+  }
+
+* {
+    /* outline: 1px green solid; */
+}
+
+
+/* 1. FORM CONTAINER */
+
+.form-container {
+    max-width: 575px;
+    height: 100vh;
+
+    margin-left: auto;
+    margin-right: auto;
+
+
+    padding: 15px;
+
+    text-align: center;
+}
+
+#designUmbrella  {
+    position: absolute;
+
+    height: 100px;
+    width: 75px;
+
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 100px;
+
+    transform: translateY(-25px);
+}
+
+legend {
+    margin: 0px 0px 10px 0;
+    padding: 10px 0px 0px 0px;
+}
+
+form {
+    position: relative;
+
+    margin: 75px 0px 0px 0;
+    padding: 10px 0px 10px 0px;
+    border-radius: 10px;
+
+    background-image: linear-gradient(180deg, #FEBF2A, #40AEEB);
+
+    text-shadow: 1px 1px 4px var(--first-color-lighter);
+    box-shadow: 1px 1px 5px var(--first-color);
+}
+
+input[type=text], input[type=password], textarea{
+    background-color: hsl(#eee, 1, .15);
+    border: none;
+    padding: 10px 10px;
+    margin: 8px 0;
+    min-width: 85%;
+    
+    font-family: var(--body-font);
+    border-radius: 5px;
+
+    transition: ease-in, .5s ease-in-out;
+}
+
+input[type=submit] {
+    background-color: hsl(#eee, 1, .15);
+    border: none;
+    padding: 5px 5px;
+    font-family: var(--body-font);
+    border-radius: 5px;
+    margin-top: 15px;
+    margin-right: 75%;
+
+    text-align: right;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+
+    border: 1.5px var(--first-color) solid;
+}
+
+textarea {
+    font-family: var(--body-font);
+    resize: none;
+}
