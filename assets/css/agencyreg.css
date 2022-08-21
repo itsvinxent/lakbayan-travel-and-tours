@@ -1,6 +1,7 @@
 /* TABLE OF CONTENTS 
 
-    1. FORM CONTAINER
+    1. HEADER CONTAINER
+    2. FORM CONTAINER
 
 */
 
@@ -36,11 +37,24 @@
   }
 
 * {
-    /* outline: 1px green solid; */
+    outline: 1px green solid;
 }
 
 
-/* 1. FORM CONTAINER */
+/* 1. HEADER CONTAINER */
+
+.headbanner {
+    height: 15vh;
+
+}
+
+.headbannerbgvid-container {
+
+    width: 100%;
+    object-fit: cover;
+}
+
+/* 2. FORM CONTAINER */
 
 .form-container {
     max-width: 575px;
@@ -53,6 +67,8 @@
     padding: 15px;
 
     text-align: center;
+
+    
 }
 
 #designUmbrella  {
@@ -67,6 +83,20 @@
     left: 100px;
 
     transform: translateY(-25px);
+}
+
+#backgroundTree {
+    position: absolute;
+
+    height: 450px;
+    width: 470px;
+    right: 0;
+    top: 75px;
+    bottom: 0;
+    left: 35px;
+
+    opacity: .35;
+    z-index: -1;
 }
 
 legend {
@@ -85,12 +115,16 @@ form {
 
     text-shadow: 1px 1px 4px var(--first-color-lighter);
     box-shadow: 1px 1px 5px var(--first-color);
+
+    z-index: 99;
 }
 
 input[type=text], input[type=password], textarea{
+    box-sizing: border-box;
     background-color: hsl(#eee, 1, .15);
-    border: none;
-    padding: 10px 10px;
+
+    border: 1px var(--logo-blue-dark) solid;
+    padding: 8px 8px;
     margin: 8px 0;
     min-width: 85%;
     
@@ -105,6 +139,7 @@ input[type=submit] {
     border: none;
     padding: 5px 5px;
     font-family: var(--body-font);
+
     border-radius: 5px;
     margin-top: 15px;
     margin-right: 75%;
