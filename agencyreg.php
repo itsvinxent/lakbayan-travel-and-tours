@@ -33,37 +33,43 @@ if(isset($_SESSION['isLoggedIn']) == false) {
 
 <section>
   <div class="form-container">
-      <form id="register-agency" action="backend/auth/signupagency.php" method="POST">
-          <img src="assets/img/Umbrella.png" id="designUmbrella"> 
-          <legend>REGISTER YOUR AGENCY NOW 🏖️</legend>
+      <form id="register-agency" action="backend/auth/signupagency.php" method="POST" enctype="multipart/form-data">
+          <div class="form-agency-part">
+            <img src="assets/img/Umbrella.png" id="designUmbrella"> 
+            <legend>REGISTER YOUR AGENCY NOW 🏖️</legend>
 
-          <label for="aName">Enter Agency Name:</label>
-          <input type="text" name="aName" id="aName" required><br>
+            <label for="aName">Enter Agency Name:</label>
+            <input type="text" name="aName" id="aName" required><br>
 
-          <label for="aEmail">Enter Agency Email:</label>
-          <input type="text" name="aEmail" id="aEmail" required><br>
+            <label for="aEmail">Enter Agency Email:</label>
+            <input type="text" name="aEmail" id="aEmail" required><br>
 
-          <label for="aAddress">Enter Agency Address:</label>
-          <input type="text" name="aAddress" id="aAddress" required><br>
+            <label for="aAddress">Enter Agency Address:</label>
+            <input type="text" name="aAddress" id="aAddress" required><br>
 
-          <label for="aDesc">Enter Agency Description:</label>
-          <textarea name="aDesc" id="aDesc" rows="4" required></textarea><br>
+            <label for="aDesc">Enter Agency Description:</label>
+            <textarea name="aDesc" id="aDesc" rows="4" required></textarea><br>
 
-          <img src="assets/img/Palmtree.png" id="backgroundTree"> 
-          <legend> 👨 AGENCY MANAGER 👩</legend>
+            <label for="aPicture">Select Agency Profile Picture</label>
+            <input type="file" name="aPicture" id="aPicture"><br>
 
-          <label for="aMFName">Enter First Name:</label>
-          <input type="text" name="aMFName" id="aMFName" required><br>
+          </div>
 
-          <label for="aMLName">Enter Last Name:</label>
-          <input type="text" name="aMLName" id="aMLName" required><br>
+          <div class="form-manager-part">
+            <img src="assets/img/Palmtree.png" id="backgroundTree"> 
+            <legend> 👨 AGENCY MANAGER 👩</legend>
 
-          <label for="aMPassword">Enter Password:</label>
-          <input type="password" name="aPassword" id="aPassword" required><br>
+            <label for="aMFName">Enter First Name:</label>
+            <input type="text" name="aMFName" id="aMFName" required><br>
 
+            <label for="aMLName">Enter Last Name:</label>
+            <input type="text" name="aMLName" id="aMLName" required><br>
 
-          <input type="submit">
+            <label for="aMPassword">Enter Password:</label>
+            <input type="password" name="aPassword" id="aPassword" required><br>
 
+            <input type="submit" name="submit">
+          </div>
       </form>
   </div>
 </section>
