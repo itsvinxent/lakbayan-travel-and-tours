@@ -51,7 +51,13 @@ if(isset($_SESSION['isLoggedIn']) == false) {
             <textarea name="aDesc" id="aDesc" rows="4" required></textarea><br>
 
             <label for="aPicture">Select Agency Profile Picture</label>
-            <input type="file" name="aPicture" id="aPicture"><br>
+            <input type="file" name="aPicture" id="aPicture" accept="image/gif, image/jpeg, image/png" onchange="prevImage(event)"><br>
+
+            <div class="preview-image-container" id="prev-container">
+              <div class="preview-image">
+                <img id="prev" src="#" alt="previmage" > 
+              </div>
+            </div>  
 
           </div>
 
@@ -73,6 +79,34 @@ if(isset($_SESSION['isLoggedIn']) == false) {
       </form>
   </div>
 </section>
+
+<script>
+var prevImage = function(event) {
+  var pcontainer = document.getElementById('prev-container');
+  
+  if(document.getElementById('aPicture').files.length != 0){
+  pcontainer.style.display='block';
+  window.setTimeout(function(){
+    pcontainer.style.opacity = 1;
+    pcontainer.style.transform = 'translateY(0)';
+  }, 100);
+  } 
+  
+  if (document.getElementById('aPicture').files.length === 0){
+    pcontainer.style.opacity = 0;
+    pcontainer.style.transform = 'translateY(-50px)';
+
+    window.setTimeout(function(){
+    pcontainer.style.display='none';
+   
+    }, 400);
+  }else {
+    var showselected = document.getElementById('prev');
+    showselected.src = URL.createObjectURL(event.target.files[0]);
+  }
+  
+};
+</script>
 
 <!-- Footer section -->
 
