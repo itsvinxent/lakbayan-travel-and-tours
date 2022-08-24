@@ -168,13 +168,13 @@ nav li a:hover {
   object-fit: cover;
 }
 
-.banner-half img {
+/* .banner-half img {
   position: absolute;
   object-fit: cover;
   height: 50vh;
   width: 100%;
   object-position: 50% 30%;
-}
+} */
 
 .text {
   position: relative;

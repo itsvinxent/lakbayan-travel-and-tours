@@ -1,5 +1,8 @@
 /* TABLE OF CONTENTS 
 
+    GOOGLE FONTS
+    DEBUGGING 
+
     1. HEADER CONTAINER
     2. FORM CONTAINER
         2.1 FORM IMAGES 
@@ -7,6 +10,7 @@
         2.3 FORM FIELDS
         2.4 BOTH FORM
         2.5 FORM TRAVEL AGENCY
+            2.5.a FORM TRAVEL AGENCY PREV IMAGE
         2.6 FORM MANAGER
 
 */
@@ -41,6 +45,8 @@
     --z-tooltip: 10;
     --z-fixed: 100;
   }
+
+/* DEBUGGING */
 
 * {
     /* outline: 1px green solid; */
@@ -174,7 +180,7 @@ textarea {
 
 /* 2.4 BOTH FORM  */
 
-.form-agency-part, .form-manager-part {
+.form-agency-part, .form-manager-part, .preview-image-container {
     border-radius: 12px;
 
     transition: ease-in, .5s ease-in-out;
@@ -201,6 +207,48 @@ textarea {
 
 .form-agency-part:focus-within {
     border: 1.5px var(--logo-blue-dark) solid;
+}
+
+/* 2.5.a FORM TRAVEL AGENCY PREV IMAGE */
+
+.preview-image-container {
+    
+    position: absolute;
+
+    height: 250px;
+    width: 250px;
+    margin: 0px 0px 0px 10px;
+    /* border-radius: 50%; */
+
+    right: 0;
+    bottom: 0;
+    left: 100%;
+
+    padding: 5px;
+
+    background-color: #1abc9c8a;
+
+    opacity: 0;
+    transform: translateY(-50px);
+
+    
+}
+
+#prev-container {
+    display: none; 
+       
+
+    transition: .5s ease-in, .5s ease-out;
+}
+
+#prev {
+    max-width: 240px;
+    height: 240px;
+
+    object-fit: fill;
+
+    border-radius: 12px;
+    /* border-radius: 50%; */
 }
 
 /* 2.6 FORM MANAGER*/
