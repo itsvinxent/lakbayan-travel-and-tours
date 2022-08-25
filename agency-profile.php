@@ -58,17 +58,11 @@ if (isset($_SESSION['isLoggedIn']) == false) {
         </div>
 
         <div class="desc">
-          <p>Lakbayan Travel and Tours will provide a convenient and
-            premium travel and tour service for local destination in the
-            Philippines, specifically in the Negros Occidental province.
-            Lakbayan Travel and Tours offers tourists the destinations
-            that they would love and relax in. We also provide essential
-            information to clients so that they are familiar with the culture of
-            their chosen places. "Lakbayan" or Lakbay Bayan travel & tours is a
-            website that allows visitors to conveniently browse tourist spots.
-          </p>
-          <div class="edit-desc">
-            <div class="desc-btn"><i class="fas fa-pen"></i></div>
+          <p class="desc-body active" id="desc-body">Lakbayan Travel and Tours will provide a convenient and premium travel and tour service for local destination in the Philippines, specifically in the Negros Occidental province. Lakbayan Travel and Tours offers tourists the destinations that they would love and relax in. We also provide essential information to clients so that they are familiar with the culture of their chosen places. "Lakbayan" or Lakbay Bayan travel & tours is a website that allows visitors to conveniently browse tourist spots.</p>
+          <textarea class="desc-textarea" name="" id="desc-textarea"></textarea>
+          <div class="desc-btn">
+            <div class="edit-desc active" id="edit-desc-btn"><i class="fas fa-pen"></i></div>
+            <div class="save-desc" id="save-desc-btn"><i class="fas fa-save"></i></div>
           </div>
         </div>
       </div>
@@ -83,165 +77,173 @@ if (isset($_SESSION['isLoggedIn']) == false) {
 
       <div class="tab-content">
         <div id="info" data-tab-content class=" data-tab-content active">
-          <h1>Agency Details</h1>
-          <div class="details">
-            <div class="row top">
-              <span class="col-left">Name</span>
-              <span class="col-right active">Lakbayan Travel and Tours</span>
-              <span class="col-right-edit">
-                <input type="text" name="" id="" value="">
+          <form action="go.php" method="POST">
+            <div class="top">
+              <span>
+                <h1>Agency Details</h1>
               </span>
-              <span class="col-edit active"><i class="fas fa-pen"></i></span>
-              <span class="col-save">
-                <div class="bg">
-                  <i class="fas fa-save"></i>
-                </div>
+              <span id="save-ch-btn" class="save-ch-btn">
+                <button>Save Changes</button>
               </span>
+            </div>
+            <div class="details">
+              <div class="row top">
+                <span class="col-left">Name</span>
+                <span class="col-right active">Lakbayan Travel and Tours</span>
+                <span class="col-right-edit">
+                  <input type="text" name="" id="" value="">
+                </span>
+                <span class="col-edit active"><i class="fas fa-pen"></i></span>
+                <span class="col-save">
+                  <div class="bg">
+                    <i class="fas fa-save"></i>
+                  </div>
+                </span>
+              </div>
+
+              <div class="row">
+                <span class="col-left">Address</span>
+                <span class="col-right active">Amara Compound, Brgy. Mayamot, Antipolo City</span>
+                <span class="col-right-edit">
+                  <input type="text" name="" id="" value="">
+                </span>
+                <span class="col-edit active"><i class="fas fa-pen"></i></span>
+                <span class="col-save">
+                  <div class="bg">
+                    <i class="fas fa-save"></i>
+                  </div>
+                </span>
+              </div>
+
+              <div class="row">
+                <span class="col-left">Email</span>
+                <span class="col-right active">lakbayantravels@gmail.com</span>
+                <span class="col-right-edit">
+                  <input type="text" name="" id="" value="">
+                </span>
+                <span class="col-edit active"><i class="fas fa-pen"></i></span>
+                <span class="col-save">
+                  <div class="bg">
+                    <i class="fas fa-save"></i>
+                  </div>
+                </span>
+              </div>
+
+              <div class="row bot">
+                <span class="col-left">Telephone #</span>
+                <span class="col-right active">0999-543-8579</span>
+                <span class="col-right-edit">
+                  <input type="text" name="" id="" value="">
+                </span>
+                <span class="col-edit active"><i class="fas fa-pen"></i></span>
+                <span class="col-save">
+                  <div class="bg">
+                    <i class="fas fa-save"></i>
+                  </div>
+                </span>
+              </div>
             </div>
 
-            <div class="row">
-              <span class="col-left">Address</span>
-              <span class="col-right active">Amara Compound, Brgy. Mayamot, Antipolo City</span>
-              <span class="col-right-edit">
-                <input type="text" name="" id="" value="">
-              </span>
-              <span class="col-edit active"><i class="fas fa-pen"></i></span>
-              <span class="col-save">
-                <div class="bg">
-                  <i class="fas fa-save"></i>
-                </div>
-              </span>
+            <h1>Social Media Accounts</h1>
+            <div class="details">
+              <div class="row top">
+                <span class="col-left">Facebook</span>
+                <span class="col-right active">www.facebook.com/lakbayantravelandtours</span>
+                <span class="col-right-edit">
+                  <input type="text" name="" id="" value="">
+                </span>
+                <span class="col-edit active"><i class="fas fa-pen"></i></span>
+                <span class="col-save">
+                  <div class="bg">
+                    <i class="fas fa-save"></i>
+                  </div>
+                </span>
+              </div>
+              <div class="row">
+                <span class="col-left">Twitter</span>
+                <span class="col-right active">www.twitter.com/lakbayantravelandtours</span>
+                <span class="col-right-edit">
+                  <input type="text" name="" id="" value="">
+                </span>
+                <span class="col-edit active"><i class="fas fa-pen"></i></span>
+                <span class="col-save">
+                  <div class="bg">
+                    <i class="fas fa-save"></i>
+                  </div>
+                </span>
+              </div>
+              <div class="row">
+                <span class="col-left">Instagram</span>
+                <span class="col-right active">www.instagram.com/lakbayantravelandtours</span>
+                <span class="col-right-edit">
+                  <input type="text" name="" id="" value="">
+                </span>
+                <span class="col-edit active"><i class="fas fa-pen"></i></span>
+                <span class="col-save">
+                  <div class="bg">
+                    <i class="fas fa-save"></i>
+                  </div>
+                </span>
+              </div>
+              <div class="row bot">
+                <span class="col-left">Youtube</span>
+                <span class="col-right active">None</span>
+                <span class="col-right-edit">
+                  <input type="text" name="" id="" value="">
+                </span>
+                <span class="col-edit active"><i class="fas fa-pen"></i></span>
+                <span class="col-save">
+                  <div class="bg">
+                    <i class="fas fa-save"></i>
+                  </div>
+                </span>
+              </div>
             </div>
 
-            <div class="row">
-              <span class="col-left">Email</span>
-              <span class="col-right active">lakbayantravels@gmail.com</span>
-              <span class="col-right-edit">
-                <input type="text" name="" id="" value="">
-              </span>
-              <span class="col-edit active"><i class="fas fa-pen"></i></span>
-              <span class="col-save">
-                <div class="bg">
-                  <i class="fas fa-save"></i>
-                </div>
-              </span>
+            <h1>Manager Information</h1>
+            <div class="details">
+              <div class="row top">
+                <span class="col-left">Name</span>
+                <span class="col-right active">Juan Dela Cruz</span>
+                <span class="col-right-edit">
+                  <input type="text" name="" id="" value="">
+                </span>
+                <span class="col-edit active"><i class="fas fa-pen"></i></span>
+                <span class="col-save">
+                  <div class="bg">
+                    <i class="fas fa-save"></i>
+                  </div>
+                </span>
+              </div>
+              <div class="row">
+                <span class="col-left">Contact #</span>
+                <span class="col-right active">0961-432-9680</span>
+                <span class="col-right-edit">
+                  <input type="text" name="" id="" value="">
+                </span>
+                <span class="col-edit active"><i class="fas fa-pen"></i></span>
+                <span class="col-save">
+                  <div class="bg">
+                    <i class="fas fa-save"></i>
+                  </div>
+                </span>
+              </div>
+              <div class="row bot">
+                <span class="col-left">Email</span>
+                <span class="col-right active">jdc_lakbayan@gmail.com</span>
+                <span class="col-right-edit">
+                  <input type="text" name="" id="" value="">
+                </span>
+                <span class="col-edit active"><i class="fas fa-pen"></i></span>
+                <span class="col-save">
+                  <div class="bg">
+                    <i class="fas fa-save"></i>
+                  </div>
+                </span>
+              </div>
             </div>
 
-            <div class="row bot">
-              <span class="col-left">Telephone #</span>
-              <span class="col-right active">0999-543-8579</span>
-              <span class="col-right-edit">
-                <input type="text" name="" id="" value="">
-              </span>
-              <span class="col-edit active"><i class="fas fa-pen"></i></span>
-              <span class="col-save">
-                <div class="bg">
-                  <i class="fas fa-save"></i>
-                </div>
-              </span>
-            </div>
-          </div>
-
-          <h1>Social Media Accounts</h1>
-          <div class="details">
-            <div class="row top">
-              <span class="col-left">Facebook</span>
-              <span class="col-right active">www.facebook.com/lakbayantravelandtours</span>
-              <span class="col-right-edit">
-                <input type="text" name="" id="" value="">
-              </span>
-              <span class="col-edit active"><i class="fas fa-pen"></i></span>
-              <span class="col-save">
-                <div class="bg">
-                  <i class="fas fa-save"></i>
-                </div>
-              </span>
-            </div>
-            <div class="row">
-              <span class="col-left">Twitter</span>
-              <span class="col-right active">www.twitter.com/lakbayantravelandtours</span>
-              <span class="col-right-edit">
-                <input type="text" name="" id="" value="">
-              </span>
-              <span class="col-edit active"><i class="fas fa-pen"></i></span>
-              <span class="col-save">
-                <div class="bg">
-                  <i class="fas fa-save"></i>
-                </div>
-              </span>
-            </div>
-            <div class="row">
-              <span class="col-left">Instagram</span>
-              <span class="col-right active">www.instagram.com/lakbayantravelandtours</span>
-              <span class="col-right-edit">
-                <input type="text" name="" id="" value="">
-              </span>
-              <span class="col-edit active"><i class="fas fa-pen"></i></span>
-              <span class="col-save">
-                <div class="bg">
-                  <i class="fas fa-save"></i>
-                </div>
-              </span>
-            </div>
-            <div class="row bot">
-              <span class="col-left">Youtube</span>
-              <span class="col-right active">None</span>
-              <span class="col-right-edit">
-                <input type="text" name="" id="" value="">
-              </span>
-              <span class="col-edit active"><i class="fas fa-pen"></i></span>
-              <span class="col-save">
-                <div class="bg">
-                  <i class="fas fa-save"></i>
-                </div>
-              </span>
-            </div>
-          </div>
-
-          <h1>Manager Information</h1>
-          <div class="details">
-            <div class="row top">
-              <span class="col-left">Name</span>
-              <span class="col-right active">Juan Dela Cruz</span>
-              <span class="col-right-edit">
-                <input type="text" name="" id="" value="">
-              </span>
-              <span class="col-edit active"><i class="fas fa-pen"></i></span>
-              <span class="col-save">
-                <div class="bg">
-                  <i class="fas fa-save"></i>
-                </div>
-              </span>
-            </div>
-            <div class="row">
-              <span class="col-left">Contact #</span>
-              <span class="col-right active">0961-432-9680</span>
-              <span class="col-right-edit">
-                <input type="text" name="" id="" value="">
-              </span>
-              <span class="col-edit active"><i class="fas fa-pen"></i></span>
-              <span class="col-save">
-                <div class="bg">
-                  <i class="fas fa-save"></i>
-                </div>
-              </span>
-            </div>
-            <div class="row bot">
-              <span class="col-left">Email</span>
-              <span class="col-right active">jdc_lakbayan@gmail.com</span>
-              <span class="col-right-edit">
-                <input type="text" name="" id="" value="">
-              </span>
-              <span class="col-edit active"><i class="fas fa-pen"></i></span>
-              <span class="col-save">
-                <div class="bg">
-                  <i class="fas fa-save"></i>
-                </div>
-              </span>
-            </div>
-          </div>
-
-          <!-- <div class="left">
+            <!-- <div class="left">
               <div class="image">
                 <img src="assets/img/logo.png" alt="">
                 <div class="middle">
@@ -249,6 +251,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
                 </div>
               </div>
             </div> -->
+          </form>
         </div>
 
         <div id="package" data-tab-content class="data-tab-content">
@@ -370,57 +373,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
     });
   </script>
 
-  <script>
-    const tabs = document.querySelectorAll('[data-tab-target]')
-    // const tabContents = document.querySelectorAll('[data-tab-content]')
-    const tabContents = document.querySelectorAll('.data-tab-content')
-
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const target = document.querySelector(tab.dataset.tabTarget)
-        tabContents.forEach(tabContent => {
-          tabContent.classList.remove('active')
-        })
-        tabs.forEach(tab => {
-          tab.classList.remove('active')
-        })
-        tab.classList.add('active')
-        target.classList.add('active')
-      })
-    })
-  </script>
-
-  <script>
-    const editBtn = document.querySelectorAll('.col-edit');
-    editBtn.forEach(edit => {
-      edit.addEventListener('click', () => {
-        const editField = edit.previousElementSibling;
-        const saveBtn = edit.nextElementSibling;
-        const value = editField.childNodes[1];
-
-        editField.previousElementSibling.classList.remove('active');
-        editField.childNodes[1].defaultValue = editField.previousElementSibling.childNodes[0].nodeValue;
-        editField.classList.add('active');
-
-        edit.classList.remove('active');
-        saveBtn.classList.add('active');
-      })
-    })
-
-    const saveBtn = document.querySelectorAll('.col-save');
-    saveBtn.forEach(save => {
-      save.addEventListener('click', () => {
-        const editBtn = save.previousElementSibling;
-        const editField = editBtn.previousElementSibling;
-        const valueCell = editField.previousElementSibling;
-        save.classList.remove('active');
-        editBtn.classList.add('active');
-        editField.classList.remove('active');
-        valueCell.classList.add('active');
-        valueCell.innerHTML = editField.childNodes[1].value;
-      })
-    })
-  </script>
+  <script src="assets/js/agency-profile.js"></script>
 
 </body>
 
