@@ -14,6 +14,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="assets/css/modal.css">
   <link rel="stylesheet" href="assets/css/profile.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/footer.css">
 
@@ -49,10 +50,10 @@ if (isset($_SESSION['isLoggedIn']) == false) {
           </span>
           <span class="ico-container">
             <div class="ico">
-              <a href="facebook.com"><i class="fab fa-facebook-f"></i></a>
-              <a href="twitter.com"><i class="fab fa-twitter"></i></a>
-              <a href="instagram.com"><i class="fab fa-instagram"></i></a>
-              <a href="lakbayan.com"><i class="fas fa-globe"></i></a>
+              <a href="www.facebook.com" rel="noopener" target="_blank"><i class="fab fa-facebook-f"></i></a>
+              <a href="wwww.twitter.com" rel="noopener" target="_blank"><i class="fab fa-twitter"></i></a>
+              <a href="www.instagram.com" rel="noopener" target="_blank"><i class="fab fa-instagram"></i></a>
+              <a href="www.lakbayan.com" rel="noopener" target="_blank"><i class="fas fa-globe"></i></a>
             </div>
           </span>
         </div>
@@ -275,32 +276,146 @@ if (isset($_SESSION['isLoggedIn']) == false) {
                   Negros Island Region of the Philippines. It is the home of TawHai, the biggest floating bar in Asia.
                 </div>
               </div>
-              <div class="functions">
 
+              <div class="func-btn">
+                <span class="func-edit">
+                  <div class="buttn"><i class="fas fa-pen"></i></div>
+                </span>
+                <span class="func-delete">
+                  <div class="buttn"><i class="fas fa-trash"></i></div>
+                </span>
+
+                <span class="earnings">
+                  <p class="amt">P7,500</p>
+                  <p style="font-size: 12px;">PER PERSON</p>
+                </span>
               </div>
-              <!-- <div class="price">
-                <p>FROM</p>
-                <p class="pr">P7,500.00</p>
-                <a class="book-btn" href="includes/packages/lakawon.php">BOOK NOW</a>
-              </div> -->
             </div>
           </div>
+
+          <div class="card-container">
+            <div class="wrap">
+              <div class="image">
+                <img src="assets/img/tri 1.jpg" alt="" />
+              </div>
+
+              <div class="cap">
+                <h2>Tri-City (Bacolod - Silay - Talisay) Exclusive Day Tour</h2>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <div class="data">
+                  Get to know more about the rich history and cultural heritage of Negros. This trip focuses on the Spanish heritage and the history of the sugarcane industry and haciendas of Negros. You will visit heritage houses, museums and century old churches guided by our DOT accredited tour guides.
+                </div>
+              </div>
+
+              <div class="func-btn">
+                <span class="func-edit">
+                  <div class="buttn"><i class="fas fa-pen"></i></div>
+                </span>
+                <span class="func-delete">
+                  <div class="buttn"><i class="fas fa-trash"></i></div>
+                </span>
+
+                <span class="earnings">
+                  <p class="amt">P3,161</p>
+                  <p style="font-size: 12px;">PER PERSON</p>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-container">
+            <div class="wrap">
+              <div class="image">
+                <img src="assets/img/Ruinsmain.jpeg" alt="" />
+              </div>
+
+              <div class="cap">
+                <h2>The Ruins Day Tour</h2>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i cl ass="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+                <div class="data">
+                  The Ruins of Talisay City has become famous for its naturally ruined beauty. The Ruins was built to memorialize the great love of a husband to his departed wife. Currently, the family of the grandson of Mercedes, Mr. Raymund Javellana, owns and maintains The Ruins.
+                </div>
+              </div>
+              <div class="func-btn">
+                <span class="func-edit">
+                  <div class="buttn"><i class="fas fa-pen"></i></div>
+                </span>
+                <span class="func-delete">
+                  <div class="buttn"><i class="fas fa-trash"></i></div>
+                </span>
+
+                <span class="earnings">
+                  <p class="amt">P2,100</p>
+                  <p style="font-size: 12px;">PER PERSON</p>
+                </span>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <div id="history" data-tab-content class="data-tab-content">
-          <table>
+          <table class="user-table">
             <thead>
               <tr>
                 <th>Booking Date</th>
                 <th>Name</th>
                 <th>Travel Package</th>
-                <th>Number of Persons</th>
+                <th># of Persons</th>
+                <th># of Days</th>
                 <th>Trip Date</th>
                 <th>Total</th>
               </tr>
             </thead>
             <tbody>
-
+              <tr>
+                <td>08/23/22</td>
+                <td>Luke Skywalker</td>
+                <td>The Ruins Day Tour</td>
+                <td>5</td>
+                <td>3</td>
+                <td>9/11/22</td>
+                <td>P10,500</td>
+              </tr>
+              <tr>
+                <td>08/23/22</td>
+                <td>Han Solo</td>
+                <td>Lakawon Island Day Tour</td>
+                <td>2</td>
+                <td>2</td>
+                <td>9/05/22</td>
+                <td>P15,000</td>
+              </tr>
+              <tr>
+                <td>08/23/22</td>
+                <td>Ben Kenobi</td>
+                <td>Lakawon Island Day Tour</td>
+                <td>5</td>
+                <td>2</td>
+                <td>9/18/22</td>
+                <td>P30,000</td>
+              </tr>
+              <tr>
+                <td>08/23/22</td>
+                <td>Paolo Benjamin Guico</td>
+                <td>Tri-City (Bacolod - Silay - Talisay) Exclusive Day Tour</td>
+                <td>9</td>
+                <td>3</td>
+                <td>9/25/22</td>
+                <td>P35,000</td>
+              </tr>
             </tbody>
           </table>
         </div>

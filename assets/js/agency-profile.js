@@ -64,7 +64,11 @@ saveBtn.forEach(save => {
         valueCell.classList.add('active');
         valueCell.innerHTML = currValue;
 
-        if (previousValue != currValue) {
+
+        if (currValue.length === 0) {
+            alert("ERROR. Empty Field");
+            valueCell.innerHTML = previousValue;
+        } else if (previousValue != currValue) {
             saveChBtn.classList.add('active');
         } else {
             saveChBtn.classList.remove('active');
@@ -80,7 +84,8 @@ const descEdit = document.getElementById('desc-textarea');
 editDescBtn.addEventListener('click', () => {
     descBody.classList.remove('active');
     descEdit.classList.add('active');
-    descEdit.innerHTML = descBody.innerHTML;
+    previousValue = descBody.firstChild.nodeValue;
+    descEdit.innerHTML = previousValue;
     editDescBtn.classList.remove('active');
     saveDescBtn.classList.add('active');
 })
@@ -88,7 +93,18 @@ editDescBtn.addEventListener('click', () => {
 saveDescBtn.addEventListener('click', () => {
     descBody.classList.add('active');
     descEdit.classList.remove('active');
-    descBody.innerHTML = descEdit.value;
+    currValue = descEdit.value;
+    descBody.innerHTML = currValue;
     editDescBtn.classList.add('active');
     saveDescBtn.classList.remove('active');
+
+    if (currValue.length === 0) {
+        alert("ERROR. Empty Field");
+        descBody.innerHTML = previousValue;
+        descEdit.inn = previousValue;
+    } else if (previousValue != currValue) {
+        saveChBtn.classList.add('active');
+    } else {
+        saveChBtn.classList.remove('active');
+    }
 })

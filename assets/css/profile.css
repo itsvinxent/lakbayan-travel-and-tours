@@ -110,9 +110,10 @@
 .banner-logo .edit-desc.active,
 .banner-logo .save-desc.active {
   display: block;
+  cursor: pointer;
 }
 
-.banner-logo .desc:hover .desc-body{
+.banner-logo .desc:hover .desc-body {
   border: 1px solid black;
   border-radius: 5px;
   padding: 10px;
@@ -144,7 +145,7 @@
   display: block;
 }
 
-.banner-logo .desc-body, 
+.banner-logo .desc-body,
 .banner-logo .desc-textarea,
 .banner-logo .edit-desc,
 .banner-logo .save-desc {
@@ -261,17 +262,8 @@
 
 .tab-content #info.data-tab-content.active {
   width: 88%;
-  margin: 0 auto 1rem auto;
+  margin: 0 auto 3rem auto;
 }
-
-/* .banner-logo img{
-  border-radius: 50%;
-  margin: 50px 0 0 auto;  
-  width: 200px;
-  height: 200px;
-  transition: .5s ease;
-  backface-visibility: hidden;
-} */
 
 .tab-content #info .top .save-ch-btn.active {
   text-align: right;
@@ -332,7 +324,7 @@
 
 .tab-content #info .row .col-right-edit input {
   padding: 0 5px;
-  background-color:ghostwhite;
+  background-color: ghostwhite;
   border: 1px solid black;
   border-radius: 3px;
   width: 100%;
@@ -365,9 +357,9 @@
   color: white;
 }
 
-.tab-content #info .row .col-save.active{
+.tab-content #info .row .col-save.active {
   display: block;
-  
+
   padding: 5px 0;
 }
 
@@ -382,24 +374,17 @@
   cursor: pointer;
 }
 
-.tab-content #info .row .col-edit:hover  {
+.tab-content #info .row .col-edit.active:hover {
   /* text-decoration: underline; */
   cursor: pointer;
   color: #1abc9c;
 }
 
-/* .tab-content #info .row i {
-  opacity: 0;
-  padding-right: 10px;
-} */
+.tab-content #package.active {
+  margin-bottom: 3rem;
+}
 
-/* .tab-content #info .row .col-edit:hover i {
-  opacity: 1;
-} */
-
-
-/* Packages Container */
-.packages .wrap {
+.tab-content #package .wrap {
   margin: 25px 0;
   max-height: 250px;
   background: #e9e9e9;
@@ -408,7 +393,7 @@
   position: relative;
 }
 
-.packages .wrap .image img {
+.tab-content #package .wrap .image img {
   height: 200px;
   width: 200px;
   margin: 20px;
@@ -417,69 +402,90 @@
   object-fit: cover;
 }
 
-.heart {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  top: 0;
-  left: 0;
-}
-
-.h_container {
-  background-color: white;
-  border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  display: inline-block;
-  width: 35px;
-  height: 35px;
-  text-align: center;
-  line-height: 45px;
-  position: inherit;
-  top: 10%;
-  right: 10%;
-}
-#heart {
-  font-size: 25px;
-}
-#heart:hover {
-  color: red;
-}
-
-.packages .wrap .cap {
+.tab-content #package .wrap .cap {
   margin: 20px;
 }
 
-.packages .wrap .cap .rating {
+.tab-content #package .wrap .cap .rating {
   color: var(--logo-yellow-dark);
   font-size: 20px;
 }
 
-.packages .wrap .cap .data {
-  padding-top: 15px;
-  font-size: 17px;
+.tab-content #package .wrap .cap .data {
+  text-align: justify;
 }
 
-.packages .wrap .cap h2 {
-  font-size: 30px;
-}
-
-.packages .wrap .price {
-  text-align: right;
-  margin: 20px;
-}
-
-.packages .wrap .price p {
+.tab-content #package .wrap .cap h2 {
   font-size: 20px;
-  letter-spacing: 1px;
 }
 
-.packages .wrap .price .pr {
-  margin-bottom: 15px;
+.tab-content #package .wrap .func-btn {
+  position: relative;
+  margin: 20px;
+  display: flex;
+  justify-content: right;
 }
 
-.book-btn {
-  padding: 10px;
-  background-color: var(--logo-yellow-dark);
-  color: black;
-  border-radius: 10px;
+.tab-content #package .wrap .func-btn .buttn {
+  height: 35px;
+  width: 35px;
+  text-align: center;
+  background-color: #1abc9c;
+  color: white;
+  border-radius: 50%;
+  line-height: 35px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.tab-content #package .wrap .func-btn .earnings {
+  position: absolute;
+  top: 75%;
+  right: 0;
+}
+
+.tab-content #package .wrap .func-btn .earnings p {
+  text-align: right;
+}
+
+.tab-content #package .wrap .func-btn .earnings .amt {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.tab-content #history.data-tab-content.active {
+  margin: 10px auto 3rem auto;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+}
+
+.tab-content #history.data-tab-content table {
+  text-align: left;
+  border-collapse: collapse;
+  font-size: 1em;
+  font-family: var(--body-font);
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  margin-top: 1rem;
+}
+
+.tab-content #history.data-tab-content table thead tr {
+  background-color: var(--first-color);
+  color: white;
+}
+
+.tab-content #history.data-tab-content th,
+.tab-content #history.data-tab-content td {
+  padding: 12px 15px;
+}
+
+.tab-content #history.data-tab-content tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.tab-content #history.data-tab-content tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
 }
