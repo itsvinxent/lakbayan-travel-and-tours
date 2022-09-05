@@ -4,6 +4,9 @@ $_SESSION['active'] = 's-pack';
 if(isset($_SESSION['isLoggedIn']) == false) {
   $_SESSION['isLoggedIn'] = false;
 }
+
+$whereamI = 1; 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +21,9 @@ if(isset($_SESSION['isLoggedIn']) == false) {
   <link rel="stylesheet" href="../../assets/css/modal.css" />
   <link rel="stylesheet" href="../../assets/css/footer.css" />
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+  <link rel="stylesheet" href="../../assets/css/chatbox.css">
+
   <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- flatpickr -->
@@ -31,6 +37,8 @@ if(isset($_SESSION['isLoggedIn']) == false) {
   <?php 
   include '../components/nav.php';
   include '../components/accountModal.php';
+
+  include '../components/chatbox.php';
   ?>
   
   <section class="packages-pages">
