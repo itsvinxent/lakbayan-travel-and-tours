@@ -66,11 +66,21 @@
     object-fit: cover;
 }
 
+#bg-vid{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+
+    z-index: -1;
+}
+
 /* 2. FORM CONTAINER */
 
 .form-container {
     max-width: 575px;
-    height: 100vh;
+    /* height: 120vh; */
 
     margin-left: auto;
     margin-right: auto;
@@ -124,13 +134,14 @@ legend {
 form {
     position: relative;
 
-    margin: 75px 0px 0px 0;
+    margin: 25px 0px 0px 0;
     padding: 10px 0px 10px 0px;
     border-radius: 10px;
+    
 
     background-image: linear-gradient(180deg, #febe2a5b, #40afeb5b);
 
-
+    transform: scale(0.85);
     text-shadow: 1px 1px 4px var(--first-color-lighter);
     /* box-shadow: 1px 1px 3px var(--first-color); */
 
@@ -155,7 +166,7 @@ input[type=text], input[type=password], textarea, input[type=file]{
     transition: ease-in, .5s ease-in-out;
 }
 
-input[type=submit] {
+input[type=submit], input[type=button] {
     background-color: hsl(#eee, 1, .15);
     border: none;
     padding: 5px 5px;
@@ -163,7 +174,9 @@ input[type=submit] {
 
     border-radius: 5px;
     margin: 15px 75% 15px 0px;
+}
 
+input[type=submit] {
     text-align: right;
 }
 
@@ -188,11 +201,13 @@ textarea {
     box-shadow: 0px 1px 12px 1px rgba(0,0,0,0.3);
     box-sizing: border-box;
     
+   
 }
 
 /* 2.5 FORM TRAVEL AGENCY */
 
 .form-agency-part {
+    height: fit-content;
     background-color: var(--logo-yellow-dark);
 
     border: 1.5px var(--logo-yellow-dark) solid;
@@ -202,7 +217,9 @@ textarea {
     margin: 0px 0px 15px 0px;
     transform: translateX(-15px);
 
-    
+    display: block;
+
+    transition: 1s ease-out;
 }
 
 .form-agency-part:focus-within {
@@ -259,9 +276,19 @@ textarea {
 
     border: 1.5px var(--logo-blue-dark) solid;
     overflow: hidden;
-
+    
     transform: translateX(15px);
+
+    /* transform: translateX(100%);
+    transition: ease-out 0.3s;
+
+    opacity: 0; */
 }
+
+/* .forrm-manager-part.is-active{
+    transform: translateX(15px);
+    opacity: 1;
+} */
 
 .form-manager-part:focus-within {
     border: 1.5px var(--logo-yellow-dark) solid;
