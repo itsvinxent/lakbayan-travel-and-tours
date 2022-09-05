@@ -6,6 +6,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
 }
 
 $whereamI = 1; 
+$isAgency = false;
 
 ?>
 <!DOCTYPE html>

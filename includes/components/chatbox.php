@@ -1,13 +1,7 @@
 
 <?php 
-    if($whereamI == 1){
-        $camp = "../../assets/img/Campuestohan1.jpeg";
-        $loc = $camp;
-    }
-    else if($whereamI == 2) {
-        $ilaya = "../../assets/img/Ilaya1.jpg";
-        $loc = $ilaya;
-    }
+    
+    $loc = "../../assets/img/logo.png";
        
     
 ?> 
@@ -32,10 +26,23 @@
             <div class="badge">1</div>
             <div class="chat-area">
             <?php
+            if ($isAgency != true){
              echo '<div class="income-msg">
                         <img src="'.$loc.'" class="avatar" alt="">
                         <span class="msg"> Hi, How can I help you?</span>
                    </div>';   
+                }
+            else {
+                echo '
+                    <div class="out-msg">
+                     <span class="my-msg">Hi, How can I help you?</span>
+                     <img src="'.$loc.'" class="avatar">
+                    </div>`
+                    <div class="income-msg">
+                        <img src="../../assets/img/agencypfp/PFP-6307fe74313145.40646674.jpg" class="avatar" alt="">
+                        <span class="msg"> How much is the price? and the inclusions? </span>
+                   </div>';   
+            }
             ?>
             </div>
 
