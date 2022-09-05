@@ -31,10 +31,14 @@ if(isset($_SESSION['isLoggedIn']) == false) {
 ?>
 <!-- FORM FIELD -->
 
+<video autoplay muted loop id="bg-vid">
+  <source src="assets\media\Sunset.mp4" type="video/mp4" >
+</video>
+
 <section>
   <div class="form-container">
       <form id="register-agency" action="backend/auth/signupagency.php" method="POST" enctype="multipart/form-data">
-          <div class="form-agency-part">
+          <div class="form-agency-part" id="agencyform">
             <img src="assets/img/Umbrella.png" id="designUmbrella"> 
             <legend>REGISTER YOUR AGENCY NOW 🏖️</legend>
 
@@ -53,6 +57,8 @@ if(isset($_SESSION['isLoggedIn']) == false) {
             <label for="aPicture">Select Agency Profile Picture</label>
             <input type="file" name="aPicture" id="aPicture" accept="image/gif, image/jpeg, image/png" onchange="prevImage(event)"><br>
 
+            <!-- <input type="button" value="Next" onclick="showman()" class="shownext"> -->
+            
             <div class="preview-image-container" id="prev-container">
               <div class="preview-image">
                 <img id="prev" src="#" alt="previmage" > 
@@ -61,7 +67,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
 
           </div>
 
-          <div class="form-manager-part">
+          <div class="form-manager-part" id="managerform">
             <img src="assets/img/Palmtree.png" id="backgroundTree"> 
             <legend> 👨 AGENCY MANAGER 👩</legend>
 
@@ -106,6 +112,30 @@ var prevImage = function(event) {
   }
   
 };
+
+// function nextform(){
+//   var travelpart = document.getElementById("agencyform");
+//   var managerpart = document.getElementById("managerform")
+//   travelpart.style.display = "none";
+// }
+
+// const showmanager = document.querySelector('.form-manager-part');
+
+// document.querySelector(".shownext").addEventListener("click", 
+// () => {
+//   showmanager.removeAttribute('hidden');
+//   showmanager.classList.toggle("is-active");
+// })
+
+// // function showman(){
+// //   showmanager.removeAttribute('hidden');
+
+// //   const reflow = element.offsetHeight;
+  
+// //   showmanager.classList.add('is-active');
+// // }
+
+
 </script>
 
 <!-- Footer section -->
