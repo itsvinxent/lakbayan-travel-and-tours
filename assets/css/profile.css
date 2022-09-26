@@ -1,3 +1,11 @@
+.banner-half.profile {
+  height: 40vh;
+}
+
+.banner-half.profile video {
+  height: 40vh;
+}
+
 .profile-container {
   width: 75%;
   margin: auto;
@@ -10,6 +18,10 @@
   padding-top: 135px;
   text-align: justify;
   border-bottom: 1px rgba(255, 255, 255, 0.4);
+}
+
+.banner-logo.user {
+  margin-bottom: 2rem;
 }
 
 .banner-logo .agency-email {
@@ -380,6 +392,18 @@
   color: #1abc9c;
 }
 
+.tab-content #package .create-button {
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: var(--first-color);
+  color: white;
+  font: inherit;
+  margin-top: 2rem;
+  cursor: pointer;
+}
+
 .tab-content #package.active {
   margin-bottom: 3rem;
 }
@@ -402,6 +426,14 @@
   object-fit: cover;
 }
 
+.tab-content #package .wrap.user {
+  max-height: 150px;
+}
+
+.tab-content #package .wrap.user .image img {
+  height: 100px;
+}
+
 .tab-content #package .wrap .cap {
   margin: 20px;
 }
@@ -417,6 +449,10 @@
 
 .tab-content #package .wrap .cap h2 {
   font-size: 20px;
+}
+
+.tab-content #package .wrap.user .cap p {
+  margin-top: 5px;
 }
 
 .tab-content #package .wrap .func-btn {
@@ -440,16 +476,37 @@
 
 .tab-content #package .wrap .func-btn .earnings {
   position: absolute;
-  top: 75%;
+  bottom: 0;
   right: 0;
 }
 
-.tab-content #package .wrap .func-btn .earnings p {
+.tab-content #package .wrap .func-btn .cost {
+  position: absolute;
+  top: -5px;
+  right: 0;
+}
+
+.tab-content #package .wrap .func-btn p {
   text-align: right;
 }
 
-.tab-content #package .wrap .func-btn .earnings .amt {
+.tab-content #package .wrap .func-btn .amt {
   font-size: 24px;
+  font-weight: bold;
+  color: #34495e;
+}
+
+.tab-content #package .wrap .func-btn .check-order {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: var(--first-color);
+}
+
+.check-order a {
+  color: white;
   font-weight: bold;
 }
 
@@ -488,4 +545,9 @@
 
 .tab-content #history.data-tab-content tbody tr:nth-of-type(even) {
   background-color: #f3f3f3;
+}
+
+td a {
+  color: black;
+  text-decoration: underline;
 }

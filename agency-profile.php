@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION['active'] = 'pack';
+$_SESSION['active'] = 'profile';
 if (isset($_SESSION['isLoggedIn']) == false) {
   $_SESSION['isLoggedIn'] = false;
 }
@@ -34,7 +34,7 @@ $isAgency = true;
   <?php
   include 'includes/components/nav.php';
 
-  include 'includes/components/chatbox.php';
+  include 'includes/components/chatbox-agency.php';
   ?>
 
   <section class="sections packages" id="packages">
@@ -264,6 +264,7 @@ $isAgency = true;
         </div>
 
         <div id="package" data-tab-content class="data-tab-content">
+        <button class="create-button" id="modalBOpen">Create a New Package</button>
           <div class="card-container">
             <div class="wrap">
               <div class="image">
@@ -373,29 +374,64 @@ $isAgency = true;
           </div>
 
         </div>
+        <div class="bmodal-container" id="bmodal_container">
+          <div class="booking-modal">
+            <h1>Package Creation</h1>
+            <p>Enter the details of the package to be listed here in the website.</p>
+            <input type="hidden" name="loc" value="campuestohan" />
+            <input placeholder="Package Name" required />
+            <input placeholder="Price per Person" required />
+            <input placeholder="Phone Number" required />
+            <input placeholder="Reservations" required />
+            <input type="number" min="1" max="10" name="persons" placeholder="Cancellation Limit (Hours)" required>
+            <input type="number" min="1" max="4" name="duration" placeholder="Duration" required>
+            <textarea name="msg" id="msg" rows="10" placeholder="Description and Inclusions (500 words max)"></textarea>
 
+            <div class="buttons">
+              <button id="modalLogin" class="modal-login">Add Package</button>
+              <a id="modalBClose" class="btn">Close</a>
+            </div>
+          </div>
+        </div>
+        <script>
+            const bopen = document.getElementById('modalBOpen');
+            const bmodal_container = document.getElementById('bmodal_container');
+            const bclose = document.getElementById('modalBClose');
+
+            bopen.addEventListener('click', () => {
+              bmodal_container.classList.add('show');
+            })
+
+            bclose.addEventListener('click', () => {
+              bmodal_container.classList.remove('show');
+            })
+        </script>
         <div id="history" data-tab-content class="data-tab-content">
           <table class="user-table">
             <thead>
               <tr>
-                <th>Booking Date</th>
+              <th>Booking Date</th>
                 <th>Name</th>
                 <th>Travel Package</th>
                 <th># of Persons</th>
                 <th># of Days</th>
                 <th>Trip Date</th>
                 <th>Total</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>08/23/22</td>
-                <td>Luke Skywalker</td>
-                <td>The Ruins Day Tour</td>
+                <td>John Mark De Ocampo</td>
+                <td>Campuestohan Highland Resort</td>
                 <td>5</td>
                 <td>3</td>
                 <td>9/11/22</td>
                 <td>P10,500</td>
+                <td>
+                  <a href="travel-order.php">Travel Order</a>
+                </td>
               </tr>
               <tr>
                 <td>08/23/22</td>
@@ -405,6 +441,9 @@ $isAgency = true;
                 <td>2</td>
                 <td>9/05/22</td>
                 <td>P15,000</td>
+                <td>
+                  <a href="travel-order.php">Travel Order</a>
+                </td>
               </tr>
               <tr>
                 <td>08/23/22</td>
@@ -414,6 +453,9 @@ $isAgency = true;
                 <td>2</td>
                 <td>9/18/22</td>
                 <td>P30,000</td>
+                <td>
+                  <a href="travel-order.php">Travel Order</a>
+                </td>
               </tr>
               <tr>
                 <td>08/23/22</td>
@@ -423,6 +465,9 @@ $isAgency = true;
                 <td>3</td>
                 <td>9/25/22</td>
                 <td>P35,000</td>
+                <td>
+                  <a href="travel-order.php">Travel Order</a>
+                </td>
               </tr>
             </tbody>
           </table>

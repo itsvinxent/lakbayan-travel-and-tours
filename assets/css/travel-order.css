@@ -1,0 +1,172 @@
+.content .progress {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3rem auto;
+    width: 50%;
+}
+
+.progress .icon {
+    display: inherit;
+    justify-content: center;
+    vertical-align: middle;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.progress .icon img {
+    padding: 24px;
+}
+
+.progress .icon.green {
+    border: 10px solid var(--first-color);
+}
+
+.progress .icon.green.active {
+    background-color: rgba(26, 188, 156, .5);
+}
+
+.progress .icon.gray {
+    border: 10px solid #e0e0e0;
+}
+
+.progress .icon p {
+    position: absolute;
+    transform: translate(0, 90px);
+}
+
+.progress .icon .title.active {
+    font-weight: bold;
+}
+
+.progress .icon:hover .title {
+    text-decoration: underline;
+}
+
+.progress .bar {
+    height: 10px;
+    width: 100px;
+}
+
+.progress .bar.green {
+    background-color: var(--first-color);
+}
+
+.progress .bar.gray {
+    background-color: #e0e0e0;
+}
+
+.content .spec-content {
+    
+    margin: 6rem auto 3rem auto;
+    width: 60%;
+}
+
+.spec-content h1 {
+    text-align: left;
+}
+
+.spec-content .amt {
+    text-align: right;
+}
+
+.spec-content .pen {
+    text-align: right;
+    margin-top: -5px;
+}
+
+.spec-content .payment.active {
+    display: flex;
+    margin-top: 1rem auto;
+}
+
+.spec-content .payment {
+    display: none;
+}
+
+.spec-content .payment .main {
+    padding-right: 75px;
+}
+
+.spec-content .gcash div {
+    padding: 10px 0 10px 0;
+}
+
+.spec-content .gcash div img {
+    height: 500px;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.spec-content .gcash div button, 
+.spec-content .receipt button  {
+    background-color: #017cfe;
+    padding: 10px;
+    font: inherit;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin: 10px 0;
+    width: 100%;
+}
+
+.spec-content .gcash div button:hover,
+.spec-content .receipt button:hover {
+    cursor: pointer;
+}
+
+.spec-content .bank div {
+    padding-top: 10px;
+}
+
+.spec-content .trans {
+    margin-top: 1rem;
+}
+
+.spec-content .receipt {
+    margin-top: 200px;
+    background-color: #34495e;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.spec-content .receipt button {
+    background-color: var(--first-color);
+    margin: 15px 0 0 0;
+}
+
+.spec-content .payment-agency.active {
+    display: flex;
+    margin-top: 1rem auto;
+}
+
+.spec-content .payment-agency {
+    display: none;
+}
+
+.spec-content .payment-agency img{
+    height: 500px;
+    margin-top: 1rem;
+}
+
+.spec-content .payment-agency .details {
+    padding-left: 25px;
+}
+
+.spec-content .payment-agency .details button {
+    padding: 10px;
+    width: 100%;
+    background-color: var(--first-color);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font: inherit;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.spec-content .payment-agency .details .deny {
+    background-color: #ff0018;
+}

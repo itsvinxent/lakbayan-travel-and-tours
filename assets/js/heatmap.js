@@ -16,8 +16,8 @@
 	// });
 	
     var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 10,
-        minZoom: 8,
+        // maxZoom: 10,
+        // minZoom: 8,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
@@ -34,8 +34,8 @@
     };
 
     pinfo.update = function (props) {
-      this._div.innerHTML = '<h4>Active Cases per Municipality</h4>' +  (props ?
-        '<b>' + props.name + '</b><br />' + props.cases + ' cases' : 'Hover over a municipality');
+      this._div.innerHTML = '<h4>Active Cases in the Area</h4>' +  (props ?
+        '<b>' + props.province + '</b><br />' + props.cases + ' cases' : 'Hover over a municipality');
 	  
 		// this.con.style.color = "red";
     };
@@ -51,17 +51,6 @@
 			 			'#1a9850';
   }
 
-//   function style(feature) {
-// 		return {
-// 			weight: 2,
-// 			opacity: 1,
-// 			color: 'white',
-// 			dashArray: '3',
-// 			fillOpacity: 0.7,
-// 			fillColor: getColor(feature.properties.cases)
-// 		};
-// 	}
-
 	function style(feature) {
 		return {
 			weight: 1,
@@ -69,7 +58,7 @@
 			color: 'black',
 			dashArray: '3',
 			fillOpacity: .7,
-			fillColor: getColor(feature.properties.cases)
+			fillColor: getColor(parseInt(feature.properties.cases.replace(/,/g, ''), 10))
 		};
 	}
 
@@ -102,7 +91,7 @@ var prev = document.getElementById('city of talisay');
 		var layer = e.target;
 		map.fitBounds(layer.getBounds());
 		// var con = 'bacolod';
-		var con = (String(layer.feature.properties.name).toLowerCase());
+		var con = (String(layer.feature.properties.province).toLowerCase());
 		var muni = document.getElementById(con);
 		
 		jQuery(function($) {
@@ -134,11 +123,31 @@ var prev = document.getElementById('city of talisay');
 		});
 	}
 
+	for (let i = 1; i <= 19; i++) {
+		var filename = "geojson/provinces-region-ph"+ i + ".json";
+		$.getJSON(filename, function (gjson) {
+			geojson = L.geoJson(gjson, {
+				style: style,
+				onEachFeature: onEachFeature
+			}).addTo(map);
+		});
+	}
+
+	for (let j = 2; j <= 4; j++) {
+		filename = "geojson/provinces-region-ph18-"+ j + ".json";
+		$.getJSON(filename, function (gjson) {
+			geojson = L.geoJson(gjson, {
+				style: style,
+				onEachFeature: onEachFeature
+			}).addTo(map);
+		});
+	}
+
 	/* global statesData */
-	geojson = L.geoJson(provinceData, {
-		style: style,
-		onEachFeature: onEachFeature
-	}).addTo(map);
+	// geojson = L.geoJson(provinceData, {
+	// 	style: style,
+	// 	onEachFeature: onEachFeature
+	// }).addTo(map);
 
 	map.attributionControl.addAttribution('COVID-19 data &copy; <a href="https://doh.gov.ph/covid19tracker">Department of Health</a>');
 

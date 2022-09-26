@@ -1,7 +1,7 @@
 <?php
 session_start();
 $_SESSION['active'] = 'index';
-if(isset($_SESSION['isLoggedIn']) == false) {
+if (isset($_SESSION['isLoggedIn']) == false) {
   $_SESSION['isLoggedIn'] = false;
 }
 ?>
@@ -22,13 +22,13 @@ if(isset($_SESSION['isLoggedIn']) == false) {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="icon" href="assets/img/logo.png">
 
-  <title>Lakbayan Travels and Tours</title>
+  <title>Lakbayan</title>
 </head>
 
 <body>
-  <?php 
-    include 'includes/components/nav.php';
-    include 'includes/components/accountModal.php';
+  <?php
+  include 'includes/components/nav.php';
+  include 'includes/components/accountModal.php';
   ?>
   <section class="main-page vidban">
     <div id="bann" class="banner">
@@ -36,8 +36,8 @@ if(isset($_SESSION['isLoggedIn']) == false) {
       <div id="goto" class="text">
         <h1>Explore without limits</h1>
         <h2>Your travel starts here, with us.</h2>
-        <a <?php 
-            if(!$_SESSION['isLoggedIn']) { 
+        <a <?php
+            if (!$_SESSION['isLoggedIn']) {
               echo "class=\"logn\"";
             } else {
               echo "href=\"destinations.php\"";
@@ -61,8 +61,9 @@ if(isset($_SESSION['isLoggedIn']) == false) {
               echo 'class="container"';
             }
             ?> id="container">
-        <div class="form-container sign-up-container">
-          <form name="sign-up-form" action="backend/auth/signup.php" method="post">
+        <div class="form-container sign-up-container" id="sign-up-container">
+          <!-- <form name="sign-up-form" action="backend/auth/signup.php" method="post"> -->
+          <form>
             <h1>Create Account</h1>
             <!-- <div class="social-container">
               <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -76,7 +77,9 @@ if(isset($_SESSION['isLoggedIn']) == false) {
             </div>
             <input type="email" name="email" placeholder="Email" required />
             <input type="password" name="password" placeholder="Password" required />
-            <button type="submit" name="Submit" value="Submit">Sign Up</button>
+            <button class="reg-user" type="submit" name="Submit" value="Submit">Sign Up</button>
+            <a href="agencyreg.php" style="color: black; text-decoration: underline;">Register as a Travel Agency</a>
+            
           </form>
         </div>
         <div class="form-container sign-in-container">
@@ -126,6 +129,94 @@ if(isset($_SESSION['isLoggedIn']) == false) {
       });
     </script>
   </section>
+  <section class="main-page user-pref">
+    <div class="login-banner">
+      <video src="assets/media/plane.mp4" muted loop autoplay preload="auto"></video>
+
+      <div class="pref-form-container">
+        <div class="page-one" id="page-one">
+          <h1>Traveler Profile</h1>
+          <p>Please select your preferred destination types.</p>
+          <div class="checklist">
+            <label><input type="checkbox" name="" id=""> Beaches and Resorts</label>
+            <label><input type="checkbox" name="" id=""> Mountains</label>
+            <label><input type="checkbox" name="" id=""> Islands</label>
+            <label><input type="checkbox" name="" id=""> Animal Life</label>
+            <label><input type="checkbox" name="" id=""> Recreation</label>
+            <label><input type="checkbox" name="" id=""> Historical and Cultural Landmarks</label>
+          </div>
+          <button onclick="next_btn()">Next</button>
+        </div>
+        <div class="page-two" id="page-two">
+          <h1>Traveler Profile</h1>
+          <p class="description">Please add some of the places you've gone to.</p>
+          <div class="text">
+            <input type="text" placeholder="Search for a place" class="field" />
+            <span class="ico"><i class="fas fa-search"></i></span>
+          </div>
+          <div class="places">
+            <div class="place-card">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>Manila, Philippines</p> <i class="fas fa-times"></i>
+            </div>
+            <div class="place-card">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>Bacolod City (Negros Occidental)</p> <i class="fas fa-times"></i>
+            </div>
+            <div class="place-card">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>Puerto Princesa (Palawan)</p> <i class="fas fa-times"></i>
+            </div>
+          </div>
+          <label><input type="checkbox" name="" id="terms"> I have read the Terms and Conditions.</label>
+          <span class="btn-cont">
+            <p id="back-btn" onclick="prev_btn()">Go Back</p>
+            <button id="complete-reg" class="complete-reg" disabled>Register Now</button>
+          </span>
+          
+        </div>
+      </div>
+
+      <script>
+          var pageone = document.getElementById("page-one");
+          var pagetwo = document.getElementById("page-two");
+        function next_btn() {
+          pageone.style.opacity = 0;
+          pageone.style.transform = "translate(-10%, 0)";
+
+
+          // pageone.style.display = "none";
+          // pagetwo.style.display = "block";
+          pagetwo.style.opacity = 1;
+          pagetwo.style.transform = "translate(0, 0)";
+          pagetwo.style.transition = "opacity 1s ease-in";
+
+        }
+        
+        function prev_btn() {
+          pageone.style.opacity = 1;
+          pageone.style.transform = "translate(0, 0)";
+          pageone.style.transition = "all .1s ease-in";
+          
+          pagetwo.style.transition = "transform .1s ease-in";
+          pagetwo.style.opacity = 0;
+          pagetwo.style.transform = "translate(110%, 0)";
+        }
+
+        checkbox = document.getElementById("terms");
+        button = document.getElementById('complete-reg');
+        checkbox.addEventListener('change', function(e) {
+          if (checkbox.checked) {
+            button.disabled = false;
+          } else {
+            button.disabled = true;
+          }
+        });
+      </script>
+    </div>
+  </section>
+
+
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -160,22 +251,54 @@ if(isset($_SESSION['isLoggedIn']) == false) {
       $('#goto a').click(function(e) {
         if ($(this).hasClass('logn') && pagePositon + 1 <= pageMaxPosition) {
           document.body.style.overflow = 'visible';
-          pagePositon++;
+          pagePositon=1;
           $('html, body').stop().animate({
             scrollTop: $scrollItems.eq(pagePositon).offset().top
           }, 400);
           document.body.style.overflow = 'hidden';
         }
-        if ($(this).hasClass('logp') && pagePositon - 1 >= 0) {
+        if ($(this).hasClass('ret-home') && pagePositon - 1 >= 0) {
           document.body.style.overflow = 'visible';
-          pagePositon--;
+          pagePositon = 0;
           $('html, body').stop().animate({
             scrollTop: $scrollItems.eq(pagePositon).offset().top
           }, 300);
           document.body.style.overflow = 'hidden';
           return false;
         }
+        if ($(this).hasClass('sign-up btn') && pagePositon + 1 <= pageMaxPosition) {
+          document.body.style.overflow = 'visible';
+          pagePositon = 2;
+          $('html, body').stop().animate({
+            scrollTop: $scrollItems.eq(pagePositon).offset().top
+          }, 400);
+          document.body.style.overflow = 'hidden';
+        }
       });
+
+      $('#sign-up-container button').click(function(e) {
+        if ($(this).hasClass('reg-user') && pagePositon + 1 <= pageMaxPosition) {
+          document.body.style.overflow = 'visible';
+          pagePositon = 2;
+          $('html, body').stop().animate({
+            scrollTop: $scrollItems.eq(pagePositon).offset().top
+          }, 400);
+          document.body.style.overflow = 'hidden';
+        }
+      });
+
+      $('#page-two button').click(function(e) {
+        pagePositon = 0;
+        if ($(this).hasClass('complete-reg') && pagePositon + 1 <= pageMaxPosition) {
+          document.body.style.overflow = 'visible';
+          pagePositon = 1;
+          $('html, body').stop().animate({
+            scrollTop: $scrollItems.eq(pagePositon).offset().top
+          }, 400);
+          document.body.style.overflow = 'hidden';
+        }
+      });
+
 
       //Update position func:
       function upPos() {
@@ -191,4 +314,5 @@ if(isset($_SESSION['isLoggedIn']) == false) {
     });
   </script>
 </body>
+
 </html>

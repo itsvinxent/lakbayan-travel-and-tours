@@ -37,9 +37,9 @@
                     <div class="out-msg">
                      <span class="my-msg">Hi, How can I help you?</span>
                      <img src="'.$loc.'" class="avatar">
-                    </div>`
+                    </div>
                     <div class="income-msg">
-                        <img src="../../assets/img/agencypfp/PFP-6307fe74313145.40646674.jpg" class="avatar" alt="">
+                        <img src="../../assets/img/JM.jpeg" class="avatar" alt="">
                         <span class="msg"> How much is the price? and the inclusions? </span>
                    </div>';   
             }

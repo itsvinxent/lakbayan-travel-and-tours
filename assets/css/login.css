@@ -49,7 +49,7 @@
   margin-bottom: 18px;
 }
 
-.login button {
+.login button, .login .btn, .pref-form-container button {
   border-radius: 20px;
   border: none;
   background: linear-gradient(
@@ -65,6 +65,14 @@
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: transform 80ms ease-in;
+}
+
+button:disabled:hover{
+  cursor: not-allowed;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 .login .overlay-panel.overlay-left button {
@@ -298,4 +306,128 @@
   margin: 0 5px;
   height: 40px;
   width: 40px;
+}
+
+.user-pref .pref-form-container {
+  background-color: #f5f5f5;
+  height: 57%;
+  width: 30%;
+  z-index: inherit;
+  border-radius: 5px;
+  padding: 2rem;
+}
+
+.user-pref .pref-form-container .page-one {
+  position: absolute;
+  transition: all .1s ease-in;
+}
+
+.user-pref .pref-form-container .checklist {
+  margin-top: 10px;
+}
+
+.user-pref .pref-form-container label {
+  display: block;
+  padding: 10px 0;
+}
+
+.user-pref .pref-form-container button {
+  margin-top: 10px;
+  float: right;
+}
+
+.user-pref .pref-form-container #complete-reg {
+  margin: 0;
+}
+
+.user-pref .pref-form-container .page-two {
+  position: absolute;
+  transform: translate(110%, 0);
+  opacity: 0;
+  transition: transform 1s ease-in;
+  transition: opacity 1s ease-in;
+}
+
+.user-pref .pref-form-container .page-two .description {
+  margin-bottom: 20px;
+}
+
+.user-pref .pref-form-container .page-two .field {
+  border: none;
+  width: 100%;
+  padding: 10px 45px 10px 25px;
+  border-radius: 25px;
+  font-family: inherit;
+  background: white;
+  font-size: 14px;
+  border: 2px solid black;
+}
+
+input.field:focus {
+  outline:none;
+}
+
+.ico {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  font-size: 20px;
+  color: var(--first-color);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-two .places {
+
+  justify-content: center;
+  
+}
+
+.page-two .places .place-card {
+  display: flex;
+  margin: 10px 0;
+  align-items: center;
+  
+  width: 100%;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid #333;
+  
+}
+
+.fas.fa-map-marker-alt {
+  padding-right: 10px;
+  font-size: 20px;
+}
+
+.fas.fa-times {
+  position: absolute;
+  right: 15px;
+  font-size: 14px;
+}
+
+.page-two label {
+  width: 100%;
+  text-align: center;
+  align-items: center;
+}
+
+.page-two label input {
+  margin-right: 10px;
+}
+
+.page-two .btn-cont {
+  display: flex;
+  vertical-align: middle;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.page-two .btn-cont #back-btn:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }

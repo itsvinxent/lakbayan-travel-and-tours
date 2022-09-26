@@ -13,11 +13,11 @@
       } else {
         echo 'src="assets/img/logo.png"';
       }
-    ?>>Lakbayan Travel and Tours</label>
+    ?>>Lakbayan</label>
   <ul>
     <li id="goto"><a 
             <?php if ($_SESSION['active'] == 'index') {
-              echo 'class="active logp" href="#"';
+              echo 'class="active ret-home" href="#"';
             } elseif ($_SESSION['active'] == 's-dest' || $_SESSION['active'] == 's-pack') {
               echo 'href="../../index.php"';
             } else {
@@ -68,13 +68,17 @@
         if ($_SESSION['isLoggedIn'] == false) {
           echo "<li id='goto'> <a class='logn'>";
         } else {
-          echo "<li> <a id='modalOpen'class='logn'>";
+          echo "<li> <a href='user-profile.php' >";
         }
       } else {
         echo "<li id='goto'> <a class='logn'>";
       }
+    } else if ($_SESSION['active'] == 'profile') {
+      echo "<li> <a id='modalOpen'class='logn active'>";
+    } elseif ($_SESSION['active'] == 's-dest' || $_SESSION['active'] == 's-pack') {
+      echo "<li> <a href='../../user-profile.php' >";
     } else {
-      echo "<li> <a id='modalOpen'class='logn'>";
+      echo "<li> <a href='user-profile.php' >";
     }
 
     ?><img src="https://img.icons8.com/external-febrian-hidayat-gradient-febrian-hidayat/64/000000/external-user-user-interface-febrian-hidayat-gradient-febrian-hidayat.png" /></a></li>

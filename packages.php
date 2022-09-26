@@ -30,14 +30,14 @@ if (isset($_SESSION['booking-stat']) == false) {
   <?php
   include 'includes/components/nav.php';
   include 'includes/components/accountModal.php';
-  
+
   if ($_SESSION['booking-stat'] != 'none') {
-    if($_SESSION['booking-stat'] == 'success') {
-      echo<<<END
+    if ($_SESSION['booking-stat'] == 'success') {
+      echo <<<END
         <div class="modal-container show" id="amodal_container">
         <div class='modal'>
           <h1>Hooray!</h1>
-          <p>Your booking inquiry has been sent. We'll contact you as soon as possible.</p>
+          <p>Your booking information has been sent. We'll contact you as soon as possible.</p>
           <div class="buttons">
             <a id="modalBClose" class="btn">Got it!</a>
           </div>
@@ -46,7 +46,7 @@ if (isset($_SESSION['booking-stat']) == false) {
         END;
       $_SESSION['booking-stat'] = 'none';
     } else {
-      echo<<<END
+      echo <<<END
         <div class="modal-container show" id="amodal_container">
         <div class='modal'>
           <h1>Oops!</h1>
@@ -60,14 +60,14 @@ if (isset($_SESSION['booking-stat']) == false) {
       $_SESSION['booking-stat'] = 'none';
     }
   }
-  
+
   ?>
   <script>
     const emodal_container = document.getElementById('amodal_container');
     const eclose = document.getElementById('modalBClose');
 
     eclose.addEventListener('click', () => {
-        emodal_container.classList.remove('show');
+      emodal_container.classList.remove('show');
     })
   </script>
 
@@ -75,205 +75,197 @@ if (isset($_SESSION['booking-stat']) == false) {
     <div class="banner-half">
       <video src="assets/media/falls.mp4" muted loop autoplay preload="auto"></video>
       <div class="text">
-        <h1>Packages</h1>
-        <h2>PAY LESS FOR YOU TRAVELS WITH DISCOUNTED BUNDLES</h2>
+        <input type="text" placeholder="Where'd you wanna go?" class="field" />
+        <span class="ico"><i class="fas fa-search"></i></span>
       </div>
     </div>
 
-    <div class="card-container">
-      <div class="wrap">
-        <div class="image">
-          <img src="assets/img/Lakawon1.jpg" alt="" />
-          <div class="heart">
-            <div class="h_container">
-              <i id="heart" class="far fa-heart"></i>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="cap">
-          <h2>Lakawon Island Day Tour</h2>
+    <div class="package-container">
+      <div class="filter-container">
+        <h3>FILTER RESULTS</h3>
+        <div class="filter filter-rating">
+          <p class="header">Rating</p>
           <div class="rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
           </div>
-          <div class="data">
-            Lakawon, also called Llacaon, is a 16-hectare, banana-shaped island off the coast of Cadiz in the northern portion of Negros Occidental, a province in the 
-            Negros Island Region of the Philippines. It is the home of TawHai, the biggest floating bar in Asia. 
+          <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+              & Up
+          </div>
+          <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              & Up
+          </div>
+          <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              & Up
+          </div>
+          <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              & Up
           </div>
         </div>
-        <div class="price">
-          <p>FROM</p>
-          <p class="pr">P7,500.00</p>
-          <a class="book-btn" href="includes/packages/lakawon.php">BOOK NOW</a>
+        <div class="filter filter-duration">
+          <p class="header">Duration</p>
+          <input type="range" min="1" max="14" step="1" value="0">
+          <p class="days">Day(s): 1</p>
+        </div>
+        <div class="filter filter-price">
+          <p class="header">Price</p>
+          <div class="inputs">
+            <input type="text" placeholder="MIN">
+            <p>to</p>
+            <input type="text" placeholder="MAX">
+          </div>
+          <button class="apply-filter">APPLY</button>
         </div>
       </div>
-    </div>
-
-    <div class="card-container">
-      <div class="wrap">
-        <div class="image">
-          <img src="assets/img/Campuestohan1.jpeg" alt="" />
-          <div class="heart">
-            <div class="h_container">
-              <i id="heart" class="far fa-heart"></i>
+      <div class="card-container">
+        <div class="wrapper">
+          <div class="border"><a href="includes/packages/lakawon.php">LEARN MORE</a></div>
+          <div class="image">
+            <img src="assets/img/Lakawon1.jpg" alt="">
+          </div>
+          <div class="content">
+            <h2>Lakawon Island Day Tour</h2>
+            <p style="font-size: 12px;">by <a href="agency-profile.php">Lakbayan Travel and Tours</a></p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <div class="price">
+              <p class="amt">P2,100</p>
+              <p style="font-size: 12px;">PER PERSON</p>
             </div>
           </div>
-
-        </div>
-
-        <div class="cap">
-          <h2>Campuestohan Highland Resort</h2>
-          <div class="rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-          </div>
-          <div class="data">
-          The Campuestohan Highland Resort is situated at the foot of Mt. Makawili, on the border of Bacolod and Talisay. Swimming pools and a wave pool with bubbles are available at this themed entertainment park.
+          <div class="learn-btn">
+              <a href="includes/packages/lakawon.php">LEARN MORE</a>
           </div>
         </div>
-        <div class="price">
-          <p>FROM</p>
-          <p class="pr">P2,350.00</p>
-          <a class="book-btn" href="includes/packages/campuestohan.php">BOOK NOW</a>
-        </div>
-      </div>
-    </div>
 
-    <div class="card-container">
-      <div class="wrap">
-        <div class="image">
-          <img src="assets/img/tri 1.jpg" alt="" />
-          <div class="heart">
-            <div class="h_container">
-              <i id="heart" class="far fa-heart"></i>
+        <div class="wrapper">
+          <div class="border"><a href="includes/packages/lakawon.php">LEARN MORE</a></div>
+          <div class="image">
+            <img src="assets/img/Campuestohan1.jpeg" alt="">
+          </div>
+          <div class="content">
+            <h2>Campuestohan Highland Resort</h2>
+            <p style="font-size: 12px;">by <a href="agency-profile.php">Lakbayan Travel and Tours</a></p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <div class="price">
+              <p class="amt">P2,100</p>
+              <p style="font-size: 12px;">PER PERSON</p>
             </div>
           </div>
-
-        </div>
-
-        <div class="cap">
-          <h2>Tri-City (Bacolod - Silay - Talisay) Exclusive Day Tour</h2>
-          <div class="rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-          </div>
-          <div class="data">
-            Get to know more about the rich history and cultural heritage of Negros. This trip focuses on the Spanish heritage and the history of the sugarcane industry and haciendas of Negros. You will visit heritage houses, museums and century old churches guided by our DOT accredited tour guides.
+          <div class="learn-btn">
+              <a href="includes/packages/campuestohan.php">LEARN MORE</a>
           </div>
         </div>
-        <div class="price">
-          <p>FROM</p>
-          <p class="pr">P3,161.25</p>
-          <a class="book-btn" href="includes/packages/tri.php">BOOK NOW</a>
-        </div>
-      </div>
-    </div>
 
-    <div class="card-container">
-      <div class="wrap">
-        <div class="image">
-          <img src="assets/img/Ilaya1.jpg" alt="" />
-          <div class="heart">
-            <div class="h_container">
-              <i id="heart" class="far fa-heart"></i>
+        <div class="wrapper">
+          <div class="border"><a href="includes/packages/lakawon.php">LEARN MORE</a></div>
+          <div class="image">
+            <img src="assets/img/tri 1.jpg" alt="">
+          </div>
+          <div class="content">
+            <h2>Tri-City (Bacolod - Silay - Talisay) Exclusive Day Tour</h2>
+            <p style="font-size: 12px;">by <a href="agency-profile.php">Lakbayan Travel and Tours</a></p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <div class="price">
+              <p class="amt">P2,100</p>
+              <p style="font-size: 12px;">PER PERSON</p>
             </div>
           </div>
-
-        </div>
-
-        <div class="cap">
-          <h2>Bacolod Ilaya Resort</h2>
-          <div class="rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-          </div>
-          <div class="data">
-            Ilaya, located in the hilly area of Silay City, is one of the newest additions to Negros' must-see sites. With its Balinese-inspired architectural design perched atop a breathtaking vista of Silay, the Guimaras strait, and nearby islands, it is certainly a relaxing area to wallow in the wonderful splendor of nature, with the island of Panay further into the horizon.
+          <div class="learn-btn">
+              <a href="includes/packages/tri.php">LEARN MORE</a>
           </div>
         </div>
-        <div class="price">
-          <p>FROM</p>
-          <p class="pr">P2,200.00</p>
-          <a class="book-btn" href="includes/packages/ilaya.php">BOOK NOW</a>
-        </div>
-      </div>
-    </div>
 
-    <div class="card-container">
-      <div class="wrap">
-        <div class="image">
-          <img src="assets/img/Ruinsmain.jpeg" alt="" />
-          <div class="heart">
-            <div class="h_container">
-              <i id="heart" class="far fa-heart"></i>
+        <div class="wrapper">
+          <div class="border"><a href="includes/packages/lakawon.php">LEARN MORE</a></div>
+          <div class="image">
+            <img src="assets/img/Ruinsmain.jpeg" alt="">
+          </div>
+          <div class="content">
+            <h2>The Ruins Day Tour</h2>
+            <p style="font-size: 12px;">by <a href="agency-profile.php">Lakbayan Travel and Tours</a></p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <div class="price">
+              <p class="amt">P2,100</p>
+              <p style="font-size: 12px;">PER PERSON</p>
             </div>
           </div>
-        </div>
-
-        <div class="cap">
-          <h2>The Ruins Day Tour</h2>
-          <div class="rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-          </div>
-          <div class="data">
-          The Ruins of Talisay City has become famous for its naturally ruined beauty. The Ruins was built to memorialize the great love of a husband to his departed wife. Currently, the family of the grandson of Mercedes, Mr. Raymund Javellana, owns and maintains The Ruins.
+          <div class="learn-btn">
+              <a href="includes/packages/ruins.php">LEARN MORE</a>
           </div>
         </div>
-        <div class="price">
-          <p>FROM</p>
-          <p class="pr">P2,100.00</p>
-          <a class="book-btn" href="includes/packages/ruins.php">BOOK NOW</a>
-        </div>
-      </div>
-    </div>
 
-    <div class="card-container">
-      <div class="wrap">
-        <div class="image">
-          <img src="assets/img/Nabulao1.jpg" alt="" />
-          <div class="heart">
-            <div class="h_container">
-              <i id="heart" class="far fa-heart"></i>
+        <div class="wrapper">
+          <div class="border"></div>
+          <div class="image">
+            <img src="assets/img/Ruinsmain.jpeg" alt="">
+          </div>
+          <div class="content">
+            <h2>The Ruins Day Tour</h2>
+            <p style="font-size: 12px;">by <a href="agency-profile.php">Lakbayan Travel and Tours</a></p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <div class="price">
+              <p class="amt">P2,100</p>
+              <p style="font-size: 12px;">PER PERSON</p>
             </div>
           </div>
+          <div class="learn-btn">
+              <a href="includes/packages/ruins.php">LEARN MORE</a>
+          </div>
         </div>
 
-        <div class="cap">
-          <h2>Nabila Beach and Dive Resort</h2>
-          <div class="rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-          </div>
-          <div class="data">
-            Featuring a free private carpark, a diving centre and a restaurant, Nabulao Beach And Dive Resort can be found within 9 km from the centre of Sipalay. The venue also offers airport transfer, 24-hour front desk assistance and concierge service.
-          </div>
-        </div>
-        <div class="price">
-          <p>FROM</p>
-          <p class="pr">P4,500.00</p>
-          <a class="book-btn" href="includes/packages/nabila.php">BOOK NOW</a>
-        </div>
       </div>
     </div>
 
@@ -336,7 +328,18 @@ if (isset($_SESSION['booking-stat']) == false) {
       });
     });
   </script>
-  
+
+  <script>
+    var elem = document.querySelector('input[type="range"]');
+
+    var rangeValue = function(){
+      var newValue = elem.value;
+      var target = document.querySelector('.days');
+      target.innerHTML = "Day(s): " + newValue;
+    }
+
+    elem.addEventListener("input", rangeValue);
+  </script>
 </body>
 
 </html>

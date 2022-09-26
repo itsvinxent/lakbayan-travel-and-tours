@@ -191,7 +191,7 @@ $isAgency = false;
       </div>
 
       <div class="left">
-        <h1>Lakawon Island Day Tour</h1>
+        <h1>Campuestohan Highland Resort</h1>
         <h2>About:</h2>
 
         <p style="text-align: justify;">
