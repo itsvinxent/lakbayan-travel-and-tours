@@ -3,6 +3,8 @@ session_start();
 $_SESSION['active'] = 'profile';
 if (isset($_SESSION['isLoggedIn']) == false) {
   $_SESSION['isLoggedIn'] = false;
+} else if ($_SESSION['utype'] != 'manager'){
+  echo '<meta http-equiv="refresh" content="0;URL=../../user-profile.php" />';
 }
 
 $whereamI = 3;
@@ -31,10 +33,17 @@ $isAgency = true;
 </head>
 
 <body>
-  <?php
+<?php
   include 'includes/components/nav.php';
+  include 'backend/auth/getagency.php';
 
-  include 'includes/components/chatbox-agency.php';
+ 
+  $disEmail = $_SESSION['setEmail'];
+  $disDesc = $_SESSION['setDesc'];
+  $disAdd = $_SESSION['setAdd'];
+  $disTelNum = $_SESSION['setTelNumber'];
+  $disMName = $_SESSION['setMName'];
+  $disMContact = $_SESSION['setMContact'];
   ?>
 
   <section class="sections packages" id="packages">
@@ -45,16 +54,25 @@ $isAgency = true;
 
     <div class="profile-container">
       <div class="banner-logo">
-        <div class="image">
-          <img src="assets/img/logo.png" alt="">
-          <div class="middle">
-            <div class="text"><i class="fas fa-pen"></i>Edit</div>
+
+        <form>
+          <div class="image">
+            <img src="assets/img/logo.png" alt="">
+            <div class="middle">
+              <div class="text"><i class="fas fa-pen"><input class="middle" type="file" name="aPicture" id="aPicture" accept="image/gif, image/jpeg, image/png" style="opacity: 0;"></i>Edit</div>
+            </div>
           </div>
-        </div>
+        </form>
+
         <div class="top">
-          <span>
-            <h1 class="agency-name">Lakbayan Travel and Tours</h1>
-            <p class="agency-email">lakbayantravels@gmail.com</p>
+          <span>  
+
+          <?php
+
+            echo '<h1 class="agency-name">'.$_SESSION['setName'].'</h1>
+                  <p class="agency-email">'.$disEmail.'</p>';
+          ?>
+
           </span>
           <span class="ico-container">
             <div class="ico">
@@ -66,14 +84,19 @@ $isAgency = true;
           </span>
         </div>
 
-        <div class="desc">
-          <p class="desc-body active" id="desc-body">Lakbayan Travel and Tours will provide a convenient and premium travel and tour service for local destination in the Philippines, specifically in the Negros Occidental province. Lakbayan Travel and Tours offers tourists the destinations that they would love and relax in. We also provide essential information to clients so that they are familiar with the culture of their chosen places. "Lakbayan" or Lakbay Bayan travel & tours is a website that allows visitors to conveniently browse tourist spots.</p>
+        <?php
+
+        
+        echo 
+        '<div class="desc">
+          <p class="desc-body active" id="desc-body">'.$disDesc.'</p>
           <textarea class="desc-textarea" name="" id="desc-textarea"></textarea>
           <div class="desc-btn">
             <div class="edit-desc active" id="edit-desc-btn"><i class="fas fa-pen"></i></div>
             <div class="save-desc" id="save-desc-btn"><i class="fas fa-save"></i></div>
           </div>
-        </div>
+        </div>'
+        ?>
       </div>
 
       <div class="nav">
@@ -86,7 +109,7 @@ $isAgency = true;
 
       <div class="tab-content">
         <div id="info" data-tab-content class=" data-tab-content active">
-          <form action="go.php" method="POST">
+          <form action="backend\auth\updateprof.php" method="POST">
             <div class="top">
               <span>
                 <h1>Agency Details</h1>
@@ -98,9 +121,13 @@ $isAgency = true;
             <div class="details">
               <div class="row top">
                 <span class="col-left">Name</span>
-                <span class="col-right active">Lakbayan Travel and Tours</span>
+
+                <?php 
+                echo '<span class="col-right active" id="">'.$_SESSION['setName'].'</span>';
+                ?>
+
                 <span class="col-right-edit">
-                  <input type="text" name="" id="" value="">
+                  <input type="text" name="profName" id="" value="">
                 </span>
                 <span class="col-edit active"><i class="fas fa-pen"></i></span>
                 <span class="col-save">
@@ -112,9 +139,13 @@ $isAgency = true;
 
               <div class="row">
                 <span class="col-left">Address</span>
-                <span class="col-right active">Amara Compound, Brgy. Mayamot, Antipolo City</span>
+
+                <?php
+                echo '<span class="col-right active" name="profAdd">'.$disAdd.'</span>';
+                ?>
+
                 <span class="col-right-edit">
-                  <input type="text" name="" id="" value="">
+                  <input type="text" name="profAdd" id="" value="">
                 </span>
                 <span class="col-edit active"><i class="fas fa-pen"></i></span>
                 <span class="col-save">
@@ -126,9 +157,13 @@ $isAgency = true;
 
               <div class="row">
                 <span class="col-left">Email</span>
-                <span class="col-right active">lakbayantravels@gmail.com</span>
+
+                <?php
+                echo '<span class="col-right active">'.$disEmail.'</span>';
+                ?>
+
                 <span class="col-right-edit">
-                  <input type="text" name="" id="" value="">
+                  <input type="text" name="profEmail" id="" value="">
                 </span>
                 <span class="col-edit active"><i class="fas fa-pen"></i></span>
                 <span class="col-save">
@@ -140,9 +175,12 @@ $isAgency = true;
 
               <div class="row bot">
                 <span class="col-left">Telephone #</span>
-                <span class="col-right active">0999-543-8579</span>
+
+                <?php
+                echo '<span class="col-right active">'.$disTelNum.'</span>'
+                ?>
                 <span class="col-right-edit">
-                  <input type="text" name="" id="" value="">
+                  <input type="text" name="profTel" id="" value="">
                 </span>
                 <span class="col-edit active"><i class="fas fa-pen"></i></span>
                 <span class="col-save">
@@ -213,7 +251,11 @@ $isAgency = true;
             <div class="details">
               <div class="row top">
                 <span class="col-left">Name</span>
-                <span class="col-right active">Juan Dela Cruz</span>
+
+                <?php 
+                echo '<span class="col-right active">'.$disMName.'</span>';
+                ?>
+
                 <span class="col-right-edit">
                   <input type="text" name="" id="" value="">
                 </span>
@@ -226,7 +268,11 @@ $isAgency = true;
               </div>
               <div class="row">
                 <span class="col-left">Contact #</span>
-                <span class="col-right active">0961-432-9680</span>
+                <?php
+
+                echo '<span class="col-right active">'.$disMContact.'</span>';
+
+                ?>
                 <span class="col-right-edit">
                   <input type="text" name="" id="" value="">
                 </span>
@@ -239,7 +285,11 @@ $isAgency = true;
               </div>
               <div class="row bot">
                 <span class="col-left">Email</span>
-                <span class="col-right active">jdc_lakbayan@gmail.com</span>
+
+                <?php
+                echo '<span class="col-right active">'.$disEmail.'</span>';
+                ?>
+                
                 <span class="col-right-edit">
                   <input type="text" name="" id="" value="">
                 </span>
@@ -265,7 +315,56 @@ $isAgency = true;
 
         <div id="package" data-tab-content class="data-tab-content">
         <button class="create-button" id="modalBOpen">Create a New Package</button>
-          <div class="card-container">
+
+          <?php 
+            while($row = mysqli_fetch_array($qry_packages))
+            {
+            ?>
+
+            <div class="card-container">
+              <div class="wrap">
+                <div class="image">
+                  
+                 <?php
+                 echo '<img src="data:image/jpg;base64,'.base64_encode($row['packageImg_Name']).'" alt=""/>';
+                 ?>
+                </div>
+
+                <div class="cap">
+                  <h2><?php echo $row['packageTitle']?></h2>
+                  <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <div class="data">
+                    <?php echo $row['packageDescription']?>
+                  </div>
+                </div>
+
+                <div class="func-btn">
+                  <span class="func-edit">
+                    <div class="buttn"><i class="fas fa-pen"></i></div>
+                  </span>
+                  <span class="func-delete">
+                    <div class="buttn"><i class="fas fa-trash"></i></div>
+                  </span>
+
+                  <span class="earnings">
+                    <p class="amt"><?php echo $row['fresult']?></p>
+                    <p style="font-size: 12px;">PER PERSON</p>
+                  </span>
+                </div>
+              </div>
+            </div>
+              
+            <?php 
+            }
+            ?>
+
+          <!-- <div class="card-container">
             <div class="wrap">
               <div class="image">
                 <img src="assets/img/Lakawon1.jpg" alt="" />
@@ -371,7 +470,7 @@ $isAgency = true;
                 </span>
               </div>
             </div>
-          </div>
+          </div> -->
 
         </div>
         <div class="bmodal-container" id="bmodal_container">
