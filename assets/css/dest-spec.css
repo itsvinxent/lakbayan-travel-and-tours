@@ -99,3 +99,21 @@
   font-size: 13px;
   padding-right: 5px;
 }
+
+@media (max-width: 480px) {
+  .destination-pages .content {
+    margin: 0 1rem !important;
+  }
+
+  .destination-pages .header {
+    margin-top: 1rem;
+  }
+
+  .destination-pages .header span i {
+    margin: 0 1rem;
+  }
+
+  .destination-pages .loc {
+    margin: 0 1rem;
+  }
+}

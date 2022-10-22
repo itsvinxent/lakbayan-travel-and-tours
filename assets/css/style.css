@@ -52,6 +52,7 @@ nav {
   z-index: var(--z-fixed);
   position: fixed;
   list-style-type: none;
+  top: 0;
 }
 
 nav.scrolled {
@@ -119,6 +120,10 @@ nav li a:hover {
   display: none;
 }
 
+.closebtn {
+  color: #1abc9c;
+}
+
 #check {
   display: none;
 }
@@ -168,13 +173,13 @@ nav li a:hover {
   object-fit: cover;
 }
 
-/* .banner-half img {
+.banner-half img {
   position: absolute;
   object-fit: cover;
   height: 50vh;
   width: 100%;
-  object-position: 50% 30%;
-} */
+  /* object-position: 50% 30%; */
+}
 
 .text {
   position: relative;
@@ -223,15 +228,59 @@ nav li a:hover {
 }
 
 /*========== Media Responsive ==========*/
-@media (max-width: 952px) {
+/* Smartphones (portrait) ----------- */
+@media (max-width: 480px) {
+  label.logo {
+    padding-left: 25px;
+    padding-right: 0;
+    font-size: 20px;
+  }
+
+  nav .logo img {
+    padding-right: 15px;
+  }
+
+  .checkbtn, .closebtn {
+    margin-right: 25px;
+  }
+
+  #check:checked ~ .closebtn {
+    display: block;
+    transition: all 0.5s;
+    margin-right: 25px !important;
+  }
+
+  .banner {
+    padding-left: 50px;
+  }
+
+  .banner .text h1 {
+    font-size: 3em;
+  }
+
+  .banner .text h2 {
+    font-size: 1.2em;
+  }
+
+  .banner-half .text h2 {
+    width: 90%;
+    margin: auto;
+  }
+
+  .banner-half, .banner-half video {
+    height: 35vh;
+  }
+
+}
+
+/* @media (max-width: 952px) {
   label.logo {
     padding-left: 50px;
   }
   nav ul li a {
     font-size: 16px;
   }
-}
-
+} */
 @media (max-width: 1024px) {
   .checkbtn {
     display: block;
@@ -248,6 +297,7 @@ nav li a:hover {
     transition: all 0.1s;
     text-align: left;
     padding-top: 40px;
+    z-index: -1;
   }
   nav ul li {
     display: block;
@@ -281,7 +331,11 @@ nav li a:hover {
     display: none;
     transition: all 0.5s;
   }
+}
 
+
+@media (min-width: 481px) and (max-width: 1024px) {
+  
   /* Destination Specific Pages */
   .destination-pages .content {
     margin: 0 50px;
@@ -446,7 +500,7 @@ nav li a:hover {
   }
 }
 
-@media (max-width: 1280px) {
+@media (min-width:1025px) and (max-width: 1280px) {
   label.logo {
     padding-left: 100px;
     padding-right: 140px;

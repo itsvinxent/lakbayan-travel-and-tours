@@ -99,3 +99,33 @@
   font-weight: var(--font-medium);
   cursor: pointer;
 }
+
+@media (max-width: 480px) {
+  .destinations .card-container {
+    margin: 0;
+  }
+
+  .destinations .cap.clicked {
+    opacity: 1;
+  }
+  
+  .destinations .wrap img.clicked {
+    -webkit-transform: scale(1.08);
+    -ms-transform: scale(1.08);
+    transform: scale(1.08);
+    /* bottom: 20px; */
+  }
+
+  .destinations .wrap:hover .cap {
+    visibility: visible;
+    opacity: 0;
+  }
+  
+  .destinations .wrap:hover img {
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none;
+    /* bottom: 20px; */
+  }
+}
+

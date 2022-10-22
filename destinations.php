@@ -167,6 +167,21 @@
       });
     });
   </script>
+  <!-- <script>
+    // Mobile Onclick
+    var wrap = document.querySelectorAll(".wrap");
+    wrap.forEach(element => {
+      
+      element.addEventListener('click', () => {
+        wrap.forEach(e => { 
+          e.lastElementChild.style.opacity = "0";
+        });
+        var target = element.lastElementChild;
+        target.style.opacity = "1";
+      })
+    });
+  </script> -->
+
 </body>
 
 </html>

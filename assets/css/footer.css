@@ -85,3 +85,56 @@ footer.site-footer {
       var(--logo-blue-dark)
     );
   }
+
+  @media (max-width: 480px) {
+    .site-footer .container {
+      display: grid;
+      grid-template-columns: .5fr .5fr;
+      grid-template-rows: .5fr 1fr .5fr;
+      max-width: 75%;
+      margin: auto;
+      grid-gap: 20px;
+      color: white;
+      padding-bottom: 30px;
+    }
+
+    .site-footer .abt {
+      grid-column: 1 / 3;
+      grid-row: 2;
+    }
+
+    .site-footer .logo {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .site-footer .logo img {
+      width: 100%;
+    }
+
+    .site-footer .quick-links {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .site-footer .soc-med {
+      grid-column: 1 / 3;
+      grid-row: 3;
+    }
+
+    .site-footer .soc-med h1 {
+      text-align: center;
+    }
+
+    .site-footer .soc-med .contact {
+      width: 55%;
+      margin: auto;
+    }
+
+    .site-footer .soc-med .icons {
+      display: flex;
+      width: 70%;
+      margin: auto;
+      justify-content: space-evenly;
+    }
+  }

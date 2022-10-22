@@ -9,7 +9,9 @@
     }
     else{
         $usrid = $_GET['id'];
-        $delete_query = " DELETE FROM traveldb.user_tbl WHERE id = $usrid; " ;
+        $currentDate = new DateTime();
+        // $delete_query = " DELETE FROM traveldb.user_tbl WHERE id = $usrid; " ;
+        $delete_query = "UPDATE traveldb.user_tbl SET deletedOn = '$currentDate->format('Y-m-d')' WHERE id = $usrid; " ;
         
          mysqli_query($conn,$delete_query);
     
@@ -33,4 +35,4 @@
 <!-- <script language="JavaScript" type="text/javascript">
     location.href = document.referrer + '?date=' + new Date().valueOf();
 </script> -->
-<meta http-equiv="refresh" content="0;URL=../../admin-users.php" />
+<!-- <meta http-equiv="refresh" content="0;URL=../../admin-users.php" /> -->

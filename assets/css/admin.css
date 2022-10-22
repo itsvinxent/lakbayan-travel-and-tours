@@ -46,20 +46,28 @@
     background-color: #f3f3f3;
   }
   
-  .content-users tbody td a {
+  /* .content-users tbody td a {
     text-decoration: none;
     color: red;
     outline: none;
     font-size: 20px;
     margin-left: 5px;
-  }
+  } */
   
   .content-users tbody td button {
     border: none;
     cursor: pointer;
     font-size: 20px;
-    color: var(--logo-blue-dark);
     background: none;
+  }
+
+  .content-users #modalEOpen {
+    color: var(--logo-blue-dark);
+    margin-right: 10px;
+  }
+
+  .content-users #modalDOpen {
+    color: red;
   }
   
   .content-users button.add-btn {

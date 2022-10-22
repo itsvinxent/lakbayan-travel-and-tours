@@ -22,6 +22,9 @@ if (isset($_SESSION['booking-stat']) == false) {
 
   <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  
   <link rel="icon" href="assets/img/logo.png" />
   <title>Packages | Lakbayan Travels and Tours</title>
 </head>
@@ -29,47 +32,48 @@ if (isset($_SESSION['booking-stat']) == false) {
 <body>
   <?php
   include 'includes/components/nav.php';
-  include 'includes/components/accountModal.php';
+  // include 'includes/components/accountModal.php';
+  include 'backend/connect/dbCon.php';
 
-  if ($_SESSION['booking-stat'] != 'none') {
-    if ($_SESSION['booking-stat'] == 'success') {
-      echo <<<END
-        <div class="modal-container show" id="amodal_container">
-        <div class='modal'>
-          <h1>Hooray!</h1>
-          <p>Your booking information has been sent. We'll contact you as soon as possible.</p>
-          <div class="buttons">
-            <a id="modalBClose" class="btn">Got it!</a>
-          </div>
-        </div>
-        </div>  
-        END;
-      $_SESSION['booking-stat'] = 'none';
-    } else {
-      echo <<<END
-        <div class="modal-container show" id="amodal_container">
-        <div class='modal'>
-          <h1>Oops!</h1>
-          <p>We are not able to process your inquiry. Maybe try again later?</p>
-          <div class="buttons">
-            <a id="modalBClose" class="btn">Alright!</a>
-          </div>
-        </div>
-        </div>  
-        END;
-      $_SESSION['booking-stat'] = 'none';
-    }
-  }
+  // if ($_SESSION['booking-stat'] != 'none') {
+  //   if ($_SESSION['booking-stat'] == 'success') {
+  //     echo <<<END
+  //       <div class="modal-container show" id="amodal_container">
+  //       <div class='modal'>
+  //         <h1>Hooray!</h1>
+  //         <p>Your booking information has been sent. We'll contact you as soon as possible.</p>
+  //         <div class="buttons">
+  //           <a id="modalBClose" class="btn">Got it!</a>
+  //         </div>
+  //       </div>
+  //       </div>  
+  //       END;
+  //     $_SESSION['booking-stat'] = 'none';
+  //   } else {
+  //     echo <<<END
+  //       <div class="modal-container show" id="amodal_container">
+  //       <div class='modal'>
+  //         <h1>Oops!</h1>
+  //         <p>We are not able to process your inquiry. Maybe try again later?</p>
+  //         <div class="buttons">
+  //           <a id="modalBClose" class="btn">Alright!</a>
+  //         </div>
+  //       </div>
+  //       </div>  
+  //       END;
+  //     $_SESSION['booking-stat'] = 'none';
+  //   }
+  // }
 
   ?>
-  <script>
+  <!-- <script>
     const emodal_container = document.getElementById('amodal_container');
     const eclose = document.getElementById('modalBClose');
 
     eclose.addEventListener('click', () => {
       emodal_container.classList.remove('show');
     })
-  </script>
+  </script> -->
 
   <section class="sections packages" id="destinations">
     <div class="banner-half">
@@ -81,192 +85,224 @@ if (isset($_SESSION['booking-stat']) == false) {
     </div>
 
     <div class="package-container">
-      <div class="filter-container">
+      <div class="filter-container" id="filter-container">
         <h3>FILTER RESULTS</h3>
         <div class="filter filter-rating">
           <p class="header">Rating</p>
-          <div class="rating">
+          <input type="checkbox" name="rating" id="5s" class="rating-inp" value="5">
+          <label for="5s" class="rating-label">
+            <div class="rating">
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
-          </div>
-          <div class="rating">
+              only
+            </div>
+          </label>
+
+          <input type="checkbox" name="rating" id="4s" class="rating-inp" value="4">
+          <label for="4s" class="rating-label">
+            <div class="rating">
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="far fa-star"></i>
               & Up
-          </div>
-          <div class="rating">
+            </div>
+          </label>
+
+          <input type="checkbox" name="rating" id="3s" class="rating-inp" value="3">
+          <label for="3s" class="rating-label">
+            <div class="rating">
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="far fa-star"></i>
               <i class="far fa-star"></i>
               & Up
-          </div>
-          <div class="rating">
+            </div>
+          </label>
+
+          <input type="checkbox" name="rating" id="2s" class="rating-inp" value="2">
+          <label for="2s" class="rating-label">
+            <div class="rating">
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="far fa-star"></i>
               <i class="far fa-star"></i>
               <i class="far fa-star"></i>
               & Up
-          </div>
-          <div class="rating">
+            </div>
+          </label>
+
+          <!-- style="display: none;" -->
+          <input type="checkbox" name="rating" id="1s" class="rating-inp" value="1">
+          <label for="1s" class="rating-label">
+            <div class="rating">
               <i class="fas fa-star"></i>
               <i class="far fa-star"></i>
               <i class="far fa-star"></i>
               <i class="far fa-star"></i>
               <i class="far fa-star"></i>
               & Up
-          </div>
+            </div>
+          </label>
         </div>
         <div class="filter filter-duration">
           <p class="header">Duration</p>
-          <input type="range" min="1" max="14" step="1" value="0">
-          <p class="days">Day(s): 1</p>
+          <input type="range" min="0" max="14" step="1" value="0">
+          <p class="days">Day(s): 0</p>
         </div>
         <div class="filter filter-price">
           <p class="header">Price</p>
           <div class="inputs">
-            <input type="text" placeholder="MIN">
+            <input type="number" placeholder="MIN" id="price-min">
             <p>to</p>
-            <input type="text" placeholder="MAX">
+            <input type="number" placeholder="MAX" id="price-max">
           </div>
-          <button class="apply-filter">APPLY</button>
+          <p id="range-err-msg" style="display: none; color: red; font-size: 12px; text-align: center; padding-top: 10px">Please apply a proper range value.</p>
+          <button class="apply-filter" id="apply-price">APPLY</button>
         </div>
+
+        <script>
+          var rating = 0,
+            duration = 0,
+            price_min = 0,
+            price_max = 0;
+          var filter_req, filter_timeout;
+          var postdata = {
+            is_filtering: true,
+            rating: 0,
+            duration: 0
+          }
+
+          // Rating
+          $(".rating-inp").change(function() {
+            var checkbox = this;
+            var count = 0,
+              rating = 0;
+            if ($(this).is(":checked"))
+              this.labels[0].firstElementChild.classList.remove('active');
+
+            $(".rating-inp").each(function() {
+              if (this == checkbox & $(checkbox).is(":checked")) {
+                this.labels[0].firstElementChild.classList.add('active');
+                count++;
+              } else {
+                $(this).prop('checked', false);
+                this.labels[0].firstElementChild.classList.remove('active');
+              }
+            })
+
+            rating = (count == 0) ? 0 : $(this).val()
+
+            postdata['rating'] = rating;
+            filterTimeout();
+
+          });
+
+          // Duration
+          $('input[type="range"]').on('input', function() {
+            $(this).next()[0].innerHTML = "Day(s): " + $(this).val()
+            duration = $(this).val()
+
+            postdata['duration'] = duration;
+            filterTimeout();
+
+
+
+          });
+
+          // Price
+          $("#apply-price").click(function() {
+            price_min = ($('#price-min').val() == undefined || $('#price-min').val() == "") ? 0 : $('#price-min').val();
+            price_max = ($('#price-max').val() == undefined || $('#price-max').val() == "") ? 0 : $('#price-max').val();
+
+            if (price_min == 0 && price_max == 0) {
+              $("#range-err-msg").css('display', 'block');
+              delete postdata.price_min;
+              delete postdata.price_max;
+            } else {
+              if (price_min > price_max && price_max != 0) {
+                $("#range-err-msg").css('display', 'block');
+                delete postdata.price_min;
+                delete postdata.price_max;
+              } else {
+                $("#range-err-msg").css('display', 'none');
+                postdata['price_min'] = price_min;
+                postdata['price_max'] = price_max;
+                filterTimeout();
+
+              }
+            }
+          });
+
+          function filterTimeout() {
+            if (filter_timeout) {
+              clearTimeout(filter_timeout);
+            }
+            if (filter_req) {
+              filter_req.abort();
+            }
+
+            filter_timeout = setTimeout(function() {
+              filterPackages().then(function(data) {
+                $('#card-container').empty();
+                $('#card-container').html(data);
+              });
+            }, 500);
+          }
+
+          function filterPackages() {
+            filter_req = $.ajax({
+              url: 'backend/package/packages_search.php',
+              method: 'POST',
+              data: postdata,
+              async: true,
+              context: this,
+              beforeSend: function() {
+                $('#loading').css('display', 'flex');
+                $('#card-container').css('display', 'none');
+              },
+              complete: function() {
+                $('#loading').css('display', 'none');
+                $('#card-container').css('display', 'flex');
+              }
+            });
+
+            return filter_req;
+          }
+        </script>
       </div>
-      <div class="card-container">
-        <div class="wrapper">
-          <div class="border"><a href="includes/packages/lakawon.php">LEARN MORE</a></div>
-          <div class="image">
-            <img src="assets/img/Lakawon1.jpg" alt="">
-          </div>
-          <div class="content">
-            <h2>Lakawon Island Day Tour</h2>
-            <p style="font-size: 12px;">by <a href="agency-profile.php">Lakbayan Travel and Tours</a></p>
-            <div class="rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price">
-              <p class="amt">P2,100</p>
-              <p style="font-size: 12px;">PER PERSON</p>
-            </div>
-          </div>
-          <div class="learn-btn">
-              <a href="includes/packages/lakawon.php">LEARN MORE</a>
-          </div>
+      <div class="right">
+        <div class="searchbar" style="margin-bottom: 3rem;">
+          <input type="text" name="search" id="search" autocomplete="off" placeholder="Search by Location or Travel Agency Name" class="field" style=" background: white;" />
+          <div id="output"></div>
+          <span class="ico"><i class="fas fa-search"></i></span>
         </div>
+        <div class="card-container" id="card-container">
+          <?php
+          include_once "backend/package/packages_display.php";
 
-        <div class="wrapper">
-          <div class="border"><a href="includes/packages/lakawon.php">LEARN MORE</a></div>
-          <div class="image">
-            <img src="assets/img/Campuestohan1.jpeg" alt="">
-          </div>
-          <div class="content">
-            <h2>Campuestohan Highland Resort</h2>
-            <p style="font-size: 12px;">by <a href="agency-profile.php">Lakbayan Travel and Tours</a></p>
-            <div class="rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price">
-              <p class="amt">P2,100</p>
-              <p style="font-size: 12px;">PER PERSON</p>
-            </div>
-          </div>
-          <div class="learn-btn">
-              <a href="includes/packages/campuestohan.php">LEARN MORE</a>
-          </div>
+          $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult,  AI.*, AG.agencyName 
+                    FROM traveldb.package_tbl AS PK 
+                    INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                    INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
+                    GROUP BY AI.packageIDFrom";
+
+          fetch_packages($query_string, $conn);
+
+          ?>
+
         </div>
-
-        <div class="wrapper">
-          <div class="border"><a href="includes/packages/lakawon.php">LEARN MORE</a></div>
-          <div class="image">
-            <img src="assets/img/tri 1.jpg" alt="">
-          </div>
-          <div class="content">
-            <h2>Tri-City (Bacolod - Silay - Talisay) Exclusive Day Tour</h2>
-            <p style="font-size: 12px;">by <a href="agency-profile.php">Lakbayan Travel and Tours</a></p>
-            <div class="rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price">
-              <p class="amt">P2,100</p>
-              <p style="font-size: 12px;">PER PERSON</p>
-            </div>
-          </div>
-          <div class="learn-btn">
-              <a href="includes/packages/tri.php">LEARN MORE</a>
-          </div>
-        </div>
-
-        <div class="wrapper">
-          <div class="border"><a href="includes/packages/lakawon.php">LEARN MORE</a></div>
-          <div class="image">
-            <img src="assets/img/Ruinsmain.jpeg" alt="">
-          </div>
-          <div class="content">
-            <h2>The Ruins Day Tour</h2>
-            <p style="font-size: 12px;">by <a href="agency-profile.php">Lakbayan Travel and Tours</a></p>
-            <div class="rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price">
-              <p class="amt">P2,100</p>
-              <p style="font-size: 12px;">PER PERSON</p>
-            </div>
-          </div>
-          <div class="learn-btn">
-              <a href="includes/packages/ruins.php">LEARN MORE</a>
-          </div>
-        </div>
-
-        <div class="wrapper">
-          <div class="border"></div>
-          <div class="image">
-            <img src="assets/img/Ruinsmain.jpeg" alt="">
-          </div>
-          <div class="content">
-            <h2>The Ruins Day Tour</h2>
-            <p style="font-size: 12px;">by <a href="agency-profile.php">Lakbayan Travel and Tours</a></p>
-            <div class="rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price">
-              <p class="amt">P2,100</p>
-              <p style="font-size: 12px;">PER PERSON</p>
-            </div>
-          </div>
-          <div class="learn-btn">
-              <a href="includes/packages/ruins.php">LEARN MORE</a>
-          </div>
+        <div class="loading" id="loading" style="display: none; justify-content: center; margin: auto;">
+          <img src="assets/img/loading.gif" alt="">
         </div>
 
       </div>
+
     </div>
 
   </section>
@@ -317,8 +353,6 @@ if (isset($_SESSION['booking-stat']) == false) {
     </div>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
   <script>
     $(function() {
       $(document).scroll(function() {
@@ -327,12 +361,23 @@ if (isset($_SESSION['booking-stat']) == false) {
         $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
       });
     });
+    $(document).on('click', function(event) {
+      var checkbox = document.getElementById('filter-en');
+      var menu = document.getElementById('mobile-filter-container');
+
+      if (!$(event.target).closest('#mobile-filter-container').length &
+        $('#mobile-filter-container').css('left') == '0px') {
+        checkbox.checked ^= 1;
+      }
+
+
+    });
   </script>
 
   <script>
     var elem = document.querySelector('input[type="range"]');
 
-    var rangeValue = function(){
+    var rangeValue = function() {
       var newValue = elem.value;
       var target = document.querySelector('.days');
       target.innerHTML = "Day(s): " + newValue;

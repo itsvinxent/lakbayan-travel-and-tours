@@ -134,6 +134,10 @@ button:hover {
   margin-left: 2.85px;
 }
 
+.login #mobile-container {
+  display: none;
+}
+
 .login .container {
   /* background-color: #fff; */
   background: none;
@@ -310,25 +314,70 @@ button:hover {
 
 .user-pref .pref-form-container {
   background-color: #f5f5f5;
-  height: 57%;
-  width: 30%;
+  height: 65%;
+  width: 45%;
   z-index: inherit;
   border-radius: 5px;
   padding: 2rem;
 }
 
 .user-pref .pref-form-container .page-one {
-  position: absolute;
+  
   transition: all .1s ease-in;
 }
 
 .user-pref .pref-form-container .checklist {
   margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:space-evenly;
+  align-items: center;
+}
+
+.user-pref .pref-form-container .checklist input[type="checkbox"] {
+  display: none;
 }
 
 .user-pref .pref-form-container label {
-  display: block;
-  padding: 10px 0;
+  /* display: block; */
+  position: relative;
+  text-align: center;
+  padding: 5px;
+  border-radius: 15px;
+  border: solid 5px #c0c0c0;
+  margin-bottom: 15px; 
+  height: 95px;
+}
+
+.user-pref .pref-form-container label.active {
+  border: solid 5px #1abc9c;
+}
+
+.user-pref .pref-form-container label img.hovered {
+  filter: blur(0);
+  transition: filter 0.5 ease-in-out;
+}
+
+.user-pref .pref-form-container label img {
+  height: 75px;
+  width: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  /* opacity: .8; */
+  filter: blur(1px);
+}
+
+.user-pref .pref-form-container label .text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 18px;
+  width: 100%;
+
 }
 
 .user-pref .pref-form-container button {
@@ -342,7 +391,7 @@ button:hover {
 
 .user-pref .pref-form-container .page-two {
   position: absolute;
-  transform: translate(110%, 0);
+  transform: translateX(100%);
   opacity: 0;
   transition: transform 1s ease-in;
   transition: opacity 1s ease-in;
@@ -398,12 +447,12 @@ input.field:focus {
   
 }
 
-.fas.fa-map-marker-alt {
+.place-card .fas.fa-map-marker-alt {
   padding-right: 10px;
   font-size: 20px;
 }
 
-.fas.fa-times {
+.place-card .fas.fa-times {
   position: absolute;
   right: 15px;
   font-size: 14px;
@@ -430,4 +479,76 @@ input.field:focus {
 .page-two .btn-cont #back-btn:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+
+
+@media (max-width: 480px) {
+
+  .switch {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-left: auto; 
+    margin-right: auto; 
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 50px;
+
+    opacity: 1;
+    
+    border-radius: 50%;
+    color: white;
+    background-color: #1abc9c;
+    z-index: 3;
+  }
+
+  #login #container {
+    display: none;
+  }
+
+  #login #mobile-container {
+    display: block;
+    box-shadow: none;
+    min-height: 50%;
+  }
+  .login .form-container {
+    width: 100%;
+  }
+  .login .sign-up-container {
+    opacity: 1;
+    transform: translate(100%, 0);
+  }
+  
+  .login .sign-in-container form button {
+    margin-top: 10px;
+  }
+
+  .login .form-container form {
+    height: 75%;
+    background-color: transparent;
+  }
+  .login form a {
+    color: white !important;
+    margin: 10px 0;
+  }
+  .login form h1 {
+    color: white;
+  }
+  .login form input {
+    border-radius: 5px;
+  }
+  .login input.fname, 
+  .login input.lname {
+    width: 150px;
+  }
+
+  
+
+
+
 }

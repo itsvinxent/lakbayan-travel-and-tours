@@ -14,11 +14,17 @@
                     echo 'href="admin-users.php"';
                 } ?>>User Accounts</a></li>
         <li><a <?php
-                if ($_SESSION['active'] == 'trips') {
+                if ($_SESSION['active'] == 'packages') {
+                    echo 'class="active" href="#"';
+                } else {
+                    echo 'href="admin-packages.php"';
+                } ?>>Packages</a></li>
+        <li><a <?php
+                if ($_SESSION['active'] == 'bookings') {
                     echo 'class="active" href="#"';
                 } else {
                     echo 'href="admin-trips.php"';
-                } ?>>Booking Inquiries</a></li>
+                } ?>>Booking and Inquiries</a></li>
         <?php
             if ($_SESSION['active'] == 'index') {
             if (isset($_SESSION['isLoggedIn'])) {

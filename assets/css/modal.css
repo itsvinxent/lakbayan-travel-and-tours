@@ -60,7 +60,7 @@
   margin-bottom: 20px;
   height: 75%;
   text-align: center;
-  
+
 }
 
 .booking-modal input, .user-modal input, 
@@ -91,7 +91,8 @@
 
 .modal button, 
 .booking-modal button, 
-.user-modal button {
+.user-modal button, 
+.admin-usr .tab-content button {
   border-radius: 20px;
 	border: none;
 	color: #FFFFFF;
@@ -106,11 +107,17 @@
   font-family: "Poppins", sans-serif;
 }
 
-.modal button#modalLogin, 
-.booking-modal button#modalLogin,
-.user-modal button#modalLogin {
+.modal .modal-login, 
+.booking-modal .modal-login,
+.user-modal .modal-login,
+.admin-usr .tab-content .modal-login {
   background: linear-gradient(90deg, var(--logo-yellow-dark), var(--first-color), var(--logo-blue-dark));
   margin-right: 20px;
+}
+
+.modal-login:disabled {
+  cursor: not-allowed;
+  opacity: .5;
 }
 
 /* .modal a#modalClose.btn,
@@ -118,17 +125,18 @@
   background-image: linear-gradient(90deg, var(--logo-blue-dark), var(--first-color), var(--logo-yellow-dark));
 } */
 
-.modal .buttons, .booking-modal .buttons, .user-modal .buttons {
-  display: inline-block;
-  padding-top: 10px;
+.modal .buttons, .booking-modal .buttons, .user-modal .buttons, .admin-usr .tab-content .buttons{
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 20px;
 }
 
 .modal a#modalClose.btn, 
 a#modalBClose.btn,
-a#modalEClose.btn {
+a#modalEClose.btn, 
+a#modalDClose.btn {
   display: block;
   position: relative;
-  float: right;
   top: 0;
   width: 220px;
   background-image: linear-gradient(
@@ -153,6 +161,7 @@ a#modalEClose.btn {
 	text-transform: uppercase;
   cursor: pointer;
 
+  text-align: center;
 }
 
 a#modalBClose.btn{

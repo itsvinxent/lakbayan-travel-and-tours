@@ -79,7 +79,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
             <input type="password" name="password" placeholder="Password" required />
             <button class="reg-user" type="submit" name="Submit" value="Submit">Sign Up</button>
             <a href="agencyreg.php" style="color: black; text-decoration: underline;">Register as a Travel Agency</a>
-            
+
           </form>
         </div>
         <div class="form-container sign-in-container">
@@ -113,6 +113,72 @@ if (isset($_SESSION['isLoggedIn']) == false) {
           </div>
         </div>
       </div>
+
+      <div id="mobile-container" class="container">
+        <div class="form-container sign-up-container" id="msign-up-container">
+          <!-- <form name="sign-up-form" action="backend/auth/signup.php" method="post"> -->
+          <form>
+            <h1>Create Account</h1>
+            <!-- <div class="social-container">
+              <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+              <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <span>or use your email for registration</span> -->
+            <div class="names">
+              <input type="text" name="fname" placeholder="First Name" class="fname" required />
+              <input type="text" name="lname" placeholder="Last Name" class="lname" required />
+            </div>
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="password" name="password" placeholder="Password" required />
+            <button class="reg-user" type="submit" name="Submit" value="Submit">Sign Up</button>
+            <a href="agencyreg.php" style="color: black; text-decoration: underline;">Register as a Travel Agency</a>
+
+          </form>
+        </div>
+        <div class="form-container sign-in-container" id="msign-in-container">
+          <form name="sign-in-form" action="backend/auth/signin.php" method="post">
+            <h1>Sign in</h1>
+            <!-- <div class="social-container">
+              <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+              <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <span>or use your account</span> -->
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="password" name="password" placeholder="Password" required />
+            <a href="#">Forgot your password?</a>
+            <button type="submit">Sign In</button>
+          </form>
+        </div>
+
+        <div class="switch" id="switch">
+          <i class="fas fa-arrow-right" id="arr-right"></i>
+        </div>
+        <script>
+          const switchB = document.getElementById('switch');
+          const arr = document.getElementById('arr-right');
+          const su = document.getElementById('msign-up-container');
+          const si = document.getElementById('msign-in-container');
+
+          switchB.addEventListener('click', () => {
+            if (arr.style.transform == "scaleX(-1)") {
+              su.style.transform = "translate(100%, 0)";
+              si.style.transform = "translate(0, 0)";
+              arr.style.transform = "scaleX(1)";
+              arr.style.transition = "transform .3s ease-in"
+            } else {
+              su.style.transform = "translate(0, 0)";
+              si.style.transform = "translate(-100%, 0)";
+              arr.style.transform = "scaleX(-1)";
+              arr.style.transition = "transform .3s ease-in"
+            }
+
+          });
+        </script>
+
+      </div>
+
     </div>
     <script>
       const signUpButton = document.getElementById('signUp');
@@ -138,12 +204,36 @@ if (isset($_SESSION['isLoggedIn']) == false) {
           <h1>Traveler Profile</h1>
           <p>Please select your preferred destination types.</p>
           <div class="checklist">
-            <label><input type="checkbox" name="" id=""> Beaches and Resorts</label>
-            <label><input type="checkbox" name="" id=""> Mountains</label>
-            <label><input type="checkbox" name="" id=""> Islands</label>
-            <label><input type="checkbox" name="" id=""> Animal Life</label>
-            <label><input type="checkbox" name="" id=""> Recreation</label>
-            <label><input type="checkbox" name="" id=""> Historical and Cultural Landmarks</label>
+            <input type="checkbox" id="beaches">
+            <label class="choice" for="beaches">
+              <img src="assets/img/beaches.jpg" alt="">
+              <div class="text">Beaches and Resorts</div>
+            </label>
+            <input type="checkbox" id="mountain">
+              <label class="choice" for="mountain">
+              <img src="assets/img/mountains.jpg" alt="">
+              <div class="text">Mountains</div>
+            </label>
+            <input type="checkbox" id="island" >
+              <label class="choice" for="island">
+              <img src="assets/img/islands.jpg" alt="">
+              <div class="text">Islands</div>
+            </label>
+            <input type="checkbox" id="animal">
+            <label class="choice" for="animal">
+              <img src="assets/img/animals.jpg" alt="">
+              <div class="text">Animal Life</div>
+            </label>
+            <input type="checkbox" id="recreation">
+            <label class="choice" for="recreation">
+              <img src="assets/img/recreation.jpg" alt="">
+              <div class="text">Recreation</div>
+            </label>
+            <input type="checkbox" id="history">
+            <label class="choice" for="history">
+              <img src="assets/img/history.jpeg" alt="">
+              <div class="text">Historical Landmarks</div>
+            </label>
           </div>
           <button onclick="next_btn()">Next</button>
         </div>
@@ -197,7 +287,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
           pageone.style.opacity = 1;
           pageone.style.transform = "translate(0, 0)";
           pageone.style.transition = "all .1s ease-in";
-          
+
           pagetwo.style.transition = "transform .1s ease-in";
           pagetwo.style.opacity = 0;
           pagetwo.style.transform = "translate(110%, 0)";
@@ -221,6 +311,11 @@ if (isset($_SESSION['isLoggedIn']) == false) {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
   <script>
+    $(document).on("change", "input[type='checkbox']", function() {
+      $(this).next().toggleClass("active");
+    });
+  </script>
+  <!-- <script>
     $(function() {
       $(document).scroll(function() {
         var $nav = $("._nav");
@@ -228,7 +323,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
         $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
       });
     });
-  </script>
+  </script> -->
 
   <script>
     $(function() {
@@ -262,7 +357,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
           pagePositon = 0;
           $('html, body').stop().animate({
             scrollTop: $scrollItems.eq(pagePositon).offset().top
-          }, 300);
+          }, 400);
           document.body.style.overflow = 'hidden';
           return false;
         }

@@ -37,20 +37,25 @@
                         <td>$row[3]</td>
                         <td style="display: none">$row[4]</td>
                         <td>$row[5]</td>
+                        <td hidden>$row[6]</td>
+                        <td hidden>$row[7]</td>
+                        <td hidden>$row[8]</td>
+                        <td hidden>$row[9]</td>
+                        <td hidden>$row[10]</td>
+                        <td hidden>$row[11]</td>
+                        <td hidden>$row[12]</td>
+                        <td hidden>$row[13]</td>
+                        <td hidden>$row[14]</td>
                         <td>
                             <button type="button" id="modalEOpen" class="edit-btn"><i class="far fa-edit"></i></button>
-                            <a href="backend/admin/user_delete.php?id='$row[0]';">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
+                            <button type="button" id="modalDOpen" class="delete-btn"><i class="fas fa-trash-alt"></i></button>
                         </td>
                     </tr> 
                 
                 END;
             }
             echo "</tbody></table> ";
-            echo<<<END
-                <button type="button" id="modalBOpen" class="add-btn">Create New Account</button>
-            END;
+
         }
         else{
             echo<<<END

@@ -31,7 +31,7 @@ if (isset($_SESSION['utype'])) {
     <!-- flatpickr -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <link rel="icon" href="assets/img/logo.png" />
-    <title>Administrator | Lakbayan Travels and Tours</title>
+    <title>Administrator | Lakbayan</title>
 </head>
 
 <body>
