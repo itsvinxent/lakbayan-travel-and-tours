@@ -60,7 +60,14 @@ editBtn.forEach(edit => {
             previousValue = editField.previousElementSibling.childNodes[0].innerHTML;   
         }
         editField.previousElementSibling.classList.remove('active');
-        editField.childNodes[1].value = previousValue;
+        if (editField.childNodes[1] === document.getElementById('bday')) {
+            flatpickr("#bday", {
+                dateFormat: "m-d-Y",
+                defaultDate: previousValue
+            });
+        } else {
+            editField.childNodes[1].value = previousValue;
+        }
         editField.classList.add('active');
 
         edit.classList.remove('active');
@@ -118,35 +125,37 @@ const editDescBtn = document.getElementById('edit-desc-btn');
 const saveDescBtn = document.getElementById('save-desc-btn');
 const descBody = document.getElementById('desc-body');
 const descEdit = document.getElementById('desc-textarea');
+if (editDescBtn != undefined) {
+    editDescBtn.addEventListener('click', () => {
+        descBody.classList.remove('active');
+        descEdit.classList.add('active');
+        descEdit.innerHTML = descEdit.nextElementSibling.value;
+        editDescBtn.classList.remove('active');
+        saveDescBtn.classList.add('active');
+    });
+}
+if (saveDescBtn != undefined) {
+    saveDescBtn.addEventListener('click', () => {
+        descBody.classList.add('active');
+        descEdit.classList.remove('active');
+        currValue = descEdit.value;
+        descBody.innerHTML = currValue;
+        editDescBtn.classList.add('active');
+        saveDescBtn.classList.remove('active');
 
-editDescBtn.addEventListener('click', () => {
-    descBody.classList.remove('active');
-    descEdit.classList.add('active');
-    descEdit.innerHTML = descEdit.nextElementSibling.value;
-    editDescBtn.classList.remove('active');
-    saveDescBtn.classList.add('active');
-})
+        if (currValue.length === 0) {
+            alert("ERROR. Empty Field");
+            descBody.innerHTML = descEdit.nextElementSibling.value;
+            descEdit.value = descEdit.nextElementSibling.value;
+        } else if (descEdit.nextElementSibling.value != currValue) {
+            editcount++;   
+        } else {      
+            editcount === 0 ? editcount = 0 : editcount--;
+        }
 
-saveDescBtn.addEventListener('click', () => {
-    descBody.classList.add('active');
-    descEdit.classList.remove('active');
-    currValue = descEdit.value;
-    descBody.innerHTML = currValue;
-    editDescBtn.classList.add('active');
-    saveDescBtn.classList.remove('active');
-
-    if (currValue.length === 0) {
-        alert("ERROR. Empty Field");
-        descBody.innerHTML = descEdit.nextElementSibling.value;
-        descEdit.value = descEdit.nextElementSibling.value;
-    } else if (descEdit.nextElementSibling.value != currValue) {
-        editcount++;
-    } else {      
-        editcount === 0 ? editcount = 0 : editcount--;
-    }
-
-    checkeditcount();
-})
+        checkeditcount();
+    });
+}
 
 // Image Upload Preview
 $('#aPicture').on('change', function(e) {
@@ -180,7 +189,7 @@ $(document.querySelector('.discardform-btn')).on('click', function(e) {
     var rows = document.querySelectorAll('#info .row');
 
     rows.forEach(row => {
-        // console.log(row.children[1].children[0].innerHTML)
+        console.log(row.children[1].children[0].innerHTML)
 
         // if (row.children[1].children[1] === undefined) {
             row.children[1].children[0].innerHTML = row.children[2].children[1].value;

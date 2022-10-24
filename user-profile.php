@@ -25,6 +25,7 @@ $mode = 1;
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- flatpickr -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
   <link rel="icon" href="assets/img/logo.png" />
   <title>Profile | Lakbayan Travels and Tours</title>
@@ -92,9 +93,6 @@ $mode = 1;
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-  <!-- flatpickr -->
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
   <script>
     $(function() {
       $(document).scroll(function() {
@@ -102,11 +100,6 @@ $mode = 1;
 
         $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
       });
-    });
-
-    flatpickr("input[type=datetime-local]", {
-      dateFormat: "Y-m-d",
-      defaultDate: this.value
     });
   </script>
 

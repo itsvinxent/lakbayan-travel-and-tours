@@ -37,7 +37,7 @@ include "backend/connect/dbCon.php";
         <!-- My Account Tab -->
 
         <div id="info" data-tab-content class=" data-tab-content active">
-          <form action="backend\auth\updateprof.php" method="POST" style="padding-bottom: 3rem;">
+          <form id="myaccountform" action="backend\auth\updateprof.php" method="POST" style="padding-bottom: 3rem;">
 
 
             <!-- <span id="save-ch-btn" class="save-ch-btn">
@@ -1435,8 +1435,8 @@ include "backend/connect/dbCon.php";
       </div>
       <div class="save-container" id="save-ch-btn" style="display: none;">
         <div class="button-container">
-          <button type="submit" class="saveform-btn">Save Changes</button>
-          <button type="submit" class="discardform-btn">Discard Changes</button>
+          <input type="submit" class="saveform-btn" form="myaccountform" value="Save Changes"/>
+          <button class="discardform-btn">Discard Changes</button>
         </div>
       </div>
 
