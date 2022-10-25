@@ -1,7 +1,6 @@
 <?php
 require_once "../connect/dbCon.php";
 include "packages_display.php";
-include "packages_displaytbl.php";
 
 // Default Table Query
 $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult,  AI.*, AG.agencyName 
@@ -29,13 +28,12 @@ function get_prefix()
   return " WHERE ";
 }
 
-if (isset($_POST['is_filtering']) and $_POST['is_filtering']) {
-
+if ($_POST['is_filtering'] == 'true' and $_POST['booking'] == 'false') {
   try {
     $has_previous_value = false;
 
     // Determines if the data to be displayed is for a specific Travel Agency Only. 
-    $hasagency = false;
+    $hasagency = true;
     $isadmin = false;
     // if(isset($_POST['profile']) and $_POST['profile'] and isset($_POST['agencyid'])) {
     if ($hasagency) {
@@ -84,6 +82,11 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering']) {
     //   $has_previous_value = true;
     // }
 
+    // if (isset($_POST['availability'])) {
+    //   $query_string .= get_prefix() . "PK.packageAvailability = '{$_POST['availability']}'";
+    //   $has_previous_value = true;
+    // }
+
   } finally {
     $query_string .= " GROUP BY AI.packageIDFrom";
     // if(isset($_POST['profile']) and $_POST['profile'] and isset($_POST['agencyid'])) {
@@ -99,19 +102,8 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering']) {
   }
 }
 
-// Get by Travel Agency
-// if (isset($_POST['getByAgency']) and $_POST['getByAgency']) {
-//   // $query_string .= " WHERE agencyID = {$_POST['agencyid']}
-//   //                 GROUP BY AI.packageIDFrom";
-//   $query_string .= " WHERE agencyID = 1
-//                     GROUP BY AI.packageIDFrom";
-
-//   fetch_packages($query_string, $conn);
-// }
-
-
 // Filter Queries for Booking Table
-if (isset($_POST['booking']) and $_POST['booking']) {
+if ($_POST['booking'] == 'true' and $_POST['is_filtering'] == 'false') {
   try {
     $query_string = "SELECT IQ.*, CONCAT(US.fname, ' ',US.lname) AS fullname, BK.*, PK.packageTitle
                         FROM traveldb.inquiry_tbl AS IQ
@@ -124,32 +116,39 @@ if (isset($_POST['booking']) and $_POST['booking']) {
     $hasagency = true;
     // if(isset($_POST['profile']) and $_POST['profile'] and isset($_POST['agencyid'])) {
     if ($hasagency) {
-      $query_string .= " WHERE agencyID = 1 ";
+      $query_string .= " WHERE packageCreator = 1";
       $has_previous_value = true;
     }
 
-    if (isset($_POST['b-name'])) {
-      $query_string .= get_prefix() . "PK.packageTitle LIKE '%{$_POST['b-name']}%'";
-      $has_previous_value = true;
-    }
-
-    if (isset($_POST['customer_name'])) {
-      $query_string .= get_prefix() . "fullname LIKE '%{$_POST['customer_name']}%'";
+    if (isset($_POST['b_name'])) {
+      $query_string .= get_prefix() . "PK.packageTitle LIKE '%{$_POST['b_name']}%'";
       $has_previous_value = true;
     }
 
     if (isset($_POST['trn'])) {
-      $query_string .= get_prefix() . "BK.bookingTransacNum = '%{$_POST['trn']}%'";
+      $query_string .= get_prefix() . "BK.bookingTransacNum = '{$_POST['trn']}'";
       $has_previous_value = true;
     }
 
     if (isset($_POST['package_id'])) {
-      $query_string .= get_prefix() . "IQ.packageID = '%{$_POST['package_id']}%'";
+      $query_string .= get_prefix() . "IQ.packageID = '{$_POST['package_id']}'";
       $has_previous_value = true;
     }
+
+    if (isset($_POST['customer_name'])) {
+      $query_string .= " HAVING fullname LIKE '%{$_POST['customer_name']}%'";
+      $has_previous_value = true;
+    }
+
+    // if (isset($_POST['status'])) {
+    //   $query_string .= get_prefix() . "BK.bookingStatus = '{$_POST['status']}'";
+    //   $has_previous_value = true;
+    // }
+
   } finally {
-    $query_string .= " GROUP BY AI.packageIDFrom";
+    // $query_string .= " GROUP BY AI.packageIDFrom";
     // if(isset($_POST['profile']) and $_POST['profile'] and isset($_POST['agencyid'])) {
     fetch_bookingtbl($query_string, $conn);
+    // echo $query_string;
   }
 }

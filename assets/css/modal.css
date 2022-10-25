@@ -92,7 +92,7 @@
 .modal button, 
 .booking-modal button, 
 .user-modal button, 
-.admin-usr .tab-content button {
+.admin-usr .modal-container .tab-content button {
   border-radius: 20px;
 	border: none;
 	color: #FFFFFF;

@@ -5,7 +5,7 @@ const saveChBtn = document.getElementById('save-ch-btn');
 var editcount = 0;
 
 tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
+    $(tab).on('click', () => {
         const target = document.querySelector(tab.dataset.tabTarget)
         tabContents.forEach(tabContent => {
             tabContent.classList.remove('active')
@@ -28,8 +28,9 @@ tabs.forEach(tab => {
         } else {
             checkeditcount();
         }
-    })
-})
+    });
+});
+
 
 const editBtn = document.querySelectorAll('.col-edit');
 var previousValue;

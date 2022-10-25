@@ -11,7 +11,7 @@ include "backend/connect/dbCon.php";
 <section class="sections profile-view" id="profile-view" style="margin-top: 5rem;">
   <div class="profile-view-container">
     <div class="nav-vertical">
-      <div class="user">  
+      <div class="user">
         <img src="assets/img/logo.png" alt="" style="height: 100px">
         <p style="font-size: 17px; font-weight: bold;">Lakbayan Travel and Tours</p>
         <span style="font-size: 13px;"><i class="far fa-eye" style="margin-right: 3px;"></i><a href="agency-profile.php?mode=view">View As Visitor</a></span>
@@ -113,7 +113,7 @@ include "backend/connect/dbCon.php";
                 </div>
               </div>'
               ?>
-              
+
             </div>
 
             <h1>Agency Details</h1>
@@ -125,10 +125,12 @@ include "backend/connect/dbCon.php";
                 <?php
                 // echo '<span class="col-right active" id=""><p>'.$_SESSION['setName'].'</p></span>';
                 ?>
-                <span class="col-right active" id=""><p>Lakbayan Travel and Tours</p></span>
+                <span class="col-right active" id="">
+                  <p>Lakbayan Travel and Tours</p>
+                </span>
                 <span class="col-right-edit">
                   <input type="text" name="profName" id="" value="">
-                  <input type="hidden" value="<?php echo "Lakbayan Travel and Tours"?>">
+                  <input type="hidden" value="<?php echo "Lakbayan Travel and Tours" ?>">
                 </span>
                 <span class="col-edit active"><i class="fas fa-pen"></i></span>
                 <span class="col-save">
@@ -144,10 +146,12 @@ include "backend/connect/dbCon.php";
                 <?php
                 // echo '<span class="col-right active" name="profAdd"><p>'.$disAdd.'</p></span>';
                 ?>
-                <span class="col-right active" id=""><p>Lakbayan Travel and Tours</p></span>
+                <span class="col-right active" id="">
+                  <p>Lakbayan Travel and Tours</p>
+                </span>
                 <span class="col-right-edit">
                   <input type="text" name="profAdd" id="" value="">
-                  <input type="hidden" value="<?php echo "Lakbayan Travel and Tours"?>">
+                  <input type="hidden" value="<?php echo "Lakbayan Travel and Tours" ?>">
                 </span>
                 <span class="col-edit active"><i class="fas fa-pen"></i></span>
                 <span class="col-save">
@@ -163,10 +167,12 @@ include "backend/connect/dbCon.php";
                 <?php
                 // echo '<span class="col-right active"><p>'.$disEmail.'</p></span>';
                 ?>
-                <span class="col-right active" id=""><p>lakbayan@gmail.com</p></span>
+                <span class="col-right active" id="">
+                  <p>lakbayan@gmail.com</p>
+                </span>
                 <span class="col-right-edit">
                   <input type="text" name="profEmail" id="" value="">
-                  <input type="hidden" value="<?php echo "lakbayan@gmail.com"?>">
+                  <input type="hidden" value="<?php echo "lakbayan@gmail.com" ?>">
                 </span>
                 <span class="col-edit active"><i class="fas fa-pen"></i></span>
                 <span class="col-save">
@@ -182,10 +188,12 @@ include "backend/connect/dbCon.php";
                 <?php
                 // echo '<span class="col-right active"><p>'.$disTelNum.'</p></span>'
                 ?>
-                <span class="col-right active" id=""><p>09993548963</p></span>
+                <span class="col-right active" id="">
+                  <p>09993548963</p>
+                </span>
                 <span class="col-right-edit">
                   <input type="text" name="profTel" id="" value="">
-                  <input type="hidden" value="<?php echo "09993548963"?>">
+                  <input type="hidden" value="<?php echo "09993548963" ?>">
                 </span>
                 <span class="col-edit active"><i class="fas fa-pen"></i></span>
                 <span class="col-save">
@@ -203,7 +211,7 @@ include "backend/connect/dbCon.php";
                 <span class="col-right active">www.facebook.com/<p>lakbayantours</p></span>
                 <span class="col-right-edit">
                   <input type="text" name="" id="" value="">
-                  <input type="hidden" value="<?php echo "lakbayantours"?>">
+                  <input type="hidden" value="<?php echo "lakbayantours" ?>">
                 </span>
                 <span class="col-edit active"><i class="fas fa-pen"></i></span>
                 <span class="col-save">
@@ -217,7 +225,7 @@ include "backend/connect/dbCon.php";
                 <span class="col-right active">www.twitter.com/<p>lakbayantours</p></span>
                 <span class="col-right-edit">
                   <input type="text" name="" id="" value="">
-                  <input type="hidden" value="<?php echo "lakbayantours"?>">
+                  <input type="hidden" value="<?php echo "lakbayantours" ?>">
                 </span>
                 <span class="col-edit active"><i class="fas fa-pen"></i></span>
                 <span class="col-save">
@@ -231,7 +239,7 @@ include "backend/connect/dbCon.php";
                 <span class="col-right active">www.instagram.com/<p>lakbayantours</p></span>
                 <span class="col-right-edit">
                   <input type="text" name="" id="" value="">
-                  <input type="hidden" value="<?php echo "lakbayantours"?>">
+                  <input type="hidden" value="<?php echo "lakbayantours" ?>">
                 </span>
                 <span class="col-edit active"><i class="fas fa-pen"></i></span>
                 <span class="col-save">
@@ -245,7 +253,7 @@ include "backend/connect/dbCon.php";
                 <span class="col-right active">www.youtube.com/<p>lakbayantours</p></span>
                 <span class="col-right-edit">
                   <input type="text" name="" id="" value="">
-                  <input type="hidden" value="<?php echo "lakbayantours"?>">
+                  <input type="hidden" value="<?php echo "lakbayantours" ?>">
                 </span>
                 <span class="col-edit active"><i class="fas fa-pen"></i></span>
                 <span class="col-save">
@@ -264,10 +272,12 @@ include "backend/connect/dbCon.php";
                 <?php
                 // echo '<span class="col-right active">'.$disMName.'</span>';
                 ?>
-                <span class="col-right active" id=""><p>Name</p></span>
+                <span class="col-right active" id="">
+                  <p>Name</p>
+                </span>
                 <span class="col-right-edit">
                   <input type="text" name="" id="" value="">
-                  <input type="hidden" value="<?php echo "lakbayantours"?>">
+                  <input type="hidden" value="<?php echo "lakbayantours" ?>">
                 </span>
                 <span class="col-edit active"><i class="fas fa-pen"></i></span>
                 <span class="col-save">
@@ -283,10 +293,12 @@ include "backend/connect/dbCon.php";
                 // echo '<span class="col-right active">'.$disMContact.'</span>';
 
                 ?>
-                <span class="col-right active" id=""><p>09993548963</p></span>
+                <span class="col-right active" id="">
+                  <p>09993548963</p>
+                </span>
                 <span class="col-right-edit">
                   <input type="text" name="" id="" value="">
-                  <input type="hidden" value="<?php echo "lakbayantours"?>">
+                  <input type="hidden" value="<?php echo "lakbayantours" ?>">
                 </span>
                 <span class="col-edit active"><i class="fas fa-pen"></i></span>
                 <span class="col-save">
@@ -301,10 +313,12 @@ include "backend/connect/dbCon.php";
                 <?php
                 // echo '<span class="col-right active">'.$disEmail.'</span>';
                 ?>
-                <span class="col-right active" id=""><p>ayalajv.23@gmail.com</p></span>
+                <span class="col-right active" id="">
+                  <p>ayalajv.23@gmail.com</p>
+                </span>
                 <span class="col-right-edit">
                   <input type="text" name="" id="" value="">
-                  <input type="hidden" value="<?php echo "lakbayantours"?>">
+                  <input type="hidden" value="<?php echo "lakbayantours" ?>">
                 </span>
                 <span class="col-edit active"><i class="fas fa-pen"></i></span>
                 <span class="col-save">
@@ -381,185 +395,209 @@ include "backend/connect/dbCon.php";
           <div class="main-content component" style="margin-top: 10px;">
             <div class="availability-filter">
               <span>
-                <input class="avail-inp" type="checkbox" name="a-all" id="a-all" style="display: none;">
+                <input class="avail-inp" type="radio" name="avail-fil" value="a-all" id="a-all" style="display: none;">
                 <label for="a-all"><span>All</span></label>
               </span>
               <span>
-                <input class="avail-inp" type="checkbox" name="a-available" id="a-available" style="display: none;">
+                <input class="avail-inp" type="radio" name="avail-fil" value="a-available" id="a-available" style="display: none;">
                 <label for="a-available"><span>Available</span></label>
               </span>
               <span>
-                <input class="avail-inp" type="checkbox" name="a-unlisted" id="a-unlisted" style="display: none;">
+                <input class="avail-inp" type="radio" name="avail-fil" value="a-unlisted" id="a-unlisted" style="display: none;">
                 <label for="a-unlisted"> <span>Unlisted</span> </label>
               </span>
             </div>
-            <div id="full-table" class="fulltable">
+            <div id="full-table" class="fulltable" data-tab-target="#create-package">
               <?php
-                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult,  AI.*, AG.agencyName 
+              $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult,  AI.*, AG.agencyName 
                       FROM traveldb.package_tbl AS PK 
                       INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                       INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
                       WHERE agencyID = 1
                       GROUP BY AI.packageIDFrom";
 
-                fetch_packagetbl($query_string, $conn, true);
+              fetch_packagetbl($query_string, $conn, true);
 
-                ?>
+              ?>
             </div>
           </div>
-          <!-- Delete Account Modal -->
+          <!-- Delete Travel Package Modal -->
           <div class="modal-container" id="dmodal_container">
             <div class="user-modal">
-                <h1>Confirmation</h1>
-                <p>You are about to <strong>delete</strong> a Travel Package. By doing this, all of the related transactions for this Travel Package will be cancelled/delete as well. Type in "I Understand" to confirm. </p>
-                <br><input type="text" name="confirm" id="confirm" placeholder="I Understand"><br>
-                <form action="" method="POST" id="del-action">
-                    <div class="buttons">
-                        <button type="submit" id="modalDelete" class="modal-login">Delete Account</button>
-                    </div>
-                </form>
-                <a id="modalDClose" class="btn">Cancel</a>
+              <h1>Confirmation</h1>
+              <p>You are about to <strong>delete</strong> a Travel Package. By doing this, all of the related transactions for this Travel Package will be cancelled/delete as well. Type in "I Understand" to confirm. </p>
+              <br><input type="text" name="confirm" id="confirm" placeholder="I Understand"><br>
+              <form action="" method="POST" id="del-action">
+                <div class="buttons">
+                  <button type="submit" id="modalDelete" class="modal-login">Delete Account</button>
+                  <a id="modalDClose" class="btn">Cancel</a>
+                </div>
+              </form>
             </div>
           </div>
 
           <script>
-            $(document).ready(function() {
-              $('#a-all').prop('checked', true);
-              $('#a-all').next().addClass('active');
+            $('#a-all').prop('checked', true);
+            $('#a-all').next().addClass('active');
 
-              var count = 4;
-              var filter_req, filter_timeout;
-              var pack_name, pack_location, pack_cat, pack_duration = 0;
-              var postdata = {
-                is_filtering: true,
-                profile: true,
-                name: "",
-                location: "",
-                category: "",
-                duration: undefined
+            var count = 4;
+            var filter_req, filter_timeout;
+            var pack_name, pack_location, pack_cat, pack_duration = 0;
+            var postdata = {
+              is_filtering: true,
+              booking: false,
+              name: "",
+              location: "",
+              category: "",
+              duration: undefined,
+              availability: "a-all"
+            }
+
+            $('#get-search').on('click', function() {
+              pack_name = $('#package-name').val();
+              pack_location = $('#package-location').val();
+              pack_cat = $('#package-category').val();
+              pack_duration = $('#package-duration').val();
+
+              package_data_input();
+              
+              if (count != 0) {
+                filterTimeout(postdata, '#full-table');
               }
-
-              function postdata_append(postdata, name, value) {
-                if ((value != undefined) & (value != '') & (value != null)) {
-                  postdata[name] = value;
-                } else {
-                  delete postdata[name];
-                  count--;
-                }
-                return postdata
-              }
-
-              $('#get-search').on('click', function() {
-                pack_name = $('#package-name').val();
-                pack_location = $('#package-location').val();
-                pack_cat = $('#package-category').val();
-                pack_duration = $('#package-duration').val();
-
-                postdata = postdata_append(postdata, 'name', pack_name)
-                postdata = postdata_append(postdata, 'location', pack_location)
-                postdata = postdata_append(postdata, 'category', pack_cat)
-                postdata = postdata_append(postdata, 'duration', pack_duration)
-
-                if (count != 0) {
-                  filterTimeout();
-                }
-                count = 4;
-
-              });
-
-              $('#reset-search').on('click', function() {
-                postdata = {
-                  is_filtering: true,
-                  profile: true
-                }
-
-                filterTimeout();
-              })
-
-              function filterTimeout() {
-                if (filter_timeout) {
-                  clearTimeout(filter_timeout);
-                }
-                if (filter_req) {
-                  filter_req.abort();
-                }
-
-                filter_timeout = setTimeout(function() {
-                  filterPackages().then(function(data) {
-                    $('#full-table').empty();
-                    $('#full-table').html(data);
-                  });
-                }, 500);
-              }
-
-              function filterPackages() {
-                filter_req = $.ajax({
-                  url: 'backend/package/packages_search.php',
-                  method: 'POST',
-                  data: postdata,
-                  async: true,
-                  context: this
-                });
-
-                return filter_req;
-              }
+              count = 4;
 
             });
+
+            $('#reset-search').on('click', function() {
+              postdata = {
+                is_filtering: true,
+                booking: false
+              }
+
+              filterTimeout(postdata, '#full-table');
+            })
+
+            function filterTimeout($postdata, $tableid) {
+              if (filter_timeout) {
+                clearTimeout(filter_timeout);
+              }
+              if (filter_req) {
+                filter_req.abort();
+              }
+
+              filter_timeout = setTimeout(function() {
+                filterPackages($postdata).then(function(data) {
+                  $($tableid).empty();
+                  $($tableid).html(data);
+                });
+              }, 500);          
+            }
+
+            function filterPackages($postdata) {
+              filter_req = $.ajax({
+                url: 'backend/package/packages_search.php',
+                method: 'POST',
+                data: $postdata,
+                async: true,
+                context: this
+              });
+
+              return filter_req;
+            }
+
+            function postdata_append(postdata, name, value) {
+              if ((value != undefined) & (value != '') & (value != null)) {
+                postdata[name] = value;
+              } else {
+                delete postdata[name];
+                count--;
+              }
+              return postdata
+            }
+
+            function package_data_input() {
+              postdata = postdata_append(postdata, 'name', pack_name)
+              postdata = postdata_append(postdata, 'location', pack_location)
+              postdata = postdata_append(postdata, 'category', pack_cat)
+              postdata = postdata_append(postdata, 'duration', pack_duration)
+            }
+
+            function booking_data_input() {
+              bookingpostdata = postdata_append(bookingpostdata, 'b_name', pack_name)
+              bookingpostdata = postdata_append(bookingpostdata, 'customer_name', pack_customer)
+              bookingpostdata = postdata_append(bookingpostdata, 'trn', pack_transact)
+              bookingpostdata = postdata_append(bookingpostdata, 'package_id', pack_id)
+            }
 
             // Availablity Filter
-            $(".avail-inp").change(function() {
-              var checkbox = this;
-              var count = 0,
-                rating = 0;
-              if ($(this).is(":checked"))
-                this.labels[0].classList.remove('active');
-
-              $(".avail-inp").each(function() {
-                if (this == checkbox & $(checkbox).is(":checked")) {
-                  this.labels[0].classList.add('active');
-                  count++;
-                } else {
-                  $(this).prop('checked', false);
+            function filterTable($inputclass, $type, $post) {
+              $($inputclass).change(function() {
+                var checkbox = this;
+                var count = 0,
+                  rating = 0;
+                if ($(this).is(":checked"))
                   this.labels[0].classList.remove('active');
+
+                $($inputclass).each(function() {
+                  if (this == checkbox & $(checkbox).is(":checked")) {
+                    this.labels[0].classList.add('active');
+                    count++;
+                  } else {
+                    $(this).prop('checked', false);
+                    this.labels[0].classList.remove('active');
+                  }
+                });
+
+                $post = postdata_append($post, $type, $(checkbox).val())
+                console.log($type)
+                if ($type == 'availability') {
+                  package_data_input();
+                  filterTimeout($post, '#full-table');
+                } else {
+                  booking_data_input();
+                  filterTimeout($post, '#fullb-table');
                 }
+                console.log($post);
+              });
+            }
+
+            filterTable(".avail-inp", 'availability', postdata);
+
+            // const eopen = document.getElementById('modalEOpen');
+            const dopeners = Array.from(document.getElementsByClassName('delete-btn'));
+            const dmodal_container = document.getElementById('dmodal_container');
+            const dclose = document.getElementById('modalDClose');
+            const form = document.getElementById('del-action');
+            const confirm = document.getElementById('confirm')
+
+            dopeners.forEach(dopen => {
+              dopen.addEventListener('click', function handleClick(event) {
+                dmodal_container.classList.add('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children('td').map(function() {
+                  return $(this).text();
+                }).get();
+
+                form.action = "backend/admin/user_delete.php?id=" + data[0]
+
+
               });
             });
 
-            // // const eopen = document.getElementById('modalEOpen');
-            // const dopeners = Array.from(document.getElementsByClassName('delete-btn'));
-            // const dmodal_container = document.getElementById('dmodal_container');
-            // const dclose = document.getElementById('modalDClose');
-            // const form = document.getElementById('del-action');
-            // const confirm = document.getElementById('confirm')
+            document.getElementById('modalDelete').disabled = true;
+            confirm.addEventListener('input', function() {
+              if (this.value == "I Understand") {
+                document.getElementById('modalDelete').disabled = false;
+              } else {
+                document.getElementById('modalDelete').disabled = true;
+              }
+            });
 
-            // dopeners.forEach(dopen => {
-            //     dopen.addEventListener('click', function handleClick(event) {
-            //         dmodal_container.classList.add('show');
-
-            //         $tr = $(this).closest('tr');
-
-            //         var data = $tr.children('td').map(function() {
-            //             return $(this).text();
-            //         }).get();
-
-            //         form.action = "backend/admin/user_delete.php?id=" + data[0]
-
-
-            //     });
-            // });
-
-            // document.getElementById('modalDelete').disabled = true;
-            // confirm.addEventListener('input', function() {
-            //     if (this.value == "I Understand") {
-            //         document.getElementById('modalDelete').disabled = false;
-            //     } else {
-            //         document.getElementById('modalDelete').disabled = true;
-            //     }
-            // });
-
-            // dclose.addEventListener('click', () => {
-            //     dmodal_container.classList.remove('show');
-            // });
+            dclose.addEventListener('click', () => {
+              dmodal_container.classList.remove('show');
+            });
           </script>
 
         </div>
@@ -631,7 +669,7 @@ include "backend/connect/dbCon.php";
                         $(removebtn).on('click', function() {
                           var remloc = removebtn.parentElement.innerText;
                           removebtn.parentElement.remove();
-                          loc_array = loc_array.filter(function(letter) {
+                          cat_array = cat_array.filter(function(letter) {
                             return letter !== remloc;
                           });
                         });
@@ -1385,8 +1423,8 @@ include "backend/connect/dbCon.php";
             </div>
 
             <div class="buttons">
-              <span><button id="get-search">Search</button></span>
-              <span><button id="reset-search">Reset</button></span>
+              <span><button id="b-get-search">Search</button></span>
+              <span><button id="b-reset-search">Reset</button></span>
             </div>
           </div>
 
@@ -1394,48 +1432,91 @@ include "backend/connect/dbCon.php";
           <div class="main-content component" style="margin-top: 10px;">
             <div class="availability-filter">
               <span>
-                <input class="avail-inp" type="checkbox" name="s-all" id="s-all" style="display: none;">
+                <input class="stat-inp" type="radio" name="stat-fil" value="s-all" id="s-all" style="display: none;">
                 <label for="s-all"><span>All</span></label>
               </span>
               <span>
-                <input class="avail-inp" type="checkbox" name="s-unpaid" id="s-unpaid" style="display: none;">
+                <input class="stat-inp" type="radio" name="stat-fil" value="s-unpaid" id="s-unpaid" style="display: none;">
                 <label for="s-unpaid"><span>Unpaid</span></label>
               </span>
               <span>
-                <input class="avail-inp" type="checkbox" name="s-processing" id="s-processing" style="display: none;">
+                <input class="stat-inp" type="radio" name="stat-fil" value="s-processing" id="s-processing" style="display: none;">
                 <label for="s-processing"><span>Processing</span></label>
               </span>
               <span>
-                <input class="avail-inp" type="checkbox" name="s-completed" id="s-completed" style="display: none;">
+                <input class="stat-inp" type="radio" name="stat-fil" value="s-completed" id="s-completed" style="display: none;">
                 <label for="s-completed"><span>Completed</span></label>
               </span>
               <span>
-                <input class="avail-inp" type="checkbox" name="s-cancelled" id="s-cancelled" style="display: none;">
+                <input class="stat-inp" type="radio" name="stat-fil" value="s-cancelled" id="s-cancelled" style="display: none;">
                 <label for="s-cancelled"><span>Cancelled</span></label>
               </span>
             </div>
 
-            <div id="fullb-table">
-              <?php 
-                $query_string = "SELECT IQ.*, CONCAT(US.fname, ' ',US.lname) AS fullname, BK.*, PK.packageTitle
+            <div id="fullb-table" class="fulltable">
+              <?php
+              $query_string = "SELECT IQ.*, CONCAT(US.fname, ' ',US.lname) AS fullname, BK.*, PK.packageTitle
                                   FROM traveldb.inquiry_tbl AS IQ
                                   INNER JOIN traveldb.user_tbl AS US ON IQ.id_user = US.id
                                   INNER JOIN traveldb.booking_tbl AS BK ON IQ.id = BK.inquiryInfoID 
                                   INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID";
-                fetch_bookingtbl($query_string, $conn);
-                mysqli_close($conn);
+              fetch_bookingtbl($query_string, $conn);
+              mysqli_close($conn);
               ?>
             </div>
 
           </div>
-          
+
         </div>
         <!-- End of Bookings Tab -->
+        <script>
+          $('#s-all').prop('checked', true);
+          $('#s-all').next().addClass('active');
+
+          count = 4;
+          var pack_transact, pack_id, pack_customer;
+          var bookingpostdata = {
+            booking: true,
+            is_filtering: false,
+            b_name: "",
+            customer_name: "",
+            trn: "",
+            package_id: undefined,
+            status: "s-all"
+          }
+
+          $('#b-get-search').on('click', function() {
+            pack_name = $('#b-package-name').val();
+            pack_transact = $('#b-package-transact').val();
+            pack_id = $('#b-package-id').val();
+            pack_customer = $('#package-customer').val();
+
+            booking_data_input();
+
+            if (count != 0) {
+              filterTimeout(bookingpostdata, '#fullb-table');
+            }
+            count = 4;
+
+          });
+
+          $('#b-reset-search').on('click', function() {
+            bookingpostdata = {
+              is_filtering: false,
+              booking: true
+            }
+
+            filterTimeout(bookingpostdata, '#fullb-table');
+          });
+
+          // Transaction Status Filter
+          filterTable(".stat-inp", 'status', bookingpostdata)
+        </script>
 
       </div>
       <div class="save-container" id="save-ch-btn" style="display: none;">
         <div class="button-container">
-          <input type="submit" class="saveform-btn" form="myaccountform" value="Save Changes"/>
+          <input type="submit" class="saveform-btn" form="myaccountform" value="Save Changes" />
           <button class="discardform-btn">Discard Changes</button>
         </div>
       </div>

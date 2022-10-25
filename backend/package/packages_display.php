@@ -127,7 +127,7 @@ function fetch_bookingtbl($query_string, $conn) {
     echo <<<END
             <div class="package-func">
                 <span>
-                    <h3>$rowcount Packages</h3>
+                    <h3>$rowcount Transaction(s)</h3>
                 </span>
             </div>
             <div class="package-table">
@@ -157,7 +157,10 @@ function fetch_bookingtbl($query_string, $conn) {
             <td><?php echo $row['packageTitle'] ?></td>
             <td><?php echo $row['bookingStatus'] ?></td>
             <td><?php echo $row['bookingPrice'] ?></td>
-            <td></td>
+            <td>
+                <button type="button" data-tab-target="#edit-booking" id="modalEOpen" class="edit-btn"><i class="far fa-edit"></i></button>
+                <button type="button" id="modalDOpen" class="delete-btn"><i class="fas fa-trash-alt"></i></button>
+            </td>
         </tr>
 <?php
     }

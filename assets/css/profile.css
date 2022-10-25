@@ -651,6 +651,7 @@
 
 .package-table {
   overflow-y: auto;
+  height: 40vh;
 }
 
 .tab-content #create-package.data-tab-content,
@@ -899,19 +900,22 @@
   color: var(--logo-yellow-dark);
 }
 
-.fulltable tbody td button {
+.fulltable tbody td button,
+.fullb-table tbody td button {
   border: none;
   cursor: pointer;
   font-size: 20px;
   background: none;
 }
 
-.fulltable #modalEOpen {
+.fulltable #modalEOpen,
+.fullb-table #modalEOpen {
   color: var(--logo-blue-dark);
   margin-right: 10px;
 }
 
-.fulltable #modalDOpen {
+.fulltable #modalDOpen,
+.fullb-table #modalDOpen {
   color: red;
 }
 
