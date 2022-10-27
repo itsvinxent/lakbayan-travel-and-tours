@@ -38,7 +38,7 @@ $mode = 1;
   include 'includes/components/nav.php';
   include 'includes/components/accountModal.php';
 
-  if ($mode == 0 or $_GET['mode'] == 'view'){
+  if ($mode == 0 or $_GET['mode'] ?? null == 'view'){
     include 'includes/profile/userprofile-view.php';
   } else {
     include 'includes/profile/userprofile-edit.php';

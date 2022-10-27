@@ -63,7 +63,7 @@ editBtn.forEach(edit => {
         editField.previousElementSibling.classList.remove('active');
         if (editField.childNodes[1] === document.getElementById('bday')) {
             flatpickr("#bday", {
-                dateFormat: "m-d-Y",
+                dateFormat: "M-d-Y",
                 defaultDate: previousValue
             });
         } else {
@@ -212,7 +212,7 @@ var cutoff, cutoffObj;
 flatpickr("input[type=date-local]", {
     altInput: true,
     altFormat: "D, F j, Y h:i K",
-    dateFormat: "m-d-Y H:i:S",
+    dateFormat: "M-d-Y H:i:S",
     minDate: "today",
     mode: "range",
     enableTime: true,
@@ -254,7 +254,7 @@ flatpickr("input[type=date-local]", {
 flatpickr("input[type=datetime-local]", {
     altInput: true,
     altFormat: "D, F j, Y h:i K",
-    dateFormat: "m-d-Y H:i:S",
+    dateFormat: "M-d-Y H:i:S",
     minDate: "today",
     enableTime: true,
     mode: "single",
@@ -273,7 +273,7 @@ flatpickr("input[type=datetime-local]", {
             mode: "multiple",
             defaultDate: dates,
             inline: true
-
+            
         });
         cutoffObj = instance.selectedDateElem.innerHTML;
         $('.right .flatpickr-innerContainer .selected').each(function () {

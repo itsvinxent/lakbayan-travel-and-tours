@@ -45,7 +45,7 @@ $isAgency = true;
 <?php
   include 'includes/components/nav.php';
 
-  if ($mode == 0 or $_GET['mode'] == 'view'){
+  if ($mode == 0 or $_GET['mode'] ?? null == 'view'){
     include 'includes/profile/agencyprofile-view.php';
   } else {
     include 'includes/profile/agencyprofile-edit.php';
