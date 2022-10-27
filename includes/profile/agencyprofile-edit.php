@@ -407,7 +407,7 @@ include "backend/connect/dbCon.php";
                 <label for="a-unlisted"> <span>Unlisted</span> </label>
               </span>
             </div>
-            <div id="full-table" class="fulltable" data-tab-target="#create-package">
+            <div id="full-table" class="fulltable">
               <?php
               $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult,  AI.*, AG.agencyName 
                       FROM traveldb.package_tbl AS PK 
@@ -436,28 +436,17 @@ include "backend/connect/dbCon.php";
             </div>
           </div>
 
+          <script src="assets/js/search-filters.js"></script>
           <script>
             $('#a-all').prop('checked', true);
             $('#a-all').next().addClass('active');
-
-            var count = 4;
-            var filter_req, filter_timeout;
-            var pack_name, pack_location, pack_cat, pack_duration = 0;
-            var postdata = {
-              is_filtering: true,
-              booking: false,
-              name: "",
-              location: "",
-              category: "",
-              duration: undefined,
-              availability: "a-all"
-            }
 
             $('#get-search').on('click', function() {
               pack_name = $('#package-name').val();
               pack_location = $('#package-location').val();
               pack_cat = $('#package-category').val();
               pack_duration = $('#package-duration').val();
+              postdata['logged_user'] = 'agency';
 
               package_data_input();
               
@@ -471,95 +460,12 @@ include "backend/connect/dbCon.php";
             $('#reset-search').on('click', function() {
               postdata = {
                 is_filtering: true,
-                booking: false
+                booking: false,
+                logged_user: 'agency'
               }
 
               filterTimeout(postdata, '#full-table');
             })
-
-            function filterTimeout($postdata, $tableid) {
-              if (filter_timeout) {
-                clearTimeout(filter_timeout);
-              }
-              if (filter_req) {
-                filter_req.abort();
-              }
-
-              filter_timeout = setTimeout(function() {
-                filterPackages($postdata).then(function(data) {
-                  $($tableid).empty();
-                  $($tableid).html(data);
-                });
-              }, 500);          
-            }
-
-            function filterPackages($postdata) {
-              filter_req = $.ajax({
-                url: 'backend/package/packages_search.php',
-                method: 'POST',
-                data: $postdata,
-                async: true,
-                context: this
-              });
-
-              return filter_req;
-            }
-
-            function postdata_append(postdata, name, value) {
-              if ((value != undefined) & (value != '') & (value != null)) {
-                postdata[name] = value;
-              } else {
-                delete postdata[name];
-                count--;
-              }
-              return postdata
-            }
-
-            function package_data_input() {
-              postdata = postdata_append(postdata, 'name', pack_name)
-              postdata = postdata_append(postdata, 'location', pack_location)
-              postdata = postdata_append(postdata, 'category', pack_cat)
-              postdata = postdata_append(postdata, 'duration', pack_duration)
-            }
-
-            function booking_data_input() {
-              bookingpostdata = postdata_append(bookingpostdata, 'b_name', pack_name)
-              bookingpostdata = postdata_append(bookingpostdata, 'customer_name', pack_customer)
-              bookingpostdata = postdata_append(bookingpostdata, 'trn', pack_transact)
-              bookingpostdata = postdata_append(bookingpostdata, 'package_id', pack_id)
-            }
-
-            // Availablity Filter
-            function filterTable($inputclass, $type, $post) {
-              $($inputclass).change(function() {
-                var checkbox = this;
-                var count = 0,
-                  rating = 0;
-                if ($(this).is(":checked"))
-                  this.labels[0].classList.remove('active');
-
-                $($inputclass).each(function() {
-                  if (this == checkbox & $(checkbox).is(":checked")) {
-                    this.labels[0].classList.add('active');
-                    count++;
-                  } else {
-                    $(this).prop('checked', false);
-                    this.labels[0].classList.remove('active');
-                  }
-                });
-
-                $post = postdata_append($post, $type, $(checkbox).val())
-                console.log($type)
-                if ($type == 'availability') {
-                  package_data_input();
-                  filterTimeout($post, '#full-table');
-                } else {
-                  booking_data_input();
-                  filterTimeout($post, '#fullb-table');
-                }
-                console.log($post);
-              });
-            }
 
             filterTable(".avail-inp", 'availability', postdata);
 
@@ -1473,23 +1379,12 @@ include "backend/connect/dbCon.php";
           $('#s-all').prop('checked', true);
           $('#s-all').next().addClass('active');
 
-          count = 4;
-          var pack_transact, pack_id, pack_customer;
-          var bookingpostdata = {
-            booking: true,
-            is_filtering: false,
-            b_name: "",
-            customer_name: "",
-            trn: "",
-            package_id: undefined,
-            status: "s-all"
-          }
-
           $('#b-get-search').on('click', function() {
             pack_name = $('#b-package-name').val();
             pack_transact = $('#b-package-transact').val();
             pack_id = $('#b-package-id').val();
             pack_customer = $('#package-customer').val();
+            bookingpostdata['logged_user'] = 'agency';
 
             booking_data_input();
 
@@ -1503,7 +1398,8 @@ include "backend/connect/dbCon.php";
           $('#b-reset-search').on('click', function() {
             bookingpostdata = {
               is_filtering: false,
-              booking: true
+              booking: true,
+              logged_user: 'agency'
             }
 
             filterTimeout(bookingpostdata, '#fullb-table');

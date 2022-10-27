@@ -26,7 +26,7 @@ include "backend/connect/dbCon.php";
           <img src="https://img.icons8.com/plasticine/50/000000/name.png" />
           My Account
         </li>
-        <li data-tab-target="#history" class="tab">
+        <li data-tab-target="#package" class="tab" id="sub-book-active">
           <img src="https://img.icons8.com/plasticine/50/000000/transaction-list.png" />
           My Transactions
         </li>
@@ -271,7 +271,7 @@ include "backend/connect/dbCon.php";
                 <span class="col-right active" id=""><p>Roman Catholic</p></span>
                 <span class="col-right-edit">
                   <input type="text" name="religion" id="religion" value="">
-                  <input type="hidden" value="<?php echo "ocampomark@gmail.com"?>">
+                  <input type="hidden" value="<?php echo "Roman Catholic"?>">
                 </span>
                 <span class="col-edit active"><i class="fas fa-pen"></i></span>
                 <span class="col-save">
@@ -282,75 +282,111 @@ include "backend/connect/dbCon.php";
               </div>
 
             </div>
+          </form>
 
       </div>
 
-      <div id="history" data-tab-content class="data-tab-content">
-        <table class="user-table">
-          <thead>
-            <tr>
-              <th>Booking Date</th>
-              <th>Name</th>
-              <th>Travel Package</th>
-              <th># of Persons</th>
-              <th># of Days</th>
-              <th>Trip Date</th>
-              <th>Total</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>08/23/22</td>
-              <td>John Mark De Ocampo</td>
-              <td>Campuestohan Highland Resort</td>
-              <td>5</td>
-              <td>3</td>
-              <td>9/11/22</td>
-              <td>P10,500</td>
-              <td>
-                <a href="travel-order.php">Travel Order</a>
-              </td>
-            </tr>
-            <tr>
-              <td>08/23/22</td>
-              <td>Han Solo</td>
-              <td>Lakawon Island Day Tour</td>
-              <td>2</td>
-              <td>2</td>
-              <td>9/05/22</td>
-              <td>P15,000</td>
-              <td>
-                <a href="travel-order.php">Travel Order</a>
-              </td>
-            </tr>
-            <tr>
-              <td>08/23/22</td>
-              <td>Ben Kenobi</td>
-              <td>Lakawon Island Day Tour</td>
-              <td>5</td>
-              <td>2</td>
-              <td>9/18/22</td>
-              <td>P30,000</td>
-              <td>
-                <a href="travel-order.php">Travel Order</a>
-              </td>
-            </tr>
-            <tr>
-              <td>08/23/22</td>
-              <td>Paolo Benjamin Guico</td>
-              <td>Tri-City (Bacolod - Silay - Talisay) Exclusive Day Tour</td>
-              <td>9</td>
-              <td>3</td>
-              <td>9/25/22</td>
-              <td>P35,000</td>
-              <td>
-                <a href="travel-order.php">Travel Order</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div id="package" data-tab-content class="data-tab-content booking">
+          <div class="package-search component">
+            <div class="name">
+              <span><label for="b-package-name">Package Name</label></span>
+              <span><input type="search" name="b-package-name" id="b-package-name" placeholder="Enter Package Name"></span>
+            </div>
+            <div class="dur">
+              <span><label for="b-package-transact">TRN</label></span>
+              <span><input type="number" name="b-package-transact" id="b-package-transact" placeholder="Enter Transaction Number"></span>
+            </div>
+            <div class="cat">
+              <span><label for="b-package-category">Package ID</label></span>
+              <span><input type="number" name="b-package-id" id="b-package-id" placeholder="Enter Package ID"></span>
+            </div>
+            <div class="cust">
+              <span><label for="package-customer">Customer Name</label></span>
+              <span><input class="package-customer" type="text" name="package-customer" id="package-customer" placeholder="Enter Customer Name"></span>
+            </div>
+
+            <div class="buttons">
+              <span><button id="b-get-search">Search</button></span>
+              <span><button id="b-reset-search">Reset</button></span>
+            </div>
+          </div>
+
+
+          <div class="main-content component" style="margin-top: 10px;">
+            <div class="availability-filter">
+              <span>
+                <input class="stat-inp" type="radio" name="stat-fil" value="s-all" id="s-all" style="display: none;">
+                <label for="s-all"><span>All</span></label>
+              </span>
+              <span>
+                <input class="stat-inp" type="radio" name="stat-fil" value="s-unpaid" id="s-unpaid" style="display: none;">
+                <label for="s-unpaid"><span>Unpaid</span></label>
+              </span>
+              <span>
+                <input class="stat-inp" type="radio" name="stat-fil" value="s-processing" id="s-processing" style="display: none;">
+                <label for="s-processing"><span>Processing</span></label>
+              </span>
+              <span>
+                <input class="stat-inp" type="radio" name="stat-fil" value="s-completed" id="s-completed" style="display: none;">
+                <label for="s-completed"><span>Completed</span></label>
+              </span>
+              <span>
+                <input class="stat-inp" type="radio" name="stat-fil" value="s-cancelled" id="s-cancelled" style="display: none;">
+                <label for="s-cancelled"><span>Cancelled</span></label>
+              </span>
+            </div>
+
+            <div id="fullb-table" class="fulltable">
+              <?php
+              $query_string = "SELECT IQ.*, CONCAT(US.fname, ' ',US.lname) AS fullname, BK.*, PK.packageTitle
+                                  FROM traveldb.inquiry_tbl AS IQ
+                                  INNER JOIN traveldb.user_tbl AS US ON IQ.id_user = US.id
+                                  INNER JOIN traveldb.booking_tbl AS BK ON IQ.id = BK.inquiryInfoID 
+                                  INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID";
+              fetch_bookingtbl($query_string, $conn);
+              mysqli_close($conn);
+              ?>
+            </div>
+
+          </div>
+
+        </div>
+
+        <script src="assets/js/search-filters.js"></script>
+        <script>
+          $('#s-all').prop('checked', true);
+          $('#s-all').next().addClass('active');
+
+
+          $('#b-get-search').on('click', function() {
+            pack_name = $('#b-package-name').val();
+            pack_transact = $('#b-package-transact').val();
+            pack_id = $('#b-package-id').val();
+            pack_customer = $('#package-customer').val();
+            bookingpostdata['logged_user'] = 'user';
+
+            booking_data_input();
+
+            if (count != 0) {
+              filterTimeout(bookingpostdata, '#fullb-table');
+            }
+            count = 4;
+
+          });
+
+          $('#b-reset-search').on('click', function() {
+            bookingpostdata = {
+              is_filtering: false,
+              booking: true,
+              logged_user: 'user'
+            }
+
+            filterTimeout(bookingpostdata, '#fullb-table');
+          });
+
+          // Transaction Status Filter
+          filterTable(".stat-inp", 'status', bookingpostdata)
+        </script>
 
     </div>
     <div class="save-container" id="save-ch-btn" style="display: none;">

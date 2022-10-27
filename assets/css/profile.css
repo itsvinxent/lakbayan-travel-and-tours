@@ -588,7 +588,8 @@
   cursor: pointer;
 }
 
-.package-search button#reset-search {
+.package-search button#reset-search,
+.package-search button#b-reset-search {
   background-color: #34495e;
 }
 

@@ -32,12 +32,8 @@ if ($_POST['is_filtering'] == 'true' and $_POST['booking'] == 'false') {
   try {
     $has_previous_value = false;
 
-    // Determines if the data to be displayed is for a specific Travel Agency Only. 
-    $hasagency = true;
-    $isadmin = false;
-    // if(isset($_POST['profile']) and $_POST['profile'] and isset($_POST['agencyid'])) {
-    if ($hasagency) {
-      $query_string .= " WHERE agencyID = 1 ";
+    if(isset($_POST['logged_user']) and $_POST['logged_user'] == 'agency') {
+      $query_string .= " WHERE agencyID = 1";
       $has_previous_value = true;
     }
 
@@ -89,11 +85,10 @@ if ($_POST['is_filtering'] == 'true' and $_POST['booking'] == 'false') {
 
   } finally {
     $query_string .= " GROUP BY AI.packageIDFrom";
-    // if(isset($_POST['profile']) and $_POST['profile'] and isset($_POST['agencyid'])) {
-    if ($hasagency) {
+    if(isset($_POST['logged_user']) and $_POST['logged_user'] == 'agency') {
       fetch_packagetbl($query_string, $conn, true);
     }
-    else if ($isadmin) {
+    else if(isset($_POST['logged_user']) and $_POST['logged_user'] == 'admin') {
       fetch_packagetbl($query_string, $conn, false);
     } else {
       fetch_packages($query_string, $conn);
@@ -113,11 +108,14 @@ if ($_POST['booking'] == 'true' and $_POST['is_filtering'] == 'false') {
 
     $has_previous_value = false;
 
-    $hasagency = true;
-    // if(isset($_POST['profile']) and $_POST['profile'] and isset($_POST['agencyid'])) {
-    if ($hasagency) {
-      $query_string .= " WHERE packageCreator = 1";
-      $has_previous_value = true;
+    if(isset($_POST['logged_user'])) {
+      if($_POST['logged_user'] == 'agency') {
+        $query_string .= " WHERE packageCreator = 1";
+        $has_previous_value = true;
+      } else if($_POST['logged_user'] == 'user') {
+        $query_string .= " WHERE id_user = 1";
+        $has_previous_value = true;
+      }
     }
 
     if (isset($_POST['b_name'])) {
