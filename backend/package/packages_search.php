@@ -2,8 +2,10 @@
 require_once "../connect/dbCon.php";
 include "packages_display.php";
 
+session_start();
+
 // Default Table Query
-$query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult,  AI.*, AG.agencyName 
+$query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName 
                     FROM traveldb.package_tbl AS PK 
                     INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                     INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom";
@@ -37,7 +39,7 @@ if ($_POST['is_filtering'] == 'true' and $_POST['booking'] == 'false') {
     $isadmin = false;
     // if(isset($_POST['profile']) and $_POST['profile'] and isset($_POST['agencyid'])) {
     if ($hasagency) {
-      $query_string .= " WHERE agencyID = 1 ";
+      $query_string .= " WHERE agencyID = $_SESSION[setID] ";
       $has_previous_value = true;
     }
 

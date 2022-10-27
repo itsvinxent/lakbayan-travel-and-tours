@@ -21,7 +21,24 @@ if(!$conn){
     mysqli_stmt_bind_param($qry, 'i',  $_SESSION['id']); //sets the parameters (?) above
 
     mysqli_stmt_execute($qry);
-    mysqli_stmt_bind_result($qry, $gotID, $gotName, $gotDesc, $gotAdd, $gotManID, $gotManPass, $gotPfPicture, $gotTelNumber, $gotEmail, $gotMName, $gotMContact);
+    mysqli_stmt_bind_result($qry, $gotID, 
+                                  $gotName, 
+                                  $gotDesc, 
+                                  $gotAdd, 
+                                  $gotManID, 
+                                  $gotPfPicture,
+                                  $gotBanner,
+                                  $gotTelNumber, 
+                                  $gotfblink,
+                                  $gottwlink, 
+                                  $gotiglink,
+                                  $gotEmail,
+                                  $gotDOT,
+                                  $gotProof,
+                                  $isdeleted, 
+                                  $gotMEmail, 
+                                  $gotMName, 
+                                  $gotMContact);
     mysqli_stmt_fetch($qry);
     
 
@@ -33,16 +50,40 @@ if(!$conn){
     $_SESSION['setDesc'] = $gotDesc;
     $_SESSION['setAdd'] = $gotAdd;
     $_SESSION['setManID'] = $gotManID;
-    $_SESSION['setManPass'] = $gotManPass;
-    $_SESSION['setPfPicture'] = $gotPfPicture;
-    $_SESSION['setTelNumber'] = $gotTelNumber;
-    $_SESSION['setEmail'] = $gotEmail;
 
+    if(empty($gotPfPicture)) $gotPfPicture = '../../DefaultAgent.png';
+
+    $_SESSION['setPfPicture'] = $gotPfPicture;
+
+    if(empty($gotBanner)) $gotBanner = '../../DefaultBannerAgent.jpg';
+
+    $_SESSION['setBanner'] = $gotBanner;
+
+    $_SESSION['setTelNumber'] = $gotTelNumber;
+    $_SESSION['setfblink'] = $gotfblink;
+    $_SESSION['settwlink'] = $gottwlink;
+    $_SESSION['setiglink'] = $gotiglink;
+    $_SESSION['setEmail'] = $gotEmail;
+    $_SESSION['isdeleted'] = $isdeleted;
+    
     // manager info 
+    $_SESSION['setMEmail'] = $gotMEmail;
     $_SESSION['setMName'] = $gotMName;
     $_SESSION['setMContact'] = $gotMContact;
 
     mysqli_stmt_close($qry);
+
+    $fblink = '';
+    $twlink = '';
+    $iglink = '';
+
+    
+    // mysqli_stmt_bind_param($qry_sm, 'i',  $_SESSION['id']); //sets the parameters (?) above
+
+    // mysqli_stmt_execute($qry_sm);
+    // mysqli_stmt_bind_result($qry_sm, $smedia_name);
+    // mysqli_stmt_fetch($qry_sm);
+
 
 
     // AGENCY PACKAGES

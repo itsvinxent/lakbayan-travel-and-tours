@@ -63,6 +63,7 @@
               echo 'href="about.php"';
             } ?>>About Us</a></li>
     <?php
+    
     if ($_SESSION['active'] == 'index') {
       if (isset($_SESSION['isLoggedIn'])) {
         if ($_SESSION['isLoggedIn'] == false) {
@@ -73,12 +74,14 @@
       } else {
         echo "<li id='goto'> <a class='logn'>";
       }
-    } else if ($_SESSION['active'] == 'profile') {
+    } else if ($_SESSION['active'] == 'profile' && $_SESSION['isLoggedIn'] == true) {
       echo "<li> <a id='modalOpen'class='logn active'>";
-    } elseif ($_SESSION['active'] == 's-dest' || $_SESSION['active'] == 's-pack') {
+
+    } else if (($_SESSION['active'] == 'dest' || $_SESSION['active'] == 'pack' || $_SESSION['active'] == 'map' || $_SESSION['active'] == 'about') && $_SESSION['isLoggedIn'] == true ) {
       echo "<li> <a href='../../user-profile.php' >";
+
     } else {
-      echo "<li> <a href='user-profile.php' >";
+      echo "<li> <a id='modalOpen'class='logn'>";
     }
 
     ?><img src="https://img.icons8.com/external-febrian-hidayat-gradient-febrian-hidayat/64/000000/external-user-user-interface-febrian-hidayat-gradient-febrian-hidayat.png" /></a></li>

@@ -1,6 +1,8 @@
 <?php
 include "backend/package/packages_display.php";
 include "backend/connect/dbCon.php";
+
+include "backend\auth\getagency.php";
 ?>
 <script>
   var $nav = $("._nav");
@@ -8,328 +10,319 @@ include "backend/connect/dbCon.php";
 </script>
 <link rel="stylesheet" href="assets/css/profile-edit.css">
 
-<section class="sections profile-view" id="profile-view" style="margin-top: 5rem;">
-  <div class="profile-view-container">
-    <div class="nav-vertical">
-      <div class="user">
-        <img src="assets/img/logo.png" alt="" style="height: 100px">
-        <p style="font-size: 17px; font-weight: bold;">Lakbayan Travel and Tours</p>
-        <span style="font-size: 13px;"><i class="far fa-eye" style="margin-right: 3px;"></i><a href="agency-profile.php?mode=view">View As Visitor</a></span>
-      </div>
-      <ul class="tabs">
-        <li data-tab-target="#info" class="tab active" id="acc-active">
-          <img src="https://img.icons8.com/plasticine/50/000000/name.png" />
-          My Account
-        </li>
-        <li data-tab-target="#package" class="tab" style="margin-bottom: 5px;" id="pack-active">
-          <img src="https://img.icons8.com/plasticine/50/000000/package.png" />
-          My Packages
-        </li>
-        <li data-tab-target=".booking" class="tab" id="sub-book-active">
-          <img src="https://img.icons8.com/plasticine/50/000000/transaction-list.png" />
-          My Transactions
-        </li>
-      </ul>
+    <section class="sections profile-view" id="profile-view" style="margin-top: 5rem;">
+      <div class="profile-view-container">
+        <div class="nav-vertical">
+          <div class="user">
+          <img src="<?php echo 'assets/img/users/travelagent/'.$_SESSION['setID'].'/pfp/'.$_SESSION['setPfPicture'];?>" alt="" style="height: 100px">
+            <p style="font-size: 17px; font-weight: bold;"><?php echo $_SESSION['setName']?></p>
+            <span style="font-size: 13px;"><i class="far fa-eye" style="margin-right: 3px;"></i><a href="agency-profile.php?mode=view">View As Visitor</a></span>
+          </div>
+          <ul class="tabs">
+            <li data-tab-target="#info" class="tab active" id="acc-active">
+              <img src="https://img.icons8.com/plasticine/50/000000/name.png" />
+              My Account
+            </li>
+            <li data-tab-target="#package" class="tab" style="margin-bottom: 5px;" id="pack-active">
+              <img src="https://img.icons8.com/plasticine/50/000000/package.png" />
+              My Packages
+            </li>
+            <li data-tab-target=".booking" class="tab" id="sub-book-active">
+              <img src="https://img.icons8.com/plasticine/50/000000/transaction-list.png" />
+              My Transactions
+            </li>
+          </ul>
+        </div>
+
+        <div class="main-panel" style="position: relative; width: 100%;">
+          <div class="tab-content" id="tab-content">
+            <!-- My Account Tab -->
+
+            <div id="info" data-tab-content class=" data-tab-content active">
+            <form action="backend\auth\updateprof.php" method="POST" enctype="multipart/form-data" style="padding-bottom: 3rem;" id="myaccountform">
+
+
+    <!-- <span id="save-ch-btn" class="save-ch-btn">
+      <button>Save Changes</button>
+    </span> -->
+
+    <!-- <div class="wall" style="display: flex; margin-top: 1rem; width: 100%;">
+    <div class="img">
+      <img src="assets/img/logo.png" alt="">
+      <input type="file" name="aPicture" id="aPicture" accept="image/gif, image/jpeg, image/png" style="opacity: 0;">
+      <label for="aPicture">
+        <div class="img-hover">
+          <div class="text">
+            <i class="fas fa-pen">
+            </i>Edit
+          </div>
+        </div>
+      </label>
     </div>
 
-    <div class="main-panel" style="position: relative; width: 100%;">
-      <div class="tab-content" id="tab-content">
-        <!-- My Account Tab -->
+    <div class="profile-banner">
+      <img src="assets/img/mountains.jpg" alt="">
+      <input type="file" name="aBanner" id="aBanner" accept="image/gif, image/jpeg, image/png" style="opacity: 0;">
+      <label for="aBanner">
+        <div class="banner-hover">
+          <div class="text" for="aBanner">
+            <i class="fas fa-pen"></i>Edit
+          </div>
+        </div>
+      </label>
+    </div>
+    </div> -->
 
-        <div id="info" data-tab-content class=" data-tab-content active">
-          <form id="myaccountform" action="backend\auth\updateprof.php" method="POST" style="padding-bottom: 3rem;">
+    <div class="profile-banner">
+      <?php 
+      
+      echo '<img id="img-banner" src="assets/img/users/travelagent/'.$_SESSION['setID'].'/banner/'.$_SESSION['setBanner'].'" alt="">';
+      ?>
+      <input type="file" name="profBanner" id="aBanner" accept="image/gif, image/jpeg, image/png" style="display: none;">
+      <label for="aBanner">
+        <div class="banner-hover">
+          <div class="text" for="aBanner">
+            <i class="fas fa-pen"></i>Edit
+          </div>
+        </div>
+      </label>
+    </div>
 
-
-            <!-- <span id="save-ch-btn" class="save-ch-btn">
-              <button>Save Changes</button>
-            </span> -->
-
-            <!-- <div class="wall" style="display: flex; margin-top: 1rem; width: 100%;">
-            <div class="img">
-              <img src="assets/img/logo.png" alt="">
-              <input type="file" name="aPicture" id="aPicture" accept="image/gif, image/jpeg, image/png" style="opacity: 0;">
-              <label for="aPicture">
-                <div class="img-hover">
-                  <div class="text">
-                    <i class="fas fa-pen">
-                    </i>Edit
-                  </div>
-                </div>
-              </label>
+    <div class="banner-logo">
+      <div class="image" style="left: 13%">
+        <?php 
+        echo '<img id="img-pic" src="assets/img/users/travelagent/'.$_SESSION['setID'].'/pfp/'.$_SESSION['setPfPicture'].'" alt="">';
+        ?>
+        <input class="middle" type="file" name="profPicture" id="aPicture" accept="image/gif, image/jpeg, image/png" style="display: none;">
+        <label for="aPicture">
+          <div class="middle">
+            <div class="text">
+              <i class="fas fa-pen"></i>Edit
             </div>
-
-            <div class="profile-banner">
-              <img src="assets/img/mountains.jpg" alt="">
-              <input type="file" name="aBanner" id="aBanner" accept="image/gif, image/jpeg, image/png" style="opacity: 0;">
-              <label for="aBanner">
-                <div class="banner-hover">
-                  <div class="text" for="aBanner">
-                    <i class="fas fa-pen"></i>Edit
-                  </div>
-                </div>
-              </label>
-            </div>
-          </div> -->
-
-            <div class="profile-banner">
-              <img id="img-banner" src="assets/img/islands.jpg" alt="">
-              <input type="file" name="aBanner" id="aBanner" accept="image/gif, image/jpeg, image/png" style="display: none;">
-              <label for="aBanner">
-                <div class="banner-hover">
-                  <div class="text" for="aBanner">
-                    <i class="fas fa-pen"></i>Edit
-                  </div>
-                </div>
-              </label>
-            </div>
-
-            <div class="banner-logo">
-              <div class="image" style="left: 13%">
-                <img id="img-pic" src="assets/img/logo.png" alt="">
-                <input class="middle" type="file" name="aPicture" id="aPicture" accept="image/gif, image/jpeg, image/png" style="display: none;">
-                <label for="aPicture">
-                  <div class="middle">
-                    <div class="text">
-                      <i class="fas fa-pen"></i>Edit
-                    </div>
-                  </div>
-                </label>
-              </div>
+          </div>
+        </label>
+      </div>
 
 
-              <?php
-              // '<div class="desc">
-              // <p class="desc-body active" id="desc-body">'.$disDesc.'</p>
-              // <input type="hidden" value="'.$disDesc.'">
-              echo
-              '<h1 style="font-size: 1.5em; margin-top: 0;">Agency Description</h1>
-              <div class="desc">
-                <p class="desc-body active" id="desc-body">Lakbayan Travel and Tours will provide a convenient and premium travel and tour service for local destinations in the Philippines. Lakbayan Travel and Tours offers tourists destinations that they would love and relax in. We also provide essential information to clients so that they are familiar with the culture of their chosen places.</p>
-                <textarea class="desc-textarea" name="" id="desc-textarea"></textarea>
-                <input type="hidden" value="Lakbayan Travel and Tours will provide a convenient and premium travel and tour service for local destinations in the Philippines. Lakbayan Travel and Tours offers tourists destinations that they would love and relax in. We also provide essential information to clients so that they are familiar with the culture of their chosen places."/>
-                <div class="desc-btn">
-                  <div class="edit-desc active" id="edit-desc-btn"><i class="fas fa-pen"></i></div>
-                  <div class="save-desc" id="save-desc-btn"><i class="fas fa-save"></i></div>
-                </div>
-              </div>'
-              ?>
+      <?php
+      // '<div class="desc">
+      // <p class="desc-body active" id="desc-body">'.$disDesc.'</p>
+      // <input type="hidden" value="'.$disDesc.'">
+      echo
+      '<h1 style="font-size: 1.5em; margin-top: 0;">Agency Description</h1>
+      <div class="desc">
+        <p class="desc-body active" id="desc-body">'.$_SESSION['setDesc'].'</p>
+        <textarea class="desc-textarea" name="profDesc" id="desc-textarea"></textarea>
+        <input type="hidden" value="'.$_SESSION['setDesc'].'"/>
+        <div class="desc-btn">
+          <div class="edit-desc active" id="edit-desc-btn"><i class="fas fa-pen"></i></div>
+          <div class="save-desc" id="save-desc-btn"><i class="fas fa-save"></i></div>
+        </div>
+      </div>'
+      ?>
+      
+    </div>
 
-            </div>
+    <h1>Agency Details</h1>
+    <div class="details">
 
-            <h1>Agency Details</h1>
-            <div class="details">
+      <div class="row top">
+        <span class="col-left">Name</span>
 
-              <div class="row top">
-                <span class="col-left">Name</span>
+        <?php
+        // echo '<span class="col-right active" id=""><p>'.$_SESSION['setName'].'</p></span>';
+        ?>
+        <span class="col-right active" id=""><p><?php echo $_SESSION['setName']?></p></span>
+        <span class="col-right-edit">
+          <input type="text" name="profName" id="" value="">
+          <input type="hidden" value="<?php echo $_SESSION['setName']?>">
+        </span>
+        <span class="col-edit active"><i class="fas fa-pen"></i></span>
+        <span class="col-save">
+          <div class="bg">
+            <i class="fas fa-save"></i>
+          </div>
+        </span>
+      </div>
 
-                <?php
-                // echo '<span class="col-right active" id=""><p>'.$_SESSION['setName'].'</p></span>';
-                ?>
-                <span class="col-right active" id="">
-                  <p>Lakbayan Travel and Tours</p>
-                </span>
-                <span class="col-right-edit">
-                  <input type="text" name="profName" id="" value="">
-                  <input type="hidden" value="<?php echo "Lakbayan Travel and Tours" ?>">
-                </span>
-                <span class="col-edit active"><i class="fas fa-pen"></i></span>
-                <span class="col-save">
-                  <div class="bg">
-                    <i class="fas fa-save"></i>
-                  </div>
-                </span>
-              </div>
+      <div class="row">
+        <span class="col-left">Address</span>
 
-              <div class="row">
-                <span class="col-left">Address</span>
+        <?php
+        // echo '<span class="col-right active" name="profAdd"><p>'.$disAdd.'</p></span>';
+        ?>
+        <span class="col-right active" id=""><p><?php echo $_SESSION['setAdd']?></p></span>
+        <span class="col-right-edit">
+          <input type="text" name="profAdd" id="" value="">
+          <input type="hidden" value="<?php echo $_SESSION['setAdd']?>">
+        </span>
+        <span class="col-edit active"><i class="fas fa-pen"></i></span>
+        <span class="col-save">
+          <div class="bg">
+            <i class="fas fa-save"></i>
+          </div>
+        </span>
+      </div>
 
-                <?php
-                // echo '<span class="col-right active" name="profAdd"><p>'.$disAdd.'</p></span>';
-                ?>
-                <span class="col-right active" id="">
-                  <p>Lakbayan Travel and Tours</p>
-                </span>
-                <span class="col-right-edit">
-                  <input type="text" name="profAdd" id="" value="">
-                  <input type="hidden" value="<?php echo "Lakbayan Travel and Tours" ?>">
-                </span>
-                <span class="col-edit active"><i class="fas fa-pen"></i></span>
-                <span class="col-save">
-                  <div class="bg">
-                    <i class="fas fa-save"></i>
-                  </div>
-                </span>
-              </div>
+      <div class="row">
+        <span class="col-left">Email</span>
 
-              <div class="row">
-                <span class="col-left">Email</span>
+        <?php
+        // echo '<span class="col-right active"><p>'.$disEmail.'</p></span>';
+        ?>
+        <span class="col-right active" id=""><p><?php echo $_SESSION['setEmail']?></p></span>
+        <span class="col-right-edit">
+          <input type="email" name="profEmail" id="" value="">
+          <input type="hidden" value="<?php echo $_SESSION['setEmail']?>">
+        </span>
+        <span class="col-edit active"><i class="fas fa-pen"></i></span>
+        <span class="col-save">
+          <div class="bg">
+            <i class="fas fa-save"></i>
+          </div>
+        </span>
+      </div>
 
-                <?php
-                // echo '<span class="col-right active"><p>'.$disEmail.'</p></span>';
-                ?>
-                <span class="col-right active" id="">
-                  <p>lakbayan@gmail.com</p>
-                </span>
-                <span class="col-right-edit">
-                  <input type="text" name="profEmail" id="" value="">
-                  <input type="hidden" value="<?php echo "lakbayan@gmail.com" ?>">
-                </span>
-                <span class="col-edit active"><i class="fas fa-pen"></i></span>
-                <span class="col-save">
-                  <div class="bg">
-                    <i class="fas fa-save"></i>
-                  </div>
-                </span>
-              </div>
+      <div class="row bot">
+        <span class="col-left">Telephone #</span>
 
-              <div class="row bot">
-                <span class="col-left">Telephone #</span>
+        <?php
+        // echo '<span class="col-right active"><p>'.$disTelNum.'</p></span>'
+        ?>
+        <span class="col-right active" id=""><p><?php echo $_SESSION['setTelNumber']?></p></span>
+        <span class="col-right-edit">
+          <input type="text" name="profTel" id="" value="" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          <input type="hidden" value="<?php echo $_SESSION['setTelNumber']?>">
+        </span>
+        <span class="col-edit active"><i class="fas fa-pen"></i></span>
+        <span class="col-save">
+          <div class="bg">
+            <i class="fas fa-save"></i>
+          </div>
+        </span>
+      </div>
+    </div>
 
-                <?php
-                // echo '<span class="col-right active"><p>'.$disTelNum.'</p></span>'
-                ?>
-                <span class="col-right active" id="">
-                  <p>09993548963</p>
-                </span>
-                <span class="col-right-edit">
-                  <input type="text" name="profTel" id="" value="">
-                  <input type="hidden" value="<?php echo "09993548963" ?>">
-                </span>
-                <span class="col-edit active"><i class="fas fa-pen"></i></span>
-                <span class="col-save">
-                  <div class="bg">
-                    <i class="fas fa-save"></i>
-                  </div>
-                </span>
-              </div>
-            </div>
+    <h1>Social Media Accounts</h1>
+    <div class="details">
+      <div class="row top">
+        <span class="col-left">Facebook</span>
+        <span class="col-right active">www.facebook.com/<p><?php echo $_SESSION['setfblink']?></p></span>
+        <span class="col-right-edit">
+          <input type="text" name="infblink" id="" value="">
+          <input type="hidden" value="<?php echo $_SESSION['setfblink']?>">
+        </span>
+        <span class="col-edit active"><i class="fas fa-pen"></i></span>
+        <span class="col-save">
+          <div class="bg">
+            <i class="fas fa-save"></i>
+          </div>
+        </span>
+      </div>
+      <div class="row">
+        <span class="col-left">Twitter</span>
+        <span class="col-right active">www.twitter.com/<p><?php echo $_SESSION['settwlink']?></p></span>
+        <span class="col-right-edit">
+          <input type="text" name="intwlink" id="" value="">
+          <input type="hidden" value="<?php echo $_SESSION['settwlink']?>">
+        </span>
+        <span class="col-edit active"><i class="fas fa-pen"></i></span>
+        <span class="col-save">
+          <div class="bg">
+            <i class="fas fa-save"></i>
+          </div>
+        </span>
+      </div>
+      <div class="row">
+        <span class="col-left">Instagram</span>
+        <span class="col-right active">www.instagram.com/<p><?php echo $_SESSION['setiglink']?></p></span>
+        <span class="col-right-edit">
+          <input type="text" name="iniglink" id="" value="">
+          <input type="hidden" value="<?php echo $_SESSION['setiglink']?>">
+        </span>
+        <span class="col-edit active"><i class="fas fa-pen"></i></span>
+        <span class="col-save">
+          <div class="bg">
+            <i class="fas fa-save"></i>
+          </div>
+        </span>
+      </div>
+      <div class="row bot">
+        <span class="col-left">Youtube</span>
+        <span class="col-right active">www.youtube.com/<p>lakbayantours</p></span>
+        <span class="col-right-edit">
+          <input type="text" name="" id="" value="">
+          <input type="hidden" value="<?php echo "lakbayantours"?>">
+        </span>
+        <span class="col-edit active"><i class="fas fa-pen"></i></span>
+        <span class="col-save">
+          <div class="bg">
+            <i class="fas fa-save"></i>
+          </div>
+        </span>
+      </div>
+    </div>
 
-            <h1>Social Media Accounts</h1>
-            <div class="details">
-              <div class="row top">
-                <span class="col-left">Facebook</span>
-                <span class="col-right active">www.facebook.com/<p>lakbayantours</p></span>
-                <span class="col-right-edit">
-                  <input type="text" name="" id="" value="">
-                  <input type="hidden" value="<?php echo "lakbayantours" ?>">
-                </span>
-                <span class="col-edit active"><i class="fas fa-pen"></i></span>
-                <span class="col-save">
-                  <div class="bg">
-                    <i class="fas fa-save"></i>
-                  </div>
-                </span>
-              </div>
-              <div class="row">
-                <span class="col-left">Twitter</span>
-                <span class="col-right active">www.twitter.com/<p>lakbayantours</p></span>
-                <span class="col-right-edit">
-                  <input type="text" name="" id="" value="">
-                  <input type="hidden" value="<?php echo "lakbayantours" ?>">
-                </span>
-                <span class="col-edit active"><i class="fas fa-pen"></i></span>
-                <span class="col-save">
-                  <div class="bg">
-                    <i class="fas fa-save"></i>
-                  </div>
-                </span>
-              </div>
-              <div class="row">
-                <span class="col-left">Instagram</span>
-                <span class="col-right active">www.instagram.com/<p>lakbayantours</p></span>
-                <span class="col-right-edit">
-                  <input type="text" name="" id="" value="">
-                  <input type="hidden" value="<?php echo "lakbayantours" ?>">
-                </span>
-                <span class="col-edit active"><i class="fas fa-pen"></i></span>
-                <span class="col-save">
-                  <div class="bg">
-                    <i class="fas fa-save"></i>
-                  </div>
-                </span>
-              </div>
-              <div class="row bot">
-                <span class="col-left">Youtube</span>
-                <span class="col-right active">www.youtube.com/<p>lakbayantours</p></span>
-                <span class="col-right-edit">
-                  <input type="text" name="" id="" value="">
-                  <input type="hidden" value="<?php echo "lakbayantours" ?>">
-                </span>
-                <span class="col-edit active"><i class="fas fa-pen"></i></span>
-                <span class="col-save">
-                  <div class="bg">
-                    <i class="fas fa-save"></i>
-                  </div>
-                </span>
-              </div>
-            </div>
+    <h1>Manager Information</h1>
+    <div class="details">
+      <div class="row top">
+        <span class="col-left">Name</span>
 
-            <h1>Manager Information</h1>
-            <div class="details">
-              <div class="row top">
-                <span class="col-left">Name</span>
+        <?php
+        // echo '<span class="col-right active">'.$disMName.'</span>';
+        ?>
+        <span class="col-right active" id=""><p>Name</p></span>
+        <span class="col-right-edit">
+          <input type="text" name="" id="" value="">
+          <input type="hidden" value="<?php echo "lakbayantours"?>">
+        </span>
+        <span class="col-edit active"><i class="fas fa-pen"></i></span>
+        <span class="col-save">
+          <div class="bg">
+            <i class="fas fa-save"></i>
+          </div>
+        </span>
+      </div>
+      <div class="row">
+        <span class="col-left">Contact #</span>
+        <?php
 
-                <?php
-                // echo '<span class="col-right active">'.$disMName.'</span>';
-                ?>
-                <span class="col-right active" id="">
-                  <p>Name</p>
-                </span>
-                <span class="col-right-edit">
-                  <input type="text" name="" id="" value="">
-                  <input type="hidden" value="<?php echo "lakbayantours" ?>">
-                </span>
-                <span class="col-edit active"><i class="fas fa-pen"></i></span>
-                <span class="col-save">
-                  <div class="bg">
-                    <i class="fas fa-save"></i>
-                  </div>
-                </span>
-              </div>
-              <div class="row">
-                <span class="col-left">Contact #</span>
-                <?php
+        // echo '<span class="col-right active">'.$disMContact.'</span>';
 
-                // echo '<span class="col-right active">'.$disMContact.'</span>';
+        ?>
+        <span class="col-right active" id=""><p>09993548963</p></span>
+        <span class="col-right-edit">
+          <input type="text" name="" id="" value="">
+          <input type="hidden" value="<?php echo "lakbayantours"?>">
+        </span>
+        <span class="col-edit active"><i class="fas fa-pen"></i></span>
+        <span class="col-save">
+          <div class="bg">
+            <i class="fas fa-save"></i>
+          </div>
+        </span>
+      </div>
+      <div class="row bot">
+        <span class="col-left">Email</span>
 
-                ?>
-                <span class="col-right active" id="">
-                  <p>09993548963</p>
-                </span>
-                <span class="col-right-edit">
-                  <input type="text" name="" id="" value="">
-                  <input type="hidden" value="<?php echo "lakbayantours" ?>">
-                </span>
-                <span class="col-edit active"><i class="fas fa-pen"></i></span>
-                <span class="col-save">
-                  <div class="bg">
-                    <i class="fas fa-save"></i>
-                  </div>
-                </span>
-              </div>
-              <div class="row bot">
-                <span class="col-left">Email</span>
+        <?php
+        // echo '<span class="col-right active">'.$disEmail.'</span>';
+        ?>
+        <span class="col-right active" id=""><p>ayalajv.23@gmail.com</p></span>
+        <span class="col-right-edit">
+          <input type="text" name="" id="" value="">
+          <input type="hidden" value="<?php echo "lakbayantours"?>">
+        </span>
+        <span class="col-edit active"><i class="fas fa-pen"></i></span>
+        <span class="col-save">
+          <div class="bg">
+            <i class="fas fa-save"></i>
+          </div>
+        </span>
+      </div>
+    </div>
 
-                <?php
-                // echo '<span class="col-right active">'.$disEmail.'</span>';
-                ?>
-                <span class="col-right active" id="">
-                  <p>ayalajv.23@gmail.com</p>
-                </span>
-                <span class="col-right-edit">
-                  <input type="text" name="" id="" value="">
-                  <input type="hidden" value="<?php echo "lakbayantours" ?>">
-                </span>
-                <span class="col-edit active"><i class="fas fa-pen"></i></span>
-                <span class="col-save">
-                  <div class="bg">
-                    <i class="fas fa-save"></i>
-                  </div>
-                </span>
-              </div>
-            </div>
-
-          </form>
+    </form>
         </div>
 
         <!-- Packages List Tab -->
@@ -367,12 +360,12 @@ include "backend/connect/dbCon.php";
                 <input type="text" name="package-location" id="package-location" placeholder="Enter a Location in the Philippines" list="sample" />
                 <datalist id="sample">
                   <?php
-                  $locquerystring = "SELECT DISTINCT Province FROM areas_tbl;";
+                  $locquerystring = "SELECT DISTINCT City FROM areas_tbl;";
                   $array = array();
                   $query = mysqli_query($conn, $locquerystring);
 
                   while ($row = mysqli_fetch_assoc($query)) {
-                    $array[] = $row['Province'];
+                    $array[] = $row['City'];
                   }
 
                   for ($i = 0; $i < count($array); $i++) {
@@ -409,11 +402,11 @@ include "backend/connect/dbCon.php";
             </div>
             <div id="full-table" class="fulltable" data-tab-target="#create-package">
               <?php
-              $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult,  AI.*, AG.agencyName 
+              $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName 
                       FROM traveldb.package_tbl AS PK 
                       INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                       INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
-                      WHERE agencyID = 1
+                      WHERE packageCreator = $_SESSION[setID]
                       GROUP BY AI.packageIDFrom";
 
               fetch_packagetbl($query_string, $conn, true);
@@ -604,14 +597,14 @@ include "backend/connect/dbCon.php";
 
         <!-- Create Packages Tab -->
         <div id="create-package" data-tab-content class="data-tab-content">
-          <form id="create-form">
+        <form id="create-form" action="backend\package\package_add.php" method="POST" enctype="multipart/form-data">
             <h1>Basic Travel Package Information</h1>
             <p>Please input the important details about the Travel Package.</p>
             <div class="details">
               <div class="left">
                 <div class="row">
                   <span><label for="c-package-name"><span style="color: red;">*</span>Package Name</label></span>
-                  <span><input type="text" name="c-package-name" id="c-package-name"></span>
+                  <span><input type="text" name="c-package-name" id="c-package-name" required></span>
                 </div>
                 <div class="row desc">
                   <span><label for="c-package-desc"><span style="color: red;">*</span>Description</label></span>
@@ -630,7 +623,8 @@ include "backend/connect/dbCon.php";
                       <option value="animals">Animal Life</option>
                       <option value="recreation">Recreation</option>
                       <option value="historical">Historical Landmarks</option>
-                    </select>
+                    </select> 
+                    <input type="hidden" name="hidden-categories" id="hidden-categories" required></input>
                     <!-- </datalist> -->
                     <span id="add-cat" style="margin-left: 10px; cursor: pointer; display: none;"><i class="fas fa-plus"></i></span>
 
@@ -662,7 +656,9 @@ include "backend/connect/dbCon.php";
                           "class": "fas fa-times remove-cat",
                           "style": "margin-left: 10px; font-size: 12px; cursor: pointer;"
                         })
+                        document.getElementById("hidden-categories").value = cat_array;
                         $div.append($close);
+
                       }
 
                       document.querySelectorAll('.remove-cat').forEach(removebtn => {
@@ -670,8 +666,15 @@ include "backend/connect/dbCon.php";
                           var remloc = removebtn.parentElement.innerText;
                           removebtn.parentElement.remove();
                           cat_array = cat_array.filter(function(letter) {
+
+                            
+                            document.getElementById("hidden-categories").value = cat_array;
+
+
                             return letter !== remloc;
                           });
+
+                          console.log(remloc);
                         });
                       });
 
@@ -686,12 +689,12 @@ include "backend/connect/dbCon.php";
                     <input type="text" name="package-locations" id="package-locations" placeholder="Enter a Location in the Philippines" list="sample" />
                     <datalist id="sample">
                       <?php
-                      $locquerystring = "SELECT DISTINCT Province FROM areas_tbl;";
+                      $locquerystring = "SELECT DISTINCT City FROM areas_tbl;";
                       $array = array();
                       $query = mysqli_query($conn, $locquerystring);
 
                       while ($row = mysqli_fetch_assoc($query)) {
-                        $array[] = $row['Province'];
+                        $array[] = $row['City'];
                       }
 
                       for ($i = 0; $i < count($array); $i++) {
@@ -700,6 +703,7 @@ include "backend/connect/dbCon.php";
 
                       ?>
                     </datalist>
+                    <input type="hidden" name="hidden-location" id="hidden-location"></input>
                     <span id="add-loc" style="margin-left: 10px; cursor: pointer; display: none;"><i class="fas fa-plus"></i></span>
 
                   </span>
@@ -747,6 +751,8 @@ include "backend/connect/dbCon.php";
                           "class": "fas fa-times remove-loc",
                           "style": "margin-left: 10px; font-size: 12px; cursor: pointer;"
                         })
+
+                        document.getElementById("hidden-location").value = loc_array;
                         $div.append($close);
                       }
                       document.querySelectorAll('.remove-loc').forEach(removebtn => {
@@ -754,6 +760,7 @@ include "backend/connect/dbCon.php";
                           var remloc = removebtn.parentElement.innerText;
                           removebtn.parentElement.remove();
                           loc_array = loc_array.filter(function(letter) {
+                            document.getElementById("hidden-location").value = loc_array;
                             return letter !== remloc;
                           });
                         });
@@ -768,7 +775,7 @@ include "backend/connect/dbCon.php";
                 <h3>Travel Package Images</h3>
                 <div class="upload-container">
                   <span style="text-align: center;">
-                    <input type="file" name="featured-img" id="featured-img" class="inputfile" accept="image/*" style="display: none;">
+                    <input type="file" name="featured-img" id="featured-img" class="inputfile" accept="image/*" style="display: none;" required>
                     <label id="label-featured" for="featured-img">
                       <div class="upload-btn">
                         <img src="https://img.icons8.com/plasticine/50/000000/plus-2-math.png" />
@@ -781,7 +788,7 @@ include "backend/connect/dbCon.php";
                     <input type="hidden" name="" value="Featured Photo">
                   </span>
                   <span style="text-align: center;">
-                    <input type="file" name="img1" id="img1" class="inputfile" accept="image/*" style="display: none;">
+                    <input type="file" name="additional[]" id="img1" class="inputfile" accept="image/*" style="display: none;" required>
                     <label id="label-img1" for="img1">
                       <div class="upload-btn">
                         <img src="https://img.icons8.com/plasticine/50/000000/plus-2-math.png" />
@@ -794,7 +801,7 @@ include "backend/connect/dbCon.php";
                     <input type="hidden" name="" value="Image 1">
                   </span>
                   <span style="text-align: center;">
-                    <input type="file" name="img2" id="img2" class="inputfile" accept="image/*" style="display: none;">
+                    <input type="file" name="additional[]" id="img2" class="inputfile" accept="image/*" style="display: none;" required>
                     <label id="label-img2" for="img2">
                       <div class="upload-btn">
                         <img src="https://img.icons8.com/plasticine/50/000000/plus-2-math.png" />
@@ -807,7 +814,7 @@ include "backend/connect/dbCon.php";
                     <input type="hidden" name="" value="Image 2">
                   </span>
                   <span style="text-align: center;">
-                    <input type="file" name="img3" id="img3" class="inputfile" accept="image/*" style="display: none;">
+                    <input type="file" name="additional[]" id="img3" class="inputfile" accept="image/*" style="display: none;">
                     <label id="label-img3" for="img3">
                       <div class="upload-btn">
                         <img src="https://img.icons8.com/plasticine/50/000000/plus-2-math.png" />
@@ -820,7 +827,7 @@ include "backend/connect/dbCon.php";
                     <input type="hidden" name="" value="Image 3">
                   </span>
                   <span style="text-align: center;">
-                    <input type="file" name="img4" id="img4" class="inputfile" accept="image/*" style="display: none;">
+                    <input type="file" name="additional[]" id="img4" class="inputfile" accept="image/*" style="display: none;">
                     <label id="label-img4" for="img4">
                       <div class="upload-btn">
                         <img src="https://img.icons8.com/plasticine/50/000000/plus-2-math.png" />
@@ -833,7 +840,7 @@ include "backend/connect/dbCon.php";
                     <input type="hidden" name="" value="Image 4">
                   </span>
                   <span style="text-align: center;">
-                    <input type="file" name="img5" id="img5" class="inputfile" accept="image/*" style="display: none;">
+                    <input type="file" name="additional[]" id="img5" class="inputfile" accept="image/*" style="display: none;">
                     <label id="label-img5" for="img5">
                       <div class="upload-btn">
                         <img src="https://img.icons8.com/plasticine/50/000000/plus-2-math.png" />
@@ -867,18 +874,18 @@ include "backend/connect/dbCon.php";
                 <div class="row">
                   <span>Cut-Off</span>
                   <span>
-                    <input type="datetime-local" name="resdate" placeholder="Select Booking/Cancellation Cut-off" />
+                    <input type="datetime-local" name="cutdate" placeholder="Select Booking/Cancellation Cut-off" />
                   </span>
                 </div>
                 <div class="row three">
                   <span>Age Limit</span>
-                  <span><input type="number" name="" id="" placeholder="Minimum Age" min="1"></span>
-                  <span><input type="number" name="" id="" placeholder="Maximum Age"></span>
+                  <span><input type="number" name="agemin" id="" placeholder="Minimum Age" min="1"></span>
+                  <span><input type="number" name="agemax" id="" placeholder="Maximum Age"></span>
                 </div>
                 <div class="row three">
                   <span>Participant Limit</span>
-                  <span><input type="number" name="" id="" placeholder="Minimum #" min="1"></span>
-                  <span><input type="number" name="" id="" placeholder="Maximum #"></span>
+                  <span><input type="number" name="headmin" id="" placeholder="Minimum #" min="1"></span>
+                  <span><input type="number" name="headmax" id="" placeholder="Maximum #"></span>
                 </div>
               </div>
               <div class="right">
@@ -904,7 +911,7 @@ include "backend/connect/dbCon.php";
                 <div class="row desc" id="row-base">
                   <span>Base Price</span>
                   <span>
-                    <input type="number" name="" id="" placeholder="PHP" min="1">
+                    <input type="number" name="price-adult" id="" placeholder="PHP" min="1">
                     <span style="font-size: 12px; text-align: justify;">
                       <p>The amount to be inputted would be the fixed price of the Package.</p>
                     </span>
@@ -946,7 +953,7 @@ include "backend/connect/dbCon.php";
                     </span>
                     <span class="toggle" style="position: relative;">
                       <label class="toggleswitch">
-                        <input id="partial-switch" type="checkbox" class="switch__input" checked>
+                        <input id="partial-switch" name='ispartial' type="checkbox" class="switch__input" checked>
                         <span class="slider-circle"></span>
                       </label>
                     </span>
@@ -956,11 +963,11 @@ include "backend/connect/dbCon.php";
                       Set Partial Payment by:
                       <span>
                         <span style=" display: grid; grid-template-columns: .1fr .4fr; align-items: center;">
-                          <input type="radio" name="partial-method" id="percentage" checked>
+                          <input type="radio" name="partial-method" value="percent" id="percentage" checked>
                           <label for="percentage" style="padding-left: 5px;">Percentage</label>
                         </span>
                         <span style=" display: grid; grid-template-columns: .1fr .4fr; align-items: center;">
-                          <input type="radio" name="partial-method" id="amount">
+                          <input type="radio" name="partial-method" value="exact" id="amount">
                           <label for="amount" style="padding-left: 5px;">Exact Amount</label>
                         </span>
                       </span>
@@ -968,7 +975,7 @@ include "backend/connect/dbCon.php";
                     <div style="margin-top: .6rem; display: grid; grid-template-rows: .2fr .2fr;">
                       <span id="partial-label">Input the Percentage</span>
                       <span>
-                        <input type="number">
+                        <input type="number" name="partial-amount">
                       </span>
                     </div>
                   </div>
@@ -998,7 +1005,7 @@ include "backend/connect/dbCon.php";
 
             </div>
             <div style="text-align: right; margin-top: 1rem;">
-              <button type="submit" class="saveform-btn">Save New Package</button>
+              <button type="submit" name="submitpack" class="saveform-btn">Save New Package</button>
             </div>
           </form>
 
@@ -1088,12 +1095,12 @@ include "backend/connect/dbCon.php";
                     <input type="text" name="package-locations" id="package-locations" placeholder="Enter a Location in the Philippines" list="sample" />
                     <datalist id="sample">
                       <?php
-                      $locquerystring = "SELECT DISTINCT Province FROM areas_tbl;";
+                      $locquerystring = "SELECT DISTINCT City FROM areas_tbl;";
                       $array = array();
                       $query = mysqli_query($conn, $locquerystring);
 
                       while ($row = mysqli_fetch_assoc($query)) {
-                        $array[] = $row['Province'];
+                        $array[] = $row['City'];
                       }
 
                       for ($i = 0; $i < count($array); $i++) {
@@ -1516,7 +1523,7 @@ include "backend/connect/dbCon.php";
       </div>
       <div class="save-container" id="save-ch-btn" style="display: none;">
         <div class="button-container">
-          <input type="submit" class="saveform-btn" form="myaccountform" value="Save Changes" />
+          <input type="submit" name='submitupdate' class="saveform-btn" form="myaccountform" value="Save Changes" />
           <button class="discardform-btn">Discard Changes</button>
         </div>
       </div>

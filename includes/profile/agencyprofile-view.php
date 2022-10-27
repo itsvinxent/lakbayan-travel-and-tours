@@ -1,6 +1,7 @@
 <?php
   include 'backend/auth/getagency.php';
 
+  $disMEmail = $_SESSION['setMEmail'];
   $disEmail = $_SESSION['setEmail'];
   $disDesc = $_SESSION['setDesc'];
   $disAdd = $_SESSION['setAdd'];
@@ -20,7 +21,9 @@
 <section class="sections profile-view" id="profile-view">
 
     <div class="banner-half">
-      <img id="img-banner" src="assets/img/islands.jpg" alt="">
+      <?php
+      echo '<img id="img-banner" src="assets/img/users/travelagent/'.$_SESSION['setID'].'/banner/'.$_SESSION['setBanner'].'" alt="">';
+      ?>
     </div>
 
     <div class="profile-container">
@@ -124,7 +127,7 @@
               <div class="row bot">
                 <span class="col-left">Email</span>
                 <?php
-                echo '<span class="col-right active">'.$disEmail.'</span>';
+                echo '<span class="col-right active">'.$disMEmail.'</span>';
                 ?>
               </div>
             </div>
