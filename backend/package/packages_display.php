@@ -64,7 +64,7 @@ function fetch_packagetbl($query_string, $conn, $withAdd)
 
         if ($withAdd) {
             echo '<span>
-                    <button id="package-create" data-tab-target="#create-package"><i class="fas fa-plus"></i>Add New Package</button>
+                    <button id="package-create" data-tab-target="#create-package" class="resetting"><i class="fas fa-plus"></i>Add New Package</button>
                 </span>';
         }
                 
@@ -109,7 +109,7 @@ function fetch_packagetbl($query_string, $conn, $withAdd)
                 </div>
             </td>
             <td>
-                <button type="button" data-tab-target="#edit-package" id="modalEOpen" class="edit-btn"><i class="far fa-edit"></i></button>
+                <button type="button" data-tab-target="#create-package" id="modalEOpen" class="pack-edit-btn resetting"><i class="far fa-edit"></i></button>
                 <button type="button" id="modalDOpen" class="delete-btn"><i class="fas fa-trash-alt"></i></button>
             </td>
         </tr>
@@ -158,7 +158,7 @@ function fetch_bookingtbl($query_string, $conn) {
             <td><?php echo $row['bookingStatus'] ?></td>
             <td><?php echo $row['bookingPrice'] ?></td>
             <td>
-                <button type="button" data-tab-target="#edit-booking" id="modalEOpen" class="edit-btn"><i class="far fa-edit"></i></button>
+                <button type="button" data-tab-target="#edit-booking" id="modalEOpen" class="book-edit-btn"><i class="far fa-edit"></i></button>
                 <button type="button" id="modalDOpen" class="delete-btn"><i class="fas fa-trash-alt"></i></button>
             </td>
         </tr>
@@ -166,6 +166,46 @@ function fetch_bookingtbl($query_string, $conn) {
     }
     echo '</tbody> </table> </div>';
     // mysqli_close($conn);
+}
+
+function fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $conn) {
+    // $qry_package = mysqli_query($conn, $query_string);
+    // $row = mysqli_fetch_array($qry_package);
+
+    // echo json_encode($row);
+
+    $qry_package = mysqli_query($conn, $package_qry);
+    $package = mysqli_fetch_array($qry_package);
+
+    $qry_categ = mysqli_query($conn, $categ_qry);
+    $cat_array = array();
+    
+    while ($category = mysqli_fetch_assoc($qry_categ)) {
+        $cat_array[] = $category['packageCategory'];
+    }
+
+    $qry_loc = mysqli_query($conn, $loc_qry);
+    $loc_array = array();
+    
+    while ($location = mysqli_fetch_assoc($qry_loc)) {
+        $loc_array[] = $location['City'];
+    }
+
+    $qry_img = mysqli_query($conn, $img_qry);
+    $img_array = array();
+    
+    while ($image = mysqli_fetch_assoc($qry_img)) {
+        $img_array[] = $image['packageImg_Name'];
+    }
+
+    echo json_encode(
+        array("details" => $package, 
+            "category" => $cat_array,
+            "location" => $loc_array,
+            "images" => $img_array
+        )
+    );
+
 }
 
 ?>

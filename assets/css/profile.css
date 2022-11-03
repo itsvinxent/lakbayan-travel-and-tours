@@ -767,6 +767,13 @@
   cursor: pointer;
 }
 
+.right .img-name {
+  width: 130px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .right .flatpickr-calendar.animate.inline {
   margin: 0 auto;
 }
@@ -785,9 +792,10 @@
   color: #fff;
 }
 
-.right .flatpickr-next-month {
+/* .right .flatpickr-next-month,
+.right .flatpickr-prev-month  {
   display: none;
-}
+} */
 
 /* Input Switch */
 .toggleswitch {

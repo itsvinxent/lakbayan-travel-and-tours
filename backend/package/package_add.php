@@ -47,12 +47,13 @@
         $partialtype = 'NOT'; //INSERT TO PACKAGE_TBL
         $partialamt = 0;
         if(isset($_POST['ispartial'])){
-        if($_POST['partial-method'] == 'percent'){
-            $partialtype = 'PERCENT';
-            $partialamt = $_POST['partial-amount'];}
-        }else if ($_POST['partial-method'] == 'exact'){
-            $partialtype = 'EXACT';
-            $partialamt = $_POST['partial-amount'];
+            if($_POST['partial-method'] == 'percent'){
+                $partialtype = 'PERCENT';
+                $partialamt = $_POST['partial-amount'];}
+            else if ($_POST['partial-method'] == 'exact'){
+                $partialtype = 'EXACT';
+                $partialamt = $_POST['partial-amount'];
+            }
         }
 
         $myid = $_SESSION['setID'];

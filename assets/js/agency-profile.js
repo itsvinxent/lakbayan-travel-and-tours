@@ -5,8 +5,14 @@ const saveChBtn = document.getElementById('save-ch-btn');
 var editcount = 0;
 
 tabs.forEach(tab => {
-    $(tab).on('click', () => {
-        const target = document.querySelector(tab.dataset.tabTarget)
+    const target = document.querySelector(tab.dataset.tabTarget);
+    var reset = document.querySelectorAll('.resetting');
+    var selector = null;
+    if (tab == document.getElementById('package-create') || tab == document.querySelector('.pack-edit-btn')) {
+        tab == document.getElementById('package-create') ? selector = '#package-create' : selector = '.pack-edit-btn';
+        tab = document.getElementById('full-table');
+    } 
+    $(tab).on('click', selector, () => {
         tabContents.forEach(tabContent => {
             tabContent.classList.remove('active')
         })
@@ -209,7 +215,15 @@ $(document.querySelector('.discardform-btn')).on('click', function(e) {
 var durations = [], duration = [], dates = [];
 var cutoff, cutoffObj;
 
-flatpickr("input[type=date-local]", {
+var displayCal = $('#date-display').flatpickr({
+    monthSelectorType: "static",
+    yearSelectorType: "static",
+    dateFormat: "D, M d Y h:i K",
+    mode: "multiple",
+    inline: true
+});
+
+var schedCal = $("#tourduration").flatpickr({
     altInput: true,
     altFormat: "D, F j, Y h:i K",
     dateFormat: "M-d-Y H:i:S",
@@ -225,19 +239,29 @@ flatpickr("input[type=date-local]", {
             dates.push(element);
             durations.push(element);
         });
-        flatpickr("#date-display", {
-            monthSelectorType: "static",
-            yearSelectorType: "static",
-            minDate: "today",
-            mode: "multiple",
-            defaultDate: dates,
-            inline: true
-        });
+        displayCal.setDate(dates.reverse(), "M-d-Y H:i:S");
 
         if (duration.length === 2) {
             duration.length = 0;
         }
         duration.push(instance.selectedDateElem.innerHTML);
+
+        // var listDate = [];
+        var starting;
+        if (dates[0] < dates[1]) {
+            starting = dates[0];
+        } else {
+            starting = dates[1];
+        }
+        // let loop = new Date(starting);
+        // listDate.push(starting);
+
+        // while (loop < ending) {
+        //     listDate.push(loop);
+        //     let newDate = loop.setDate(loop.getDate() + 1);
+        //     loop = new Date(newDate);
+        // }
+        cutoffCal.set('maxDate', starting);
 
         $('.right .flatpickr-innerContainer .selected').each(function () {
             if (duration.includes($(this)[0].innerHTML)) {
@@ -251,7 +275,7 @@ flatpickr("input[type=date-local]", {
     }
 });
 
-flatpickr("input[type=datetime-local]", {
+var cutoffCal = $("#cutdate").flatpickr({
     altInput: true,
     altFormat: "D, F j, Y h:i K",
     dateFormat: "M-d-Y H:i:S",
@@ -266,16 +290,13 @@ flatpickr("input[type=datetime-local]", {
             dates.push(element);
         });
         dates.push(cutoff);
-        flatpickr("#date-display", {
-            monthSelectorType: "static",
-            yearSelectorType: "static",
-            minDate: "today",
-            mode: "multiple",
-            defaultDate: dates,
-            inline: true
-            
-        });
+        displayCal.setDate(dates.reverse(), "M-d-Y H:i:S");
         cutoffObj = instance.selectedDateElem.innerHTML;
+
+        let cutDisable = new Date(cutoff);
+        console.log(typeof(cutDisable));
+        schedCal.set('disable', [cutDisable]);
+
         $('.right .flatpickr-innerContainer .selected').each(function () {
             if (duration.includes($(this)[0].innerHTML)) {
                 $(this).addClass("duration");
@@ -292,14 +313,6 @@ $(document).ready(function() {
     $('.right .flatpickr-innerContainer').css("pointer-events", "none");
 });
 
-flatpickr("#date-display", {
-    monthSelectorType: "static",
-    yearSelectorType: "static",
-    dateFormat: "D, M d Y h:i K",
-    minDate: "today",
-    mode: "multiple",
-    inline: true
-});
 
 // File Upload Labels
 var inputs = document.querySelectorAll('.inputfile');
@@ -328,11 +341,14 @@ Array.prototype.forEach.call(inputs, function (input) {
 var removeupload = document.querySelectorAll('.uploaded');
 removeupload.forEach(remover => {
     $(remover).click(function (e) { 
-        var target = this.previousElementSibling.previousElementSibling;
-        console.log(target);
-        $(target).val('');
-        this.previousElementSibling.style.display = "flex"
-        this.nextElementSibling.innerHTML = this.nextElementSibling.nextElementSibling.value;
-        this.style.display = "none";
+        removeuploadimg(this);
     });
 })
+
+function removeuploadimg(removebtn) {
+    var target = removebtn.previousElementSibling.previousElementSibling;
+    $(target).val('');
+    removebtn.previousElementSibling.style.display = "flex"
+    removebtn.nextElementSibling.innerHTML = removebtn.nextElementSibling.nextElementSibling.value;
+    removebtn.style.display = "none";
+}

@@ -3,7 +3,6 @@ var filter_req, filter_timeout;
 var pack_transact, pack_id, pack_customer;
 var bookingpostdata = {
   booking: true,
-  is_filtering: false,
   logged_user: "",
   b_name: "",
   customer_name: "",
@@ -14,7 +13,6 @@ var bookingpostdata = {
 var pack_name, pack_location, pack_cat, pack_duration = 0;
 var postdata = {
   is_filtering: true,
-  booking: false,
   logged_user: "",
   name: "",
   location: "",
@@ -91,9 +89,7 @@ function filterTimeout($postdata, $tableid) {
           this.labels[0].classList.remove('active');
         }
       });
-
       $post = postdata_append($post, $type, $(checkbox).val())
-      console.log($type)
       if ($type == 'availability') {
         package_data_input();
         filterTimeout($post, '#full-table');
@@ -101,6 +97,5 @@ function filterTimeout($postdata, $tableid) {
         booking_data_input();
         filterTimeout($post, '#fullb-table');
       }
-      console.log($post);
     });
   }

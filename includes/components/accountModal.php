@@ -23,8 +23,8 @@
             <h1>Welcome, $name!</h1>
             <p>You are logged in within the system. You can now start picking your destinations and book them with us.</p>
             <div class=\"buttons\">
-                <button id=\"modalLogin\" onClick=\"location.href='backend/auth/signout.php'\">Sign Out</button>
-                <button id=\"modalLogin\" onClick=\"location.href='../../agency-profile.php'\">Travel Agency</button>
+                <button id=\"modalLogin\" class='modal-login' onClick=\"location.href='backend/auth/signout.php'\">Sign Out</button>
+                <button id=\"modalLogin\" class='modal-login' onClick=\"location.href='agency-profile.php'\">Travel Agency</button>
                 <a id=\"modalClose\" class=\"btn\">Close</a>
             </div>
             </div>
@@ -36,7 +36,7 @@
             <h1>Welcome, $name!</h1>
             <p>You are logged in within the system. You can now start picking your destinations and book them with us.</p>
             <div class=\"buttons\">
-                <button id=\"modalLogin\" onClick=\"location.href='backend/auth/signout.php'\">Sign Out</button>
+                <button id=\"modalLogin\" class='modal-login' onClick=\"location.href='backend/auth/signout.php'\">Sign Out</button>
                 <a id=\"modalClose\" class=\"btn\">Close</a>
             </div>
             </div>

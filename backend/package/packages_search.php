@@ -30,7 +30,8 @@ function get_prefix()
   return " WHERE ";
 }
 
-if ($_POST['is_filtering'] == 'true' and $_POST['booking'] == 'false') {
+// Filter Queries for Packages Table
+if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
   try {
     $has_previous_value = false;
 
@@ -100,7 +101,7 @@ if ($_POST['is_filtering'] == 'true' and $_POST['booking'] == 'false') {
 }
 
 // Filter Queries for Booking Table
-if ($_POST['booking'] == 'true' and $_POST['is_filtering'] == 'false') {
+if (isset($_POST['booking']) and $_POST['booking'] == 'true') {
   try {
     $query_string = "SELECT IQ.*, CONCAT(US.fname, ' ',US.lname) AS fullname, BK.*, PK.packageTitle
                         FROM traveldb.inquiry_tbl AS IQ
@@ -151,4 +152,14 @@ if ($_POST['booking'] == 'true' and $_POST['is_filtering'] == 'false') {
     fetch_bookingtbl($query_string, $conn);
     // echo $query_string;
   }
+}
+
+// Package Edit Form UI
+if (isset($_POST['is_editing']) and $_POST['is_editing'] == 'true') {
+  $package_qry = "SELECT PK.* FROM traveldb.package_tbl AS PK WHERE PK.packageID = {$_POST['packageID']}";
+  $categ_qry = "SELECT * FROM traveldb.packagecateg_tbl where packageID_from = {$_POST['packageID']}";
+  $loc_qry =  "SELECT * FROM traveldb.packagedest_tbl INNER JOIN areas_tbl AS AT ON AT.cityID = packageAreasID WHERE packageDestID = {$_POST['packageID']}";
+  $img_qry = "SELECT * FROM traveldb.packageimg_tbl WHERE packageIDFrom = {$_POST['packageID']}";
+
+  fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $conn);
 }
