@@ -58,13 +58,20 @@ if(!$conn){
     $_SESSION['address'] = $address;
     $_SESSION['contact'] = $contact;
 
-    if (empty($profpic)) $profpic = "..\..\DefaultProf.jpg";
+    if (empty($profpic)) $profpic = "../../DefaultProf.jpg";
     $_SESSION['profpic'] = $profpic;
 
-    if (empty($userbanner)) $userbanner ="..\..\DefaultBanner.jpg";
+    if (empty($userbanner)) $userbanner ="../../DefaultBanner.jpg";
     $_SESSION['userbanner'] = $userbanner;
 
     // manager info 
     mysqli_stmt_close($stmt);
+}
+
+function view_otheruser($conn, $id){
+    $id = mysqli_real_escape_string($conn, $id);
+    $sql = mysqli_query($conn, "SELECT *, CONCAT(fname, ' ',lname) AS fullname FROM user_tbl WHERE id=$id");
+    $got = mysqli_fetch_array($sql);
+    return $got;
 }
 ?> 

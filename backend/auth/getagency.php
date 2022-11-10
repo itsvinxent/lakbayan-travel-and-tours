@@ -96,4 +96,24 @@ if(!$conn){
                                          GROUP BY AI.packageIDFrom");
    
 }
+
+function view_other($conn, $id){
+    $id = mysqli_real_escape_string($conn, $id);
+    $sql = mysqli_query($conn, "SELECT AG.*, CONCAT(US.fname, ' ', US.lname) AS fullname, US.email, US.contactnumber  FROM agency_tbl AS AG INNER JOIN user_tbl AS US ON AG.agencyManID=US.id WHERE agencyID=$id");
+    $got = mysqli_fetch_array($sql);
+    return $got;
+}
+
+function view_otherpack($conn, $id){
+    $id = mysqli_real_escape_string($conn, $id);
+    $sql = mysqli_query($conn, "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult,  AI.*
+                                FROM traveldb.package_tbl AS PK 
+                                INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                                LEFT JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
+                                WHERE packageCreator = $id AND (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL)
+                                GROUP BY AI.packageIDFrom");
+    // $got = mysqli_fetch_array($sql);
+    return $sql;
+}
+
 ?> 

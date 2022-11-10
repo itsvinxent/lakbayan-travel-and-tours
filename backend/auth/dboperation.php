@@ -46,4 +46,30 @@ function multi_getid($conn, $data, $table, $id): int{
         return $idgot[$id];
     }
 }
+
+function multi_deletedb($conn, $data, $table, $idname, $id){
+    foreach($data as $key => $val){
+        $name[] =  $key;
+        $value[] = "'".$val."'";
+    }
+
+    $name = implode(",", $name);
+    $value = implode(",", $value);
+
+    echo '<br>'. $name. ' ' .$value;
+
+    //$sql = "".$this->insert."".$table."($name)".$this->values."($value)";
+    $sql = "DELETE FROM ".$table." WHERE ".$name."=".$value." AND ".$idname."=".$id."";
+    echo '<br>'.$sql;
+
+    
+    
+    
+    if(mysqli_query($conn, $sql)){
+
+    }
+
+}
+
+
 ?>

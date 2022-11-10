@@ -122,7 +122,8 @@ require 'imgverification.php';
 
     
     // mysqli_close($conn);
-if(isset($_POST['aTerms']) && isset($_FILES['aVerify'])){
+    $nope = 0;
+if(isset($_POST['aTerms']) && isset($_FILES['aVerify']) && $nope == 1){
 
         $gotVerify  = $_FILES['aVerify'];
         $chk =  image_verification($gotVerify);

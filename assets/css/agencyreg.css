@@ -340,12 +340,16 @@ textarea {
   .wizard {
     width: 920px;
     position: relative; }
-  
+
   .wizard > .steps {
+    display: none;}
+  
+  /* .wizard > .steps {
+    display: none;
     position: absolute;
     justify-content: center;
-    top: 27.44%;
-    right: 30%;
+    top: 150px;
+    right: 275px;
     transform: translateX(50%);
     z-index: 9; }
   
@@ -385,14 +389,15 @@ textarea {
     background: var(--logo-yellow-dark) }
   .wizard > .steps li.checked a {
     background: var(--logo-yellow-dark) }
-    .wizard > .steps li.checked a:after {
-      width: 58px; }
+   .wizard > .steps li.checked a:after {
+      width: 58px; 
+    }
   .wizard > .steps li:last-child a {
     margin-right: 0; }
   .wizard > .steps li:first-child a:before {
     display: none; }
   .wizard > .steps li:first-child a:after {
-    display: none; }
+    display: none; } */
   
   .wizard > .content {
     position: relative;
@@ -425,19 +430,25 @@ textarea {
     padding-right: 51px; }
   
   .form-header {
+    position: relative;
     text-align: center; }
-  
+
   h3 {
 
     font-size: 22px;
     color: var(--logo-blue-dark);
     text-transform: uppercase;
-    letter-spacing: 7px;
+    letter-spacing: 2.5px;
     padding: 5px 15px;
     display: inline-block;
     border: 1px solid #dad8e4;
     margin-bottom: 75px; }
   
+    h4 {
+      position: absolute;
+      top: 50%;
+      right: 50%;
+    }
 
   
   .form-row {
@@ -523,13 +534,18 @@ textarea {
     background: url("../images/textarea-bg.png") no-repeat right bottom 3px; }
 
 
-  .error{
-
+  label.error, label label.error{
+    position: absolute;
     color: red;
     font-size: x-small;
-    bottom: 0;
-    top: 10px;
+    bottom: -10px;
+    left: 0;
+    padding: 0px;
+    margin: 0px;
+  }
 
+  label label.error{
+    bottom: -18px;
   }
   
   .actions {
@@ -599,10 +615,13 @@ textarea {
     position: absolute;
     opacity: 0;
     cursor: pointer; }
+
   .checkbox-tick input:checked ~ .checkmark {
     background: #999; }
-    .checkbox-tick input:checked ~ .checkmark:after {
-      display: block; }
+
+  .checkbox-tick input:checked ~ .checkmark:after {
+    display: block; }
+    
   .checkbox-tick .checkmark {
     position: absolute;
     top: 3px;

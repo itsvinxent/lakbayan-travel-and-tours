@@ -105,139 +105,146 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                 <h2></h2>
                 <section>
                     <div class="inner">
-						<div class="image-holder">
-							<img src="assets\img\AgencyReg1.jfif" alt="">
-						</div>
-						<div class="form-content" >
-							<div class="form-header">
-								<h3>AGENCY INFORMATION</h3>
-							</div>
-							<p>Please fill with your agency details</p>
-							<div class="form-row">
-								<div class="form-holder w-100">
-									<input type="text" name="aName" id="aName" placeholder="Agency Name" class="form-control" required>
-								</div>
-								<!-- <div class="form-holder">
-									<input type="text" placeholder="Last Name" class="form-control">
-								</div> -->
-							</div>
-							<div class="form-row">
-								<div class="form-holder">
-									<input type="email" name="aEmail" id="aEmail" placeholder="Agency Email" class="form-control" required>
-								</div>
-								<div class="form-holder"> 
-									<input type="text" name="aNumber" id="aNumber" placeholder="Agency Number" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="11" required>
-								</div>
-							</div>
-							<div class="form-row">
-								<div class="form-holder w-100">
-									<input type="text" name="aAddress" id="aAddress" placeholder="Agency Address" class="form-control" reeuired>
-							  </div>
-					      <!-- <div class="form-holder" style="align-self: flex-end; transform: translateY(4px);">
-									<div class="checkbox-tick">
-										<label class="male">
-											<input type="radio" name="gender" value="male" checked> Male<br>
-											<span class="checkmark"></span>
-										</label>
-										<label class="female">
-											<input type="radio" name="gender" value="female"> Female<br>
-											<span class="checkmark"></span>
-										</label>
-									</div> 
-								</div>-->
-							</div>
-                <!-- <div class="form-row">
-                  <div class="form-holder w-65">
-                    <textarea name="" id="" placeholder="Agency Description" class="form-control" style="height: 99px;"></textarea>
-                  </div>
-                </div> -->
-							<!-- <div class="checkbox-circle">
-								<label>
-									<input type="checkbox" checked> Nor again is there anyone who loves or pursues or desires to obtaini.
-									<span class="checkmark"></span>
-								</label>
-							</div> -->
-						</div>
-					</div>
+                      <div class="image-holder">
+                        <img src="assets\img\AgencyReg1.jfif" alt="">
+                      </div>
+                      <div class="form-content" >
+                  
+                        <div class="form-header">
+                          <h3>AGENCY INFORMATION</h3>
+                          <h4>1 of 3</h4>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                          </div>
+                        </div>
+                        <p>Please fill with your agency details</p>
+                        <div class="form-row">
+                          <div class="form-holder w-100">
+                            <input type="text" name="aName" id="aName" placeholder="Agency Name" class="form-control" >
+                          </div>
+                          <!-- <div class="form-holder">
+                            <input type="text" placeholder="Last Name" class="form-control">
+                          </div> -->
+                        </div>
+                        <div class="form-row">
+                          <div class="form-holder">
+                            <input type="email" name="aEmail" id="aEmail" placeholder="Agency Email" class="form-control" >
+                          </div>
+                          <div class="form-holder"> 
+                            <input type="text" name="aNumber" id="aNumber" placeholder="Agency Number" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="11" >
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-holder w-100">
+                            <input type="text" name="aAddress" id="aAddress" placeholder="Agency Address" class="form-control" >
+                          </div>
+                          <!-- <div class="form-holder" style="align-self: flex-end; transform: translateY(4px);">
+                            <div class="checkbox-tick">
+                              <label class="male">
+                                <input type="radio" name="gender" value="male" checked> Male<br>
+                                <span class="checkmark"></span>
+                              </label>
+                              <label class="female">
+                                <input type="radio" name="gender" value="female"> Female<br>
+                                <span class="checkmark"></span>
+                              </label>
+                            </div> 
+                          </div>-->
+                        </div>
+                          <!-- <div class="form-row">
+                            <div class="form-holder w-65">
+                              <textarea name="" id="" placeholder="Agency Description" class="form-control" style="height: 99px;"></textarea>
+                            </div>
+                          </div> -->
+                        <!-- <div class="checkbox-circle">
+                          <label>
+                            <input type="checkbox" checked> Nor again is there anyone who loves or pursues or desires to obtaini.
+                            <span class="checkmark"></span>
+                          </label>
+                        </div> -->
+                      </div>
+                    </div>
                 </section>
 
 				<!-- SECTION 2 -->
                 <h2></h2>
                 <section>
                     <div class="inner">
-						<div class="image-holder">
-							<img src="assets\img\AgencyReg2.jfif" alt="">
-						</div>
-						<div class="form-content">
-							<div class="form-header">
-								<h3>MANAGER INFORMATION</h3>
-							</div>
-							<p>Please fill with additional info</p>
-							<div class="form-row">
-								<div class="form-holder">
-									<input type="text" name="aMFName" id="aMFName" placeholder="First Name" class="form-control">
-								</div>
+                      <div class="image-holder">
+                        <img src="assets\img\AgencyReg2.jfif" alt="">
+                      </div>
+                      <div class="form-content">
+                        <div class="form-header">
+                          <h3>MANAGER INFORMATION</h3>
+                          <h4>2 of 3</h4>
+                        </div>
+                        <p>Please fill with additional info</p>
+                        <div class="form-row">
+                          <div class="form-holder">
+                            <input type="text" name="aMFName" id="aMFName" placeholder="First Name" class="form-control">
+                          </div>
 
-                <div class="form-holder">
-									<input type="text" name="aMLName" id="aMLName" placeholder="Last Name" class="form-control">
-								</div>
-							</div>
+                          <div class="form-holder">
+                            <input type="text" name="aMLName" id="aMLName" placeholder="Last Name" class="form-control">
+                          </div>
+                        </div>
 
-							<div class="form-row">
-								<div class="form-holder w-100">
-									<input type="text" name="aPassword" id="aPassword" placeholder="Password" class="form-control">
-								</div>
-							</div>
+                        <div class="form-row">
+                          <div class="form-holder w-100">
+                            <input type="text" name="aPassword" id="aPassword" placeholder="Password" class="form-control">
+                          </div>
+                        </div>
 
-							<div class="form-row">
-								<!-- <div class="select">
-									<div class="form-holder">
-										<div class="select-control">Your country</div>
-										<i class="zmdi zmdi-caret-down"></i>
-									</div>
-									<ul class="dropdown">
-										<li rel="United States">United States</li>
-										<li rel="United Kingdom">United Kingdom</li>
-										<li rel="Viet Nam">Viet Nam</li>
-									</ul>
-								</div> -->
-								<div class="form-holder"></div>
-							</div>
-						</div>
-					</div>
+                        <div class="form-row">
+                          <!-- <div class="select">
+                            <div class="form-holder">
+                              <div class="select-control">Your country</div>
+                              <i class="zmdi zmdi-caret-down"></i>
+                            </div>
+                            <ul class="dropdown">
+                              <li rel="United States">United States</li>
+                              <li rel="United Kingdom">United Kingdom</li>
+                              <li rel="Viet Nam">Viet Nam</li>
+                            </ul>
+                          </div> -->
+                          <div class="form-holder"></div>
+                        </div>
+                      </div>
+                    </div>
                 </section>
 
                 <!-- SECTION 3 -->
                 <h2></h2>
                 <section>
                     <div class="inner">
-						<div class="image-holder">
-							<img src="assets\img\AgencyReg3.jfif" alt="">
-						</div>
-						<div class="form-content">
-							<div class="form-header">
-								<h3>VERIFICATION</h3>
-							</div>
-							<p>Verify your Travel Agency</p>
-							<div class="form-row">
-              <div class="form-holder w-100">
-									<input type="text" name="aDot" id="aDot" placeholder="Enter DOT Accreditation Number" class="form-control">
-								</div>
-							</div>
-              <p>Upload your Accredition Certificate <i></i></p>
-              <div class="form-row">
-              <div class="form-holder w-100">
-									<input type="file" name="aVerify" id="aVerify" placeholder="Upload your Accredition Certificate" class="form-control">
-								</div>
-							</div>
-							<div class="checkbox-circle mt-24">
-								<label>
-									<input type="checkbox" name="aTerms" id="aTermss" checked>  Please accept <a href="#">terms and conditions</a>
-									<span class="checkmark"></span>
-								</label>
-							</div>
-						</div>
-					</div>
+                      <div class="image-holder">
+                        <img src="assets\img\AgencyReg3.jfif" alt="">
+                      </div>
+                      <div class="form-content">
+                        <div class="form-header">
+                          <h3>VERIFICATION</h3>
+                          <h4>3 of 3</h4>
+                        </div>
+                        <p>Verify your Travel Agency</p>
+                        <div class="form-row">
+                        <div class="form-holder w-100">
+                            <input type="text" name="aDot" id="aDot" placeholder="Enter DOT Accreditation Number" class="form-control">
+                          </div>
+                        </div>
+                        <p>Upload your Accredition Certificate <i></i></p>
+                        <div class="form-row">
+                        <div class="form-holder w-100">
+                            <input type="file" name="aVerify" id="aVerify" placeholder="Upload your Accredition Certificate" class="form-control">
+                          </div>
+                        </div>
+                        <div class="checkbox-circle mt-24">
+                          <label>
+                            <input type="checkbox" name="aTerms" id="aTerms" checked>  Please accept <a href="#">terms and conditions</a>
+                            <span class="checkmark"></span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
                 </section>
             </form>
 	</div>
@@ -251,8 +258,86 @@ if(isset($_SESSION['isLoggedIn']) == false) {
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
 
 <script>
+  // $(function(){
+  //   $("#wizard").validate({
+  //   rules: {
+  //     aName: "required",
+  //     aEmail: {
+  //       required: true,
+  //       email: true
+  //     },
+  //     aNumber: {
+  //       phoneUS:true,
+  //       range: [1, 11]
+  //     },
+  //     agree: 'required',
+  //     aAddress: "required",
+  //     aNumber: "required",
+  //     aMFName: "required",
+  //     aMLName: "required",
+  //     aPassword: "required"
+
+
+  //   }
+  // })
+  // })
+  
   $(function(){
-    $("#wizard").validate({
+
+    $('ul[role="tablist"]').hide();
+
+    var form = $("#wizard").show();
+    var tinybutt = $('.wizard > .steps li a');
+    var count = 0;
+
+    form.steps({
+        headerTag: "h2",
+        bodyTag: "section",
+        transitionEffect: "slide",
+        enableAllSteps: true,
+        transitionEffectSpeed: 275,
+        errorClass: "error",
+        loadingTemplate: '<span class="spinner"></span> #text#',
+        autoFocus: true,
+        labels: {
+            finish: "Submit",
+            next: "Next",
+            previous: "Back"
+        },
+        onStepChanging: function(event, currentIndex, newIndex)
+        {
+
+          form.validate().settings.ignore = ":disabled,:hidden";
+
+          console.log(count);
+          if (($('#aName').val() === null || $('#aEmail').val() === null || $('#aAddress').val() === null || $('#aNumber').val() === null ) && currentIndex == 0 ) {
+            count++;
+            return false;}
+
+          if (($('#aMFName').val() === null || $('#aMLName').val() === null || $('#aPassword').val() === null) && currentIndex == 1 ) {
+          return false;}
+
+          if(currentIndex > newIndex) return true;
+
+          return form.valid();
+        },
+        onStepChanged: function(event, currentIndex, priorIndex){
+          //if(currentIndex === 2 && priorIndex === 3) form.steps("previous");
+          console.log("CI => " + currentIndex);
+          console.log("PI => " + priorIndex);
+        },
+        onFinishing: function(event, currentIndex){
+          if($('#aDot').val() === null || $('#aVerify').val() === null || $('#aTerms').val() === null){
+            return false;
+          }
+
+          return form.valid();
+        },
+        onFinished: function (event, currentIndex){
+          form.submit();
+        }
+
+    }).validate({
     rules: {
       aName: "required",
       aEmail: {
@@ -260,59 +345,43 @@ if(isset($_SESSION['isLoggedIn']) == false) {
         email: true
       },
       aNumber: {
-        requireed: true,
         phoneUS:true,
         range: [1, 11]
       },
       agree: 'required',
       aAddress: "required",
-      aNumber: "required"
+      aNumber: "required",
+      aMFName: "required",
+      aMLName: "required",
+      aPassword: "required",
+      aDot: "required",
+      aVerify: {
+        required: true
+      },
+      aTerms: "required"
+    },
+    messages: {
+      aTerms: "Please accept the terms and service",
+      aVerify: "Please select a file",
+      aDot: "Please enter your DOT number"
     }
-  })
-  })
-  
-
-  $(function(){
-	$("#wizard").steps({
-        headerTag: "h2",
-        bodyTag: "section",
-        transitionEffect: "none",
-        enableAllSteps: true,
-        transitionEffectSpeed: 250,
-        errorClass: 'error',
-        saveState: true,
-        labels: {
-            finish: "Submit",
-            next: "Next",
-            previous: "Back"
-        },
-        onFinished: function (event, currentIndex){
-          var inputcontent = new Array();
-          $('input').each(function(){
-            if($(this).val() === null){
-              return false;
-            }else $("#wizard").submit();
-          })
-          
-       
-        
-        }
     });
     $('.wizard > .steps li a').click(function(){
     	$(this).parent().addClass('checked');
-		$(this).parent().prevAll().addClass('checked');
-		$(this).parent().nextAll().removeClass('checked');
+      $(this).parent().prevAll().addClass('checked');
+      $(this).parent().nextAll().removeClass('checked');
     });
     // Custome Jquery Step Button
-    $('.forward').click(function(){
-      if($('#aName').val() === null){
-        return false;
-      }else
-    	$("#wizard").steps('next');
-    })
-    $('.backward').click(function(){
-        $("#wizard").steps('previous');
-    })
+    // $('.forward').click(function(){
+    //   if($('#aName').val() === null){
+    //     return false;
+    //   }else
+    // 	$("#wizard").steps('next');
+    // })
+    // $('.backward').click(function(){
+    //     $("#wizard").steps('previous');
+    // })
+
     // Select Dropdown
     $('html').click(function() {
         $('.select .dropdown').hide(); 
@@ -339,6 +408,8 @@ if(isset($_SESSION['isLoggedIn']) == false) {
     }
 
 })
+
+
 </script>
 
 <script>

@@ -4,43 +4,55 @@ set_include_path(dirname(__FILE__));
 require 'imgverification.php';
 session_start();
 
+// ACCOUNT INFORMATION
+$firstName = $_POST['fname'];
+$lastName = $_POST['lname'];
+$inEmail = $_POST['email'];
+$inPass = $_POST['pass'];
 
+$inImage = $_FILES['aPicture']['name'];
+$inBan = $_FILES['aBanner']['name'];
 
-$inName = $_POST['inName'];
-$inAdd = $_POST['inAdd'];
-$inEmail = $_POST['inEmail'];
-$inTel = $_POST['inTel'];
-$inImage = $_FILES['inPicture']['name'];
+if (empty($firstName)) $firstName = $firstName = $_SESSION['fname'];
+if (empty($lastName)) $lastName = $_SESSION['lname'];
+if (empty($inEmail)) $inEmail =  $_SESSION['email'];
+if (empty($inPass)) $inPass =  $_SESSION['password'];
+if ($inImage == null) $inImage = $_SESSION['profpic'];
+if($inBan == null) $inBan = $_SESSION['userbanner'];
 
-if ($inImage == null) {
-    echo 'im null';
+// PERSONAL INFORMATION
+$inTel = $_POST['contact'];
+$inAdd = $_POST['address'];
+$inBirth = strtotime($_POST['bday']);
+$inGender = $_POST['gender'];
+$inRace = $_POST['race'];
+$inNat = $_POST['nationality'];
+$inReligion = $_POST['religion'];
 
-    $inImage = $_SESSION['profpic'];
-
-    echo $inImage;
-}
-if (empty($inName)) 
-    {
-        $firstName = $_SESSION['fname'];
-        $lastName = $_SESSION['lname'];
-    } else {
-        $reversedName = explode(' ', strrev($inName), 2);
-        $lastName = strrev($reversedName[0]);
-        $firstName = strrev($reversedName[1]);
-    }
+if (empty($inBirth)) {$inBirth = date("Y-m-d", strtotime($_SESSION['birthday']));
+}else $inBirth = date("Y-m-d", $inBirth);
 
 if (empty($inAdd)) $inAdd =  $_SESSION['address'];
-if (empty($inEmail)) $inEmail =  $_SESSION['email'];
 if (empty($inTel)) $inTel = $_SESSION['contact'];
+if (empty($inGender)) $inGender = $_SESSION['gender'];
+if (empty($inRace)) $inRace = $_SESSION['race'];
+if (empty($inNat)) $inNat = $_SESSION['nationality'];
+if (empty($inReligion)) $inTel = $_SESSION['religion'];
 
 
 $userID = $_SESSION['id'];
 
+// IMAGE DIRECTORY CHECK
 $placehere = '../../assets/img/users/traveler/'.$userID.'/pfp/';
-
 //checks if dir exist and makes one if it does not
 if(!file_exists($placehere)){
     mkdir($placehere, 0777, true);
+}
+
+$placeban = '../../assets/img/users/traveler/'.$userID.'/banner/';
+//checks if dir exist and makes one if it does not
+if(!file_exists($placeban)){
+    mkdir($placeban, 0777, true);
 }
 
 
@@ -48,56 +60,43 @@ include '..\connect\dbCon.php';
 
 // echo 'the email is '.$checking.' checked!';
 
-// if (isset($_POST['submit']) && isset($_FILES['inPicture'])){
-//     $imgName = $_FILES['inPicture']['name'];
-//     $imgSize = $_FILES['inPicture']['size'];
-//     $imgTemp = $_FILES['inPicture']['tmp_name'];
-//     $imgError = $_FILES['inPicture']['error'];
-
-//     if ($imgError === 0){
-
-//         if(!($imgSize > 5000000)){
-//             $imgAllowed = pathinfo($imgName, PATHINFO_EXTENSION); 
-//             $toLower = strtolower($imgAllowed);
-//             $allowedExt = array("jpg", "jpeg", "png");
-
-//             if(in_array($toLower, $allowedExt)){
-//                 $updatedName = uniqid("PFP-", true).'.'.$toLower; //NAME TO PUT TO DATABASE
-//                 $uploadToFile = '../../assets/img/users/traveler/'.$userID.'/pfp/'.$updatedName; //UPLOAD LOC
-            
-            
-//             }
-//         }
-        
-//     }else if($imgError == 4){
-
-//     }else{
-
-//     }
-
-// }
 $img = array();
 $chk = array();
-$nope = 0;
+$nope = 1;
+
+echo $inBirth;
 
 echo "BITCH ".$nope;
 
-if (isset($_FILES['inPicture']) && isset($_POST['submit']) && $nope == 1){
-    $img = $_FILES['inPicture'];
+
+
+if (isset($_POST['submit']) && $nope == 1){
+    //IMAGE CHECK
+    $img = $_FILES['aPicture'];
     $chk = image_verification($img);
 
-    if($chk == false && $img['error'] != 4){
+    //BANNER CHECK
+    $ban = $_FILES['aBanner'];
+    $chkban = image_verification($ban);
 
+    if($chk == false && $img['error'] != 4){
         echo 'There was a problem with the image';
     }else{
-    
-        $temploc = $img['tmp_name'];
-        $extension = strtolower(pathinfo($img['name'], PATHINFO_EXTENSION));
-        $updated = uniqid("PFP-TR-", true).'.'.$extension;
-    
+
+        //PROFILE
+        $updated = rename_image($img, "PFP-TR-");
         $uploadto = $placehere.$updated;
 
-        if($img['error'] == 4) $updated = $inImage;
+        if($img['error'] == 4) $updated = $inImage; 
+
+        //BANNER
+        $updatedban = rename_image($ban, "BAN-TR");
+        $uploadban = $placeban.$updatedban;
+
+        if($ban['error'] == 4) $updatedban = $inBan;
+
+        if($inPass == $_SESSION['password']){ $newpass = $_SESSION['password'];
+        }else $newpass = password_hash($inPass, PASSWORD_BCRYPT);
 
         if (!$conn){
     
@@ -108,14 +107,21 @@ if (isset($_FILES['inPicture']) && isset($_POST['submit']) && $nope == 1){
                                lname='$lastName',
                                `address`='$inAdd',
                                email='$inEmail',
-                               contactnumber= $inTel,
-                               profpicture='$updated'
+                               contactnumber= '$inTel',
+                               profpicture='$updated',
+                               userbanner='$updatedban',
+                               `password`='$newpass', 
+                               birthday='$inBirth',
+                               gender='$inGender',
+                               race='$inRace',
+                               religion='$inReligion',
+                               nationality='$inNat'
                             WHERE id = $userID"; //Replace with Session
         
             if (mysqli_query($conn, $qry)){
+                if ($img['error'] != 4) move_uploaded_file($img['tmp_name'], $uploadto);
+                if ($ban['error'] != 4) move_uploaded_file($ban['tmp_name'], $uploadban);
                 echo '<meta http-equiv="refresh" content="0;URL=../../user-profile.php" />';
-                if ($img['error'] != 4) move_uploaded_file($temploc, $uploadto);
-                
             }else{
                 echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
         

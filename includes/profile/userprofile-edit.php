@@ -95,7 +95,7 @@ include "backend/auth/getuser.php";
               <div class="row">
                 <span class="col-left">Last Name</span>
                 <!-- <span class="col-right active"><p>De Ocampo</p></span> -->
-                 <span class="col-right active"><?php echo $_SESSION['lname']?></span>
+                 <span class="col-right active"><p><?php echo $_SESSION['lname']?></p></span>
                 <span class="col-right-edit">
                   <input type="text" name="lname" id="lname" value="">
                   <input type="hidden" value="<?php echo $_SESSION['lname']?>">

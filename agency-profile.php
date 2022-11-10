@@ -1,9 +1,11 @@
 <?php
 session_start();
 $_SESSION['active'] = 'profile';
+$_SESSION['utype'] = $_SESSION['utype'] ?? null;
 if (isset($_SESSION['isLoggedIn']) == false) {
   $_SESSION['isLoggedIn'] = false;
-} else if ($_SESSION['utype'] != 'manager'){
+  
+} else if ($_SESSION['utype'] != 'manager' && $_SESSION['isLoggedIn']==true){
   echo '<meta http-equiv="refresh" content="0;URL=../../user-profile.php" />';
 }
 // Determines if the page will be loaded on 0 - ViewMode or 1 - EditMode
@@ -26,7 +28,7 @@ $isAgency = true;
   <link rel="stylesheet" href="assets/css/footer.css">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
-  <link rel="stylesheet" href="assets/css/chatbox.css">
+  <!-- <link rel="stylesheet" href="assets/css/chatbox.css"> -->
 
   <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />

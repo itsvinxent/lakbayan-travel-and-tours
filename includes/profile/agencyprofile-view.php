@@ -8,6 +8,23 @@
   $disTelNum = $_SESSION['setTelNumber'];
   $disMName = $_SESSION['setMName'];
   $disMContact = $_SESSION['setMContact'];
+
+  if(isset($_GET['id'])){
+    $viewID = $_GET['id'];
+
+    $display = view_other($conn, $viewID);
+
+    $displaypack = view_otherpack($conn, $viewID);
+    
+    if($display == null){
+      echo '<meta http-equiv="refresh" content="0;URL=agency-profile.php" />';
+    }
+  }else{
+    $viewID = $_SESSION['setID'];
+    
+    $display = view_other($conn, $viewID);
+    $displaypack = view_otherpack($conn, $viewID);
+  }
 ?>
 <script>
   $(function() {
@@ -22,22 +39,25 @@
 
     <div class="banner-half">
       <?php
-      echo '<img id="img-banner" src="assets/img/users/travelagent/'.$_SESSION['setID'].'/banner/'.$_SESSION['setBanner'].'" alt="">';
+       echo '<img id="img-banner" src="assets/img/users/travelagent/'.$display['agencyID'].'/banner/'.$display['agencyBanner'].'" alt="">';
       ?>
     </div>
 
     <div class="profile-container">
       <div class="banner-logo">
           <div class="image">
-            <img src="assets/img/logo.png" alt="">
+            <?php 
+
+              echo '<img src="assets/img/users/travelagent/'.$display['agencyID'].'/pfp/'.$display['agencyPfPicture'].'" alt="">';
+            ?>
           </div>
 
         <div class="top">
           <span>  
           <?php
 
-            echo '<h1 class="agency-name">'.$_SESSION['setName'].'</h1>
-                  <p class="agency-email">'.$disEmail.'</p>';
+            echo '<h1 class="agency-name">'.$display['agencyName'].'</h1>
+                  <p class="agency-email">'.$display['agencyEmail'].'</p>';
           ?>
 
           </span>
@@ -56,7 +76,7 @@
         
         echo 
         '<div class="desc" style="pointer-events: none;">
-          <p class="desc-body active" id="desc-body">'.$disDesc.'</p>
+          <p class="desc-body active" id="desc-body">'.$display['agencyDescription'].'</p>
         </div>'
         ?>
       </div>
@@ -79,28 +99,28 @@
               <div class="row top">
                 <span class="col-left">Name</span>
                 <?php 
-                echo '<span class="col-right active" id="">'.$_SESSION['setName'].'</span>';
+                echo '<span class="col-right active" id="">'.$display['agencyName'].'</span>';
                 ?>
               </div>
 
               <div class="row">
                 <span class="col-left">Address</span>
                 <?php
-                echo '<span class="col-right active" name="profAdd">'.$disAdd.'</span>';
+                echo '<span class="col-right active" name="profAdd">'.$display['agencyAddress'].'</span>';
                 ?>
               </div>
 
               <div class="row">
                 <span class="col-left">Email</span>
                 <?php
-                echo '<span class="col-right active">'.$disEmail.'</span>';
+                echo '<span class="col-right active">'.$display['agencyEmail'].'</span>';
                 ?>
               </div>
 
               <div class="row bot">
                 <span class="col-left">Telephone #</span>
                 <?php
-                echo '<span class="col-right active">'.$disTelNum.'</span>'
+                echo '<span class="col-right active">'.$display['agencyTelNumber'].'</span>'
                 ?>
               </div>
             </div>
@@ -110,19 +130,19 @@
               <div class="row top">
                 <span class="col-left">Name</span>
                 <?php 
-                echo '<span class="col-right active">'.$disMName.'</span>';
+                echo '<span class="col-right active">'.$display['fullname'].'</span>';
                 ?>
               </div>
               <div class="row">
                 <span class="col-left">Contact #</span>
                 <?php
-                echo '<span class="col-right active">'.$disMContact.'</span>';
+                echo '<span class="col-right active">'.$display['contactnumber'].'</span>';
                 ?>
               </div>
               <div class="row bot">
                 <span class="col-left">Email</span>
                 <?php
-                echo '<span class="col-right active">'.$disMEmail.'</span>';
+                echo '<span class="col-right active">'.$display['email'].'</span>';
                 ?>
               </div>
             </div>
@@ -130,7 +150,7 @@
 
         <div id="package" data-tab-content class="data-tab-content">
           <?php 
-            while($row = mysqli_fetch_array($qry_packages))
+            while($row = mysqli_fetch_array($displaypack))
             {
             ?>
 
@@ -139,7 +159,9 @@
                 <div class="image">
                   
                  <?php
-                 echo '<img src="data:image/jpg;base64,'.base64_encode($row['packageImg_Name']).'" alt=""/>';
+                  if (isset($row['packageImg_Name'])){
+                    echo '<img src="assets/img/users/travelagent/'.$row['packageCreator'].'/package/'.$row['packageID'].'/img/'.$row['packageImg_Name'].'" alt=""/>';}
+                  else echo '<img src="assets/img/Missing.jpeg" alt=""/>';
                  ?>
                 </div>
 
@@ -174,7 +196,7 @@
             </div>
               
             <?php 
-            }
+            } echo '<center><p style="padding: 10px 0px 0px 0px;"> No more packages to display</p></center>';
             ?>
 
         </div>

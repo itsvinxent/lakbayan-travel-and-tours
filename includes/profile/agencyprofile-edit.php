@@ -23,7 +23,7 @@ include "backend\auth\getagency.php";
               <img src="https://img.icons8.com/plasticine/50/000000/name.png" />
               My Account
             </li>
-            <li data-tab-target="#package" class="tab" style="margin-bottom: 5px;" id="pack-active">
+            <li data-tab-target="#package" class="tab" style="margin-bottom: 5px;" id="pack-active" onclick="returnForm()">
               <img src="https://img.icons8.com/plasticine/50/000000/package.png" />
               My Packages
             </li>
@@ -271,10 +271,10 @@ include "backend\auth\getagency.php";
         <?php
         // echo '<span class="col-right active">'.$disMName.'</span>';
         ?>
-        <span class="col-right active" id=""><p>Name</p></span>
+        <span class="col-right active" id=""><p><?php echo $_SESSION['setMName']?></p></span>
         <span class="col-right-edit">
           <input type="text" name="" id="" value="">
-          <input type="hidden" value="<?php echo "lakbayantours"?>">
+          <input type="hidden" value="<?php echo $_SESSION['setMName']?>">
         </span>
         <span class="col-edit active"><i class="fas fa-pen"></i></span>
         <span class="col-save">
@@ -290,10 +290,10 @@ include "backend\auth\getagency.php";
         // echo '<span class="col-right active">'.$disMContact.'</span>';
 
         ?>
-        <span class="col-right active" id=""><p>09993548963</p></span>
+        <span class="col-right active" id=""><p><?php echo $_SESSION['setMContact']?></p></span>
         <span class="col-right-edit">
           <input type="text" name="" id="" value="">
-          <input type="hidden" value="<?php echo "lakbayantours"?>">
+          <input type="hidden" value="<?php echo $_SESSION['setMContact']?>">
         </span>
         <span class="col-edit active"><i class="fas fa-pen"></i></span>
         <span class="col-save">
@@ -308,10 +308,10 @@ include "backend\auth\getagency.php";
         <?php
         // echo '<span class="col-right active">'.$disEmail.'</span>';
         ?>
-        <span class="col-right active" id=""><p>ayalajv.23@gmail.com</p></span>
-        <span class="col-right-edit">
+       <span class="col-right active" id=""><p><?php echo $_SESSION['setMEmail']?></p></span>
+       <span class="col-right-edit">
           <input type="text" name="" id="" value="">
-          <input type="hidden" value="<?php echo "lakbayantours"?>">
+          <input type="hidden" value="<?php echo $_SESSION['setMEmail']?>">
         </span>
         <span class="col-edit active"><i class="fas fa-pen"></i></span>
         <span class="col-save">
@@ -574,12 +574,11 @@ include "backend\auth\getagency.php";
                           cat_array = cat_array.filter(function(letter) {
 
                             
-                            document.getElementById("hidden-categories").value = cat_array;
-
+                           
 
                             return letter !== remloc;
                           });
-
+                          document.getElementById("hidden-categories").value = cat_array;
                           console.log(remloc);
                         });
                       });
@@ -666,9 +665,10 @@ include "backend\auth\getagency.php";
                           var remloc = removebtn.parentElement.innerText;
                           removebtn.parentElement.remove();
                           loc_array = loc_array.filter(function(letter) {
-                            document.getElementById("hidden-location").value = loc_array;
+                            
                             return letter !== remloc;
                           });
+                          document.getElementById("hidden-location").value = loc_array;
                         });
                       });
 
@@ -729,9 +729,10 @@ include "backend\auth\getagency.php";
                           var remloc = removebtn.parentElement.innerText;
                           removebtn.parentElement.remove();
                           inc_array = inc_array.filter(function(letter) {
-                            document.getElementById("hidden-inclusions").value = inc_array;
+                            
                             return letter !== remloc;
                           });
+                          document.getElementById("hidden-inclusions").value = inc_array;
                         });
                       });
 
@@ -745,7 +746,7 @@ include "backend\auth\getagency.php";
                 <h3>Travel Package Images</h3>
                 <div class="upload-container">
                   <span style="text-align: center;">
-                    <input type="file" name="featured-img" id="featured-img" class="inputfile" accept="image/*" style="display: none;" required>
+                    <input type="file" name="featured-img" id="featured-img" class="inputfile" accept="image/*" style="display: none;">
                     <label id="label-featured" for="featured-img">
                       <div class="upload-btn">
                         <img src="https://img.icons8.com/plasticine/50/000000/plus-2-math.png" />
@@ -758,8 +759,8 @@ include "backend\auth\getagency.php";
                     <input type="hidden" value="Featured Photo">
                     <input type="hidden" name="featured-img-name" id="featured-img-name">
                   </span>
-                  <span style="text-align: center;">
-                    <input type="file" name="additional[]" id="img1" class="inputfile" accept="image/*" style="display: none;" required>
+                  <span style="text-align: center;"  onclick="onUpdate(1)">
+                    <input type="file" name="additional[]" id="img1" class="inputfile" accept="image/*" style="display: none;">
                     <label id="label-img1" for="img1">
                       <div class="upload-btn">
                         <img src="https://img.icons8.com/plasticine/50/000000/plus-2-math.png" />
@@ -772,8 +773,8 @@ include "backend\auth\getagency.php";
                     <input type="hidden" value="Image 1">
                     <input type="hidden" name="img1-name" id="img1-name">
                   </span>
-                  <span style="text-align: center;">
-                    <input type="file" name="additional[]" id="img2" class="inputfile" accept="image/*" style="display: none;" required>
+                  <span style="text-align: center;"  onclick="onUpdate(2)">
+                    <input type="file" name="additional[]" id="img2" class="inputfile" accept="image/*" style="display: none;">
                     <label id="label-img2" for="img2">
                       <div class="upload-btn">
                         <img src="https://img.icons8.com/plasticine/50/000000/plus-2-math.png" />
@@ -786,7 +787,7 @@ include "backend\auth\getagency.php";
                     <input type="hidden" value="Image 2">
                     <input type="hidden" name="img2-name" id="img2-name">
                   </span>
-                  <span style="text-align: center;">
+                  <span style="text-align: center;"  onclick="onUpdate(3)">
                     <input type="file" name="additional[]" id="img3" class="inputfile" accept="image/*" style="display: none;">
                     <label id="label-img3" for="img3">
                       <div class="upload-btn">
@@ -800,7 +801,7 @@ include "backend\auth\getagency.php";
                     <input type="hidden" value="Image 3">
                     <input type="hidden" name="img3-name" id="img3-name">
                   </span>
-                  <span style="text-align: center;">
+                  <span style="text-align: center;"  onclick="onUpdate(4)">
                     <input type="file" name="additional[]" id="img4" class="inputfile" accept="image/*" style="display: none;">
                     <label id="label-img4" for="img4">
                       <div class="upload-btn">
@@ -814,7 +815,7 @@ include "backend\auth\getagency.php";
                     <input type="hidden" value="Image 4">
                     <input type="hidden" name="img4-name" id="img4-name">
                   </span>
-                  <span style="text-align: center;">
+                  <span style="text-align: center;"  onclick="onUpdate(5)">
                     <input type="file" name="additional[]" id="img5" class="inputfile" accept="image/*" style="display: none;">
                     <label id="label-img5" for="img5">
                       <div class="upload-btn">
@@ -1197,6 +1198,23 @@ include "backend\auth\getagency.php";
                 $(filetext).prev().prev().css("display", "none");
               }
 
+            }
+
+            function onUpdate(i){
+              let hiddenimgname = "#img"+i+"-name";
+              filetext = $(hiddenimgname).prev().prev().text();
+              
+              $(hiddenimgname).val(filetext);
+            }
+
+            function changeForm(){
+              var change = document.getElementById("create-form");
+              change.action = "backend\\package\\package_edit.php";
+            }
+
+            function returnForm(){
+              var change = document.getElementById("create-form");
+              change.action = "backend\\package\\package_add.php";
             }
 
           </script>

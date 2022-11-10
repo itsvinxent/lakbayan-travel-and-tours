@@ -290,6 +290,7 @@ if (isset($_SESSION['booking-stat']) == false) {
                     FROM traveldb.package_tbl AS PK 
                     INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                     INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
+                    WHERE (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) 
                     GROUP BY AI.packageIDFrom";
 
           fetch_packages($query_string, $conn, false);

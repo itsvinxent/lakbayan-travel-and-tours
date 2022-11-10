@@ -14,16 +14,16 @@ function fetch_packages($query_string, $conn, $editmode)
             <div class="image">
                 <?php
                 // echo '<img src="data:image/jpg;base64,' . base64_encode($row['packageImg_Name']) . '" alt="" style="height: 160px;"/>';
-                echo <<<END
-                    <img src="assets/img/users/travelagent/{$row['packageCreator']}/package/{$row['packageID']}/img/{$row['packageImg_Name']}"/>
-                END;
+                if (isset($row['packageImg_Name'])){
+                    echo '<img src="assets/img/users/travelagent/'.$row['packageCreator'].'/package/'.$row['packageID'].'/img/'.$row['packageImg_Name'].'" alt=""/>';}
+                else echo '<img src="assets/img/Missing.jpeg" alt=""/>';
                 // echo '<img src="users/travelagent/' .$row['packageCreator']. 'package/' .$row['packageID']. '//img//' . $row['packageImg_Name'] . " alt="" style="height: 160px;"/>';
                 ?>
             </div>
             <div class="content">
                 <h2><?php echo $row['packageTitle'] ?></h2>
                 <p style="font-size: 12px;">by
-                    <a href="agency-profile.php"> <?php echo $row['agencyName'] ?> </a>
+                <a href="agency-profile.php?mode=view&id=<?php echo $row['packageCreator'] ?>"> <?php echo $row['agencyName'] ?> </a> 
                 </p>
                 <div class="rating">
                     <?php
@@ -127,7 +127,7 @@ function fetch_packagetbl($query_string, $conn, $withAdd)
                 </div>
             </td>
             <td>
-                <button type="button" data-tab-target="#create-package" id="modalEOpen" class="pack-edit-btn resetting"><i class="far fa-edit"></i></button>
+                <button type="button" data-tab-target="#create-package" id="modalEOpen" class="pack-edit-btn resetting" onclick='changeForm()'><i class="far fa-edit"></i></button>
                 <button type="button" id="modalDOpen" class="delete-btn"><i class="fas fa-trash-alt"></i></button>
             </td>
         </tr>
@@ -194,12 +194,14 @@ function fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $inc_
 
     $qry_package = mysqli_query($conn, $package_qry);
     $package = mysqli_fetch_array($qry_package);
+    $_SESSION['PACKAGE_ID'] = $package['packageID'];
 
     $qry_categ = mysqli_query($conn, $categ_qry);
     $cat_array = array();
     
     while ($category = mysqli_fetch_assoc($qry_categ)) {
         $cat_array[] = $category['packageCategory'];
+        $_SESSION['CATEGORY_GOT'] = $cat_array;
     }
 
     $qry_loc = mysqli_query($conn, $loc_qry);
@@ -207,6 +209,7 @@ function fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $inc_
     
     while ($location = mysqli_fetch_assoc($qry_loc)) {
         $loc_array[] = $location['City'];
+        $_SESSION['LOCATIONS_GOT'] = $loc_array;
     }
 
     $qry_img = mysqli_query($conn, $img_qry);
@@ -214,6 +217,7 @@ function fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $inc_
     
     while ($image = mysqli_fetch_assoc($qry_img)) {
         $img_array[] = $image['packageImg_Name'];
+        $_SESSION['IMAGES_GOT'] = $img_array;
     }
 
     $qry_incl = mysqli_query($conn, $inc_qry);
