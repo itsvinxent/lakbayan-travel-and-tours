@@ -8,14 +8,8 @@
 //     }
 // }, 5000);
 
-var count = 1;
-document.getElementById('btn' + count).checked = true;
-
-document.getElementById("next-btn").onclick = function () { nextFunction() };
-document.getElementById("prev-btn").onclick = function () { prevFunction() };
-
-function nextFunction() {
-    if (count > 2) {
+function nextFunction(imgCount) {
+    if (count >= imgCount) {
         count = 1;
     } else {
         count++;
@@ -23,9 +17,9 @@ function nextFunction() {
     document.getElementById('btn' + count).checked = true;
 }
 
-function prevFunction() {
+function prevFunction(imgCount) {
     if (count == 1) {
-        count = 3
+        count = imgCount;
     } else {
         count--;
     }

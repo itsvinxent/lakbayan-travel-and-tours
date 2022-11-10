@@ -56,6 +56,7 @@ input.field:focus {
     max-height: 380px;
     background-color: white;
     position: relative;
+    cursor: pointer;
 }
 
 .wrapper:hover .learn-btn,

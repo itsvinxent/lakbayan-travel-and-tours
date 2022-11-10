@@ -92,7 +92,8 @@
 .modal button, 
 .booking-modal button, 
 .user-modal button, 
-.admin-usr .modal-container .tab-content button {
+.admin-usr .modal-container .tab-content button, 
+.edit-modal-login{
   border-radius: 20px;
 	border: none;
 	color: #FFFFFF;
@@ -110,7 +111,8 @@
 .modal .modal-login, 
 .booking-modal .modal-login,
 .user-modal .modal-login,
-.admin-usr .tab-content .modal-login {
+.admin-usr .tab-content .modal-login,
+.edit-modal-login {
   background: linear-gradient(90deg, var(--logo-yellow-dark), var(--first-color), var(--logo-blue-dark));
   margin-right: 20px;
 }
@@ -125,13 +127,13 @@
   background-image: linear-gradient(90deg, var(--logo-blue-dark), var(--first-color), var(--logo-yellow-dark));
 } */
 
-.modal .buttons, .booking-modal .buttons, .user-modal .buttons, .admin-usr .tab-content .buttons{
+.modal .buttons, .booking-modal .buttons, .user-modal .buttons, .admin-usr .tab-content .buttons, .edit-buttons{
   display: flex;
   justify-content: space-evenly;
   padding-top: 20px;
 }
 
-.modal a#modalClose.btn, 
+a#modalClose.btn, 
 a#modalBClose.btn,
 a#modalEClose.btn, 
 a#modalDClose.btn {

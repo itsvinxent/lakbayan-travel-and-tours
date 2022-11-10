@@ -18,7 +18,7 @@ if (isset($_POST['query'])) {
   $query_string .= " WHERE PK.packageTitle LIKE '%{$_POST['query']}%'
                     GROUP BY AI.packageIDFrom";
 
-  fetch_packages($query_string, $conn);
+  fetch_packages($query_string, $conn, false);
 }
 
 // Function for determining the proper prefix/suffix to be added to the SQL Query
@@ -51,7 +51,7 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
     }
 
     if (isset($_POST['duration']) and $_POST['duration'] != 0) {
-      $query_string .= get_prefix() . "PK.packagePeriod = {$_POST['duration']}";
+      $query_string .= get_prefix() . "DATEDIFF(packageEndDate, packageStartDate) = {$_POST['duration']}";
       $has_previous_value = true;
     }
 
@@ -87,6 +87,7 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
     // }
 
   } finally {
+    $query_string .= get_prefix() ."PK.is_deleted = 0";
     $query_string .= " GROUP BY AI.packageIDFrom";
     if(isset($_POST['logged_user']) and $_POST['logged_user'] == 'agency') {
       fetch_packagetbl($query_string, $conn, true);
@@ -94,7 +95,7 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
     else if(isset($_POST['logged_user']) and $_POST['logged_user'] == 'admin') {
       fetch_packagetbl($query_string, $conn, false);
     } else {
-      fetch_packages($query_string, $conn);
+      fetch_packages($query_string, $conn, false);
     }
     // echo $query_string;
   }
@@ -160,6 +161,8 @@ if (isset($_POST['is_editing']) and $_POST['is_editing'] == 'true') {
   $categ_qry = "SELECT * FROM traveldb.packagecateg_tbl where packageID_from = {$_POST['packageID']}";
   $loc_qry =  "SELECT * FROM traveldb.packagedest_tbl INNER JOIN areas_tbl AS AT ON AT.cityID = packageAreasID WHERE packageDestID = {$_POST['packageID']}";
   $img_qry = "SELECT * FROM traveldb.packageimg_tbl WHERE packageIDFrom = {$_POST['packageID']}";
+  $inc_qry = "SELECT * FROM traveldb.packageincl_tbl WHERE packageID_from = {$_POST['packageID']}";
 
-  fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $conn);
+  $jsondata = fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $inc_qry, $conn);
+  echo $jsondata;
 }

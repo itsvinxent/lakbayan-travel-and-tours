@@ -406,7 +406,7 @@ include "backend\auth\getagency.php";
                       FROM traveldb.package_tbl AS PK 
                       INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                       INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
-                      WHERE packageCreator = $_SESSION[setID]
+                      WHERE packageCreator = $_SESSION[setID] AND PK.is_deleted = 0
                       GROUP BY AI.packageIDFrom";
 
               fetch_packagetbl($query_string, $conn, true);
@@ -676,6 +676,70 @@ include "backend\auth\getagency.php";
                   </script>
 
                 </div>
+
+                <div class="row">
+                  <span><label for="c-package-category"><span style="color: red;">*</span>Inclusions</label></span>
+                  <span style="display: flex; align-items: center; margin-right: 0;">
+                    <input type="text" name="package-inclusions" id="package-inclusions" placeholder="Input Package Inclusions">
+                    <input type="hidden" name="hidden-inclusions" id="hidden-inclusions" required></input>
+                    <span id="add-inc" style="margin-left: 10px; cursor: pointer; display: none;"><i class="fas fa-plus"></i></span>
+
+                  </span>
+                  <span id="selected-inc-container" style="display:flex; justify-content: flex-end;grid-column: 1 / 3; text-align: unset; margin-right: 0;"></span>
+                  
+                  <script>
+                    var $currentInc;
+                    var inc_array = [];
+                    $('#package-inclusions').on('input', function(e) {
+                      var $input = $(this),
+                        val = $input.val();
+                      $currentInc = val;
+
+                      if (val.length === 0) {
+                        $('#add-inc').css("display", "none");
+                      } else {
+                        $('#add-inc').css("display", "block");
+                      }
+                    });
+
+                    $('#add-inc').on('click', function(e) {
+                      $('#package-inclusions').val('');
+                      $(this).css("display", "none");
+
+                      if ((inc_array.length < 5) && (!inc_array.includes($currentInc))) {
+                        inc_array.push($currentInc);
+
+                        var $div = $("<div>", {
+                          "class": "selected-loc",
+                          "text": $currentInc
+                        }, );
+                        // $div.click(function(){ /* ... */ });
+                        $("#selected-inc-container").append($div);
+
+                        var $close = $("<i>", {
+                          "class": "fas fa-times remove-inc",
+                          "style": "margin-left: 10px; font-size: 12px; cursor: pointer;"
+                        })
+
+                        document.getElementById("hidden-inclusions").value = inc_array;
+                        $div.append($close);
+                      }
+                      document.querySelectorAll('.remove-inc').forEach(removebtn => {
+                        $(removebtn).on('click', function() {
+                          var remloc = removebtn.parentElement.innerText;
+                          removebtn.parentElement.remove();
+                          inc_array = inc_array.filter(function(letter) {
+                            document.getElementById("hidden-inclusions").value = inc_array;
+                            return letter !== remloc;
+                          });
+                        });
+                      });
+
+                    });
+                  </script>
+                  
+
+                </div>
               </div>
               <div class="right">
                 <h3>Travel Package Images</h3>
@@ -790,10 +854,42 @@ include "backend\auth\getagency.php";
                   </span>
                 </div>
                 <div class="row three">
-                  <span>Age Limit</span>
+                  <div style="display: flex;">
+                    <span>
+                      Age Limit
+                    </span>
+                    <span class="toggle" style="position: relative;">
+                      <label class="toggleswitch">
+                        <input id="agelimit-switch" name='isagelimited' type="checkbox" class="switch__input" checked>
+                        <span class="slider-circle"></span>
+                      </label>
+                    </span>
+                  </div>
                   <span><input type="number" name="agemin" id="agemin" placeholder="Minimum Age" min="1"></span>
                   <span><input type="number" name="agemax" id="agemax" placeholder="Maximum Age"></span>
                 </div>
+                <script>
+                  $('#agelimit-switch').change(function() {
+                    console.log($('#agemin'));
+                    console.log($('#agemax'));
+                    if ($(this).prop("checked") === true) {
+                      $('#agemin').prop('disabled', false);
+                      $('#agemax').prop('disabled', false);
+
+                      $('#agemin').css('cursor', 'unset');
+                      $('#agemax').css('cursor', 'unset');
+                    } else {
+                      $('#agemin').prop('disabled', true);
+                      $('#agemax').prop('disabled', true);
+
+                      $('#agemin').css('cursor', 'not-allowed');
+                      $('#agemax').css('cursor', 'not-allowed');
+
+                      $('#agemin').val('');
+                      $('#agemax').val('');
+                    }
+                  });
+                </script>
                 <div class="row three">
                   <span>Participant Limit</span>
                   <span><input type="number" name="headmin" id="headmin" placeholder="Minimum #" min="1"></span>
@@ -946,6 +1042,10 @@ include "backend\auth\getagency.php";
                   cutoffCal.clear();
                 } else {
                   $('#create-form .saveform-btn').text('Save Changes'); 
+                  removeupload.forEach(remover => {
+                    removeuploadimg(remover);
+                  })
+                  
                   $tr = $(r).closest('tr');
 
                   var data = $tr.children('td').map(function() {
@@ -965,6 +1065,7 @@ include "backend\auth\getagency.php";
                     async: true,
                     context: this,
                     success: function (response) {
+                      console.log("requesting");
                       setDetails(response.details)
                       setCategory(response.category)
                       setLocation(response.location)
@@ -1165,43 +1266,41 @@ include "backend\auth\getagency.php";
             </div>
 
           </div>
+          <script>
+            $('#s-all').prop('checked', true);
+            $('#s-all').next().addClass('active');
 
+            bookingpostdata['logged_user'] = 'agency';
+
+            $('#b-get-search').on('click', function() {
+              pack_name = $('#b-package-name').val();
+              pack_transact = $('#b-package-transact').val();
+              pack_id = $('#b-package-id').val();
+              pack_customer = $('#package-customer').val();
+
+              booking_data_input();
+
+              if (count != 0) {
+                filterTimeout(bookingpostdata, '#fullb-table');
+              }
+              count = 4;
+
+            });
+
+            $('#b-reset-search').on('click', function() {
+              bookingpostdata = {
+                booking: true,
+                logged_user: 'agency'
+              }
+
+              filterTimeout(bookingpostdata, '#fullb-table');
+            });
+
+            // Transaction Status Filter
+            filterTable(".stat-inp", 'status', bookingpostdata)
+          </script>
         </div>
         <!-- End of Bookings Tab -->
-        <script>
-          $('#s-all').prop('checked', true);
-          $('#s-all').next().addClass('active');
-
-          bookingpostdata['logged_user'] = 'agency';
-
-          $('#b-get-search').on('click', function() {
-            pack_name = $('#b-package-name').val();
-            pack_transact = $('#b-package-transact').val();
-            pack_id = $('#b-package-id').val();
-            pack_customer = $('#package-customer').val();
-
-            booking_data_input();
-
-            if (count != 0) {
-              filterTimeout(bookingpostdata, '#fullb-table');
-            }
-            count = 4;
-
-          });
-
-          $('#b-reset-search').on('click', function() {
-            bookingpostdata = {
-              booking: true,
-              logged_user: 'agency'
-            }
-
-            filterTimeout(bookingpostdata, '#fullb-table');
-          });
-
-          // Transaction Status Filter
-          filterTable(".stat-inp", 'status', bookingpostdata)
-        </script>
-
       </div>
       <div class="save-container" id="save-ch-btn" style="display: none;">
         <div class="button-container">

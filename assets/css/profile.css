@@ -670,7 +670,7 @@
 .tab-content #create-package .details .left,
 .tab-content #edit-package .details .left{
   display: grid;
-  grid-template-rows: .2fr .5fr .2fr .4fr;
+  grid-template-rows: .2fr .5fr .2fr .2fr .4fr;
   padding-right: 1rem;
 }
 

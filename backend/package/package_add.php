@@ -150,6 +150,21 @@
 
         }
 
+        //TO PACKAGEINC_TBL PROCESS ================================================================================================
+        $inclusionsGot = array();
+        $packInclusion = $_POST['hidden-inclusions']; //INSERT TO PACKAGELOC_TBL
+        if(strstr($packInclusion, ',')) $inclusionsGot = explode(",", $packInclusion);
+        else array_push($inclusionsGot, $packInclusion);
+
+        for($i=0; $i<count($inclusionsGot); $i++){
+            $data = array(
+                'packageID_from' => $gotpkID,
+                'packageInclusion' => $inclusionsGot[$i]
+            );
+
+            multi_insertdb($conn, $data, "packageincl_tbl");
+        }
+
         //TO PACKAGEIMG_TBL PROCESS ================================================================================================
         $featuredImg = $_FILES['featured-img'];
         $ftchk = image_verification($featuredImg);

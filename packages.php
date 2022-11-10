@@ -286,13 +286,13 @@ if (isset($_SESSION['booking-stat']) == false) {
           <?php
           include_once "backend/package/packages_display.php";
 
-          $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult,  AI.*, AG.agencyName 
+          $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName 
                     FROM traveldb.package_tbl AS PK 
                     INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
-                    INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
+                    INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
                     GROUP BY AI.packageIDFrom";
 
-          fetch_packages($query_string, $conn);
+          fetch_packages($query_string, $conn, false);
 
           ?>
 
@@ -300,6 +300,64 @@ if (isset($_SESSION['booking-stat']) == false) {
         <div class="loading" id="loading" style="display: none; justify-content: center; margin: auto;">
           <img src="assets/img/loading.gif" alt="">
         </div>
+        <script>
+          var searchTimeout;
+          var searchReq;
+
+          $("#search").on('keyup', function () {
+            
+            var query = $(this).val();
+            
+            if (searchTimeout) {
+              clearTimeout(searchTimeout);
+            }
+            if (searchReq) {
+              searchReq.abort();
+            }
+
+            searchTimeout = setTimeout(function () {
+              if (query.length >= 2) {
+                $("#card-container").empty();
+                searchPackages(query).then(function(data) {
+                $('#card-container').empty();
+                $('#card-container').html(data);
+              });
+              }
+            }, 500);
+
+          });
+
+          function searchPackages(query) {
+            searchReq = $.ajax({
+              url: 'backend/package/packages_search.php',
+              method: 'POST',
+              data: {
+                query: query
+              },
+              async: true,
+              context: this,
+              beforeSend: function() {
+                $('#loading').css('display', 'flex');
+                $('#card-container').css('display', 'none');
+              },
+              success: function() {
+                $('#loading').css('display', 'none');
+                $('#card-container').css('display', 'flex');
+              }
+            });
+
+            return searchReq;
+          }
+
+          // var wrappers = document.querySelectorAll('.wrapper');
+          // wrappers.forEach(wrapper => {
+          //   $(wrapper).on('click', function() {
+          //     let selectedPackID = $(this).children()[0].value;
+          //     window.location.href = "includes/packages/details.php?packageid=" + selectedPackID;
+          //   });
+          // });
+          
+        </script>
 
       </div>
 

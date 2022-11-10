@@ -23,18 +23,18 @@
             } else {
               echo 'href="index.php"';
             } ?>>Home</a></li>
-    <li><a <?php 
-            if ($_SESSION['active'] == 'dest') {
-              echo 'class="active" href="#"';
-            } 
-            if ($_SESSION['active'] == 's-dest') {
-              echo 'class="active" href="../../destinations.php"';
-            } 
-            if ($_SESSION['active'] == 's-dest' || $_SESSION['active'] == 's-pack') {
-              echo 'href="../../destinations.php"';
-            }else {
-              echo 'href="destinations.php"';
-            } ?>>Destinations</a></li>
+    <!-- <li><a <?php 
+            // if ($_SESSION['active'] == 'dest') {
+            //   echo 'class="active" href="#"';
+            // } 
+            // if ($_SESSION['active'] == 's-dest') {
+            //   echo 'class="active" href="../../destinations.php"';
+            // } 
+            // if ($_SESSION['active'] == 's-dest' || $_SESSION['active'] == 's-pack') {
+            //   echo 'href="../../destinations.php"';
+            // }else {
+            //   echo 'href="destinations.php"';
+            // } ?>>Destinations</a></li> -->
     <li><a <?php 
             if ($_SESSION['active'] == 'pack') {
               echo 'class="active" href="#"';

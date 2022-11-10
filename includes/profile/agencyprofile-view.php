@@ -55,13 +55,8 @@
 
         
         echo 
-        '<div class="desc">
+        '<div class="desc" style="pointer-events: none;">
           <p class="desc-body active" id="desc-body">'.$disDesc.'</p>
-          <textarea class="desc-textarea" name="" id="desc-textarea"></textarea>
-          <div class="desc-btn">
-            <div class="edit-desc active" id="edit-desc-btn"><i class="fas fa-pen"></i></div>
-            <div class="save-desc" id="save-desc-btn"><i class="fas fa-save"></i></div>
-          </div>
         </div>'
         ?>
       </div>

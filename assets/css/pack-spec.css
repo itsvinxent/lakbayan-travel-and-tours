@@ -4,7 +4,7 @@
   /* max-width: 1300px; */
   max-width: 70%;
   margin: auto;
-  padding-top: 2rem;
+  padding-top: 5px;
   padding-bottom: 2rem;
   display: grid;
   grid-template-columns: 2fr 1.3fr;
@@ -12,7 +12,7 @@
 }
 
 .header {
-  margin-top: 2rem;
+  margin-top: 65px;
 }
 
 .header span {
@@ -22,9 +22,9 @@
 }
 
 .header span i {
-  font-size: 2rem;
-  margin-left: 75px;
-  margin-right: 20px;
+  font-size: 1rem;
+  margin-left: 85px;
+  margin-right: 5px;
 }
 
 .header a {
@@ -68,12 +68,18 @@
   margin: auto;
   border-radius: 10px;
   display: grid;
-  grid-template-columns: 1fr 0.4fr;
+  grid-template-columns: 1fr .5fr;
+}
+
+.packages-pages .reservation .hearts {
+  padding: 15px !important;
+  vertical-align: middle;
+  align-items: center;
 }
 
 .packages-pages .reservation .contact {
   /* padding: 0 !important; */
-  padding: 15px !important;
+  padding: 12px 0px 12px 12px!important;
   vertical-align: middle;
   align-items: center;
 }
@@ -83,14 +89,14 @@
 }
 
 .packages-pages .reservation .booking {
-  margin-left: auto;
-  margin-right: auto;
+  /* margin-left: auto;
+  margin-right: auto; */
   text-align: center;
   display: block;
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid black;
-  border-radius: 10px;
+  margin: 10px 0px 10px 10px;
+  /* padding: 10px; */
+  border-left: 1px solid black;
+  /* border-radius: 10px; */
 }
 
 /* .packages-pages .reservation .booking input {
@@ -98,7 +104,7 @@
   } */
 
 .packages-pages .reservation .booking p {
-  margin: 10px auto;
+  margin: 0 auto 15px auto;
 }
 
 .sml-txt {

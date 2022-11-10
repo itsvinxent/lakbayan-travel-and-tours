@@ -1,7 +1,7 @@
 <?php
 
 // Function for displaying in the Main Package Page and the Travel Agency Profile Page (View Mode)
-function fetch_packages($query_string, $conn)
+function fetch_packages($query_string, $conn, $editmode)
 {
 
     $qry_packages = mysqli_query($conn, $query_string);
@@ -9,10 +9,15 @@ function fetch_packages($query_string, $conn)
     while ($row = mysqli_fetch_array($qry_packages)) {
 ?>
         <div class="wrapper">
+            <input type="hidden" id="packageid" value="<?php echo $row['packageID']?>"/>
             <div class="border"></div>
             <div class="image">
                 <?php
-                echo '<img src="data:image/jpg;base64,' . base64_encode($row['packageImg_Name']) . '" alt="" style="height: 160px;"/>';
+                // echo '<img src="data:image/jpg;base64,' . base64_encode($row['packageImg_Name']) . '" alt="" style="height: 160px;"/>';
+                echo <<<END
+                    <img src="assets/img/users/travelagent/{$row['packageCreator']}/package/{$row['packageID']}/img/{$row['packageImg_Name']}"/>
+                END;
+                // echo '<img src="users/travelagent/' .$row['packageCreator']. 'package/' .$row['packageID']. '//img//' . $row['packageImg_Name'] . " alt="" style="height: 160px;"/>';
                 ?>
             </div>
             <div class="content">
@@ -32,18 +37,31 @@ function fetch_packages($query_string, $conn)
                     <p style="font-size: 12px;">PER PERSON</p>
                 </div>
             </div>
-            <div class="edit-btn">
-                <a href="includes/packages/ruins.php">
-                    <i class="fas fa-pen" style="padding-right: 7px;"></i>
-                    Edit
-                </a>
-            </div>
-            <div class="delete-btn">
-                <a href="includes/packages/ruins.php">
-                    <i class="far fa-trash-alt" style="padding-right: 7px;"></i>
-                    Delete
-                </a>
-            </div>
+            <?php if ($editmode) { 
+                echo <<<END
+                    <div class="edit-btn">
+                    <a href="includes/packages/ruins.php">
+                        <i class="fas fa-pen" style="padding-right: 7px;"></i>
+                        Edit
+                    </a>
+                    </div>
+                    <div class="delete-btn">
+                        <a href="includes/packages/ruins.php">
+                            <i class="far fa-trash-alt" style="padding-right: 7px;"></i>
+                            Delete
+                        </a>
+                    </div>
+                END;
+            } else {
+                echo "<div class='learn-btn'>
+                    <a href='includes/packages/details.php?packageid={$row['packageID']}'>
+                        Learn More
+                    </a>
+                </div>";
+            }
+            ?>
+            
+            
         </div>
     <?php
     }
@@ -168,7 +186,7 @@ function fetch_bookingtbl($query_string, $conn) {
     // mysqli_close($conn);
 }
 
-function fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $conn) {
+function fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $inc_qry, $conn) {
     // $qry_package = mysqli_query($conn, $query_string);
     // $row = mysqli_fetch_array($qry_package);
 
@@ -198,13 +216,23 @@ function fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $conn
         $img_array[] = $image['packageImg_Name'];
     }
 
-    echo json_encode(
+    $qry_incl = mysqli_query($conn, $inc_qry);
+    $inc_array = array();
+    
+    while ($inclusion = mysqli_fetch_assoc($qry_incl)) {
+        $inc_array[] = $inclusion['packageInclusion'];
+    }
+
+    $jsondata = json_encode(
         array("details" => $package, 
             "category" => $cat_array,
             "location" => $loc_array,
-            "images" => $img_array
+            "images" => $img_array,
+            "inclusions" => $inc_array
         )
     );
+
+    return $jsondata;
 
 }
 

@@ -9,7 +9,7 @@
         END;
     }
     else{ 
-        $select_query = "SELECT * FROM traveldb.user_tbl; " ;
+        $select_query = "SELECT * FROM traveldb.user_tbl where is_deleted = 0; " ;
         $result = mysqli_query($conn, $select_query);
 
         if ($result){ 
@@ -47,8 +47,8 @@
                         <td hidden>$row[13]</td>
                         <td hidden>$row[14]</td>
                         <td>
-                            <button type="button" id="modalEOpen" class="edit-btn"><i class="far fa-edit"></i></button>
-                            <button type="button" id="modalDOpen" class="delete-btn"><i class="fas fa-trash-alt"></i></button>
+                            <button type="button" id="modalEOpen" class="uedit-btn"><i class="far fa-edit"></i></button>
+                            <button type="button" id="modalDOpen" class="udelete-btn"><i class="fas fa-trash-alt"></i></button>
                         </td>
                     </tr> 
                 
