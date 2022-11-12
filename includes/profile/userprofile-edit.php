@@ -127,10 +127,10 @@ include "backend/auth/getuser.php";
               <div class="row">
                 <span class="col-left">Password</span>
                 <!-- <span class="col-right active" id=""><p>jgh3bz5</p></span> -->
-                <span class="col-right active" id=""><p><?php echo $_SESSION['password']?></p></span>
+                <span class="col-right active" id=""><p><?php //echo $_SESSION['password']?>**********</p></span>
                 <span class="col-right-edit">
                   <input type="text" name="pass" id="password" value="">
-                  <input type="hidden" value="<?php echo $_SESSION['password']?>">
+                  <input type="hidden" value="<?php //echo $_SESSION['password']?>**********">
                 </span>
                 <span class="col-edit active"><i class="fas fa-pen"></i></span>
                 <span class="col-save">
@@ -140,24 +140,6 @@ include "backend/auth/getuser.php";
                 </span>
               </div>
 
-              <div class="row">
-                <span class="col-left">Usertype</span>
-                <span class="col-right active" id=""><p>User</p></span>
-                <span class="col-right-edit">
-                  <select name="usertype" id="utype" required>
-                    <option value="user">User</option>
-                    <option value="manager">Agency Manager</option>
-                    <option value="admin">Administrator</option>
-                  </select>
-                  <input type="hidden" value="<?php echo "user"?>">
-                </span>
-                <span class="col-edit active"><i class="fas fa-pen"></i></span>
-                <span class="col-save">
-                  <div class="bg">
-                    <i class="fas fa-save"></i>
-                  </div>
-                </span>
-              </div>
             </div>
 
             <h1>Personal Information</h1>

@@ -215,4 +215,4 @@ if(isset($_POST['aTerms']) && isset($_FILES['aVerify']) && $nope == 1){
  }
 ?>
 
-<meta http-equiv="refresh" content="0;URL=../../agencyreg.php" />
+<meta http-equiv="refresh" content="0;URL=../../index.php" />

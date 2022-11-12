@@ -180,12 +180,12 @@
                 </div>
 
                 <div class="func-btn">
-                  <span class="func-edit">
+                  <!-- <span class="func-edit">
                     <div class="buttn"><i class="fas fa-pen"></i></div>
                   </span>
                   <span class="func-delete">
                     <div class="buttn"><i class="fas fa-trash"></i></div>
-                  </span>
+                  </span> -->
 
                   <span class="earnings">
                     <p class="amt"><?php echo $row['fresult']?></p>

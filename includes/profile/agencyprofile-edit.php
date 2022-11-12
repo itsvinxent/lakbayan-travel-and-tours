@@ -479,7 +479,7 @@ include "backend\auth\getagency.php";
                   return $(this).text();
                 }).get();
 
-                form.action = "backend/admin/user_delete.php?id=" + data[0]
+                form.action = "backend/package/package_delete.php?utype=agency&id=" + data[1]
 
 
               });

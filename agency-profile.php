@@ -2,12 +2,12 @@
 session_start();
 $_SESSION['active'] = 'profile';
 $_SESSION['utype'] = $_SESSION['utype'] ?? null;
-if (isset($_SESSION['isLoggedIn']) == false) {
-  $_SESSION['isLoggedIn'] = false;
+// if (isset($_SESSION['isLoggedIn']) == false) {
+//   $_SESSION['isLoggedIn'] = false;
   
-} else if ($_SESSION['utype'] != 'manager' && $_SESSION['isLoggedIn']==true){
-  echo '<meta http-equiv="refresh" content="0;URL=../../user-profile.php" />';
-}
+// } else if ($_SESSION['utype'] != 'manager' && $_SESSION['isLoggedIn']==true){
+//   echo '<meta http-equiv="refresh" content="0;URL=../../user-profile.php" />';
+// }
 // Determines if the page will be loaded on 0 - ViewMode or 1 - EditMode
 // Change to session variable on production build
 $mode = 1;

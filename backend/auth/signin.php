@@ -17,28 +17,30 @@
     
     // $_SESSION['name'] = $res[1];
     // $_SESSION['email'] = $res[2];
-    // $verify = password_verify($inpPassword, $password);
-    // if($id != 0 and $verify) {
-    if($id != 0 and $inpPassword == $password) {
+    $verify = password_verify($inpPassword, $password);
+    if($id != 0 and $verify) {
+    // if($id != 0 and $inpPassword == $password) {
         $_SESSION['isLoggedIn'] = true;
         $_SESSION['id'] = $id;
         $_SESSION['fname'] = $fname;
         $_SESSION['lname'] = $lname;
         $_SESSION['email'] = $email;
         $_SESSION['utype'] = $usertype;
+        if ($usertype == 'admin') {
+            echo "<meta http-equiv=\"refresh\" content=\"0;URL=../../admin-panel.php\" />";
+        } else {
+            echo "<meta http-equiv=\"refresh\" content=\"0;URL=../../index.php\" />";
+        }
     } else{
         echo<<<END
             <script type ="text/JavaScript">  
             alert("ERROR. Account does not exist, please check the entered email or password.")
             </script>
         END;
-    }
-
-    if ($usertype == 'admin') {
-        echo "<meta http-equiv=\"refresh\" content=\"0;URL=../../admin-users.php\" />";
-    } else {
         echo "<meta http-equiv=\"refresh\" content=\"0;URL=../../index.php\" />";
     }
+
+    
 ?>
 
 <!-- <meta http-equiv="refresh" content="0;URL=../../index.php" /> -->

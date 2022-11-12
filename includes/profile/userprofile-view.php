@@ -70,7 +70,7 @@ if(isset($_GET['id'])){
         <div class="nav">
             <ul class="tabs">
                 <li data-tab-target="#info" class="tab active">Traveler Information</li>
-                <li data-tab-target="#package" class="tab">Bookings</li>
+                <!-- <li data-tab-target="#package" class="tab">Bookings</li> -->
             </ul>
         </div>
 
@@ -100,20 +100,7 @@ if(isset($_GET['id'])){
                             <?php echo '<p>'.$display['email'].'</p>'?>
                         </span>
                     </div>
-
-                    <div class="row">
-                        <span class="col-left">Password</span>
-                        <span class="col-right active" id="">
-                            <?php echo '<p>'.$display['password'].'</p>'?>
-                        </span>
-                    </div>
-
-                    <div class="row">
-                        <span class="col-left">Usertype</span>
-                        <span class="col-right active" id="">
-                            <?php echo '<p>'.$display['usertype'].'</p>'?>
-                        </span>
-                    </div>
+                    
                 </div>
 
                 <h1>Personal Information</h1>
@@ -188,7 +175,7 @@ if(isset($_GET['id'])){
 
             </div>
 
-            <div id="package" data-tab-content class="data-tab-content">
+            <!-- <div id="package" data-tab-content class="data-tab-content">
                 <div class="card-container">
                     <div class="wrap user">
                         <div class="image">
@@ -199,9 +186,9 @@ if(isset($_GET['id'])){
                             <h2 class="title">Lakawon Island Day Tour</h2>
                             <p>Price: P7,500 per person</p>
                             <p>Booking Status: Checking Availability</p>
-                            <!-- <p>Persons: 2</p>
+                            <p>Persons: 2</p>
                 <p>Duration: 2 day(s)</p>
-                <p>Booked Date: September 5, 2022</p> -->
+                <p>Booked Date: September 5, 2022</p>
                         </div>
 
                         <div class="func-btn">
@@ -215,7 +202,7 @@ if(isset($_GET['id'])){
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
 

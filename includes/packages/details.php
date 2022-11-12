@@ -148,7 +148,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
             <div style="display: flex; justify-content: space-between;">
               <span>
                 <h1><?php echo $row['packageTitle'] ?></h1>
-                <p style="font-size: 13px;">by <a href="../../agency-profile.php" style="text-decoration: underline;"><?php echo $row['agencyName'] ?></a></p>
+                <p style="font-size: 13px;">by <a href="../../agency-profile.php?mode=view&id=<?php echo $row['packageCreator']?>" style="text-decoration: underline;"><?php echo $row['agencyName'] ?></a></p>
               </span>
               <span style="margin-top: 5px;">
                 <img src="https://img.icons8.com/material-outlined/24/null/hearts.png"/>

@@ -27,8 +27,13 @@ function fetch_packages($query_string, $conn, $editmode)
                 </p>
                 <div class="rating">
                     <?php
+                    $stars = 5;
                     for ($i = 0; $i < $row['packageRating']; $i++) {
                         echo '<i class="fas fa-star" style="padding-right: 3px;"></i>';
+                        $stars--;
+                    }
+                    for ($i=0; $i < $stars; $i++) { 
+                        echo '<i class="far fa-star" style="padding-right: 3px;"></i>';
                     }
                     ?>
                 </div>
@@ -120,8 +125,13 @@ function fetch_packagetbl($query_string, $conn, $withAdd)
             <td>
                 <div class="rating">
                     <?php
+                        $stars = 5;
                         for ($i = 0; $i < $row['packageRating']; $i++) {
                             echo '<i class="fas fa-star" style="padding-right: 3px;"></i>';
+                            $stars--;
+                        }
+                        for ($i=0; $i < $stars; $i++) { 
+                            echo '<i class="far fa-star" style="padding-right: 3px;"></i>';
                         }
                     ?>
                 </div>

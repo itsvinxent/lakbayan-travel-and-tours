@@ -10,11 +10,11 @@ function multi_insertdb($conn, $data, $table){
     $name = implode(",", $name);
     $value = implode(",", $value);
 
-    echo '<br>'. $name. ' ' .$value;
+    // echo '<br>'. $name. ' ' .$value;
 
     $sql = "INSERT INTO ".$table."($name)"." VALUES "."($value)";
     
-    echo $sql;
+    // echo $sql;
     if(mysqli_query($conn, $sql)){
 
     }else{
@@ -36,11 +36,11 @@ function multi_getid($conn, $data, $table, $id): int{
     $name = implode(",", $name);
     $value = implode(",", $value);
 
-    echo '<br>'. $name. ' ' .$value;
+    // echo '<br>'. $name. ' ' .$value;
 
     $sql = "SELECT * FROM ".$table." WHERE $name = $value";
     
-    echo $sql;
+    // echo $sql;
     if($qry = mysqli_query($conn, $sql)){
         $idgot = mysqli_fetch_assoc($qry);
         return $idgot[$id];

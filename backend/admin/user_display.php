@@ -46,6 +46,10 @@
                         <td hidden>$row[12]</td>
                         <td hidden>$row[13]</td>
                         <td hidden>$row[14]</td>
+                        <td hidden>$row[15]</td>
+                        <td hidden>$row[16]</td>
+                        <td hidden>$row[17]</td>
+                        <td hidden>$row[18]</td>
                         <td>
                             <button type="button" id="modalEOpen" class="uedit-btn"><i class="far fa-edit"></i></button>
                             <button type="button" id="modalDOpen" class="udelete-btn"><i class="fas fa-trash-alt"></i></button>

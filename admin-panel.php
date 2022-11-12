@@ -1,15 +1,14 @@
 <?php
 session_start();
-// $_SESSION['active'] = 'packages';
-// if (isset($_SESSION['utype'])) {
-//     if ($_SESSION['utype'] == 'user') {
-//         header("location: index.php");
-//         exit;
-//     }
-// } else {
-//     header("location: index.php");
-//     exit;
-// }
+if (isset($_SESSION['utype'])) {
+    if ($_SESSION['utype'] == 'user' || $_SESSION['utype'] == 'manager') {
+        header("location: index.php");
+        exit;
+    }
+} else {
+    header("location: index.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -86,7 +85,7 @@ session_start();
             <div class="main-panel" style="position: relative; width: 100%;">
                 <div class="tab-content" id="tab-content">
                     <!-- Account Tab -->
-                    <div id="info" data-tab-content class=" data-tab-content active">
+                    <div id="info" data-tab-content class=" data-tab-content active">       
                         <div class="content-users">
                             <?php include 'backend/admin/user_display.php'; ?>
                         </div>
@@ -264,22 +263,22 @@ session_start();
 
                                     $('#user_id').val(data[0]);
 
-                                    $('#img-pic').attr('src', 'assets/img/' + data[14]);
+                                    $('#img-pic').attr('src', 'assets/img/users/traveler/' + data[0] + '/pfp/' + data[15]);
                                     $('#fname').val(data[1]);
                                     $('#lname').val(data[2]);
                                     $('#email').val(data[3]);
                                     $('#password').val(data[4]);
                                     $('#pass').val(data[4]);
                                     $('#utype').val(data[5]);
-                                    $('#bday').val(data[6]);
-                                    $('#gender').val(data[7]);
-                                    $('#age').val(data[8]);
-                                    $('#address').val(data[9]);
-                                    $('#nationality').val(data[10]);
-                                    $('#race').val(data[11]);
-                                    $('#religion').val(data[12]);
-                                    $('#contact').val(data[13]);
-                                    $('#picturefile').val(data[14]);
+                                    $('#bday').val(data[8]);
+                                    $('#gender').val(data[9]);
+                                    $('#age').val('');
+                                    $('#address').val(data[10]);
+                                    $('#nationality').val(data[11]);
+                                    $('#race').val(data[12]);
+                                    $('#religion').val(data[13]);
+                                    $('#contact').val(data[14]);
+                                    $('#picturefile').val(data[15]);
                                     // $('#bannerfile').val(data[15]);
 
                                     var inpf = document.querySelectorAll('.inputfile');
@@ -505,7 +504,7 @@ session_start();
                                         return $(this).text();
                                     }).get();
 
-                                    form.action = "backend/package/package_delete.php?id=" + data[1]
+                                    form.action = "backend/package/package_delete.php?utype=admin&id=" + data[1]
 
 
                                 });

@@ -40,7 +40,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
             if (!$_SESSION['isLoggedIn']) {
               echo "class=\"logn\"";
             } else {
-              echo "href=\"destinations.php\"";
+              echo "href=\"packages.php\"";
             }
             ?>>Learn More</a>
       </div>
@@ -62,8 +62,8 @@ if (isset($_SESSION['isLoggedIn']) == false) {
             }
             ?> id="container">
         <div class="form-container sign-up-container" id="sign-up-container">
-          <!-- <form name="sign-up-form" action="backend/auth/signup.php" method="post"> -->
-          <form>
+          <form name="sign-up-form" action="backend/auth/signup.php" method="post">
+          <!-- <form> -->
             <h1>Create Account</h1>
             <!-- <div class="social-container">
               <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -116,8 +116,8 @@ if (isset($_SESSION['isLoggedIn']) == false) {
 
       <div id="mobile-container" class="container">
         <div class="form-container sign-up-container" id="msign-up-container">
-          <!-- <form name="sign-up-form" action="backend/auth/signup.php" method="post"> -->
-          <form>
+          <form name="sign-up-form" action="backend/auth/signup.php" method="post">
+          <!-- <form> -->
             <h1>Create Account</h1>
             <!-- <div class="social-container">
               <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -195,7 +195,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
       });
     </script>
   </section>
-  <section class="main-page user-pref">
+  <!-- <section class="main-page user-pref">
     <div class="login-banner">
       <video src="assets/media/plane.mp4" muted loop autoplay preload="auto"></video>
 
@@ -304,7 +304,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
         });
       </script>
     </div>
-  </section>
+  </section> -->
 
 
 
@@ -371,16 +371,16 @@ if (isset($_SESSION['isLoggedIn']) == false) {
         }
       });
 
-      $('#sign-up-container button').click(function(e) {
-        if ($(this).hasClass('reg-user') && pagePositon + 1 <= pageMaxPosition) {
-          document.body.style.overflow = 'visible';
-          pagePositon = 2;
-          $('html, body').stop().animate({
-            scrollTop: $scrollItems.eq(pagePositon).offset().top
-          }, 400);
-          document.body.style.overflow = 'hidden';
-        }
-      });
+      // $('#sign-up-container button').click(function(e) {
+      //   if ($(this).hasClass('reg-user') && pagePositon + 1 <= pageMaxPosition) {
+      //     document.body.style.overflow = 'visible';
+      //     pagePositon = 2;
+      //     $('html, body').stop().animate({
+      //       scrollTop: $scrollItems.eq(pagePositon).offset().top
+      //     }, 400);
+      //     document.body.style.overflow = 'hidden';
+      //   }
+      // });
 
       $('#page-two button').click(function(e) {
         pagePositon = 0;

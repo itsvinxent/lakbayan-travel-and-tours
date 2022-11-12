@@ -64,9 +64,9 @@ $img = array();
 $chk = array();
 $nope = 1;
 
-echo $inBirth;
+// echo $inBirth;
 
-echo "BITCH ".$nope;
+// echo "BITCH ".$nope;
 
 
 
