@@ -47,6 +47,8 @@ if(isset($_SESSION['isLoggedIn']) == false) {
   include '../../backend/connect/dbCon.php';
   include '../../backend/package/packages_display.php';
 
+  if($_SESSION['isLoggedIn']==true && isset($_SESSION['id'])) include '../../includes/components/chatbox.php';
+
   // $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, 
   //                 DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, 
   //                 -- DATEDIFF(packageStartDate, packageCutoff) AS packageCutdiffdate,

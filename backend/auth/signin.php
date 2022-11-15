@@ -17,9 +17,9 @@
     
     // $_SESSION['name'] = $res[1];
     // $_SESSION['email'] = $res[2];
-    $verify = password_verify($inpPassword, $password);
-    if($id != 0 and $verify) {
-    // if($id != 0 and $inpPassword == $password) {
+    // $verify = password_verify($inpPassword, $password);
+    //if($id != 0 and $verify) {
+     if($id != 0 and $inpPassword == $password) {
         $_SESSION['isLoggedIn'] = true;
         $_SESSION['id'] = $id;
         $_SESSION['fname'] = $fname;

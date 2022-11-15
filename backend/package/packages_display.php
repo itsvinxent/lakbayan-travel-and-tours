@@ -59,7 +59,7 @@ function fetch_packages($query_string, $conn, $editmode)
                 END;
             } else {
                 echo "<div class='learn-btn'>
-                    <a href='includes/packages/details.php?packageid={$row['packageID']}'>
+                    <a href='includes/packages/details.php?packageid={$row['packageID']}&agentid={$row['packageCreator']}'>
                         Learn More
                     </a>
                 </div>";

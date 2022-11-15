@@ -53,7 +53,7 @@ if(isset($_GET['id'])){
     <div class="profile-container">
         <div class="banner-logo profile">
             <div class="image">
-            <?php if (isset($display['userbanner'])) 
+            <?php if (isset($display['profpicture'])) 
                 {
                 echo '<img id="img-banner" src="assets/img/users/traveler/'.$display['id'].'/pfp/'.$display['profpicture'].'" alt="">';
                 }

@@ -62,7 +62,7 @@
           <a href="includes/components/cart.php" style="padding: 13px 0;"><img style="width: 40px; height: 40px;" src="https://img.icons8.com/plasticine/100/null/worldwide-delivery.png"/></a>
         </li>
         <li>
-          <a href="#" style="padding: 13px 0;"><img style="width: 40px; height: 40px;" src="https://img.icons8.com/plasticine/100/null/sent.png"/></a>
+          <a href="../../backend/chat/chatmain.php" style="padding: 13px 0;"><img style="width: 40px; height: 40px;" src="https://img.icons8.com/plasticine/100/null/sent.png"/></a>
         </li>
         END;
       }

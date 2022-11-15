@@ -1,6 +1,6 @@
 <?php
 
-include 'backend\connect\dbCon.php';
+include __DIR__.'\..\..\backend\connect\dbCon.php';
 
 if(!$conn){
     echo "error connecting to the database";
