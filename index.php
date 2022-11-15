@@ -21,6 +21,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
   <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="icon" href="assets/img/logo.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
   <title>Lakbayan</title>
 </head>
@@ -306,9 +307,6 @@ if (isset($_SESSION['isLoggedIn']) == false) {
     </div>
   </section> -->
 
-
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
   <script>
     $(document).on("change", "input[type='checkbox']", function() {

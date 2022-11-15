@@ -6,15 +6,12 @@ include "backend/auth/getuser.php";
 ?>
 <link rel="stylesheet" href="assets/css/profile-edit.css">
 
-<section class="sections profile-view" id="profile-view">
+<script>
+  var $nav = $("._nav");
+  $nav.toggleClass("scrolled");
+</script>
 
-  <div class="banner-half" style="height: 25vh;">
-    <video src="assets/media/waves.mp4" muted loop autoplay preload="auto" style="height: 25vh;"></video>
-    <div class="text">
-      <h1>Profile Page</h1>
-
-    </div>
-  </div>
+<section class="sections profile-view" id="profile-view" style="margin-top: 5rem;">
 
   <div class="profile-view-container">
     <div class="nav-vertical">

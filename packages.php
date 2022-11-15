@@ -32,48 +32,50 @@ if (isset($_SESSION['booking-stat']) == false) {
 <body>
   <?php
   include 'includes/components/nav.php';
-  // include 'includes/components/accountModal.php';
+  include 'includes/components/accountModal.php';
   include 'backend/connect/dbCon.php';
 
-  // if ($_SESSION['booking-stat'] != 'none') {
-  //   if ($_SESSION['booking-stat'] == 'success') {
-  //     echo <<<END
-  //       <div class="modal-container show" id="amodal_container">
-  //       <div class='modal'>
-  //         <h1>Hooray!</h1>
-  //         <p>Your booking information has been sent. We'll contact you as soon as possible.</p>
-  //         <div class="buttons">
-  //           <a id="modalBClose" class="btn">Got it!</a>
-  //         </div>
-  //       </div>
-  //       </div>  
-  //       END;
-  //     $_SESSION['booking-stat'] = 'none';
-  //   } else {
-  //     echo <<<END
-  //       <div class="modal-container show" id="amodal_container">
-  //       <div class='modal'>
-  //         <h1>Oops!</h1>
-  //         <p>We are not able to process your inquiry. Maybe try again later?</p>
-  //         <div class="buttons">
-  //           <a id="modalBClose" class="btn">Alright!</a>
-  //         </div>
-  //       </div>
-  //       </div>  
-  //       END;
-  //     $_SESSION['booking-stat'] = 'none';
-  //   }
-  // }
+  if ($_SESSION['booking-stat'] != 'none') {
+    if ($_SESSION['booking-stat'] == 'success') {
+      echo <<<END
+        <div class="modal-container show" id="amodal_container">
+        <div class='modal'>
+          <h1>Hooray!</h1>
+          <p>Your booking information has been sent. We'll contact you as soon as possible.</p>
+          <div class="buttons">
+            <a id="modalBClose" class="btn">Got it!</a>
+          </div>
+        </div>
+        </div>  
+        END;
+    } else {
+      echo <<<END
+        <div class="modal-container show" id="amodal_container">
+        <div class='modal'>
+          <h1>Oops!</h1>
+          <p>We are not able to process your inquiry. Maybe try again later?</p>
+          <div class="buttons">
+            <a id="modalBClose" class="btn">Alright!</a>
+          </div>
+        </div>
+        </div>  
+        END;
+    }
+    $_SESSION['booking-stat'] = 'none';
+  }
 
   ?>
-  <!-- <script>
-    const emodal_container = document.getElementById('amodal_container');
-    const eclose = document.getElementById('modalBClose');
+  <script>
+    $('#modalBClose').on("click", function() {
+      $("#amodal_container").removeClass("show");
+    });
 
-    eclose.addEventListener('click', () => {
-      emodal_container.classList.remove('show');
-    })
-  </script> -->
+    $("#amodal_container").on('click', function (e) {
+      if ($("#amodal_container").has(e.target).length === 0) {
+        $("#amodal_container").removeClass("show");
+      }
+    });    
+  </script>
 
   <section class="sections packages" id="destinations">
     <div class="banner-half">

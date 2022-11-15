@@ -3,6 +3,8 @@ session_start();
 $_SESSION['active'] = 'profile';
 if (isset($_SESSION['isLoggedIn']) == false) {
   $_SESSION['isLoggedIn'] = false;
+} else if ($_SESSION['isLoggedIn'] == false){
+  echo '<meta http-equiv="refresh" content="0;URL=index.php" />';
 }
 // Determines if the page will be loaded on 0 - ViewMode or 1 - EditMode
 // Change to session variable on production build
@@ -92,16 +94,6 @@ $mode = 1;
       </div>
     </div>
   </footer>
-
-  <script>
-    $(function() {
-      $(document).scroll(function() {
-        var $nav = $("._nav");
-
-        $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
-      });
-    });
-  </script>
 
   <script src="assets/js/agency-profile.js"></script>
 

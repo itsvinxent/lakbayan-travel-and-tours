@@ -1,5 +1,10 @@
 <?php
 session_start();
+if (isset($_GET['packageid'])){
+  $packageID = $_GET['packageid'];
+} else {
+  echo '<meta http-equiv="refresh" content="0;URL=../../packages.php" />';
+}
 $_SESSION['active'] = 's-pack';
 if(isset($_SESSION['isLoggedIn']) == false) {
   $_SESSION['isLoggedIn'] = false;
@@ -18,6 +23,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
   <link rel="stylesheet" href="../../assets/css/modal.css" />
   <link rel="stylesheet" href="../../assets/css/modal.css" />
   <link rel="stylesheet" href="../../assets/css/profile.css" />
+  <link rel="stylesheet" href="../../assets/css/checkout.css" />
   <link rel="stylesheet" href="../../assets/css/footer.css" />
 
   <!-- Font Awesome CDN -->
@@ -41,7 +47,6 @@ if(isset($_SESSION['isLoggedIn']) == false) {
   include '../../backend/connect/dbCon.php';
   include '../../backend/package/packages_display.php';
 
-  $packageID = $_GET['packageid'];
   // $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, 
   //                 DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, 
   //                 -- DATEDIFF(packageStartDate, packageCutoff) AS packageCutdiffdate,
@@ -77,6 +82,9 @@ if(isset($_SESSION['isLoggedIn']) == false) {
   $categ = $jsondata['category'];
   $catCount = count($categ);
 
+  $_SESSION['row'] = $row;
+  $_SESSION['img'] = $img;
+  
   ?>
 
   <section class="packages-pages">
@@ -150,9 +158,15 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                 <h1><?php echo $row['packageTitle'] ?></h1>
                 <p style="font-size: 13px;">by <a href="../../agency-profile.php?mode=view&id=<?php echo $row['packageCreator']?>" style="text-decoration: underline;"><?php echo $row['agencyName'] ?></a></p>
               </span>
-              <span style="margin-top: 5px;">
-                <img src="https://img.icons8.com/material-outlined/24/null/hearts.png"/>
+              <span>
+                <span style="font-size: 25px; margin-right: 5px; cursor: pointer;">
+                  <img src="../../assets/img/chatAgency.png" alt="" style="width: 25px; height: 25px;">
+                </span>
+                <span style="margin-top: 5px; cursor: pointer;">
+                  <img src="https://img.icons8.com/material-outlined/25/null/hearts.png"/>
+                </span>
               </span>
+              
             </div>
 
             <div style="display: flex; margin: 5px 0;">
@@ -192,22 +206,17 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                 $priceChild = (int) $row['packagePriceChild'];
                 $priceSenior = (int) $row['packagePriceSenior'];
                 if ( $priceChild == 0 and $priceSenior == 0) {
-              ?>
-              
-                <h2>₱<?php echo $row['packagePrice'] ?></h2>
-                <p style="font-size: 11px;">Per Person</p>
-          
-              <?php 
+                  $packagePrice = $row['packagePrice'];
+                  $priceType = 0;
+                  $lowerdesc = "Per Person";
                 } else {
-              ?>
-              
-                Starts at  
-                <h2>₱<?php echo $priceChild ?></h2>
-                <p style="font-size: 11px;">Per Person</p>
-              
-              <?php 
+                  $packagePrice = $priceChild;
+                  $priceType = 1;
+                  $lowerdesc = "Starting Price";
                 }
               ?>
+                <h2>₱<?php echo $packagePrice; ?></h2>
+                <p style="font-size: 11px;"><?php echo $lowerdesc;?></p>
             </span>
             
 
@@ -222,10 +231,12 @@ if(isset($_SESSION['isLoggedIn']) == false) {
           </div>
           <?php
             if (isset($_SESSION['isLoggedIn']) and $_SESSION['isLoggedIn']) {
-              echo '<form action="../../backend/booking/booktrip.php" method="POST">';
+              // echo '<form>'; 
+              $withend = false;
             } else {
               echo '<form action="../../index.php#login">';
               $_SESSION['toSignIn'] = false;
+              $withend = true;
             }
           ?>
           <div class="bmodal-container" id="bmodal_container">
@@ -237,82 +248,91 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                 <a id=\"modalBClose\" class=\"btn\">Maybe next time</a>
               </div>";
             } else {
-              $lname = $_SESSION['lname'];
-              $fname = $_SESSION['fname'];
-              $email = $_SESSION['email'];
             ?>
-              <div class="booking-modal" style="width: 1000px;">
-                <h1>Booking Information</h1>
-                <p>Enter the following details and the Travel Agency will be notified of the booking information sent.</p>
-                <div class="main" style="display: flex; margin-bottom: 1rem;">
-                  <div class="calendar" id="calendar" style="pointer-events: none; margin-right: 15px;">
-                    <div class="date-display" id="date-display" style="pointer-events: none;"></div>
+              <div class="booking-modal" id="booking-form" style="width: 1000px;">
+                  <input type="hidden" name="inserting" value="true">
+                  <input type="hidden" name="packageid" id="packageid" value="<?php echo $row['packageID']; ?>">
+                  <h1>Booking Information</h1>
+                  <p>Enter the following details and the Travel Agency will be notified of the booking information sent.</p>
+                  <div class="main" style="display: flex; margin-bottom: 1rem;">
+                    <div class="calendar" id="calendar" style="pointer-events: none; margin-right: 15px;">
+                      <div class="date-display" id="date-display" style="pointer-events: none;"></div>
+                    </div>
+                    <div class="classification" style="display: flex; flex-wrap: wrap; justify-content: center;">
+                      <div class="form-group" style="width: 90%; margin-bottom: 1rem; border-bottom: 1px solid black;">
+                        <?php 
+                          $startdate = date_create($row['packageStartDate']);
+                          $startdate = date_format($startdate,"D, M j, Y h:i A");
+                          $enddate = date_create($row['packageEndDate']);
+                          $enddate = date_format($enddate,"D, M j, Y h:i A");
+                          
+                          echo "<span style='font-weight: bold; font-size: 15px;'>Tour Schedule: $startdate to $enddate</span>";
+                        ?>
+                        <span id="partynum">Number of Selected Participants: 0/<?php echo $row['packagePersonMax']?></span>                  
+                      </div>
+                      <div class="form-group">
+                        <span class="form-label">Number of Infants</span>
+                        <h6>Ages 0 - 5</h6>
+                        <select class="form-control" name="infantNum" id="infantNum">
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <span class="form-label">Number of Children</span>
+                        <h6>Ages 6 - 17</h6>
+                        <select class="form-control" name="childNum" id="childNum">
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <span class="form-label">Number of Adults</span>
+                        <h6>Ages 18 - 60</h6>
+                        <select class="form-control" name="adultNum" id="adultNum">
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <span class="form-label">Number of Senior</span>
+                        <h6>Ages 61 +</h6>
+                        <select class="form-control" name="seniorNum" id="seniorNum">
+                        </select>
+                      </div>
+                    </div>
                   </div>
-                  <div class="classification" style="display: flex; flex-wrap: wrap; justify-content: center;">
-                    <div class="form-group" style="width: 90%; margin-bottom: 1rem; border-bottom: 1px solid black;">
-                      <?php 
-                        $startdate = date_create($row['packageStartDate']);
-                        $startdate = date_format($startdate,"D, M j, Y h:i A");
-                        $enddate = date_create($row['packageEndDate']);
-                        $enddate = date_format($enddate,"D, M j, Y h:i A");
-                        
-                        echo "<span style='font-weight: bold; font-size: 15px;'>Tour Schedule: $startdate to $enddate</span>";
-                      ?>
-                      <span id="partynum">Number of Selected Participants: 0/<?php echo $row['packagePersonMax']?></span>                  
-                    </div>
-                    <div class="form-group">
-                      <span class="form-label">Number of Infants</span>
-                      <h6>Ages 0 - 5</h6>
-                      <select class="form-control">
-                      </select>
-                    </div>
-
-                    <div class="form-group">
-                      <span class="form-label">Number of Children</span>
-                      <h6>Ages 6 - 17</h6>
-                      <select class="form-control">
-                      </select>
-                    </div>
-
-                    <div class="form-group">
-                      <span class="form-label">Number of Adults</span>
-                      <h6>Ages 18 - 60</h6>
-                      <select class="form-control">
-                      </select>
-                    </div>
-
-                    <div class="form-group">
-                      <span class="form-label">Number of Senior</span>
-                      <h6>Ages 61 +</h6>
-                      <select class="form-control">
-                      </select>
-                    </div>
+                  <div class="buttons">
+                    <button id="modalNext" class="modal-login">Next</button>
+                    <a id="modalBClose" class="btn">Close</a>
                   </div>
-                </div>
-                <div class="buttons">
-                  <button id="modalLogin" class="modal-login" >Book Now</button>
-                  <a id="modalBClose" class="btn">Close</a>
-                </div>
+                </form>
               </div>
             <?php
             }
             ?>
           </div>
-          <?php echo "</form>"; ?>
+          <?php if ($withend) echo "</form>"; ?>
+          <div class="modal-container" id="booking-summary">
+            
+          </div>
+
           <script src="../../assets/js/search-filters.js"></script>
           <script>
-            const bopen = document.getElementById('modalBOpen');
-            const bmodal_container = document.getElementById('bmodal_container');
-            const bclose = document.getElementById('modalBClose');
+            const $bookopener = $("#modalBOpen");
+            const $bookremover = $("#modalBClose");
+            const $bookcontainer = $("#bmodal_container");
 
-            bopen.addEventListener('click', () => {
-              bmodal_container.classList.add('show');
-            })
+            $bookopener.on("click", function() {
+              $bookcontainer.toggleClass("show");
+            });
+            $bookremover.on("click", function() {
+              $bookcontainer.removeClass("show");
+            });
 
-            bclose.addEventListener('click', () => {
-              bmodal_container.classList.remove('show');
-            })
-
+            $($bookcontainer).on('click', function (e) {
+              if ($("#bmodal_container").has(e.target).length === 0) {
+                $bookcontainer.removeClass("show");
+              }
+            });
+ 
             var displayCal = $('#date-display').flatpickr({
                 monthSelectorType: "static",
                 yearSelectorType: "static",
@@ -347,14 +367,14 @@ if(isset($_SESSION['isLoggedIn']) == false) {
               });
               return currentVal;
             }
-
+            var total;
             var minselection = <?php echo $row['packagePersonMin']?>;
             var maxselection = <?php echo $row['packagePersonMax']?>;
             setOptions(maxselection);
 
             $('.form-control').on('change', function() {
               var selection = this;
-              var total = getTotal();
+              total = getTotal();
 
               if (total > maxselection) {
                 alert('The selected number of participants must not exceed ' + maxselection + ".");
@@ -362,20 +382,43 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                 total = total - (total - maxselection);
               }
               $('#partynum').text('Number of Selected Participants: ' + total + '/' + maxselection);
-              // else if (total == 10) {
-              //   $('.form-control').each(function() {
-              //     if ($(this)[0] != $(selection)[0]) {
-              //       $(this).prop('disabled', 'disabled');
-              //     }
-                  
-              //   });
-              // } else {
-              //   $('.form-control').each(function() {
-              //     $(this).prop('disabled', false);
-              //   });
-              // }
             });
+        
+            
+            $('#modalNext').on('click', function() {
+              $.ajax({
+                url: '../../backend/package/packages_booking.php',
+                method: 'POST',
+                data: {
+                  inserting: true,
+                  packageid: $('#packageid').val(),
+                  infantNum: $('#infantNum').val(),
+                  childNum: $('#childNum').val(),
+                  adultNum: $('#adultNum').val(),
+                  seniorNum: $('#seniorNum').val()
+                },
+                async: true,
+                context: this,
+                beforeSend: function() {
+                },
+                success: function(data) {
+                  bmodal_container.classList.remove('show');
+                  $('#booking-summary').empty()
+                                       .html(data)
+                                       .toggleClass('show', true);
+                }
+              });
+            });
+
+            $('#booking-summary').on('click', function (e) {
+              if ($("#booking-summary").has(e.target).length === 0) {
+                $('#booking-summary').removeClass("show");
+              }
+            });
+           
           </script>
+          
+
         </div>
       </div>
 
@@ -428,8 +471,6 @@ if(isset($_SESSION['isLoggedIn']) == false) {
           <img src="../../assets/img/icons8-income-48.png" alt="" />
           <h3>Price</h3>
           <?php 
-            $priceChild = (int) $row['packagePriceChild'];
-            $priceSenior = (int) $row['packagePriceSenior'];
             if ( $priceChild == 0 and $priceSenior == 0) {
             ?>
             <p>

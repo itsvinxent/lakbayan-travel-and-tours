@@ -81,7 +81,7 @@ nav .logo img {
 }
 
 nav ul img {
-  height: 30px;
+  height: 40px;
   vertical-align: middle;
 }
 
@@ -94,6 +94,7 @@ nav ul li {
   display: inline-block;
   line-height: 60px;
   margin: 0 5px;
+  cursor: pointer;
 }
 
 nav ul li a {
@@ -126,6 +127,57 @@ nav li a:hover {
 
 #check {
   display: none;
+}
+
+.dropdown {
+  display: none;
+  position: fixed;
+  right: 0;
+  top: 60px;
+  width: 225px;
+  background-color: #34495e;
+  z-index: var(--z-fixed);
+  border-radius: 10px;
+  margin: 10px;
+  flex: 0 0 17rem;
+  padding: 10px;
+  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  justify-content: center;
+}
+
+.dropdown.show {
+  display: block;
+}
+
+.dropdown ul {
+  float: none;
+  margin: 0;
+}
+
+.dropdown a {
+  width: 100%;
+}
+
+.dropdown a img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.dropdown ul li {
+  width: 100%;
+  color: white; 
+  display: inline-flex;
+  align-items: center;
+  border-radius: 5px;
+  margin: 0;
+  line-height: unset;
+
+}
+
+.dropdown ul li:hover {
+  /* border-bottom: 5px solid #1abc9c; */
+  background-color: #1abc9c;
 }
 
 .banner {

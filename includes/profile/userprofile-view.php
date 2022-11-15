@@ -27,6 +27,16 @@ if(isset($_GET['id'])){
 }
 ?>
 
+<script>
+    $(function() {
+        $(document).scroll(function() {
+        var $nav = $("._nav");
+
+        $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
+        });
+    });
+</script>
+
 <section class="sections profile-user" id="packages">
 
     <div class="banner-half profile">

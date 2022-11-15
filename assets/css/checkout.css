@@ -1,0 +1,219 @@
+.fadeIn {
+  animation: fadein 5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Model Container */
+
+.model {
+  width: 900px;
+  height: 650px;
+  background: white;
+/*   font-size: 0; */
+  color: white;
+  position: relative;
+/*   animation: slideInFromLeft 1s cubic-bezier(0.68, -0.55, 0.265, 1.55); */
+  animation-fill-mode: forwards;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.room {
+  width: 50%;
+  height: 100%;
+  
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+}
+
+.previousPage {
+  display: inline-flex;
+  justify-content: left;
+  align-items: center;
+  margin: 20px;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.closePage {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.previousPage i{
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+.text-cover {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20px
+}
+
+/* .text-cover > * {
+  margin: 10px 0;
+} */
+hr {
+  margin: 10px 0;
+}
+
+.text-cover h1 {
+  font-size: 1.8rem;
+}
+
+.text-cover .price {
+  color: #e67e22;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.text-cover .price span {
+  font-size: 1.7rem;
+}
+
+.payment {
+  width: 50%;
+  height: 100%;
+  color: black;
+  display: inline-block;
+  position: relative;
+}
+
+.receipt-box {
+  padding: 20px;
+  border-bottom: 1px dashed #34495e;
+}
+
+/* .receipt-box h3, */
+.payment-info h3 {
+  margin-bottom: 10px;
+}
+
+.payment-info {
+  padding: 20px;
+}
+
+input[type=text]{
+    width: 100%;
+    padding: 8px 10px 10px;
+    margin: 15px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.btn {
+  padding: 15px 25px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  width: 90%;
+  display: block;
+  background: #1abc9c;
+  text-transform: uppercase;
+  position: absolute;
+  bottom: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.table, .client-info {
+  width: 100%;
+  max-width: 100%;
+  /* margin-bottom: 1rem; */
+  background-color: transparent;
+  border-collapse: collapse;
+}
+
+.table td, .client-info td {
+  vertical-align: top;
+}
+
+.table td {
+  font-size: 0.8rem;
+  font-style: italic;
+  padding: .25rem;
+}
+
+.table td:nth-child(2) {
+  text-align: right;
+}
+
+.client-info {
+  font-size: 14px;
+}
+
+.client-info td:nth-child(1) {
+  width: 25%;
+  font-weight: bold;
+}
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  font-weight: 600;
+  margin-block-end: 0.5em;
+  padding: 0;
+}
+
+.instr {
+  text-align: justify;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.form__radios {
+  display: grid;
+  gap: 1em;
+}
+
+.form__radio {
+  align-items: center;
+  background-color: #eee;
+  border-radius: 1em;
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);
+  display: flex;
+  padding: 10px 25px 10px 20px;
+  /* border: 1px solid black; */
+  font-size: 14px;
+}
+
+.form__radio label {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  gap: 10px;
+  height: 50px;
+}
+
+.form__radio img {
+  width: 50px;
+  height: 50px;
+  margin-right: 5px;
+}
+
