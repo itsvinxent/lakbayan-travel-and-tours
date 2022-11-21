@@ -8,7 +8,7 @@
   </label>
   <label class="logo"><img 
     <?php 
-      if ($_SESSION['active'] == 's-dest' || $_SESSION['active'] == 's-pack') { 
+      if ($_SESSION['active'] == 's-dest' || $_SESSION['active'] == 's-pack' || $_SESSION['active'] == 'chat-main') { 
         echo 'src="../../assets/img/logo.png"';
       } else {
         echo 'src="assets/img/logo.png"';
@@ -31,6 +31,8 @@
           if ($ispack) {
             $class = 'active';
           }
+        }
+        if ($_SESSION['active'] == 's-pack' || $_SESSION['active'] == 'chat-main' ) {
           $href = "../../$pagename.php";
           return "class='$class' href='$href'";
         } 
@@ -38,7 +40,7 @@
         return "class='$class' href='$href'";
 
       }
-      
+
     ?>
   <ul>
     <li id="goto"><a <?php echo setClass('index', 'index', 0);?> >Home</a></li>
@@ -54,17 +56,21 @@
     </li>
     <?php 
       if (isset($_SESSION['isLoggedIn']) and $_SESSION['isLoggedIn'] == true) {
-        echo<<<END
-        <li>
-        <a style="padding: 13px 0;"><img style="width: 40px; height: 40px;" src="https://img.icons8.com/plasticine/100/null/appointment-reminders.png"/></a>
-        </li>
-        <li>
-          <a href="includes/components/cart.php" style="padding: 13px 0;"><img style="width: 40px; height: 40px;" src="https://img.icons8.com/plasticine/100/null/worldwide-delivery.png"/></a>
-        </li>
-        <li>
-          <a href="../../backend/chat/chatmain.php" style="padding: 13px 0;"><img style="width: 40px; height: 40px;" src="https://img.icons8.com/plasticine/100/null/sent.png"/></a>
-        </li>
-        END;
+        echo '<li>
+                <a style="padding: 13px 0;"><img style="width: 40px; height: 40px;" src="https://img.icons8.com/plasticine/100/null/appointment-reminders.png"/></a>
+              </li>';
+        
+        if (isset($_SESSION['utype']) and $_SESSION['utype'] == 'user') {
+          echo '<li>
+                  <a href="includes/components/cart.php" style="padding: 13px 0;"><img style="width: 40px; height: 40px;" src="https://img.icons8.com/plasticine/100/null/worldwide-delivery.png"/></a>
+                </li>';
+        }
+
+        if (isset($_SESSION['utype']) and $_SESSION['utype'] != 'admin') {
+          echo "<li>
+                  <a " .setClass('chat-main', 'backend/chat/chatmain', 0)." style='padding: 13px 0;'><img style='width: 40px; height: 40px;' src='https://img.icons8.com/plasticine/100/null/sent.png'/></a>
+                </li>";
+        }
       }
     ?>
     
@@ -73,32 +79,32 @@
     
     if ($_SESSION['active'] == 'index') {
       if (isset($_SESSION['isLoggedIn']) and $_SESSION['isLoggedIn'] == true) {
-        echo "<li id='usericon'> <span id='modalOpen'>";
+        echo "<li id='usericon'> <a id='modalOpen' style='padding: 13px 0;'>";
       } else {
-        echo "<li id='goto'>";
+        echo "<li id='goto'><a class='logn' style='padding: 13px 0;'>";
       }
     } else {
       if (isset($_SESSION['isLoggedIn']) and $_SESSION['isLoggedIn'] == true) {
-        echo "<li id='usericon'> <span class='logn'>";
+        echo "<li id='usericon'> <a class='logn' style='padding: 13px 0;'>";
       } else {
-        echo "<li> <span id='modalOpen'class='logn'>";
+        echo "<li> <a id='modalOpen'class='logn' style='padding: 13px 0;'>";
       }
     }
 
     ?>
     <!-- <img src="https://img.icons8.com/external-febrian-hidayat-gradient-febrian-hidayat/64/000000/external-user-user-interface-febrian-hidayat-gradient-febrian-hidayat.png" /></a></li> -->
-    <img src="https://img.icons8.com/plasticine/100/null/test-account.png"/></span></li>
+    <img src="https://img.icons8.com/plasticine/100/null/test-account.png"/></a></li>
   </ul>
   <?php 
     $prefix = "";
-    if ($_SESSION['active'] == 's-pack') {
+    if ($_SESSION['active'] == 's-pack' || $_SESSION['active'] == 'chat-main') {
       $prefix = "../../";
     }
     echo<<<END
         <div class="dropdown" id="dropdown">
           <ul style="list-style-type: none;">
     END;
-    if (isset($_SESSION['active']) and $_SESSION['active'] != 'profile') {
+    if (isset($_SESSION['active']) and $_SESSION['active'] != 'u-profile') {
      echo<<<END
             <a href="{$prefix}user-profile.php">
               <li style="margin-bottom: 10px;">
@@ -108,7 +114,7 @@
             </a>
         END;
     }
-    if (isset($_SESSION['utype']) and $_SESSION['utype'] == 'manager') {
+    if (isset($_SESSION['utype']) and $_SESSION['utype'] == 'manager' and $_SESSION['active'] != 'a-profile') {
       echo<<<END
             <a href="{$prefix}agency-profile.php">
               <li style="margin-bottom: 10px;">

@@ -1,11 +1,14 @@
 
 <?php 
     session_start();
+    if (isset($_SESSION['isLoggedIn']) == false) {
+      header("location: ../../index.php");
+      exit;
+    }
     include '../../backend/auth/getuser.php';
     include '..\..\backend\connect\dbCon.php';
     
-    $_SESSION['active'] = 's-dest';
-
+    $_SESSION['active'] = 'chat-main';
     $loc = "../../assets/img/logo.png";
        
     $testdatain = 19; //SENDER change with Session
