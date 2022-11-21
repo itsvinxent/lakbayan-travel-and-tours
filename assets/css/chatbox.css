@@ -433,7 +433,7 @@ a {
     padding: 0 13px;
     border-radius: 5px;
     outline: none;
-    
+    margin: 0 !important;
 }
 
 .typing-area button{
@@ -445,7 +445,7 @@ a {
     color: #fff;
     font-size: 19px;
     cursor: pointer;
-    margin: 14px 0px;
+    /* margin: 14px 0px; */
     border-radius: 0px 5px 5px 0px;
     transition: .10s ease-in;
 }
@@ -574,6 +574,16 @@ a {
     margin-bottom: 10px;
     padding-bottom: 10px;
     border-bottom-color: #f1f1f1;
+    
+}
+
+.users-list a .content .details span{
+    transition: .1s ease;
+}
+
+.users-list a .content .details span:hover {
+    color: #1abc9c;
+
 }
 
 .users-list a:last-child{
