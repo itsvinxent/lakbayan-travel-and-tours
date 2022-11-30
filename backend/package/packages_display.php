@@ -179,15 +179,16 @@ function fetch_bookingtbl($query_string, $conn) {
     ?>
         <tr>
             <td><input type="checkbox" name="todelete[]"></td>
+            <td hidden><?php echo $row['inquiryInfoID'] ?></td>
             <td><?php echo $row['bookingID'] ?></td>
-            <td><?php echo $row['bookingTransacNum'] ?></td>
+            <td><?php echo $row['bookingNumber'] ?></td>
             <td><?php echo $row['fullname'] ?></td>
             <td><?php echo $row['packageTitle'] ?></td>
             <td><?php echo $row['bookingStatus'] ?></td>
             <td><?php echo $row['bookingPrice'] ?></td>
-            <td>
-                <button type="button" data-tab-target="#edit-booking" id="modalEOpen" class="book-edit-btn"><i class="far fa-edit"></i></button>
-                <button type="button" id="modalDOpen" class="delete-btn"><i class="fas fa-trash-alt"></i></button>
+            <td data-tab-target="#travel-order" style="cursor: pointer;" class="to_travel_order">
+                <!-- <i class="fas fa-ellipsis-h"></i> -->
+                <img style="display: inline-block; height: 100%; vertical-align: middle;" src="https://img.icons8.com/ios-glyphs/30/null/dots-loading--v3.png"/>
             </td>
         </tr>
 <?php
@@ -248,6 +249,26 @@ function fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $inc_
 
     return $jsondata;
 
+}
+
+function fetch_booking_by_id($inq_qry, $status_qry, $conn) {
+    $qry_inq = mysqli_query($conn, $inq_qry);
+    $inquiry = mysqli_fetch_assoc($qry_inq);
+    
+    $qry_status = mysqli_query($conn, $status_qry);
+    $stat_array = array();
+
+    while ($status = mysqli_fetch_assoc($qry_status)) {
+        $stat_array[] = $status;
+    }
+
+    $jsondata = json_encode(
+        array("inq" => $inquiry,
+            "status" => $stat_array
+        )
+    );
+
+    return $jsondata;
 }
 
 ?>

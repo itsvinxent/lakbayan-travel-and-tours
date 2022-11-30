@@ -5,6 +5,7 @@ include "backend/connect/dbCon.php";
 include "backend/auth/getuser.php";
 ?>
 <link rel="stylesheet" href="assets/css/profile-edit.css">
+<link rel="stylesheet" href="assets/css/travel-order.css">
 
 <script>
   var $nav = $("._nav");
@@ -281,10 +282,10 @@ include "backend/auth/getuser.php";
 
             </div>
           </form>
+        </div>
 
-      </div>
-
-      <div id="package" data-tab-content class="data-tab-content booking">
+        <!-- My Transactions Tab -->
+        <div id="package" data-tab-content class="data-tab-content booking">
           <div class="package-search component">
             <div class="name">
               <span><label for="b-package-name">Package Name</label></span>
@@ -340,51 +341,56 @@ include "backend/auth/getuser.php";
                                   FROM traveldb.inquiry_tbl AS IQ
                                   INNER JOIN traveldb.user_tbl AS US ON IQ.id_user = US.id
                                   INNER JOIN traveldb.booking_tbl AS BK ON IQ.id = BK.inquiryInfoID 
-                                  INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID";
+                                  INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID
+                                  WHERE IQ.id_user = {$_SESSION['id']}";
               fetch_bookingtbl($query_string, $conn);
               mysqli_close($conn);
               ?>
             </div>
+            <script src="assets/js/travel-order.js"></script>
 
           </div>
 
+          <script src="assets/js/search-filters.js"></script>
+          <script>
+            $('#s-all').prop('checked', true);
+            $('#s-all').next().addClass('active');
+
+
+            $('#b-get-search').on('click', function() {
+              pack_name = $('#b-package-name').val();
+              pack_transact = $('#b-package-transact').val();
+              pack_id = $('#b-package-id').val();
+              pack_customer = $('#package-customer').val();
+              bookingpostdata['logged_user'] = 'user';
+
+              booking_data_input();
+
+              if (count != 0) {
+                filterTimeout(bookingpostdata, '#fullb-table');
+              }
+              count = 4;
+
+            });
+
+            $('#b-reset-search').on('click', function() {
+              bookingpostdata = {
+                is_filtering: false,
+                booking: true,
+                logged_user: 'user'
+              }
+
+              filterTimeout(bookingpostdata, '#fullb-table');
+            });
+
+            // Transaction Status Filter
+            filterTable(".stat-inp", 'status', bookingpostdata)
+          </script>
+
         </div>
 
-        <script src="assets/js/search-filters.js"></script>
-        <script>
-          $('#s-all').prop('checked', true);
-          $('#s-all').next().addClass('active');
-
-
-          $('#b-get-search').on('click', function() {
-            pack_name = $('#b-package-name').val();
-            pack_transact = $('#b-package-transact').val();
-            pack_id = $('#b-package-id').val();
-            pack_customer = $('#package-customer').val();
-            bookingpostdata['logged_user'] = 'user';
-
-            booking_data_input();
-
-            if (count != 0) {
-              filterTimeout(bookingpostdata, '#fullb-table');
-            }
-            count = 4;
-
-          });
-
-          $('#b-reset-search').on('click', function() {
-            bookingpostdata = {
-              is_filtering: false,
-              booking: true,
-              logged_user: 'user'
-            }
-
-            filterTimeout(bookingpostdata, '#fullb-table');
-          });
-
-          // Transaction Status Filter
-          filterTable(".stat-inp", 'status', bookingpostdata)
-        </script>
+        <!-- Travel Order Tab -->
+        <?php include "includes/travel-order-tab.php"; ?>
 
     </div>
     <div class="save-container" id="save-ch-btn" style="display: none;">

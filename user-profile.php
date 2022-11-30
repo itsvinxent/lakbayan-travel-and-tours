@@ -1,10 +1,12 @@
 <?php
 session_start();
-$_SESSION['active'] = 'profile';
+$_SESSION['active'] = 'u-profile';
 if (isset($_SESSION['isLoggedIn']) == false) {
   $_SESSION['isLoggedIn'] = false;
 } else if ($_SESSION['isLoggedIn'] == false){
-  echo '<meta http-equiv="refresh" content="0;URL=index.php" />';
+  // echo '<meta http-equiv="refresh" content="0;URL=index.php" />';
+  header("location: index.php");
+  exit;
 }
 // Determines if the page will be loaded on 0 - ViewMode or 1 - EditMode
 // Change to session variable on production build

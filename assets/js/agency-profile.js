@@ -15,6 +15,7 @@ tabs.forEach(tab => {
     $(tab).on('click', selector, () => {
         tabContents.forEach(tabContent => {
             tabContent.classList.remove('active')
+            tabContent.scrollTop = 0;
         })
         tabs.forEach(tab => {
             tab.classList.remove('active')

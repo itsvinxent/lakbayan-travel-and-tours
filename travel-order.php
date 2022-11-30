@@ -24,6 +24,7 @@ if (isset($_SESSION['booking-stat']) == false) {
   <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="icon" href="assets/img/logo.png" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <title>Travel Order | Lakbayan Travels and Tours</title>
 </head>
 
@@ -33,15 +34,7 @@ if (isset($_SESSION['booking-stat']) == false) {
   include 'includes/components/accountModal.php';
   ?>
 
-  <section class="sections t-order" id="t-order">
-    <div class="banner-half">
-      <video src="assets/media/falls.mp4" muted loop autoplay preload="auto"></video>
-      <div class="text">
-        <input type="text" placeholder="Where'd you wanna go?" class="field" />
-        <span class="ico"><i class="fas fa-search"></i></span>
-      </div>
-    </div>
-
+  <section class="sections t-order" id="t-order" style="margin-top: 100px;">
     <div class="content">
       <div class="progress">
         <span class="icon green">
@@ -68,82 +61,11 @@ if (isset($_SESSION['booking-stat']) == false) {
         </span>
 
       </div>
-      <div class="spec-content">
-        <h1>Payment Status</h1>
-        <p id="status" style="text-align: justify;">
-          The payment for this booking is currently <strong>pending</strong>. Please select one of th following payment methods available.
-        </p>
-        <h1 class="amt">P15,000</h1>
-        <p class="pen">PENDING AMOUNT</p>
-
-        <div class="payment active" id="payment">
-          <div class="main gcash">
-            <h1>GCash</h1>
-            <div>
-              <p>Method #1: GCash Payment Portal</p>
-              <button>Pay Now!</button>
-            </div>
-            <div>
-              <p>Method #2: QR Code Scan</p>
-              <p style="text-align: justify;">Scan this QR Code using your GCash Mobile App.</p>
-              <img src="assets/img/LakbayanQRCode.jpg" alt="">
-            </div>
-          </div>
-
-          <div class="main right">
-            <div class="bank">
-              <h1>Bank Accounts</h1>
-              <div>
-                <p style="font-weight: bold;">BDO</p>
-                <p>Account Name: Juan Dela Cruz</p>
-                <p>Account Number: 001930300485</p>
-              </div>
-              <div>
-                <p style="font-weight: bold;">BPI</p>
-                <p>Account Name: Juan Dela Cruz</p>
-                <p>Account Number: 122672310817</p>
-              </div>
-            </div>
-            <div class="trans">
-              <h1>Money Transfer</h1>
-              <p style="font-weight: bold;">Palawan Express</p>
-              <p>Name: Juan Dela Cruz</p>
-              <p>Number: 0999-432-9680</p>
-              <br>
-            </div>
-            <div class="receipt" id="receipt">
-              <p style="text-align: justify;">Please upload the receipt/proof of transaction for the chosen payment method here.</p>
-              <input type="file" name="" id="">
-              <button onclick="changeStatus()">Submit</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="payment-agency" id="payment-agency">
-          <div class="cont">
-            <h1>Receipt Submitted</h1>
-            <img src="assets/img/receipt.jpg" alt="">
-          </div>
-          <div class="details">
-            <h1>Customer Information</h1>
-
-            <p style="margin-top: 1rem;">Name: John Mark De Ocampo</p>
-            <p>Travel Package: Campuestohan Highland Resort</p>
-            <p>Number of Persons: 5</p>
-            <p>Number of Days: 3</p>
-            <p>Trip Date: September 11, 2022</p>
-
-            <button onclick="confirm()">Confirm Payment</button>
-          </div>
-
-        </div>
-
-        <button onclick="viewAgency()">Change View</button>
-      </div>
+      
     </div>
   </section>
 
-  <footer class="site-footer">
+  <!-- <footer class="site-footer">
     <div class="container">
       <div class="logo">
         <img src="assets/img/logo.png" alt="" />
@@ -187,55 +109,15 @@ if (isset($_SESSION['booking-stat']) == false) {
         </div>
       </div>
     </div>
-  </footer>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </footer> -->
 
   <script>
-    $(function() {
-      $(document).scroll(function() {
-        var $nav = $("._nav");
-
-        $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
-      });
-    });
+    var $nav = $("._nav");
+    $nav.toggleClass("scrolled");
   </script>
 
   <script>
-    function changeStatus() {
-      var text = document.getElementById('status');
-      text.innerHTML = "The payment for this booking <strong>has been sent</strong>. Please wait for the confirmation of the Travel Agency if the payment has been received."
-    }
-
-    function viewAgency() {
-      var text = document.getElementById('status');
-      text.innerHTML = "The payment for this booking <strong>has been sent</strong>. Please review the submitted proof and confirm the payment."
-      
-      var usercontainer = document.getElementById('payment');
-      var agencycontainer = document.getElementById('payment-agency');
-
-      usercontainer.classList.remove('active');
-      agencycontainer.classList.add('active');
-    }
-
-    function confirm() {
-      var text = document.getElementById('status');
-      text.innerHTML = "The payment for this booking <strong>has been confirmed</strong> by the Travel Agency."
-      
-      var usercontainer = document.getElementById('payment');
-      var agencycontainer = document.getElementById('payment-agency');
-      var statusbar = document.getElementById('thisbar');
-      var status = document.getElementById('thisicon');
-      var receipt = document.getElementById('receipt');
-
-      usercontainer.classList.add('active');
-      agencycontainer.classList.remove('active');
-      statusbar.classList.remove('gray');
-      statusbar.classList.add('green');
-      status.classList.remove('gray');
-      status.classList.add('green');
-      receipt.style.display = "none";
-    }
+  
   </script>
 
 </body>

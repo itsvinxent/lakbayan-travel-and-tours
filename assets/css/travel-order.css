@@ -1,172 +1,362 @@
+.content .page-title {
+  width: 90%;
+  margin: 2rem auto 0 auto;
+  /* border-bottom: 2px solid #aaa;
+    padding-bottom: 10px; */
+}
+
 .content .progress {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 3rem auto;
-    width: 50%;
+  display: grid;
+  grid-template-columns: repeat(7, 0.5fr);
+  justify-content: center;
+  align-items: center;
+  margin: 1rem auto;
+  width: 50%;
+}
+
+.progress-container {
+  display: flex;
+  margin: auto;
+  width: 90%;
+  padding-bottom: 3rem;
+  border-bottom: 2px solid #aaa;
 }
 
 .progress .icon {
-    display: inherit;
-    justify-content: center;
-    vertical-align: middle;
-    align-items: center;
-    border-radius: 50%;
-    cursor: pointer;
+  display: inherit;
+  justify-content: center;
+  vertical-align: middle;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
 }
 
 .progress .icon img {
-    padding: 24px;
+  padding: 24px;
 }
 
 .progress .icon.green {
-    border: 10px solid var(--first-color);
+  border: 10px solid var(--first-color);
 }
 
 .progress .icon.green.active {
-    background-color: rgba(26, 188, 156, .5);
+  background-color: rgba(26, 188, 156, 0.5);
 }
 
 .progress .icon.gray {
-    border: 10px solid #e0e0e0;
+  border: 10px solid #e0e0e0;
 }
 
 .progress .icon p {
-    position: absolute;
-    transform: translate(0, 90px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 70px);
+  text-align: center;
+  width: 150px;
+  font-family: inherit;
 }
 
 .progress .icon .title.active {
-    font-weight: bold;
+  font-weight: bold;
 }
 
-.progress .icon:hover .title {
-    text-decoration: underline;
+.progress .icon:hover {
+  background-color: rgba(26, 188, 156, 0.5);
+  border: 10px solid var(--first-color);
 }
 
 .progress .bar {
-    height: 10px;
-    width: 100px;
+  height: 10px;
+  width: 75px;
 }
 
 .progress .bar.green {
-    background-color: var(--first-color);
+  background-color: var(--first-color);
 }
 
 .progress .bar.gray {
-    background-color: #e0e0e0;
+  background-color: #e0e0e0;
 }
 
-.content .spec-content {
-    
-    margin: 6rem auto 3rem auto;
-    width: 60%;
+.travel-sub {
+  /* display: none; */
+  opacity: 0;
+  width: 90%;
+  margin: 1.5rem auto 0 auto;
+  z-index: -10;
+  /* transition: opacity .5s ease-out; */
+  position: absolute;
+  left: 0;
+  right: 0;
 }
 
-.spec-content h1 {
-    text-align: left;
+.travel-sub.active {
+  /* display: block; */
+  opacity: 1;
+  z-index: 1;
+  transition: opacity .5s ease-in;
 }
 
-.spec-content .amt {
-    text-align: right;
+.booking-placed.active, .tpayment-info.active {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.spec-content .pen {
-    text-align: right;
-    margin-top: -5px;
+.client-inf-table tr,
+.booking-inf-table tr {
+  vertical-align: top;
 }
 
-.spec-content .payment.active {
-    display: flex;
-    margin-top: 1rem auto;
+.client-inf-table td:nth-child(1) {
+  width: 20%;
+  padding-right: 10px;
 }
 
-.spec-content .payment {
-    display: none;
+.booking-inf-table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.spec-content .payment .main {
-    padding-right: 75px;
+.booking-inf-table td:nth-child(1) {
+  width: 40%;
 }
 
-.spec-content .gcash div {
-    padding: 10px 0 10px 0;
+.booking-inf-table td:nth-child(2) {
+  text-align: right;
+  width: 50%;
 }
 
-.spec-content .gcash div img {
-    height: 500px;
-    border-radius: 20px;
-    margin-top: 10px;
+.tpayment-info .method-selection, 
+.tpayment-info .rating-sheet {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.spec-content .gcash div button, 
-.spec-content .receipt button  {
-    background-color: #017cfe;
-    padding: 10px;
-    font: inherit;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    margin: 10px 0;
-    width: 100%;
+.instructions {
+  width: 50%;
+  padding-left: 20px;
+  position: relative;
 }
 
-.spec-content .gcash div button:hover,
-.spec-content .receipt button:hover {
-    cursor: pointer;
+.instr {
+  text-align: justify;
+  font-size: 16px;
+  margin-bottom: 10px;
 }
 
-.spec-content .bank div {
-    padding-top: 10px;
+.form__radios {
+  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
 }
 
-.spec-content .trans {
-    margin-top: 1rem;
+.form__radio {
+  align-items: center;
+  background-color: #eee;
+  border-radius: 1em;
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);
+  display: flex;
+  padding: 10px 25px 10px 20px;
+  /* border: 1px solid black; */
+  font-size: 14px;
+  width: 100%;
 }
 
-.spec-content .receipt {
-    margin-top: 200px;
-    background-color: #34495e;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
+.form__radio label {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  gap: 10px;
+  height: 50px;
 }
 
-.spec-content .receipt button {
-    background-color: var(--first-color);
-    margin: 15px 0 0 0;
+.form__radio img {
+  width: 50px;
+  height: 50px;
+  margin-right: 5px;
 }
 
-.spec-content .payment-agency.active {
-    display: flex;
-    margin-top: 1rem auto;
+.btn {
+  width: 150px;
+  bottom: 0;
+  right: 0;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  display: block;
+  background: #1abc9c;
+  text-transform: uppercase;
+  position: absolute;
+  font-family: inherit;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.spec-content .payment-agency {
-    display: none;
+.btn.btn-long {
+  width: 100%;
+  position: unset;
+  padding: 10px;
+  background: #34495E;
 }
 
-.spec-content .payment-agency img{
-    height: 500px;
-    margin-top: 1rem;
+.btn.btn-long:not(:last-child) {
+  margin-bottom: 5px;
+  background: #1abc9c;
 }
 
-.spec-content .payment-agency .details {
-    padding-left: 25px;
+.btn.btn-gap {
+  margin-bottom: 15px;
 }
 
-.spec-content .payment-agency .details button {
-    padding: 10px;
-    width: 100%;
-    background-color: var(--first-color);
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font: inherit;
-    cursor: pointer;
-    margin-top: 1rem;
+
+.proof-upload {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  width: 100%;
 }
 
-.spec-content .payment-agency .details .deny {
-    background-color: #ff0018;
+.proof-right, .sched-right, .rate-right {
+  /* display: none; */
+
+  z-index: -10;
+  opacity: 0;
+  /* transition: all .5s ease-out; */
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.proof-right.active, .sched-right.active, .rate-right.active {
+  display: flex; 
+  flex-direction: column; 
+
+  z-index: 1;
+  opacity: 1;
+  transition: all .5s ease-in;
+  
+}
+
+.proof-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  justify-content: space-between;
+}
+
+.timeline {
+  display: flex; 
+  margin: 0.5rem 1rem; 
+  width: 100%; 
+  flex-direction: column;
+}
+
+.timeline-item {
+  display: inline-flex; 
+  align-items: center;
+  margin: 5px 0;
+}
+
+.milestone-dot {
+  width: 15px; 
+  height: 15px; 
+  margin-right: 10px; 
+  border-radius: 50%; 
+  background: #D9D9D9;
+  position: relative;
+}
+
+.milestone-bar {
+  position: absolute;
+  height: 20px;
+  width: 5px;
+  top: -70%;  /* position the top  edge of the element at the middle of the parent */
+  left: 50%; /* position the left edge of the element at the middle of the parent */
+  transform: translate(-50%, -50%);
+  background: #D9D9D9;
+}
+
+.gray-area {
+  background: #F0EFEF;
+  border-radius: 5px;
+  box-shadow: 0 0 1em rgb(0 0 0 / 6%);
+  height: 300px;
+  padding: 30px;
+}
+
+.message {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.rate-review textarea {
+  width: 100%;
+  height: 250px;
+  resize: none;
+  outline: none;
+  background-color: #eee;
+  border: none;
+
+  font-size: 16px;
+  line-height: 1.5em;
+  font-family: "Poppins", sans-serif;
+
+  margin: 15px;
+  padding: 10px;
+}
+
+.rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  position: relative;
+}
+
+
+.rating>input {
+  display: none;
+}
+
+.rating>label {
+  position: relative;
+  width: 1.5em;
+  font-size: 30px;
+  color: var(--logo-yellow-dark);
+  cursor: pointer;
+}
+
+.rating>label::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f005";
+  display: inline-block;
+  position: absolute;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  opacity: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.rating>label:hover:before,
+.rating>label:hover~label:before {
+  opacity: 1 !important;
+}
+
+.rating>input:checked~label:before {
+  opacity: 1;
+}
+
+.rating:hover>input:checked~label:before {
+  opacity: 0.4;
 }

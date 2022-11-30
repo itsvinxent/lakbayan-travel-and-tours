@@ -27,6 +27,7 @@
                 return;
             }
         } else if (isset($_POST['inserting']) and $_POST['inserting'] == 'true') {
+            $maxpersons = $_POST['maxpersons'];
             $infantCount = $_POST['infantNum'];
             $childrenCount = $_POST['childNum'];
             $adultCount = $_POST['adultNum'];
@@ -36,7 +37,7 @@
 
             $cartItem = isExisting($conn, $id_user, $packageID);
             
-            if ($cartItem['id'] == 0) {
+            if (isset($cartItem['id']) == false) {
                 $query = "INSERT INTO traveldb.inquiry_tbl (`id_user`, `infantCount`, `childrenCount`, `adultCount`, `seniorCount`, `packageID`) 
                 VALUES($id_user, $infantCount, $childrenCount, $adultCount, $seniorCount, $packageID)";
             } else {
@@ -55,7 +56,7 @@
                 // $_SESSION['childrenCount'] = $childrenCount;
                 // $_SESSION['adultCount'] = $adultCount;
                 // $_SESSION['seniorCount'] = $seniorCount;
-                $persons = $infantCount + $childrenCount + $adultCount + $seniorCount;    
+                $persons = $childrenCount + $adultCount + $seniorCount;    
                 $startdate = date_format(date_create($row['packageStartDate']),"M j, Y h:i A");
                 $enddate = date_format(date_create($row['packageEndDate']),"M j, Y h:i A");
                 $priceChild = (int) $row['packagePriceChild'];
@@ -165,6 +166,7 @@
                             <form action="checkout.php" method="POST">
                                 <input type="hidden" name="packageid" value="$packageID">
                                 <input type="hidden" name="totalprice" value="$total">
+                                <input type="hidden" name="availableslots" value="$maxpersons-$persons">
                                 <fieldset>
                                     <legend>Payment Method</legend>
                                     <div class="instr">You will be redirected to another page where you will sign-in your GCash account and confirm payment on the required amount.</div>
@@ -172,19 +174,19 @@
                                         <div class="form__radio">
                                             <img src="https://img.icons8.com/plasticine/100/null/gcash.png"/>
                                             <label for="gcash">GCash Payment</label>
-                                            <input checked id="gcash" name="payment-method" type="radio" value="gcash"/>
+                                            <input checked id="gcash" name="payment-method" type="radio" value="GCash"/>
                                         </div>
 
                                         <div class="form__radio">
                                             <img src="https://img.icons8.com/plasticine/100/null/bank-card-back-side.png"/>
                                             <label for="bank">Bank Transfer</label>
-                                            <input id="bank" name="payment-method" type="radio" value="bank"/>
+                                            <input id="bank" name="payment-method" type="radio" value="Bank Transfer"/>
                                         </div>
 
                                         <div class="form__radio">
                                             <img src="https://img.icons8.com/plasticine/100/null/cash-in-hand.png"/>
                                             <label for="remittance">Remittance Center</label>
-                                            <input id="remittance" name="payment-method" type="radio" value="remittance"/>
+                                            <input id="remittance" name="payment-method" type="radio" value="Remittance Center"/>
                                         </div>
                                     </div>
                                 </fieldset>

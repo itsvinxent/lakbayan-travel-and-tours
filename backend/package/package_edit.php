@@ -31,6 +31,7 @@
     
      $upMinHead = $_POST['headmin']; 
      $upMaxHead = $_POST['headmax'];
+     $upAvailHead = $upMaxHead;
 
     $myid = $_SESSION['setID'];
 
@@ -72,7 +73,8 @@
                                        packagePriceChild='$young',
                                        packagePriceSenior='$senior',
                                        packagePartialType='$partialtype',
-                                       packagePartialPrice='$partialamt'
+                                       packagePartialPrice='$partialamt',
+                                       packageSlots='$upAvailHead'
                                        WHERE packageID='$_SESSION[PACKAGE_ID]'";
 
         if(mysqli_query($conn, $qry)){

@@ -3,7 +3,9 @@ session_start();
 if (isset($_GET['packageid'])){
   $packageID = $_GET['packageid'];
 } else {
-  echo '<meta http-equiv="refresh" content="0;URL=../../packages.php" />';
+  // echo '<meta http-equiv="refresh" content="0;URL=../../packages.php" />';
+  header("location: ../../packages.php");
+  exit;
 }
 $_SESSION['active'] = 's-pack';
 if(isset($_SESSION['isLoggedIn']) == false) {
@@ -221,8 +223,25 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                 <p style="font-size: 11px;"><?php echo $lowerdesc;?></p>
             </span>
             
+            <?php 
+              $button_content = '<a id="modalBOpen" class="book-btn">Check Availability</a>';
 
-            <a id="modalBOpen" class="book-btn">Check Availability</a>
+              if (isset($_SESSION['isLoggedIn']) and $_SESSION['isLoggedIn']) {
+                $query = "SELECT id from traveldb.inquiry_tbl WHERE id_user = {$_SESSION['id']} AND packageID = $packageID";
+                $qry_exist = mysqli_query($conn, $query);
+                $cartItem = mysqli_fetch_array($qry_exist);
+  
+                if (isset($cartItem['id']) == true) {
+                  $query = "SELECT bookingID from traveldb.booking_tbl WHERE inquiryInfoID = {$cartItem['id']} AND bookingStatus != 'complete'";
+                  $qry_exist = mysqli_query($conn, $query);
+                  $cartItem = mysqli_fetch_array($qry_exist);
+                  if (isset($cartItem['bookingID']) == true) {
+                    $button_content = '<a href="../../user-profile.php?orderID='.$cartItem['bookingID'].'" class="book-btn">Check Booking Status</a>';
+                  } 
+                } 
+              }
+              echo $button_content;
+            ?>
             <div class="justify">
               <p class="sml-txt">
                 <span>Reserve now & pay later:</span>
@@ -270,7 +289,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                           
                           echo "<span style='font-weight: bold; font-size: 15px;'>Tour Schedule: $startdate to $enddate</span>";
                         ?>
-                        <span id="partynum">Number of Selected Participants: 0/<?php echo $row['packagePersonMax']?></span>                  
+                        <span id="partynum">Number of Selected Participants: 0/<?php echo $row['packageSlots']?></span>                  
                       </div>
                       <div class="form-group">
                         <span class="form-label">Number of Infants</span>
@@ -371,7 +390,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
             }
             var total;
             var minselection = <?php echo $row['packagePersonMin']?>;
-            var maxselection = <?php echo $row['packagePersonMax']?>;
+            var maxselection = <?php echo $row['packageSlots']?>;
             setOptions(maxselection);
 
             $('.form-control').on('change', function() {
@@ -397,7 +416,8 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                   infantNum: $('#infantNum').val(),
                   childNum: $('#childNum').val(),
                   adultNum: $('#adultNum').val(),
-                  seniorNum: $('#seniorNum').val()
+                  seniorNum: $('#seniorNum').val(),
+                  maxpersons: maxselection
                 },
                 async: true,
                 context: this,

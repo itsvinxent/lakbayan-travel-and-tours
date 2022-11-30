@@ -35,6 +35,7 @@
 
         $headmin = $_POST['headmin']; //INSERT TO PACKAGE_TBL
         $headmax = $_POST['headmax']; //INSERT TO PACKAGE_TBL
+        $headavail = $headmax; //INSERT TO PACKAGE_TBL
 
         $young = 0; $senior = 0;
 
@@ -81,7 +82,8 @@
             packageStartDate,
             packageEndDate,
             packageUploadDate,
-            packageCutoff) VALUES ('$myid',
+            packageCutoff,
+            packageSlots) VALUES ('$myid',
                                    '$packName',
                                    '$packDesc',
                                    '$adult',
@@ -96,7 +98,8 @@
                                    '$sdateconv',
                                    '$edateconv',
                                     now(),
-                                   '$cutoff')";
+                                   '$cutoff',
+                                   '$headavail')";
             
             if(mysqli_query($conn, $packsql)){
                 $gotpkID = mysqli_insert_id($conn);

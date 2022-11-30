@@ -61,9 +61,6 @@ if(isset($_GET['id'])){
                 echo '<img id="img-banner" src="assets/img/users/traveler/DefaultProf.jpg" alt="">';
                 }
             ?> 
-                <div class="middle">
-                    <div class="text"><i class="fas fa-pen"></i>Edit</div>
-                </div>
             </div>
             <div class="top">
                 <span>

@@ -87,7 +87,7 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
     // }
 
   } finally {
-    $query_string .= get_prefix() ."PK.is_deleted = 0";
+    $query_string .= get_prefix() ."PK.is_deleted = 0 AND PK.packageStatus = 0";
     $query_string .= " GROUP BY AI.packageIDFrom";
     if(isset($_POST['logged_user']) and $_POST['logged_user'] == 'agency') {
       fetch_packagetbl($query_string, $conn, true);
@@ -164,5 +164,26 @@ if (isset($_POST['is_editing']) and $_POST['is_editing'] == 'true') {
   $inc_qry = "SELECT * FROM traveldb.packageincl_tbl WHERE packageID_from = {$_POST['packageID']}";
 
   $jsondata = fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $inc_qry, $conn);
+  echo $jsondata;
+}
+
+// Booking Travel Order UI
+if (isset($_POST['is_travel']) and $_POST['is_travel'] == 'true') {
+  $inq_qry = "SELECT IQ.*, CONCAT(US.fname, ' ',US.lname) AS fullname, US.email, US.contactnumber, US.address, BK.*, 
+              AG.agencyManID, AG.agencyPfPicture, AG.agencyName, PK.packageCreator, PK.packageTitle, PK.packagePrice, PK.packagePriceChild, PK.packagePriceSenior, PK.packagePersonMax, PK.packagePersonMin, PK.packageStartDate, PK.packageEndDate, PK.packageSlots, AI.packageImg_Name
+              FROM traveldb.inquiry_tbl AS IQ
+              INNER JOIN traveldb.user_tbl AS US ON IQ.id_user = US.id
+              INNER JOIN traveldb.booking_tbl AS BK ON IQ.id = BK.inquiryInfoID 
+              INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID
+              INNER JOIN traveldb.agency_tbl AS AG ON PK.packageCreator = AG.agencyID
+              INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
+              WHERE (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL)
+              and BK.bookingID = {$_POST['bookingID']}";
+  // BK.inquiryInfoID = {$_POST['inquiryInfoID']} AND 
+
+  $status_qry = "SELECT * FROM traveldb.bookingstatus_tbl WHERE bookingInfoID = {$_POST['bookingID']}";
+
+  $jsondata = fetch_booking_by_id($inq_qry, $status_qry, $conn);
+  
   echo $jsondata;
 }

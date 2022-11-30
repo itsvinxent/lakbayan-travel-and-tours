@@ -8,12 +8,15 @@
 //     }
 // }, 5000);
 
+var count = 1;
+
 function nextFunction(imgCount) {
     if (count >= imgCount) {
         count = 1;
     } else {
         count++;
     }
+    console.log(count, imgCount)
     document.getElementById('btn' + count).checked = true;
 }
 
@@ -23,5 +26,6 @@ function prevFunction(imgCount) {
     } else {
         count--;
     }
+    console.log(count, imgCount)
     document.getElementById('btn' + count).checked = true;
 }
