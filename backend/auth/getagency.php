@@ -36,6 +36,7 @@ if(!$conn){
                                   $gotDOT,
                                   $gotProof,
                                   $isdeleted, 
+                                  $verStat,
                                   $gotMEmail, 
                                   $gotMName, 
                                   $gotMContact);

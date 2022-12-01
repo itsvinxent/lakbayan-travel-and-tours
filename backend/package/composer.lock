@@ -1,0 +1,78 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "97f4418327fc872665d4b30449b90555",
+    "packages": [
+        {
+            "name": "tigo/recommendation",
+            "version": "v0.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tigoCaval/recommendation-algorithm.git",
+                "reference": "9f776194a9908dba4cdd345311c5fa2339c12c06"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tigoCaval/recommendation-algorithm/zipball/9f776194a9908dba4cdd345311c5fa2339c12c06",
+                "reference": "9f776194a9908dba4cdd345311c5fa2339c12c06",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tigo\\Recommendation\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tiago A C Pereira",
+                    "email": "tiagocavalcante57@gmail.com"
+                }
+            ],
+            "description": "collaborative filtering recommender systems",
+            "keywords": [
+                "collaborative filtering",
+                "euclidean distance",
+                "recommendation",
+                "recommendation algorithm",
+                "recommendation system",
+                "recommender",
+                "recommender system",
+                "slope one"
+            ],
+            "support": {
+                "issues": "https://github.com/tigoCaval/recommendation-algorithm/issues",
+                "source": "https://github.com/tigoCaval/recommendation-algorithm/tree/v0.0.2"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/donate?hosted_button_id=S7FBV5N6ZTRXQ",
+                    "type": "custom"
+                }
+            ],
+            "time": "2021-02-23T02:18:16+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
+}

@@ -2,13 +2,24 @@
 
 // Function for displaying in the Main Package Page and the Travel Agency Profile Page (View Mode)
 function fetch_packages($query_string, $conn, $editmode)
-{
+{   
 
     $qry_packages = mysqli_query($conn, $query_string);
 
     while ($row = mysqli_fetch_array($qry_packages)) {
 ?>
         <div class="wrapper">
+            
+            <?php 
+                if(isset($row['priority'])){
+                    echo "<div class='recommended__content'>     
+                    <span>Recommended</span>
+                    </div>
+                    <div class='recommended__icon'>     
+                    <i class=\"fa-solid fa-users fa-xl\"></i>
+                    </div>";
+                }
+            ?>
             <input type="hidden" id="packageid" value="<?php echo $row['packageID']?>"/>
             <div class="border"></div>
             <div class="image">

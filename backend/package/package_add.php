@@ -29,6 +29,8 @@
 
         $cutdate = $_POST['cutdate'];
         $cutoff = date('Y-m-d h:i:s', strtotime($cutdate));
+       
+        $minage = 0; $maxage = 0;
 
         $minage = $_POST['agemin']; //INSERT TO PACKAGE_TBL
         $maxage = $_POST['agemax']; //INSERT TO PACKAGE_TBL

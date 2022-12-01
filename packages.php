@@ -287,13 +287,29 @@ if (isset($_SESSION['booking-stat']) == false) {
         <div class="card-container" id="card-container">
           <?php
           include_once "backend/package/packages_display.php";
+          include_once __DIR__."/backend/package/collaborative_filtering.php";
 
-          $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName 
-                    FROM traveldb.package_tbl AS PK 
-                    INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
-                    INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
-                    WHERE (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) AND PK.is_deleted = 0 AND PK.packageStatus = 0
-                    GROUP BY AI.packageIDFrom";
+          $result = array();
+          
+          $result = getCollabRecommendation($_SESSION["id"]);
+          $query_string = "SELECT PK.*, 
+                                  FORMAT(PK.packagePrice, 0) AS fresult, 
+                                  DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, 
+                                  AI.*, 
+                                  AG.agencyName ";
+          if(!empty($result))   {$query_string .= ", CASE ";}              
+          
+          foreach($result as $key => $results){
+              $query_string .= 'WHEN PK.packageID='.$key.' THEN 1 ';
+          }            
+
+          if(!empty($result))   {$query_string .= " END AS 'priority' ";}
+          $query_string .= "FROM traveldb.package_tbl AS PK 
+                            INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                            INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
+                            WHERE (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) AND PK.is_deleted = 0 AND PK.packageStatus = 0
+                            GROUP BY AI.packageIDFrom ";
+          if(!empty($result))   {$query_string .= "ORDER BY priority DESC";}
 
           fetch_packages($query_string, $conn, false);
 
@@ -361,6 +377,7 @@ if (isset($_SESSION['booking-stat']) == false) {
           // });
           
         </script>
+        <script src="https://kit.fontawesome.com/7846b9013f.js" crossorigin="anonymous"></script>
 
       </div>
 

@@ -1,0 +1,5 @@
+{
+    "require": {
+        "tigo/recommendation": "^0.0.2"
+    }
+}

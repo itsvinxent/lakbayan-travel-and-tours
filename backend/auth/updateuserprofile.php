@@ -37,7 +37,7 @@ if (empty($inTel)) $inTel = $_SESSION['contact'];
 if (empty($inGender)) $inGender = $_SESSION['gender'];
 if (empty($inRace)) $inRace = $_SESSION['race'];
 if (empty($inNat)) $inNat = $_SESSION['nationality'];
-if (empty($inReligion)) $inTel = $_SESSION['religion'];
+if (empty($inReligion)) $inReligion = $_SESSION['religion'];
 
 
 $userID = $_SESSION['id'];

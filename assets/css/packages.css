@@ -63,12 +63,14 @@ input.field:focus {
 .wrapper:hover .edit-btn,
 .wrapper:hover .delete-btn {
     opacity: 1;
-    z-index: 10;
+    /* z-index: 10; */
+    transition: .15s opacity ease-in;
+    transition-property: .15s z-index ease-in;
 }
 
 .wrapper:hover .border {
     opacity: 1;
-    transition: opacity ease-in;
+    transition: .15s opacity ease-in;
 }
 
 .wrapper .border {
@@ -93,7 +95,7 @@ input.field:focus {
     padding: 5px 0 5px 0;
     color: white;
     letter-spacing: 1px;
-    z-index: 10;
+    z-index: 15;
 }
 
 .wrapper .edit-btn a, 
@@ -104,7 +106,7 @@ input.field:focus {
     padding: 5px 0 5px 0;
     color: white;
     letter-spacing: 1px;
-    z-index: 10;
+    z-index: 11;
     font-size: 14px;
 }
 
@@ -376,6 +378,7 @@ font-size: 14px;
         flex-basis: 50%;
         max-width: 185px;
         margin: 10px 5px 35px 5px;
+        z-index: 0  ;
     }
     .wrapper .border {
         width: 189px;
