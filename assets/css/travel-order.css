@@ -310,7 +310,7 @@
   padding: 10px;
 }
 
-.rating {
+.rating-sheet .rating {
   display: flex;
   flex-direction: row-reverse;
   justify-content: center;
@@ -318,11 +318,11 @@
 }
 
 
-.rating>input {
+.rating-sheet .rating>input {
   display: none;
 }
 
-.rating>label {
+.rating-sheet .rating>label {
   position: relative;
   width: 1.5em;
   font-size: 30px;
@@ -330,7 +330,7 @@
   cursor: pointer;
 }
 
-.rating>label::before {
+.rating-sheet .rating>label::before {
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   content: "\f005";
@@ -348,15 +348,15 @@
   transform: translateY(-50%);
 }
 
-.rating>label:hover:before,
-.rating>label:hover~label:before {
+.rating-sheet .rating>label:hover:before,
+.rating-sheet .rating>label:hover~label:before {
   opacity: 1 !important;
 }
 
-.rating>input:checked~label:before {
+.rating-sheet .rating>input:checked~label:before {
   opacity: 1;
 }
 
-.rating:hover>input:checked~label:before {
+.rating-sheet .rating:hover>input:checked~label:before {
   opacity: 0.4;
 }

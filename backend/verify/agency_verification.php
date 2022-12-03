@@ -147,7 +147,7 @@ function getAccreditation(string $region, string $DOT): string{
     // echo $childtd;
     $extractedElements = array();
 
-    print_r($titles) ;
+    // print_r($titles) ;
 
     foreach ($titles as $key => $title){
         // $extractedElements[] = $title->textContent.PHP_EOL;
@@ -161,8 +161,8 @@ function getAccreditation(string $region, string $DOT): string{
                 "Agency" => $names[$key]->textContent.PHP_EOL
             ));
         // }       
-        echo '<br>';
-        echo $title->textContent.' of '.$names[$key]->textContent;
+        // echo '<br>';
+        // echo $title->textContent.' of '.$names[$key]->textContent;
     }
 
 
@@ -202,7 +202,11 @@ function getAccreditation(string $region, string $DOT): string{
     }else return "NOT FOUND";
 }
 
-//echo getAccreditation("CAR", "DOT-R4B-AGT-00696-2022");
 
+if (isset($_POST['region']) and isset($_POST['accredNum'])) {
+    echo getAccreditation((string) $_POST['region'], (string) $_POST['accredNum']);
+} else {
+    echo -1; // NOT SENT
+}
 
 ?>

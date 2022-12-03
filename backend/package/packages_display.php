@@ -195,8 +195,8 @@ function fetch_bookingtbl($query_string, $conn) {
             <td><?php echo $row['bookingNumber'] ?></td>
             <td><?php echo $row['fullname'] ?></td>
             <td><?php echo $row['packageTitle'] ?></td>
-            <td><?php echo $row['bookingStatus'] ?></td>
             <td><?php echo $row['bookingPrice'] ?></td>
+            <td><?php echo $row['bookingStatus'] ?></td>
             <td data-tab-target="#travel-order" style="cursor: pointer;" class="to_travel_order">
                 <!-- <i class="fas fa-ellipsis-h"></i> -->
                 <img style="display: inline-block; height: 100%; vertical-align: middle;" src="https://img.icons8.com/ios-glyphs/30/null/dots-loading--v3.png"/>

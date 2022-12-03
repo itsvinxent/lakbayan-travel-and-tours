@@ -16,7 +16,14 @@ include "backend\auth\getagency.php";
     <div class="nav-vertical">
       <div class="user">
         <img src="<?php echo 'assets/img/users/travelagent/' . $_SESSION['setID'] . '/pfp/' . $_SESSION['setPfPicture']; ?>" alt="" style="height: 100px">
-        <p style="font-size: 17px; font-weight: bold;"><?php echo $_SESSION['setName'] ?></p>
+        <div style="display: flex; justify-content: center; gap: 5px; align-items: center;">
+          <p style="font-size: 17px; font-weight: bold;"><?php echo $_SESSION['setName'] ?></p>
+          <?php if ($_SESSION['setVerStat'] == 'verified') {?>
+          <span class="material-symbols-outlined" >
+            verified
+          </span>
+          <?php } ?>
+        </div>
         <span style="font-size: 13px;"><i class="far fa-eye" style="margin-right: 3px;"></i><a href="agency-profile.php?mode=view">View As Visitor</a></span>
       </div>
       <ul class="tabs">
@@ -24,11 +31,31 @@ include "backend\auth\getagency.php";
           <img src="https://img.icons8.com/plasticine/50/000000/name.png" />
           My Account
         </li>
-        <li data-tab-target="#package" class="tab" style="margin-bottom: 5px;" id="pack-active" onclick="returnForm()">
+        <?php 
+        if ($_SESSION['setVerStat'] == 'verified') { 
+          echo<<<END
+            <li data-tab-target="#package" class="tab" style="margin-bottom: 5px;" id="pack-active" onclick="returnForm()">
+          END;
+        } else {
+          echo<<<END
+            <li class="tab" style="margin-bottom: 5px; cursor: not-allowed; opacity: .7;" id="pack-active">
+          END;
+        }
+        ?>
           <img src="https://img.icons8.com/plasticine/50/000000/package.png" />
           My Packages
         </li>
-        <li data-tab-target=".booking" class="tab" id="sub-book-active">
+        <?php 
+        if ($_SESSION['setVerStat'] == 'verified') { 
+          echo<<<END
+            <li data-tab-target=".booking" class="tab" id="sub-book-active">
+          END;
+        } else {
+          echo<<<END
+            <li class="tab" style="cursor: not-allowed; opacity: .7;" id="sub-book-active">
+          END;
+        }
+        ?>
           <img src="https://img.icons8.com/plasticine/50/000000/transaction-list.png" />
           My Transactions
         </li>
@@ -38,19 +65,19 @@ include "backend\auth\getagency.php";
     <div class="main-panel" style="position: relative; width: 100%;">
       <div class="tab-content" id="tab-content">
         <!-- My Account Tab -->
-        <?php include "includes/account-tab.php"; ?>
+        <?php include "includes/tabs/account-tab.php"; ?>
 
         <!-- Packages List Tab -->
-        <?php include "includes/package-tab.php"; ?>
+        <?php include "includes/tabs/package-tab.php"; ?>
 
         <!-- Create Packages Tab -->
-        <?php include "includes/createpkg-tab.php"; ?>
+        <?php include "includes/tabs/createpkg-tab.php"; ?>
 
         <!-- Bookings Tab -->
-        <?php include "includes/bookings-tab.php"; ?>
+        <?php include "includes/tabs/bookings-tab.php"; ?>
 
         <!-- Travel Order Tab -->
-        <?php include "includes/travel-order-tab.php"; ?>
+        <?php include "includes/tabs/travel-order-tab.php"; ?>
         
       </div>
       <div class="save-container" id="save-ch-btn" style="display: none;">

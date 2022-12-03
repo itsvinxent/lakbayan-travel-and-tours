@@ -23,6 +23,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
     <link href="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/css/smart_wizard_all.min.css" rel="stylesheet" type="text/css" />
 
     <link rel="icon" href="assets/img/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
 
@@ -227,9 +228,30 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                         </div>
                         <p>Verify your Travel Agency</p>
                         <div class="form-row">
-                        <div class="form-holder w-100">
-                            <input type="text" name="aDot" id="aDot" placeholder="Enter DOT Accreditation Number" class="form-control">
+                        <div id="accred" class="form-holder w-100" style="position: relative; display: flex; flex-wrap: nowrap;">
+                            <input style="width: 50%; min-width: unset;" type="text" name="aDot" id="aDot" placeholder="Enter DOT Accreditation #" class="form-control"> 
+                            <select name="region" id="region" style="margin-left: 15px; width: 40%; min-width: unset; color: #666;">
+                              <option disabled selected hidden style="opacity: .5;">Select Region</option>
+                              <option value="NCR">NCR</option>
+                              <option value="CAR">CAR</option>
+                              <option value="REGI">Region I</option>
+                              <option value="REGII">Region II</option>
+                              <option value="REGIII">Region III</option>
+                              <option value="REGIVA">Region IV-A</option>
+                              <option value="REGIVB">Region IV-B</option>
+                              <option value="REGV">Region V</option>
+                              <option value="REGVI">Region VI</option>
+                              <option value="REGVII">Region VII</option>
+                              <option value="REGVIII">Region VIII</option>
+                              <option value="REGIX">Region IX</option>
+                              <option value="REGX">Region X</option>
+                              <option value="REGXI">Region XI</option>
+                              <option value="REGXII">Region XII</option>
+                              <option value="REGXIII">Region XIII</option>
+                            </select>
                           </div>
+                          <input type="hidden" name="is_found">
+                          <input type="hidden" name="accreditationNum">
                         </div>
                         <p>Upload your Accredition Certificate <i></i></p>
                         <div class="form-row">
@@ -251,7 +273,6 @@ if(isset($_SESSION['isLoggedIn']) == false) {
 
 
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js"></script>
@@ -289,6 +310,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
     var form = $("#wizard").show();
     var tinybutt = $('.wizard > .steps li a');
     var count = 0;
+    var dataresult;
 
     form.steps({
         headerTag: "h2",
@@ -328,6 +350,10 @@ if(isset($_SESSION['isLoggedIn']) == false) {
         },
         onFinishing: function(event, currentIndex){
           if($('#aDot').val() === null || $('#aVerify').val() === null || $('#aTerms').val() === null){
+            return false;
+          }
+          if ($('#aName').val().toUpperCase().trim() != dataresult) {
+            alert("Your inputted Agency Name should be the same as the registered Agency Name of the given accreditation number.");
             return false;
           }
 
@@ -407,6 +433,70 @@ if(isset($_SESSION['isLoggedIn']) == false) {
       return isValid;
     }
 
+
+    var filter_timeout, filter_req;
+    
+    function checkAccredication() {
+      if ($('#aDot').val().length >= 20 && $('#region').val() != null) {
+        $.ajax({
+          url: 'backend/verify/agency_verification.php',
+          method: 'POST',
+          data: {
+            region: $('#region').val(),
+            accredNum: $('#aDot').val()
+          },
+          async: true,
+          context: this,
+          beforeSend: function() {
+            let imghtml = `<img id="resultMark" style="height: 30px; position: absolute; top: 50%; right: -5%; transform: translate(-50%, -50%);" src="assets/img/icons8-loading-bar.gif"/>`;
+            $('#resultMark').remove();
+            $('#accred').append(imghtml);
+          },
+          success: function(data) {
+            if (data != "NOT FOUND") {
+              $('#resultMark').attr("src", "https://img.icons8.com/fluency/30/null/checkmark.png");
+              if (data.trim() != $('#aName').val().toUpperCase().trim()) {
+                alert('Please set the same Agency Name used in the DOT Accreditation.')
+              }
+              dataresult = data.trim();
+              $('input[name="is_found"]').val(1);
+            } else {
+              $('#resultMark').attr("src", "https://img.icons8.com/fluency/30/null/delete-sign.png");
+              $('input[name="is_found"]').val(0);
+            }
+          }
+        });
+
+      }
+    }
+
+    $('#wizard').on('input', 'input[name="aDot"]', function() {
+      if (filter_timeout) {
+        clearTimeout(filter_timeout);
+      }
+      if (filter_req) {
+        filter_req.abort();
+      }
+
+      filter_timeout = setTimeout(function () {
+        checkAccredication();
+      }, 500);
+
+    });
+
+    $('#wizard').on('change', 'select[name="region"]', function() {
+      if (filter_timeout) {
+        clearTimeout(filter_timeout);
+      }
+      if (filter_req) {
+        filter_req.abort();
+      }
+
+      filter_timeout = setTimeout(function () {
+        checkAccredication();
+      }, 500);
+
+    });
 })
 
 

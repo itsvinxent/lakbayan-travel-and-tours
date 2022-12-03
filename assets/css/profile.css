@@ -655,66 +655,55 @@
   height: 40vh;
 }
 
-.tab-content #create-package.data-tab-content,
-.tab-content #edit-package.data-tab-content {  
+.tab-content #create-package.data-tab-content {  
   margin: 2rem;
 }
 
-.tab-content #create-package .details,
-.tab-content #edit-package .details {
+.tab-content #create-package .details {
   display: grid;   
   grid-template-columns: .6fr .5fr;
   margin-top: 2.4rem;
 }
 
-.tab-content #create-package .details .left,
-.tab-content #edit-package .details .left{
+.tab-content #create-package .details .left {
   display: grid;
   grid-template-rows: .2fr .5fr .2fr .2fr .4fr;
   padding-right: 1rem;
 }
 
-.tab-content #create-package .details .left.avail,
-.tab-content #edit-package .details .left.avail{
+.tab-content #create-package .details .left.avail {
   grid-template-rows: .1fr repeat(4, .2fr);
 }
 
-.tab-content #create-package .details .left.price-fixed,
-.tab-content #edit-package .details .left.price-fixed{
+.tab-content #create-package .details .left.price-fixed {
  grid-template-rows: .2fr 1fr; 
 }
 
-.tab-content #create-package .details .left.price-var,
-.tab-content #edit-package .details .left.price-var {
+.tab-content #create-package .details .left.price-var {
   grid-template-rows: repeat(4, 2.fr); 
  }
 
-.tab-content #create-package .details .left .row,
-.tab-content #edit-package .details .left .row {
+.tab-content #create-package .details .left .row {
   display: grid;
   grid-template-columns: .4fr 1fr;
   margin-bottom: 1rem;
   align-items: center;
 }
 
-.tab-content #create-package .details .left .row.three,
-.tab-content #edit-package .details .left .row.three{
+.tab-content #create-package .details .left .row.three {
   grid-template-columns: .4fr .5fr .5fr;
 }
 
-.tab-content #create-package .details .left .row.desc,
-.tab-content #edit-package .details .left .row.desc {
+.tab-content #create-package .details .left .row.desc {
   align-items: unset;
 }
 
-.tab-content #create-package .details .left .row-var,
-.tab-content #edit-package .details .left .row-var {
+.tab-content #create-package .details .left .row-var {
   display: grid;
   grid-template-rows: .2fr .2fr .2fr;
 }
 
-.tab-content #create-package .details .left .row span:not(:last-child),
-.tab-content #edit-package .details .left .row span:not(:last-child) {
+.tab-content #create-package .details .left .row span:not(:last-child) {
   text-align: right;
   margin-right: 15px;
 }
@@ -724,8 +713,7 @@
   width: 100%;
 }
 
-.tab-content #create-package .details .left .selected-loc,
-.tab-content #edit-package .details .left .selected-loc {
+.tab-content #create-package .details .left .selected-loc {
   display: flex; 
   align-items: center;
   padding: 5px 15px;
@@ -738,13 +726,11 @@
 }
 
 
-.tab-content #create-package .details .right,
-.tab-content #edit-package .details .right {
+.tab-content #create-package .details .right {
   margin: 0 1rem;
 }
 
-.tab-content #create-package .details .right .upload-container,
-.tab-content #edit-package .details .right .upload-container {
+.tab-content #create-package .details .right .upload-container {
   margin-top: 1rem;
   display: flex;
   flex-wrap: wrap;
@@ -752,9 +738,7 @@
 }
 
 .tab-content #create-package .details .right .upload-container .upload-btn,
-.tab-content #create-package .details .right .upload-container .uploaded,
-.tab-content #edit-package .details .right .upload-container .upload-btn,
-.tab-content #edit-package .details .right .upload-container .uploaded {
+.tab-content #create-package .details .right .upload-container .uploaded {
 
   width: 100px; 
   height: 100px; 
@@ -956,4 +940,9 @@
   font-weight: bold;
   font-family: inherit;
   cursor: pointer;
+}
+
+/* Verifications Tab */
+.tab-content .verifications.active {
+  margin-bottom: 3rem;
 }

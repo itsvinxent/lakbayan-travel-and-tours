@@ -290,8 +290,11 @@ if (isset($_SESSION['booking-stat']) == false) {
           include_once __DIR__."/backend/package/collaborative_filtering.php";
 
           $result = array();
-          
-          $result = getCollabRecommendation($_SESSION["id"]);
+
+          if ($_SESSION['isLoggedIn'] != false){
+            $result = getCollabRecommendation($_SESSION['id']);
+          };
+
           $query_string = "SELECT PK.*, 
                                   FORMAT(PK.packagePrice, 0) AS fresult, 
                                   DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, 

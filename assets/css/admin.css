@@ -84,3 +84,36 @@
     cursor: pointer;
     font-family: "Poppins", sans-serif;
   }
+
+.image-container {
+  border: 2px dashed #fff;
+  height: 250px;
+  width: 50%;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* justify-items: center; */
+  flex-direction: column;
+  position: relative;
+}
+.image-container a {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.image-container .hint {
+  color: white; 
+  font-size: 16px; 
+  position: absolute; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%);
+}
+.image-container img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}

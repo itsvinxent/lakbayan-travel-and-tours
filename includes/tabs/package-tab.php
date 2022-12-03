@@ -1,4 +1,4 @@
-<div id="package" data-tab-content class="data-tab-content">
+<div id="package" data-tab-content class="data-tab-content packages">
     <div class="package-search component">
         <div class="name">
             <span><label for="package-name">Package Name</label></span>
@@ -74,15 +74,25 @@
         </div>
         <div id="full-table" class="fulltable">
             <?php
-            $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName 
-                      FROM traveldb.package_tbl AS PK 
-                      INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
-                      INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
-                      WHERE packageCreator = $_SESSION[setID] AND PK.is_deleted = 0
-                      GROUP BY AI.packageIDFrom";
+            if ($_SESSION['utype'] == 'manager') {
+                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName 
+                                FROM traveldb.package_tbl AS PK 
+                                INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                                INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
+                                WHERE packageCreator = $_SESSION[setID] AND PK.is_deleted = 0
+                                GROUP BY AI.packageIDFrom";
 
-            fetch_packagetbl($query_string, $conn, true);
+                fetch_packagetbl($query_string, $conn, true);
+            } else if ($_SESSION['utype'] == 'admin') {
+                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName 
+                                FROM traveldb.package_tbl AS PK 
+                                INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                                INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
+                                WHERE PK.is_deleted = 0
+                                GROUP BY AI.packageIDFrom";
 
+                fetch_packagetbl($query_string, $conn, false);
+            }
             ?>
         </div>
     </div>
@@ -94,7 +104,7 @@
             <br><input type="text" name="confirm" id="confirm" placeholder="I Understand"><br>
             <form action="" method="POST" id="del-action">
                 <div class="buttons">
-                    <button type="submit" id="modalDelete" class="modal-login">Delete Account</button>
+                    <button type="submit" id="modalDelete" class="modal-login" disabled>Delete Account</button>
                     <a id="modalDClose" class="btn">Cancel</a>
                 </div>
             </form>
@@ -105,9 +115,14 @@
     <script>
         $('#a-all').prop('checked', true);
         $('#a-all').next().addClass('active');
-
-        postdata['logged_user'] = 'agency';
-
+        var usertp = <?php
+                        if ($_SESSION['utype'] == 'manager') {
+                            echo "'agency';";
+                        } else if ($_SESSION['utype'] == 'admin') {
+                            echo "'admin';";
+                        }
+                        ?>
+        postdata['logged_user'] = usertp;
         $('#get-search').on('click', function() {
             pack_name = $('#package-name').val();
             pack_location = $('#package-location').val();
@@ -126,7 +141,7 @@
         $('#reset-search').on('click', function() {
             postdata = {
                 is_filtering: true,
-                logged_user: 'agency'
+                logged_user: usertp
             }
 
             filterTimeout(postdata, '#full-table');
@@ -134,40 +149,41 @@
 
         filterTable(".avail-inp", 'availability', postdata);
 
-        // const eopen = document.getElementById('modalEOpen');
-        const dopeners = Array.from(document.getElementsByClassName('delete-btn'));
-        const dmodal_container = document.getElementById('dmodal_container');
-        const dclose = document.getElementById('modalDClose');
-        const form = document.getElementById('del-action');
-        const confirm = document.getElementById('confirm')
+        // Delete Travel Package Functions
+        // $('#full-table .delete-btn').each(function() {
+        $('#full-table').on('click', '.delete-btn', function() {
+            $('#dmodal_container').addClass('show');
 
-        dopeners.forEach(dopen => {
-            dopen.addEventListener('click', function handleClick(event) {
-                dmodal_container.classList.add('show');
+            $tr = $(this).closest('tr');
+            var data = $tr.children('td').map(function() {
+                return $(this).text();
+            }).get();
 
-                $tr = $(this).closest('tr');
+            $('#del-action').prop("action", "backend/package/package_delete.php?utype=agency&id=" + data[1]);
 
-                var data = $tr.children('td').map(function() {
-                    return $(this).text();
-                }).get();
+        })
 
-                form.action = "backend/package/package_delete.php?utype=agency&id=" + data[1]
+        // });
 
-
-            });
-        });
-
-        document.getElementById('modalDelete').disabled = true;
-        confirm.addEventListener('input', function() {
-            if (this.value == "I Understand") {
-                document.getElementById('modalDelete').disabled = false;
+        $('#dmodal_container #confirm').on('input', function() {
+            if ($(this).val() == "I Understand") {
+                $('#modalDelete').prop("disabled", false);
             } else {
-                document.getElementById('modalDelete').disabled = true;
+                $('#modalDelete').prop("disabled", true);
             }
         });
 
-        dclose.addEventListener('click', () => {
-            dmodal_container.classList.remove('show');
+        $('#dmodal_container #modalDClose').on("click", function() {
+            $("#dmodal_container").removeClass("show");
+            $('#confirm').val('');
+        });
+
+        $("#dmodal_container").on('click', function(e) {
+            if ($("#dmodal_container").has(e.target).length === 0) {
+                $("#dmodal_container").removeClass("show");
+                $('#confirm').val('');
+            }
+
         });
     </script>
 

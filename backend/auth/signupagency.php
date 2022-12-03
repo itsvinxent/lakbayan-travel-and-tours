@@ -122,8 +122,9 @@ require 'imgverification.php';
 
     
     // mysqli_close($conn);
-    $nope = 0;
-if(isset($_POST['aTerms']) && isset($_FILES['aVerify']) && $nope == 1){
+    // $nope = 0;
+    // && $nope == 1
+if(isset($_POST['aTerms']) && isset($_FILES['aVerify'])) {
 
         $gotVerify  = $_FILES['aVerify'];
         $chk =  image_verification($gotVerify);
@@ -164,8 +165,8 @@ if(isset($_POST['aTerms']) && isset($_FILES['aVerify']) && $nope == 1){
 
                         $gotID = mysqli_insert_id($conn);
 
-                        $addAgency = "INSERT INTO traveldb.agency_tbl (`agencyName`, `agencyAddress`, `agencyManID`, agencyImageProof) 
-                                    VALUES ('$_POST[aName]', '$_POST[aAddress]', '$gotID', '$updated')";
+                        $addAgency = "INSERT INTO traveldb.agency_tbl (`agencyName`, `agencyAddress`, `agencyManID`, agencyImageProof, `agencyAccreditation`,`is_found`) 
+                                    VALUES ('$_POST[aName]', '$_POST[aAddress]', '$gotID', '$updated', '$_POST[aDot]', $_POST[is_found])";
                         
                         if (mysqli_query($conn, $addAgency)){
 

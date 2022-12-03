@@ -87,9 +87,10 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
     // }
 
   } finally {
-    $query_string .= get_prefix() ."PK.is_deleted = 0 AND PK.packageStatus = 0";
+    $query_string .= get_prefix() ."PK.is_deleted = 0";
     $query_string .= " GROUP BY AI.packageIDFrom";
     if(isset($_POST['logged_user']) and $_POST['logged_user'] == 'agency') {
+      $query_string .= "AND PK.packageStatus = 0";
       fetch_packagetbl($query_string, $conn, true);
     }
     else if(isset($_POST['logged_user']) and $_POST['logged_user'] == 'admin') {

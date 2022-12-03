@@ -151,7 +151,7 @@ form {
 /* 2.3 FORM FIELDS */
 
 
-input[type=text], input[type=password], textarea, input[type=file], input[type=email]{
+input[type=text], input[type=password], textarea, input[type=file], input[type=email], #region {
     box-sizing: border-box;
     background-color: hsl(#eee, 1, .15);
 

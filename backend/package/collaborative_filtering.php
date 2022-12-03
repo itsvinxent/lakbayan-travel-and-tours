@@ -1,5 +1,6 @@
 <?php 
 include __DIR__.'/vendor/autoload.php';
+include __DIR__.'/../connect/dbCon.php';
 use Tigo\Recommendation\Recommend;
 
 
@@ -7,7 +8,8 @@ function getCollabRecommendation(int $userId): array {
     $table = array();
     $rate = 0;
 
-    $conn = new mysqli('localhost','root','1234','traveldb');
+    // $conn = new mysqli('localhost','root','1234','traveldb');
+    global $conn;
     if($conn->connect_errno){
         echo "There's an error connecting with the database";
     }

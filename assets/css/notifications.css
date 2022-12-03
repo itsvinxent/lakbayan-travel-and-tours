@@ -1,0 +1,15 @@
+.notif-badge-sml {
+  border-radius: 15px;
+  width: 35px;
+  height: 23px;
+  background-color: #ed2939;
+  position: absolute;
+  top: 50%;
+  right: -5%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  color: white;
+  font-size: 12px;
+  line-height: 23px;
+  text-align: center;
+}

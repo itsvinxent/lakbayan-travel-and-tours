@@ -55,8 +55,14 @@
         <div class="top">
           <span>  
           <?php
-
-            echo '<h1 class="agency-name">'.$display['agencyName'].'</h1>
+            echo '<div style="display: flex; gap: 10px; align-items: center;">
+                    <h1 class="agency-name">'.$display['agencyName'].'</h1>';
+            if ($_SESSION['setVerStat'] == 'verified') {
+              echo '<span class="material-symbols-outlined" style="font-size: 30px;">
+                        verified
+                    </span>';
+            }
+            echo '</div>
                   <p class="agency-email">'.$display['agencyEmail'].'</p>';
           ?>
 

@@ -36,7 +36,8 @@ if(!$conn){
                                   $gotDOT,
                                   $gotProof,
                                   $isdeleted, 
-                                  $verStat,
+                                  $gotVerStat,
+                                  $isfound, 
                                   $gotMEmail, 
                                   $gotMName, 
                                   $gotMContact);
@@ -51,6 +52,7 @@ if(!$conn){
     $_SESSION['setDesc'] = $gotDesc;
     $_SESSION['setAdd'] = $gotAdd;
     $_SESSION['setManID'] = $gotManID;
+    $_SESSION['setVerStat'] = $gotVerStat;
 
     if(empty($gotPfPicture)) $gotPfPicture = '../../DefaultAgent.png';
 
