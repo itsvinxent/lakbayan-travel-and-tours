@@ -2,6 +2,7 @@
     session_start();
     include "../../backend/connect/dbCon.php";
     include "../../backend/booking/booking_status.php";
+    include __DIR__.'/../../backend/verify/payment.php';
     // $_POST['payment-method'];
     $id_user = $_SESSION['id'];
     $packageID = $_POST['packageid'];
@@ -14,8 +15,12 @@
     $inquiry = mysqli_fetch_array($qry_exist);
     $bookingNum = $id_user.date("-ymd").$inquiry['id'];
 
-    $bookingquery = "INSERT INTO traveldb.booking_tbl (`inquiryInfoID`, `bookingNumber`, `bookingPrice`, `bookingMethod`) 
-                VALUES({$inquiry['id']}, '$bookingNum', $totalPrice, '$payment')";
+    $payload = generatePaymongoLink($totalPrice);
+    $redirect = $payload['data']['attributes']['checkout_url'];
+    $reference = $payload['data']['attributes']['reference_number'];
+
+    $bookingquery = "INSERT INTO traveldb.booking_tbl (`inquiryInfoID`, `bookingNumber`,`bookingPrice`,`bookingTransacNum`, `bookingMethod`) 
+                VALUES({$inquiry['id']}, '$bookingNum', $totalPrice, '$reference' ,'$payment')";
     
     $_SESSION['booking-stat'] = 'failed';
     
@@ -35,3 +40,4 @@
 
 ?>
 <meta http-equiv="refresh" content="0;URL=../../user-profile.php?orderID=<?php echo $addedID;?>" />
+<!-- <script type="text/javascript" language="Javascript">window.open('http://www.example.com');</script> -->

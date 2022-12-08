@@ -168,6 +168,7 @@
     $newFeat = $_FILES['featured-img'];
     $oldFeat = $_POST['featured-img-name'];
     $ftchk = image_verification($newFeat);
+    echo $oldFeat;
 
     //Get Additional Image
     echo '<br>';
@@ -190,8 +191,8 @@
         if(image_verification($newFeat)){
             $newfeatName = rename_image($newFeat, "PCK-F-");
 
-            $updatefeatsql = "UPDATE packageimg_tbl SET packageImg_Name={$newfeatName} WHERE packageIDFrom={$myid} AND packageImg_Name={$oldFeat}";
-            mysqli_query($conn, $insertqry);
+            $updatefeatsql = "UPDATE packageimg_tbl SET packageImg_Name='{$newfeatName}' WHERE packageIDFrom={$_SESSION['PACKAGE_ID']} AND packageImg_Name='{$oldFeat}'";
+            mysqli_query($conn, $updatefeatsql);
             $placefeat = $placehere.$newfeatName;
             move_uploaded_file($newFeat['tmp_name'], $placefeat);
         }else if ($newFeat['error'] != 4){

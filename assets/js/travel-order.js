@@ -28,6 +28,7 @@ function requestData(bookingID) {
             $('input[name="current-bookingID"]').val(parseInt(response.inq['bookingID']));
             $('input[name="current-userID"]').val(parseInt(response.inq['id_user']));
             $('input[name="current-packageID"]').val(parseInt(response.inq['packageID']));
+            $('input[name="current-transacNum"]').val(response.inq['bookingTransacNum']);
 
             setTabs(response.inq['bookingStatus']);
             setBooking(response);
@@ -180,6 +181,7 @@ function setPayment(response) {
     if (inq['bookingStatus'] == 'pay-pending' || inq['bookingStatus'] == 'pay-denied') {
         $('#waiting-status').css('display', 'flex'); // Agency
         $('#upForm').css('display', 'block'); // Traveler
+        $('#submit-proof').attr('href','https://pm.link/lakbayantesting/test/'+inq['bookingTransacNum'])
     } else if (inq['bookingStatus'] == 'confirm-pending') {
         $('#approveForm').css('display', 'block'); // Agency
         $('#waiting-confirm').css('display', 'flex'); // Traveler
@@ -308,7 +310,7 @@ function setTimeline(response) {
 }
 
 function up() {
-    var data = new FormData(document.getElementById("upForm"));
+    // var data = new FormData(document.getElementById("upForm"));
 
     fetch("backend/booking/booking_proofupload.php", { method: "POST", body: data })
         .then(res => res.text())
@@ -359,4 +361,22 @@ function approve() {
         })
         .catch(err => console.error(err));
     return false;
+}
+
+function refresh() {
+    var data = new FormData(document.getElementById("upForm"));
+
+    fetch("backend/booking/booking_approve.php", {method: "POST", body: data})
+        .then(res => res.text())
+        .then((code) => {
+            if(code == 1){
+                alert("Payment Succeeded!.");
+            }
+            else if(code == 4){
+                alert("ERROR Code " + code + " - Paymongo link is null.");
+            }
+            else {
+                alert("ERROR Code " + code + " - Payment still on process.");
+            }
+        })
 }

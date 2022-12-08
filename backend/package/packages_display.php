@@ -11,6 +11,10 @@ function fetch_packages($query_string, $conn, $editmode)
         <div class="wrapper">
             
             <?php 
+                if(isset($row['preferred']))
+                    echo "<div class='preferred__content'>     
+                        <span>Preferred</span><i class=\"fa-solid fa-location-dot fa-xs fa-bounce\"></i>
+                        </div>";
                 if(isset($row['priority'])){
                     echo "<div class='recommended__content'>     
                     <span>Recommended</span>
@@ -284,8 +288,8 @@ function fetch_booking_by_id($inq_qry, $status_qry, $conn) {
 
 if(isset($_POST['getData']) and $_POST['getData']=="ok") {
     include __DIR__."../../connect/dbCon.php";
-    $rating_query_string = "SELECT PR.package_rating, PR.package_review, PR.ratingDate, CONCAT(US.fname, ' ', US.lname) AS fullname, US.profpicture 
-                                FROM traveldb.packageratingtest_tbl AS PR
+    $rating_query_string = "SELECT PR.package_rating, PR.package_review, PR.ratingDate, CONCAT(US.fname, ' ', US.lname) AS fullname, US.profpicture, US.id
+                                FROM traveldb.packagerating_tbl AS PR
                                 INNER JOIN traveldb.user_tbl AS US ON PR.userID_rating = US.id
                                 WHERE packageID_rated = {$_POST['packageID']} ORDER BY ratingDate DESC";
 
@@ -300,7 +304,7 @@ if(isset($_POST['getData']) and $_POST['getData']=="ok") {
           <div class="user-pfp">
               <?php 
                 if (!empty($ratings['profpicture'])) {
-                  echo '<img src="../../assets/img/users/traveler/'.$ratings['profpicture'].'/pfp/" alt="">';
+                  echo '<img src="../../assets/img/users/traveler/'.$ratings['id'].'/pfp/'.$ratings['profpicture'].'" alt="">';
                 } else {
                   echo '<img src="../../assets/img/users/traveler/DefaultProf.jpg" alt="">';
                 }

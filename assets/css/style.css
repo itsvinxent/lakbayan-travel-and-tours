@@ -754,24 +754,42 @@ nav li a:hover {
   box-shadow: 1px 0px 10px 4px rgba(0,0,0,0.15);
 }
 
-.recommended__content, .recommended__icon {
+.recommended__content, .recommended__icon, .preferred__content {
   position: absolute;
   background: #34495e;
-  
-  
   top: 10px;
-  
   max-width: fit-content;
   padding: 0 10px;
-  
-
 
 }
 
-.recommended__content {
+.recommended__content, .preferred__content {
     box-shadow: 1px 0px 10px 4px rgba(0,0,0,0.15);
 
     left: -2%;
+}
+
+.preferred__content {
+    background: #1abc9cd2;
+
+    top: 10%;
+}
+
+.preferred__content i {
+  box-shadow: 1px 0px 10px 4px rgba(0,0,0,0.25);
+  color: rgba(194, 39, 62, 0.862);
+  margin-left: 6px;
+
+  --fa-animation-duration: 1750ms;
+  --fa-animation-timing: cubic-bezier(0.27, -0.38, 0, 1.15);
+  --fa-animation-iteration-count: 3;
+  --fa-animation-direction: alternate;
+
+}
+
+.wrapper:hover .preferred__content i{
+  --fa-animation-duration: 1550ms;
+  --fa-animation-iteration-count: infinite;
 }
 
 /* .recommended__content::before{
@@ -791,7 +809,7 @@ nav li a:hover {
   z-index: 2;
 } */
 
-.recommended__content span {
+:is(.recommended__content, .preferred__content) span {
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
   

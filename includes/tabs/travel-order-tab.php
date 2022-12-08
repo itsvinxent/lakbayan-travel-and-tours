@@ -193,7 +193,64 @@
                 <!-- LEFT SIDE: BOOKING STATUSES -->
                 <div style="position: relative; width: 40%; height: 300px;">
                     <!-- PAYMENT TAB -->
+                    <!-- PAYMONGO MODIFIED START ################################################################# -->
                     <div class="proof-right">
+                    <?php
+                        if ($_SESSION['active'] == 'u-profile') {
+                    ?>
+                        <!-- TRAVELER VIEW -->
+                        <!-- PAY-PENDING -->
+                        <form id="upForm" style="display: none;" onsubmit="return refresh()">
+                            <div id="waiting-status" class="file-upload" style="flex-direction: column; height: 300px; display:none;">
+                                <img src="https://img.icons8.com/plasticine/100/null/cash-in-hand.png"/>
+                                <h2 style="text-align: center; color: white;">Waiting for payment...</h2>
+                            </div>
+
+
+                                <input type="number" name="current-bookingID" id="current-bookingID" hidden>
+                                <input type="number" name="current-userID" id="current-userID" hidden>
+                                <input type="text" name="current-transacNum" id="current-transacNum" hidden>
+                                <input type="number" name="current-packageID" id="current-packageID" hidden>
+                                <input type="number" name="current-slots" id="current-slots" hidden>
+                            
+                            <div class="proof-buttons">
+                        
+                                <a href="" target="_blank"class="btn btn-long" id="submit-proof" style="text-align: center; font-size: 13.33px">Go to Payment Link</a>
+                                <button type="submit" class="btn btn-long" id="check-payment">Check Status</button>
+
+                            </div>
+                        </form>
+
+                        <!-- PAY-COMPLETE -->
+                        <div id="trip-confirmed" class="file-upload" style="flex-direction: column; height: 300px; display:none;">
+                            <img src="https://img.icons8.com/plasticine/100/null/checked--v1.png" />
+                            <h2 style="text-align: center; color: white;">Your Payment has been confirmed!</h2>
+                        </div>
+
+                        <?php
+                        } else {
+                        ?>
+                        <!-- TRAVELER VIEW -->      
+                        <!-- PAY-PENDING -->
+                        <div id="waiting-status" class="file-upload" style="flex-direction: column; height: 300px; display:none;">
+                                <img src="https://img.icons8.com/plasticine/100/null/submit-progress.png" />
+                                <h2 style="text-align: center; color: white;">Waiting for the Traveler Payment...</h2>
+                        </div>
+
+                        <!-- PAY-COMPLETE -->
+                        <div id="trip-confirmed" class="file-upload" style="flex-direction: column; height: 300px; display:none;">
+                                <img src="https://img.icons8.com/plasticine/100/null/checked--v1.png" />
+                                <h2 style="text-align: center; color: white;">Payment have been confirmed!</h2>
+                        </div>
+                        
+                        <?php       
+                        }
+                        ?>
+
+                    </div>
+                
+                    <!-- PAYMONGO MODIFIED END ################################################################# -->
+                    <div class="proof-right" style="display: none;">
                         <?php
                         if ($_SESSION['active'] == 'u-profile') {
                         ?>

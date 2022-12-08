@@ -288,11 +288,13 @@ if (isset($_SESSION['booking-stat']) == false) {
           <?php
           include_once "backend/package/packages_display.php";
           include_once __DIR__."/backend/package/collaborative_filtering.php";
+          include_once __DIR__."/backend/package/contentbased_filtering.php";
 
           $result = array();
 
           if ($_SESSION['isLoggedIn'] != false){
             $result = getCollabRecommendation($_SESSION['id']);
+            $resultContent = getContentBasedRecommend($_SESSION['id']);
           };
 
           $query_string = "SELECT PK.*, 
@@ -300,19 +302,34 @@ if (isset($_SESSION['booking-stat']) == false) {
                                   DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, 
                                   AI.*, 
                                   AG.agencyName ";
-          if(!empty($result))   {$query_string .= ", CASE ";}              
+          if(!empty($result))   {$query_string .= ", CASE ";} //COLLAB-BASED      
           
           foreach($result as $key => $results){
               $query_string .= 'WHEN PK.packageID='.$key.' THEN 1 ';
           }            
-
           if(!empty($result))   {$query_string .= " END AS 'priority' ";}
+
+          if(!empty($resultContent)) {$query_string .= ", CASE ";} //CONTENT-BASED
+
+          foreach($resultContent as $key => $resultContents){
+            $query_string .= 'WHEN PK.packageTitle= \''.$key.'\' THEN 1 ';
+          }
+
+          if(!empty($resultContent)) {$query_string .= " END AS 'preferred' ";}
+
           $query_string .= "FROM traveldb.package_tbl AS PK 
                             INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                             INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
                             WHERE (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) AND PK.is_deleted = 0 AND PK.packageStatus = 0
                             GROUP BY AI.packageIDFrom ";
+          
+          // IF THERES COLLABORATIVE BASED FILTERING
           if(!empty($result))   {$query_string .= "ORDER BY priority DESC";}
+          // IF THERE CONTENT BASED
+          if(!empty($resultContent) && empty($result)) {$query_string .= "ORDER BY preferred DESC";} //WITHOUT COLLAB
+          if(!empty($resultContent))   {$query_string .= ", preferred DESC";}
+
+          
 
           fetch_packages($query_string, $conn, false);
 
