@@ -38,18 +38,27 @@
 <section class="sections profile-view" id="profile-view">
 
     <div class="banner-half">
-      <?php
-       echo '<img id="img-banner" src="assets/img/users/travelagent/'.$display['agencyID'].'/banner/'.$display['agencyBanner'].'" alt="">';
-      ?>
+    <?php if (isset($display['agencyBanner'])) 
+        {
+        echo '<img id="img-banner" src="assets/img/users/travelagent/'.$display['agencyID'].'/banner/'.$display['agencyBanner'].'" alt="">';
+        }
+        else {
+        echo '<img id="img-banner" src="assets/img/users/travelagent/DefaultBannerAgent.jpg" alt="">';
+        }
+        ?> 
     </div>
 
     <div class="profile-container">
       <div class="banner-logo">
           <div class="image">
-            <?php 
-
-              echo '<img src="assets/img/users/travelagent/'.$display['agencyID'].'/pfp/'.$display['agencyPfPicture'].'" alt="">';
-            ?>
+            <?php if (isset($display['agencyPfPicture'])) 
+                {
+                echo '<img id="img-banner" src="assets/img/users/travelagent/'.$display['agencyID'].'/pfp/'.$display['agencyPfPicture'].'" alt="">';
+                }
+                else {
+                echo '<img id="img-banner" src="assets/img/users/travelagent/DefaultAgent.png" alt="">';
+                }
+            ?> 
           </div>
 
         <div class="top">
@@ -62,10 +71,59 @@
                         verified
                     </span>';
             }
-            echo '</div>
-                  <p class="agency-email">'.$display['agencyEmail'].'</p>';
-          ?>
+            echo '</div>';
+                  // <p class="agency-email">'.$display['agencyEmail'].'</p>';
+            
+            $ratingsummary_query_string = "SELECT * FROM traveldb.agencyrating_tbl WHERE agencyID= $viewID";
 
+            $sqlquery = mysqli_query($conn, $ratingsummary_query_string);
+            $ratingCounts = mysqli_fetch_array($sqlquery);
+            $rating_count_array = array(
+              5 => $ratingCounts['5_star'],
+              4 => $ratingCounts['4_star'],
+              3 => $ratingCounts['3_star'],
+              2 => $ratingCounts['2_star'],
+              1 => $ratingCounts['1_star']
+            );
+
+            $totalWeight = 0;
+            $totalReviews = 0;
+
+            foreach ($rating_count_array as $weight => $numberofReviews) {
+            $WeightMultipliedByNumber = $weight * $numberofReviews;
+            $totalWeight += $WeightMultipliedByNumber;
+            $totalReviews += $numberofReviews;
+            } 
+            $averageRating = $totalWeight / $totalReviews;
+
+            // echo "<div>$averageRating out of 5 <i class='fas fa-star' style='padding-right: 3px; color: var(--logo-yellow-dark);'></i> ($totalReviews)</div>";
+          ?>
+          <div class="rating agency" style="font-size: 20px; display: flex;">
+            <?php
+              $stars = 5;
+              $wholeNum = floor($averageRating);
+              $decimal = $averageRating - $wholeNum;
+
+              for ($i = 0; $i < $wholeNum; $i++) {
+                echo '<i class="fas fa-star"></i>';
+                $stars--;
+              }
+
+              if ($decimal != 0) {
+                if ($decimal <= 0.5) {
+                  echo '<i class="fas fa-star-half-alt"></i>';
+                } else {
+                  echo '<i class="fas fa-star"></i>';
+                }
+                $stars--;
+              }
+
+              for ($i=0; $i < $stars; $i++) { 
+                  echo '<i class="far fa-star"></i>';
+              }
+            ?>
+            <?php echo "<p style='font-size: 16px;'>($totalReviews Ratings)</p>";?>
+          </div>
           </span>
           <span class="ico-container">
             <div class="ico">

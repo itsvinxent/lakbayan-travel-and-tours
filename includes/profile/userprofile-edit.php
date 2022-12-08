@@ -344,7 +344,7 @@ include "backend/auth/getuser.php";
                                   INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID
                                   WHERE IQ.id_user = {$_SESSION['id']}";
               fetch_bookingtbl($query_string, $conn);
-              mysqli_close($conn);
+
               ?>
             </div>
             <script src="assets/js/travel-order.js"></script>

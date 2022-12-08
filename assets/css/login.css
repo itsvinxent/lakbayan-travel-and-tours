@@ -49,7 +49,7 @@
   margin-bottom: 18px;
 }
 
-.login button, .login .btn, .pref-form-container button {
+.login button, .login .btn, .pref-form-container button, .pref-form-container input[type='submit'] {
   border-radius: 20px;
   border: none;
   background: linear-gradient(
@@ -65,15 +65,14 @@
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: transform 80ms ease-in;
-}
-
-button:disabled:hover{
-  cursor: not-allowed;
-}
-
-button:hover {
   cursor: pointer;
 }
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 
 .login .overlay-panel.overlay-left button {
   background: linear-gradient(90deg, var(--first-color), var(--logo-blue-dark));
@@ -121,6 +120,11 @@ button:hover {
   padding: 12px 15px;
   margin: 8px 0;
   width: 100%;
+}
+
+.login input.missing {
+  border: 2px solid #ED2939;
+  border-radius: 5px;
 }
 
 .login input.fname,
@@ -314,8 +318,8 @@ button:hover {
 
 .user-pref .pref-form-container {
   background-color: #f5f5f5;
-  height: 65%;
-  width: 45%;
+  /* height: 65%; */
+  width: 65%;
   z-index: inherit;
   border-radius: 5px;
   padding: 2rem;
@@ -338,7 +342,7 @@ button:hover {
   display: none;
 }
 
-.user-pref .pref-form-container label {
+.user-pref .pref-form-container .checklist label {
   /* display: block; */
   position: relative;
   text-align: center;
@@ -347,6 +351,7 @@ button:hover {
   border: solid 5px #c0c0c0;
   margin-bottom: 15px; 
   height: 95px;
+  cursor: pointer;
 }
 
 .user-pref .pref-form-container label.active {
@@ -389,95 +394,45 @@ button:hover {
   margin: 0;
 }
 
-.user-pref .pref-form-container .page-two {
-  position: absolute;
-  transform: translateX(100%);
-  opacity: 0;
-  transition: transform 1s ease-in;
-  transition: opacity 1s ease-in;
+.reset-email .card {
+  display: flex; 
+  width: 40%; 
+  flex-direction: column; 
+  margin: auto; 
+  padding: 20px; 
+  background-color: white; 
+  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px; 
+  border-radius: 10px;
+  
 }
 
-.user-pref .pref-form-container .page-two .description {
-  margin-bottom: 20px;
+.reset-email .card .pass-field {
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 15px;
+  margin: 1rem 0;
 }
 
-.user-pref .pref-form-container .page-two .field {
+.reset-email .card .pass-field input[type='password']{
+  background-color: #eee; 
+  border: none; 
+  padding: 12px 15px; 
+  margin: 8px 0; 
+  width: 100%;
+}
+
+.reset-email .card input[type='submit'] {
+  border-radius: 20px;
   border: none;
-  width: 100%;
-  padding: 10px 45px 10px 25px;
-  border-radius: 25px;
-  font-family: inherit;
-  background: white;
-  font-size: 14px;
-  border: 2px solid black;
-}
-
-input.field:focus {
-  outline:none;
-}
-
-.ico {
-  position: absolute;
-  right: 20px;
-  top: 0;
-  font-size: 20px;
-  color: var(--first-color);
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.page-two .places {
-
-  justify-content: center;
-  
-}
-
-.page-two .places .place-card {
-  display: flex;
-  margin: 10px 0;
-  align-items: center;
-  
-  width: 100%;
-  background-color: white;
-  padding: 10px;
-  border-radius: 5px;
-  border: 2px solid #333;
-  
-}
-
-.place-card .fas.fa-map-marker-alt {
-  padding-right: 10px;
-  font-size: 20px;
-}
-
-.place-card .fas.fa-times {
-  position: absolute;
-  right: 15px;
-  font-size: 14px;
-}
-
-.page-two label {
-  width: 100%;
-  text-align: center;
-  align-items: center;
-}
-
-.page-two label input {
-  margin-right: 10px;
-}
-
-.page-two .btn-cont {
-  display: flex;
-  vertical-align: middle;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.page-two .btn-cont #back-btn:hover {
-  text-decoration: underline;
+  background: linear-gradient( 90deg, var(--logo-yellow-dark), var(--first-color), var(--logo-blue-dark) );
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: 'Poppins';
   cursor: pointer;
 }
 

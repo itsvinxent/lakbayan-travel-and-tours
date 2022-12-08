@@ -65,7 +65,7 @@
                                  INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID";
             }
             fetch_bookingtbl($query_string, $conn);
-            mysqli_close($conn);
+
             ?>
         </div>
         <script src="assets/js/travel-order.js"></script>

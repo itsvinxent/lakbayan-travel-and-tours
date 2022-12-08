@@ -1,3 +1,6 @@
+body {
+  background-color: #f5f5f5;
+}
 /* Packages Specific Pages */
 .packages-pages .content {
   /* margin: 0 125px; */
@@ -260,4 +263,79 @@
 .recommendations .card .location {
   font-size: 13px;
   /* padding-right: 5px; */
+}
+
+.ratings-container {
+  width: 80%;
+  margin: auto;
+  margin-bottom: 3rem;
+}
+
+.ratings-selector {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: #34495e;
+  padding: 1.75rem;
+  border-radius: 10px;
+  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  margin-top: 1rem;
+}
+
+.ratings-selector .availability-filter {
+  padding-bottom: 0;
+  border-bottom: 0;
+  margin-bottom: 0;
+  padding: 1.75rem;
+}
+
+.ratings-selector .availability-filter label {
+  border: 2px solid white;
+  color: white;
+  width: 50px;
+}
+
+.actual-rating {
+  text-align: center;
+  width: 20%;
+  color: white;
+}
+
+.ratings-list {
+  margin-top: 1rem;
+  background-color: white;
+  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  min-height: 100px;
+  border-radius: 10px;
+}
+
+.ratings-wrapper {
+  display: flex;
+  padding: 1rem 1.25rem;
+}
+
+.ratings-wrapper:not(:last-child){
+  border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.ratings-wrapper .user-pfp {
+  width: 2.5rem;
+  margin-right: 1rem;
+}
+
+.ratings-wrapper .user-pfp img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+}
+
+.ratings-wrapper .rating-body {
+  width: 100%;
+}
+
+.rating-body .rating-date {
+  font-size: 13px;
+}
+
+.rating-body .review-body {
+  margin-top: 10px;
 }

@@ -282,4 +282,56 @@ function fetch_booking_by_id($inq_qry, $status_qry, $conn) {
     return $jsondata;
 }
 
+if(isset($_POST['getData']) and $_POST['getData']=="ok") {
+    include __DIR__."../../connect/dbCon.php";
+    $rating_query_string = "SELECT PR.package_rating, PR.package_review, PR.ratingDate, CONCAT(US.fname, ' ', US.lname) AS fullname, US.profpicture 
+                                FROM traveldb.packageratingtest_tbl AS PR
+                                INNER JOIN traveldb.user_tbl AS US ON PR.userID_rating = US.id
+                                WHERE packageID_rated = {$_POST['packageID']} ORDER BY ratingDate DESC";
+
+    $sqlquery = mysqli_query($conn, $rating_query_string.' LIMIT '.$_REQUEST["start"].', '.$_REQUEST["limit"].' ');
+    $rowcount=mysqli_num_rows($sqlquery);
+    if ($rowcount != 0) {
+?>
+    <?php 
+        while($ratings = mysqli_fetch_array($sqlquery)) {
+    ?>
+        <div class="ratings-wrapper">
+          <div class="user-pfp">
+              <?php 
+                if (!empty($ratings['profpicture'])) {
+                  echo '<img src="../../assets/img/users/traveler/'.$ratings['profpicture'].'/pfp/" alt="">';
+                } else {
+                  echo '<img src="../../assets/img/users/traveler/DefaultProf.jpg" alt="">';
+                }
+              ?>
+          </div>
+          <div class="rating-body">
+            <p><?php echo $ratings['fullname']; ?></p>
+            <div class="rating" style="color: var(--logo-yellow-dark); font-size: 18px;">
+              <?php
+                $stars = 5;
+                for ($i = 0; $i < $ratings['package_rating']; $i++) {
+                  echo '<i class="fas fa-star"></i>';
+                  $stars--;
+                }
+                for ($i=0; $i < $stars; $i++) { 
+                  if ($stars == 1) {
+                    echo '<i class="far fa-star"></i>';
+                  } else {
+                    echo '<i class="far fa-star"></i>';
+                  }
+                }
+
+                $stars = 0;
+              ?>
+            </div>
+            <p class="rating-date"><?php echo $ratings['ratingDate']; ?></p>
+            <p class="review-body"><?php echo $ratings['package_review']; ?></p>
+          </div>
+        </div>
+    <?php  
+        }
+    }
+}
 ?>

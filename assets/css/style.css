@@ -289,6 +289,18 @@ nav li a:hover {
   color: #1ABC9C;
 }
 
+.rating i {
+  color: var(--logo-yellow-dark);
+}
+
+.rating i:not(:last-child) {
+  padding-right: 3px;
+}
+
+.rating.agency i:not(:last-child) {
+  padding-right: 7px;
+}
+
 /*========== Media Responsive ==========*/
 /* Smartphones (portrait) ----------- */
 @media (max-width: 480px) {

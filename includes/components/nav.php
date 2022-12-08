@@ -8,7 +8,7 @@
   </label>
   <label class="logo"><img 
     <?php 
-      if ($_SESSION['active'] == 's-dest' || $_SESSION['active'] == 's-pack' || $_SESSION['active'] == 'chat-main') { 
+      if ($_SESSION['active'] == 's-dest' || $_SESSION['active'] == 's-pack' || $_SESSION['active'] == 'chat-main' || $_SESSION['active'] == 'email' ) { 
         echo 'src="../../assets/img/logo.png"';
       } else {
         echo 'src="assets/img/logo.png"';
@@ -20,10 +20,10 @@
         $href="$pagename.php";
 
         if ($_SESSION['active'] == $sessionName) {
-          if ($sessionName == 'index') {
-          $class = "active ret-home";
-          }
           $class = "active";
+          if ($sessionName == 'index') {
+            $class = "active ret-home";
+          }
           return "class='$class' href='#'";
         } 
 
@@ -32,7 +32,7 @@
             $class = 'active';
           }
         }
-        if ($_SESSION['active'] == 's-pack' || $_SESSION['active'] == 'chat-main' ) {
+        if ($_SESSION['active'] == 's-pack' || $_SESSION['active'] == 'chat-main' || $_SESSION['active'] == 'email') {
           $href = "../../$pagename.php";
           return "class='$class' href='$href'";
         } 

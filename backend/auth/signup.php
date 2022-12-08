@@ -1,5 +1,6 @@
 <?php
-    include '../connect/dbCon.php';
+    include __DIR__.'/../connect/dbCon.php';
+    include __DIR__.'/../auth/dboperation.php';
 
     if(mysqli_connect_error()) {
         echo<<<END
@@ -21,42 +22,86 @@
                 </script>
             END;
         } else {
+            $sendto = $_POST['email'];
+            $name = $_POST['lname'];
+
             $verification = md5(rand(0, 1000));
             $hash = password_hash($_POST['password'], PASSWORD_BCRYPT);
             $query = "INSERT INTO traveldb.user_tbl (`fname`, `lname`, `email`, `password`, `verification_code`) 
             VALUES('$_POST[fname]', '$_POST[lname]', '$_POST[email]', '$hash', '$verification')";
 
             if(mysqli_query($conn,$query)){
+                // INSERT USER PREFERENCES
+                $preferencesGot = array();
+                $userPref = $_POST['trav-preferences'];
+                if(strstr($userPref, ',')) $preferencesGot = explode(",", $userPref);
+                else array_push($preferencesGot, $userPref);
+                $userID = mysqli_insert_id($conn);
+                for($i=0; $i<count($preferencesGot); $i++){
+                    $data = array(
+                        'userID' => $userID,
+                        'userPreferences' => $preferencesGot[$i]
+                    );
 
+                    multi_insertdb($conn, $data, "userpreference_tbl");
+                }
+                
+                // CREATE A NEW DIRECTORY FOR THE USER
                 $placehere = '../../assets/img/users/traveler/'.$userID.'/';
                 //checks if dir exist and makes one if it does not
                 if(!file_exists($placehere)){
                     mkdir($placehere, 0777, true);
                 }
 
-                $sendto = $_POST['email'];
-                $name = $_POST['lname'];
-                $head = 'From:rivasjeannefrancis@gmail.com'."\r\n";
-                $subject = 'LAKBAYAN VERIFICATION';
-                $body = '
+                require __DIR__.'/../package/vendor/autoload.php';
+                require "Mail/phpmailer/PHPMailerAutoload.php";
                 
-                <h1>Welcome to Lakbayan, '.strtoupper($name).'!</h1>
+                $dotenv = Dotenv\Dotenv::createImmutable(__DIR__."/../");
+                $dotenv->load();
+
+                $mail_address = $_ENV['MAIL_ADDRESS'];
+                $mail_pass = $_ENV['MAIL_PASS'];
+                
+                $mail = new PHPMailer;
+                $mail->isSMTP();
+                $mail->Host='smtp.gmail.com';
+                $mail->Port=587;
+                $mail->SMTPAuth=true;
+                $mail->SMTPSecure='tls';
+    
+                $mail->Username=$mail_address;
+                $mail->Password=$mail_pass;
+    
+                $mail->setFrom('lakbaysabayan@gmail.com', 'OTP Verification');
+                $mail->addAddress($_POST["email"]);
+                
+                $mail->isHTML(true);
+                $mail->Subject="LAKBAYAN VERIFICATION";
+                $mail->Body='
+                
+                <h1>Welcome to Lakbayan, '.strtoupper($_POST['fname']).'!</h1>
                 
                 <p>We are very excited to see you join our Lakbayan family! 
                 But before that, verify your account now!
 
                 Just click the link below to complete the verification: </p>
-                http://localhost:3000/backend/auth/verifyuser.php?email='.$sendto.'&verification_code='.$verification.'
+                http://localhost/Finals/backend/auth/verifyuser.php?email='.$sendto.'&verification_code='.$verification.'
                 ';
 
-                // mail($sendto, $subject, $body, $head);
-
-                
-                echo<<<END
-                    <script type ="text/JavaScript">  
-                    alert("Record successfully added, verification have been sent to your email")
+                if(!$mail->send()){
+                    ?>
+                        <script>
+                            alert("Registration Failed! Invalid Email.");
+                        </script>
+                    <?php
+                }else{
+                    ?>
+                    <script>
+                        alert("<?php echo "Registration Successful! A verification link has been sent to" . $sendto ?>");
+                        window.location.replace("../../index.php");
                     </script>
-                END;
+                    <?php
+                }
             }
             else{
                 echo<<<END
@@ -66,8 +111,7 @@
                 END;
             }
         }
-        mysqli_close($conn);
+
     }
 
     ?>
-<meta http-equiv="refresh" content="0;URL=../../index.php#login" />

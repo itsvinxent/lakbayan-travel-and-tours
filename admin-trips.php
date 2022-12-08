@@ -2,15 +2,15 @@
 session_start();
 $_SESSION['active'] = 'trips';
 
-if (isset($_SESSION['utype'])) {
-    if ($_SESSION['utype'] == 'user') {
-        header("location: index.php");
-        exit;
-    }
-} else {
-    header("location: index.php");
-    exit;
-}
+// if (isset($_SESSION['utype'])) {
+//     if ($_SESSION['utype'] == 'user') {
+//         header("location: index.php");
+//         exit;
+//     }
+// } else {
+//     header("location: index.php");
+//     exit;
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,6 +20,8 @@ if (isset($_SESSION['utype'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="assets/css/modal.css">
+    <link rel="stylesheet" href="assets/css/profile.css">
+    <link rel="stylesheet" href="assets/css/profile-edit.css">
     <link rel="stylesheet" href="assets/css/admin.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/footer.css">
@@ -35,11 +37,11 @@ if (isset($_SESSION['utype'])) {
 </head>
 
 <body>
-    <?php 
-        include 'includes/components/admin-nav.php';
-        include 'includes/components/accountModal.php';
-
-
+    <?php
+    include 'includes/components/admin-nav.php';
+    include 'includes/components/accountModal.php';
+    include 'backend/connect/dbCon.php';
+    include 'backend/package/packages_display.php'
     ?>
     <section class="sections admin-trips" id="admin-trips">
         <div class="banner-half">
@@ -48,67 +50,120 @@ if (isset($_SESSION['utype'])) {
                 <h1>Administrator Panel</h1>
             </div>
         </div>
-        <div class="content-users">
-            <h1>Booking Inquiries</h1>
-            <?php include 'backend/admin/trips_display.php';?>
-        </div>
-        <div class="bmodal-container" id="bmodal_container">
-            <div class="booking-modal">
-                <h1>Create Booking Information</h1>
-                <form action="backend/admin/trips_create.php" method="POST">  
-                <select name="user_id" id="user_id" style="width: 555px;" required>
-                    <?php 
-                        include 'backend/connect/dbCon.php';
-                        $select_query = "SELECT * FROM traveldb.user_tbl; " ;
-                        $result = mysqli_query($conn, $select_query);
-                        while($row = mysqli_fetch_row($result)){
-                        echo "<option value=\"$row[0]\">$row[1] $row[2]</option>";
-                        }
-                    ?>                
-                    <input id="email" type="email" name="email" placeholder="Email" required />
-                    <input id="number" type="text" name="number" placeholder="Contact Number" required/>
-                    <select name="package" aria-placeholder="Package" id="package" required>
-                        <option value="tri-city">Tri-City Exclusive Day Tour</option>
-                        <option value="lakawon">Lakawon Island Day Tour</option>
-                        <option value="campuestohan">Campuestohan Highland Resort</option>
-                        <option value="ilaya">Bacolod Ilaya Resort</option>
-                        <option value="ruins">The Ruins Day Tour</option>
-                    </select>
-                    <input id="startdate" type="datetime-local" class="datepickr" name="resdate" placeholder="Select Starting Date" />
-                    <input id="persons" type="number" min="1" max="10" name="persons" placeholder="No. of Persons" required>
-                    <input id="days" type="number" min="1" max="4" name="duration" placeholder="No. of Days" required>
-                    <textarea name="msg" id="emsg" rows="10" placeholder="Any other messages? (100 characters maximum)"></textarea>
+
+        <div class="tab-content" style="overflow: unset; box-shadow: none; background-color: unset; width: 80%; margin: 2rem auto">
+            <div id="package" data-tab-content class="data-tab-content booking active">
+                <div class="package-search component">
+                    <div class="name">
+                        <span><label for="b-package-name">Package Name</label></span>
+                        <span><input type="search" name="b-package-name" id="b-package-name" placeholder="Enter Package Name"></span>
+                    </div>
+                    <div class="dur">
+                        <span><label for="b-package-transact">TRN</label></span>
+                        <span><input type="number" name="b-package-transact" id="b-package-transact" placeholder="Enter Transaction Number"></span>
+                    </div>
+                    <div class="cat">
+                        <span><label for="b-package-category">Package ID</label></span>
+                        <span><input type="number" name="b-package-id" id="b-package-id" placeholder="Enter Package ID"></span>
+                    </div>
+                    <div class="cust">
+                        <span><label for="package-customer">Customer Name</label></span>
+                        <span><input class="package-customer" type="text" name="package-customer" id="package-customer" placeholder="Enter Customer Name"></span>
+                    </div>
 
                     <div class="buttons">
-                        <button id="modalLogin" class="modal-login" >Save Changes</button>
-                        <a id="modalBClose" class="btn">Close</a>
+                        <span><button id="b-get-search">Search</button></span>
+                        <span><button id="b-reset-search">Reset</button></span>
                     </div>
-                </form>
+                </div>
+
+
+                <div class="main-content component" style="margin-top: 10px;">
+                    <div class="availability-filter">
+                        <span>
+                            <input class="stat-inp" type="radio" name="stat-fil" value="s-all" id="s-all" style="display: none;">
+                            <label for="s-all"><span>All</span></label>
+                        </span>
+                        <span>
+                            <input class="stat-inp" type="radio" name="stat-fil" value="s-unpaid" id="s-unpaid" style="display: none;">
+                            <label for="s-unpaid"><span>Unpaid</span></label>
+                        </span>
+                        <span>
+                            <input class="stat-inp" type="radio" name="stat-fil" value="s-processing" id="s-processing" style="display: none;">
+                            <label for="s-processing"><span>Processing</span></label>
+                        </span>
+                        <span>
+                            <input class="stat-inp" type="radio" name="stat-fil" value="s-completed" id="s-completed" style="display: none;">
+                            <label for="s-completed"><span>Completed</span></label>
+                        </span>
+                        <span>
+                            <input class="stat-inp" type="radio" name="stat-fil" value="s-cancelled" id="s-cancelled" style="display: none;">
+                            <label for="s-cancelled"><span>Cancelled</span></label>
+                        </span>
+                    </div>
+
+                    <div id="fullb-table" class="fulltable">
+                        <?php
+                        $query_string = "SELECT IQ.*, CONCAT(US.fname, ' ',US.lname) AS fullname, BK.*, PK.packageTitle
+                                  FROM traveldb.inquiry_tbl AS IQ
+                                  INNER JOIN traveldb.user_tbl AS US ON IQ.id_user = US.id
+                                  INNER JOIN traveldb.booking_tbl AS BK ON IQ.id = BK.inquiryInfoID 
+                                  INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID";
+                        fetch_bookingtbl($query_string, $conn);
+                        mysqli_close($conn);
+                        ?>
+                    </div>
+
+                </div>
+
             </div>
+            <script src="assets/js/search-filters.js"></script>
             <script>
-                const topen = document.getElementById('modalBOpen');
-                const tmodal_container = document.getElementById('bmodal_container');
-                const tclose = document.getElementById('modalBClose');
-            
-                topen.addEventListener('click', () => {
-                    tmodal_container.classList.add('show');
-                })
-            
-                tclose.addEventListener('click', () => {
-                    tmodal_container.classList.remove('show');
-                })
+                $('#s-all').prop('checked', true);
+                $('#s-all').next().addClass('active');
+
+                $('#b-get-search').on('click', function() {
+                    pack_name = $('#b-package-name').val();
+                    pack_transact = $('#b-package-transact').val();
+                    pack_id = $('#b-package-id').val();
+                    pack_customer = $('#package-customer').val();
+                    bookingpostdata['logged_user'] = 'admin';
+
+                    booking_data_input();
+
+                    if (count != 0) {
+                        filterTimeout(bookingpostdata, '#fullb-table');
+                    }
+                    count = 4;
+
+                });
+
+                $('#b-reset-search').on('click', function() {
+                    bookingpostdata = {
+                        is_filtering: false,
+                        booking: true,
+                        logged_user: 'admin'
+                    }
+
+                    filterTimeout(bookingpostdata, '#fullb-table');
+                });
+
+                // Transaction Status Filter
+                filterTable(".stat-inp", 'status', bookingpostdata)
             </script>
         </div>
+
+        <!-- Edit Booking Modal -->
         <div class="bmodal-container" id="b1modal_container">
             <div class="booking-modal">
                 <h1>Edit Booking Information</h1>
-                <form action="backend/admin/trips_update.php" method="POST">  
-                    <input type="hidden" name="trip_id" id="trip_id"> 
-                    <input type="hidden" name="euser_id" id="euser_id">                 
-                    <input id="efname" type="text" name="efname" placeholder="First Name"  required/>
-                    <input id="elname" type="text" name="elname" placeholder="Last Name" required/>
+                <form action="backend/admin/trips_update.php" method="POST">
+                    <input type="hidden" name="trip_id" id="trip_id">
+                    <input type="hidden" name="euser_id" id="euser_id">
+                    <input id="efname" type="text" name="efname" placeholder="First Name" required />
+                    <input id="elname" type="text" name="elname" placeholder="Last Name" required />
                     <input id="eemail" type="email" name="eemail" placeholder="Email" required />
-                    <input id="enumber" type="text" name="enumber" placeholder="Contact Number" required/>
+                    <input id="enumber" type="text" name="enumber" placeholder="Contact Number" required />
                     <select name="epackage" aria-placeholder="Package" id="epackage" required>
                         <option value="tri-city">Tri-City Exclusive Day Tour</option>
                         <option value="lakawon">Lakawon Island Day Tour</option>
@@ -120,9 +175,9 @@ if (isset($_SESSION['utype'])) {
                     <input id="epersons" type="number" min="1" max="10" name="epersons" placeholder="No. of Persons" required>
                     <input id="edays" type="number" min="1" max="4" name="eduration" placeholder="No. of Days" required>
                     <textarea name="emsg" id="emsg" rows="10" placeholder="Any other messages? (100 characters maximum)"></textarea>
-                    
+
                     <div class="buttons">
-                        <button id="modalLogin" class="modal-login" >Save Changes</button>
+                        <button id="modalLogin" class="modal-login">Save Changes</button>
                         <a id="modalEClose" class="btn">Close</a>
                     </div>
                 </form>
@@ -132,13 +187,13 @@ if (isset($_SESSION['utype'])) {
                 const eopeners = Array.from(document.getElementsByClassName('edit-btn'));
                 const emodal_container = document.getElementById('b1modal_container');
                 const eclose = document.getElementById('modalEClose');
-                
+
                 eopeners.forEach(eopen => {
                     eopen.addEventListener('click', function handleClick(event) {
                         emodal_container.classList.add('show');
 
                         $tr = $(this).closest('tr');
-                        
+
                         var data = $tr.children('td').map(function() {
                             return $(this).text();
                         }).get();
@@ -155,19 +210,19 @@ if (isset($_SESSION['utype'])) {
                         $('#edays').val(data[8]);
                         $('textarea#emsg').val(data[9]);
                         $('#epackage').val(data[10]);
-                        
+
                     });
                 });
-                
+
                 eclose.addEventListener('click', () => {
                     emodal_container.classList.remove('show');
                 })
-            </script>    
+            </script>
         </div>
 
     </section>
 
-    
+
     <footer class="site-footer">
         <div class="container">
             <div class="logo">
@@ -187,10 +242,10 @@ if (isset($_SESSION['utype'])) {
             <div class="quick-links">
                 <h1>Quick Links</h1>
                 <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="destinations.php">Destinations</a></li>
-                <li><a href="packages.php">Packages</a></li>
-                <li><a href="about.php">About</a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="destinations.php">Destinations</a></li>
+                    <li><a href="packages.php">Packages</a></li>
+                    <li><a href="about.php">About</a></li>
                 </ul>
             </div>
             <div class="soc-med">
@@ -229,9 +284,9 @@ if (isset($_SESSION['utype'])) {
         var curdate = document.getElementById('estartdate').value;
         console.log(curdate);
         flatpickr("input[type=datetime-local]", {
-        dateFormat: "D, M d Y",
-        positionElement: ".booking-modal",
-        static: true
+            dateFormat: "D, M d Y",
+            positionElement: ".booking-modal",
+            static: true
         });
     </script>
 

@@ -324,7 +324,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                     <button id="modalNext" class="modal-login">Next</button>
                     <a id="modalBClose" class="btn">Close</a>
                   </div>
-                </form>
+                
               </div>
             <?php
             }
@@ -559,7 +559,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
       </div>
     </div>
 
-    <div class="recommendations">
+    <!-- <div class="recommendations">
       <h1>Packages Worth Checking</h1>
       <div class="card-container">
         <div class="card">
@@ -591,7 +591,109 @@ if(isset($_SESSION['isLoggedIn']) == false) {
             </a></span>
         </div>
       </div>
+    </div> -->
+    
+    
+    <div class="ratings-container">
+      <h1>Package Ratings</h1>
+      <?php 
+        $ratingsummary_query_string = "SELECT COUNT(if(package_rating = 5,1,null)) AS `5_starCount`,
+                                      COUNT(if(package_rating = 4,1,null)) AS `4_starCount`,
+                                      COUNT(if(package_rating = 3,1,null)) AS `3_starCount`,
+                                      COUNT(if(package_rating = 2,1,null)) AS `2_starCount`,
+                                      COUNT(if(package_rating = 1,1,null)) AS `1_starCount`,
+                                      COUNT(*) AS `totalCount`
+                                      FROM traveldb.packagerating_tbl WHERE packageID_rated = 11;";
+        $sqlquery = mysqli_query($conn, $ratingsummary_query_string);
+        $ratingCounts = mysqli_fetch_array($sqlquery);
+
+        $rating_count_array = array(
+          5 => $ratingCounts['5_starCount'],
+          4 => $ratingCounts['4_starCount'],
+          3 => $ratingCounts['3_starCount'],
+          2 => $ratingCounts['2_starCount'],
+          1 => $ratingCounts['1_starCount']
+        );
+        
+        $averageRating = $row['packageRating'];
+      ?>
+      <div class="ratings-selector">
+        <div class="actual-rating">
+          <div class="text">
+            <span id="rating-val" style="font-size: 30px; font-weight: bold; "><?php echo $averageRating; ?> </span><span style="font-size: 20px;">out of 5</span>
+          </div>
+          <div class="rating" style="color: var(--logo-yellow-dark); font-size: 20px;">
+            <?php
+              $stars = 5;
+              $wholeNum = floor($averageRating);
+              $decimal = $averageRating - $wholeNum;
+
+              for ($i = 0; $i < $wholeNum; $i++) {
+                echo '<i class="fas fa-star"></i>';
+                $stars--;
+              }
+
+              if ($decimal != 0) {
+                if ($decimal <= 0.5) {
+                  echo '<i class="fas fa-star-half-alt"></i>';
+                } else {
+                  echo '<i class="fas fa-star"></i>';
+                }
+                $stars--;
+              }
+
+              for ($i=0; $i < $stars; $i++) { 
+                  echo '<i class="far fa-star"></i>';
+              }
+            ?>
+          </div>
+        </div>
+        <div class="availability-filter">
+            <span style="margin-right: 10px;">
+                <input class="avail-inp" type="radio" name="avail-fil" value="a-all" id="a-all" style="display: none;">
+                <label for="a-all"><span>All</span></label>
+            </span>
+            <span style="margin-right: 10px;">
+                <input class="avail-inp" type="radio" name="avail-fil" value="a-available" id="a-available" style="display: none;">
+                <label for="a-available"><span>5 Star (<?php echo $rating_count_array['5'];?>)</span></label>
+            </span>
+            <span style="margin-right: 10px;">
+                <input class="avail-inp" type="radio" name="avail-fil" value="a-available" id="a-available" style="display: none;">
+                <label for="a-available"><span>4 Star (<?php echo $rating_count_array['4'];?>)</span></label>
+            </span>
+            <span style="margin-right: 10px;">
+                <input class="avail-inp" type="radio" name="avail-fil" value="a-available" id="a-available" style="display: none;">
+                <label for="a-available"><span>3 Star (<?php echo $rating_count_array['3'];?>)</span></label>
+            </span>
+            <span style="margin-right: 10px;">
+                <input class="avail-inp" type="radio" name="avail-fil" value="a-available" id="a-available" style="display: none;">
+                <label for="a-available"><span>2 Star (<?php echo $rating_count_array['2'];?>)</span></label>
+            </span>
+            <span style="margin-right: 10px;">
+                <input class="avail-inp" type="radio" name="avail-fil" value="a-available" id="a-available" style="display: none;">
+                <label for="a-available"><span>1 Star (<?php echo $rating_count_array['1'];?>)</span></label>
+            </span>
+        </div>
+      </div>
+
+      <div class="ratings-list" id="ratings-list-el">
+      </div>
+  		<div id="wait-msg"></div>
+
+      <script src="../../assets/js/js.scrollPagination.js"></script>
+      <script>
+        $(document).loadScrollData(0,{
+          limit		      :	10,
+          listingId	    :	"#ratings-list-el",
+          loadMsgId	    :	'#wait-msg',
+          ajaxUrl		    :	'../../backend/package/packages_display.php',
+          loadingMsg	  :	'<div style="text-align: center; margin-top: 10px;">Loading more reviews...</div>',
+          loadingSpeed	:	10,
+          packageID     : <?php echo $packageID;?>
+        });
+      </script>
     </div>
+
   </section>
 
   <footer class="site-footer">

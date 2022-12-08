@@ -29,7 +29,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
 <body>
   <?php
   include 'includes/components/nav.php';
-  include 'includes/components/accountModal.php';
+  // include 'includes/components/accountModal.php';
   ?>
   <section class="main-page vidban">
     <div id="bann" class="banner">
@@ -63,7 +63,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
             }
             ?> id="container">
         <div class="form-container sign-up-container" id="sign-up-container">
-          <form name="sign-up-form" action="backend/auth/signup.php" method="post">
+          <form name="sign-up-form" id="sign-up-form" action="backend/auth/" method="POST">
           <!-- <form> -->
             <h1>Create Account</h1>
             <!-- <div class="social-container">
@@ -78,7 +78,8 @@ if (isset($_SESSION['isLoggedIn']) == false) {
             </div>
             <input type="email" name="email" placeholder="Email" required />
             <input type="password" name="password" placeholder="Password" required />
-            <button class="reg-user" type="submit" name="Submit" value="Submit">Sign Up</button>
+            <input type="hidden" name="trav-preferences" id="trav-preferences">
+            <button class="reg-user" type="button" name="Submit">Next</button>
             <a href="agencyreg.php" style="color: black; text-decoration: underline;">Register as a Travel Agency</a>
 
           </form>
@@ -94,7 +95,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
             <span>or use your account</span> -->
             <input type="email" name="email" placeholder="Email" required />
             <input type="password" name="password" placeholder="Password" required />
-            <!-- <a href="#">Forgot your password?</a> -->
+            <a id="remodal-open" style="cursor: pointer;">Forgot your password?</a>
             <button type="submit">Sign In</button>
           </form>
         </div>
@@ -183,7 +184,6 @@ if (isset($_SESSION['isLoggedIn']) == false) {
     </div>
     <script>
       const signUpButton = document.getElementById('signUp');
-      console.log(signUpButton);
       const signInButton = document.getElementById('signIn');
       const container = document.getElementById('container');
 
@@ -196,7 +196,36 @@ if (isset($_SESSION['isLoggedIn']) == false) {
       });
     </script>
   </section>
-  <!-- <section class="main-page user-pref">
+  <!-- Password Reset Modal -->
+  <div class="modal-container" id="re-modal_container">
+        <div class="user-modal">
+            <h1>Reset Password</h1>
+            <p>Enter the email you used when you created your Lakbayan Account and we'll send you a link to reset your account.</p>
+            <form action="backend/auth/recoverpass.php" method="POST">
+              <br><input type="email" name="recovery-email" id="recovery-email"><br>
+              <div class="buttons">
+                <button type="submit" id="recoverAccount" class="modal-login">Recover</button>
+                <a id="modalBClose" class="btn">Cancel</a>
+              </div>
+            </form>
+        </div>
+    </div>
+    <script>
+      $('#remodal-open').on("click", function() {
+        $("#re-modal_container").addClass("show");
+      });
+      
+      $('#modalBClose').on("click", function() {
+        $("#re-modal_container").removeClass("show");
+      });
+
+      $("#re-modal_container").on('click', function (e) {
+        if ($("#re-modal_container").has(e.target).length === 0) {
+          $("#re-modal_container").removeClass("show");
+        }
+      });    
+  </script>
+  <section class="main-page user-pref">
     <div class="login-banner">
       <video src="assets/media/plane.mp4" muted loop autoplay preload="auto"></video>
 
@@ -205,107 +234,75 @@ if (isset($_SESSION['isLoggedIn']) == false) {
           <h1>Traveler Profile</h1>
           <p>Please select your preferred destination types.</p>
           <div class="checklist">
-            <input type="checkbox" id="beaches">
+            <input type="checkbox" id="beaches" name="select-preferences" value="Beaches and Resorts">
             <label class="choice" for="beaches">
               <img src="assets/img/beaches.jpg" alt="">
               <div class="text">Beaches and Resorts</div>
             </label>
-            <input type="checkbox" id="mountain">
+            <input type="checkbox" id="mountain" name="select-preferences" value="Mountains">
               <label class="choice" for="mountain">
               <img src="assets/img/mountains.jpg" alt="">
               <div class="text">Mountains</div>
             </label>
-            <input type="checkbox" id="island" >
+            <input type="checkbox" id="island" name="select-preferences" value="Islands">
               <label class="choice" for="island">
               <img src="assets/img/islands.jpg" alt="">
               <div class="text">Islands</div>
             </label>
-            <input type="checkbox" id="animal">
+            <input type="checkbox" id="animal" name="select-preferences" value="Animal Life">
             <label class="choice" for="animal">
               <img src="assets/img/animals.jpg" alt="">
               <div class="text">Animal Life</div>
             </label>
-            <input type="checkbox" id="recreation">
+            <input type="checkbox" id="recreation" name="select-preferences" value="Recreation">
             <label class="choice" for="recreation">
               <img src="assets/img/recreation.jpg" alt="">
               <div class="text">Recreation</div>
             </label>
-            <input type="checkbox" id="history">
+            <input type="checkbox" id="history" name="select-preferences" value="Historical Landmarks">
             <label class="choice" for="history">
               <img src="assets/img/history.jpeg" alt="">
               <div class="text">Historical Landmarks</div>
             </label>
           </div>
-          <button onclick="next_btn()">Next</button>
-        </div>
-        <div class="page-two" id="page-two">
-          <h1>Traveler Profile</h1>
-          <p class="description">Please add some of the places you've gone to.</p>
-          <div class="text">
-            <input type="text" placeholder="Search for a place" class="field" />
-            <span class="ico"><i class="fas fa-search"></i></span>
-          </div>
-          <div class="places">
-            <div class="place-card">
-              <i class="fas fa-map-marker-alt"></i>
-              <p>Manila, Philippines</p> <i class="fas fa-times"></i>
-            </div>
-            <div class="place-card">
-              <i class="fas fa-map-marker-alt"></i>
-              <p>Bacolod City (Negros Occidental)</p> <i class="fas fa-times"></i>
-            </div>
-            <div class="place-card">
-              <i class="fas fa-map-marker-alt"></i>
-              <p>Puerto Princesa (Palawan)</p> <i class="fas fa-times"></i>
-            </div>
-          </div>
-          <label><input type="checkbox" name="" id="terms"> I have read the Terms and Conditions.</label>
-          <span class="btn-cont">
-            <p id="back-btn" onclick="prev_btn()">Go Back</p>
-            <button id="complete-reg" class="complete-reg" disabled>Register Now</button>
+          <span class="btn-cont" style="display: flex; justify-content: space-between; margin-top: 10px;">
+            <label style="display: flex; align-items: center; cursor: pointer;">
+              <input type="checkbox" name="" id="terms" style="cursor: pointer; display: block; margin-right: 10px;"> I have read the <a href="includes/components/terms-and-conditions.php" style="text-decoration: underline; color: var(--first-color); font-weight: bold; margin-left: 5px;"> Terms and Conditions</a>
+            </label>
+            <button id="complete-reg" type="submit" disabled>Register</button>
           </span>
-          
         </div>
       </div>
 
       <script>
-          var pageone = document.getElementById("page-one");
-          var pagetwo = document.getElementById("page-two");
-        function next_btn() {
-          pageone.style.opacity = 0;
-          pageone.style.transform = "translate(-10%, 0)";
-
-
-          // pageone.style.display = "none";
-          // pagetwo.style.display = "block";
-          pagetwo.style.opacity = 1;
-          pagetwo.style.transform = "translate(0, 0)";
-          pagetwo.style.transition = "opacity 1s ease-in";
-
-        }
-        
-        function prev_btn() {
-          pageone.style.opacity = 1;
-          pageone.style.transform = "translate(0, 0)";
-          pageone.style.transition = "all .1s ease-in";
-
-          pagetwo.style.transition = "transform .1s ease-in";
-          pagetwo.style.opacity = 0;
-          pagetwo.style.transform = "translate(110%, 0)";
-        }
-
         checkbox = document.getElementById("terms");
         button = document.getElementById('complete-reg');
-        checkbox.addEventListener('change', function(e) {
-          if (checkbox.checked) {
-            button.disabled = false;
+        $('#terms').on('change', function(e) {
+          if ($(this).is(":checked")) {
+            $('#complete-reg').prop("disabled", false);
           } else {
-            button.disabled = true;
+            $('#complete-reg').prop("disabled", true);
           }
         });
+
+        $("#page-one input[type='checkbox']").prop('checked', false); 
+        $("#complete-reg").on('click', function(event) {
+            event.preventDefault();
+            getPref = $("#page-one input[name='select-preferences']:checked").map(function(){
+              return $(this).val();
+            }).get();
+            console.log(getPref)
+            $('#trav-preferences').val(getPref);
+            if (getPref.length > 0)
+              $('#sign-up-form').submit();
+            else 
+              alert('Please select atleast ONE (1) preferred destination type.');
+        });
+
+        
       </script>
     </div>
-  </section> -->
+  </section>
 
 
   <script>
@@ -324,14 +321,28 @@ if (isset($_SESSION['isLoggedIn']) == false) {
   </script> -->
 
   <script>
+    window.onbeforeunload = function () {
+      document.body.style.overflow = 'visible';
+      window.scrollTo(0, 0);
+      document.body.style.overflow = 'hidden';
+    }; 
     $(function() {
+
+      function scrollOnClick(pagePos) {
+        let pagePositon = pagePos;
+        document.body.style.overflow = 'visible';
+        $('html, body').stop().animate({
+          scrollTop: $scrollItems.eq(pagePositon).offset().top
+        }, 400); 
+        document.body.style.overflow = 'hidden';
+      }
 
       var pagePositon = 0,
         sectionsSeclector = 'section',
         $scrollItems = $(sectionsSeclector),
         offsetTolorence = 30,
         pageMaxPosition = $scrollItems.length - 1;
-
+        // scrollByButton = false;
       //Map the sections:
       $scrollItems.each(function(index, ele) {
         $(ele).attr("debog", index).data("pos", index);
@@ -343,55 +354,43 @@ if (isset($_SESSION['isLoggedIn']) == false) {
       //Move on click:
       $('#goto a').click(function(e) {
         if ($(this).hasClass('logn') && pagePositon + 1 <= pageMaxPosition) {
-          document.body.style.overflow = 'visible';
-          pagePositon=1;
-          $('html, body').stop().animate({
-            scrollTop: $scrollItems.eq(pagePositon).offset().top
-          }, 400);
-          document.body.style.overflow = 'hidden';
+          // scrollByButton = true;
+          scrollOnClick(1)
         }
         if ($(this).hasClass('ret-home') && pagePositon - 1 >= 0) {
-          document.body.style.overflow = 'visible';
-          pagePositon = 0;
-          $('html, body').stop().animate({
-            scrollTop: $scrollItems.eq(pagePositon).offset().top
-          }, 400);
-          document.body.style.overflow = 'hidden';
-          return false;
+          // scrollByButton = true;
+          scrollOnClick(0);
         }
         if ($(this).hasClass('sign-up btn') && pagePositon + 1 <= pageMaxPosition) {
-          document.body.style.overflow = 'visible';
-          pagePositon = 2;
-          $('html, body').stop().animate({
-            scrollTop: $scrollItems.eq(pagePositon).offset().top
-          }, 400);
-          document.body.style.overflow = 'hidden';
+          // scrollByButton = true;
+          scrollOnClick(2);
         }
+      })
+      
+      $(window).resize(function() {
+        scrollOnClick(pagePositon);
+      });
+      
+      $('#sign-up-container button').click(function(e) {
+        if($('input[name="fname"]').val() == '' || 
+          $('input[name="lname"]').val() == '' ||
+          $('input[name="email"]').val() == '' ||
+          $('input[name="password"]').val() == '') {
+            $('#sign-up-container input').each(function() {
+              if ($(this).val() == '')
+                $(this).addClass("missing");
+            })
+            alert('All fields must be filled up before proceeding!')
+          } else {
+            // $('.pref-form-container').css('opacity', '1');
+            // scrollByButton = true;
+            scrollOnClick(2);
+          }
       });
 
-      // $('#sign-up-container button').click(function(e) {
-      //   if ($(this).hasClass('reg-user') && pagePositon + 1 <= pageMaxPosition) {
-      //     document.body.style.overflow = 'visible';
-      //     pagePositon = 2;
-      //     $('html, body').stop().animate({
-      //       scrollTop: $scrollItems.eq(pagePositon).offset().top
-      //     }, 400);
-      //     document.body.style.overflow = 'hidden';
-      //   }
-      // });
-
-      $('#page-two button').click(function(e) {
-        pagePositon = 0;
-        if ($(this).hasClass('complete-reg') && pagePositon + 1 <= pageMaxPosition) {
-          document.body.style.overflow = 'visible';
-          pagePositon = 1;
-          $('html, body').stop().animate({
-            scrollTop: $scrollItems.eq(pagePositon).offset().top
-          }, 400);
-          document.body.style.overflow = 'hidden';
-        }
-      });
-
+      $('#sign-up-container input').bind('click change', function() {
+        $(this).removeClass("missing");
+      })
 
       //Update position func:
       function upPos() {
