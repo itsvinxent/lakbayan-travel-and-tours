@@ -8,4 +8,14 @@
             if ($showStatusCode) echo 0;
             else return 0;
     }
+
+    function setRefundRequest($conn, $bookingID, $refundRequest, $showStatusCode){
+        $setRefund = "UPDATE traveldb.booking_tbl SET bookingStatus='refund-request', bookingProofImg='$refundRequest' WHERE bookingID = $bookingID";
+        if (mysqli_query($conn, $setRefund))
+            if ($showStatusCode) echo 1;
+            else return 1;
+        else 
+            if ($showStatusCode) echo 0;
+            else return 0;
+    }
 ?>

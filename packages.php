@@ -291,6 +291,7 @@ if (isset($_SESSION['booking-stat']) == false) {
           include_once __DIR__."/backend/package/contentbased_filtering.php";
 
           $result = array();
+          $resultContent = array();
 
           if ($_SESSION['isLoggedIn'] != false){
             $result = getCollabRecommendation($_SESSION['id']);

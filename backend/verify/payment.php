@@ -63,6 +63,24 @@ function getPaymongoLink(string $linkReference): array{
   return json_decode($response->getBody(), true);
 }
 
+function generateRefund($amount, $payment_id, $reason, $notes){
+  $amount = $amount * 100;
+  $client = new \GuzzleHttp\Client();
+  $response = $client->request('POST', 'https://api.paymongo.com/refunds', [
+    'body' => '{"data":
+                    {"attributes":
+                               {"amount": '.$amount.',
+                                "payment_id": "'.$payment_id.'",
+                                "reason": "'.$reason.'",
+                                "notes": "'.$notes.'"}}}',
+    'headers' => [
+      'accept' => 'application/json',
+      'authorization' => 'Basic c2tfdGVzdF9MS212a29xM241N2FTRXRqNnpRR1lYUjM6',
+      'content-type' => 'application/json',
+    ],
+  ]);
+}
+
 
 // TEST ENVIRONMENT ====================================================================================================================
 // $generated = generatePaymentLink(173);
@@ -139,14 +157,19 @@ $response2 = $client->request('POST', 'https://api.paymongo.com/v1/sources', [
 // ]);
 
 
-// $decode = getPaymongoLink('wEzD8nu');
+// $decode = getPaymongoLink('qG4CS3g');
 
 // echo $decode['data']['attributes']['payments'][0]['data']['attributes']['source']['type'];
 
+// $last_key = end($decode['data']['attributes']['payments']);
+// $ctr = 0;
 // foreach ($decode['data']['attributes']['payments'] as $key => $decodes){
+//   if($ctr === count($decode['data']['attributes']['payments'])-1){
 //   echo '<pre>';
-//   print_r($decodes['data']);
-//   echo '</pre>';
+//   print_r($decodes['data']['id']);
+//   print_r($decodes['data']['attributes']['status']);
+//   echo '</pre>';}
+//   $ctr = $ctr+1;
 // }
 
 

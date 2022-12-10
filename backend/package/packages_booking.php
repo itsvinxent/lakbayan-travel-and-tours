@@ -172,22 +172,28 @@
                                     <div class="instr">You will be redirected to another page where you will sign-in your GCash account and confirm payment on the required amount.</div>
                                     <div class="form__radios" id="form__radios">
                                         <div class="form__radio">
-                                            <img src="https://img.icons8.com/plasticine/100/null/gcash.png"/>
-                                            <label for="gcash">GCash Payment</label>
-                                            <input checked id="gcash" name="payment-method" type="radio" value="GCash"/>
+                                            <img src="..\..\assets\img\paymongo.png" style="border-radius: 5px; outline: 1px #439A97 solid; margin-right: 10px; height: 40px; width: 40px"/>
+                                            <label for="paymongo">Paymongo Payment</label>
+                                            <input checked id="gcash" name="payment-method" type="radio" value="Paymongo"/>
                                         </div>
 
-                                        <div class="form__radio">
-                                            <img src="https://img.icons8.com/plasticine/100/null/bank-card-back-side.png"/>
-                                            <label for="bank">Bank Transfer</label>
-                                            <input id="bank" name="payment-method" type="radio" value="Bank Transfer"/>
-                                        </div>
+                                        <// <div class="form__radio">
+                                        <//     <img src="https://img.icons8.com/plasticine/100/null/gcash.png"/>
+                                        <//     <label for="gcash"><//GCash Payment</label>
+                                        <//     <input checked id="gcash" name="payment-method" type="radio" value="GCash"/>
+                                        <// </div>
 
-                                        <div class="form__radio">
-                                            <img src="https://img.icons8.com/plasticine/100/null/cash-in-hand.png"/>
-                                            <label for="remittance">Remittance Center</label>
-                                            <input id="remittance" name="payment-method" type="radio" value="Remittance Center"/>
-                                        </div>
+                                        <// <div class="form__radio">
+                                        <//     <img src="https://img.icons8.com/plasticine/100/null/bank-card-back-side.png"/>
+                                        <//     <label for="bank"><//Bank Transfer</label>
+                                        <//     <input id="bank" name="payment-method" type="radio" value="Bank Transfer"/>
+                                        <// </div>
+
+                                        <// <div class="form__radio">
+                                        <//     <img src="https://img.icons8.com/plasticine/100/null/cash-in-hand.png"/>
+                                        <//     <label for="remittance"><//Remittance Center</label>
+                                        <//     <input id="remittance" name="payment-method" type="radio" value="Remittance Center"/>
+                                        <// </div>
                                     </div>
                                 </fieldset>
 

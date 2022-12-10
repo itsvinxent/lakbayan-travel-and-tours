@@ -117,7 +117,8 @@
   margin-right: 20px;
 }
 
-.modal-login:disabled {
+.modal-login:disabled, 
+input[type='number']:disabled{
   cursor: not-allowed;
   opacity: .5;
 }
@@ -136,7 +137,9 @@
 a#modalClose.btn, 
 a#modalBClose.btn,
 a#modalEClose.btn, 
-a#modalDClose.btn {
+a#modalDClose.btn,
+a#modalRClose.btn,
+a#modalQClose.btn {
   display: block;
   position: relative;
   top: 0;
@@ -171,3 +174,10 @@ a#modalBClose.btn{
   top: 0;
 }
 
+#refundrequest-booking-form label {
+  margin-right: 10px;
+}
+
+#refundrequest-booking-form select {
+  margin-left: -4.9px;
+}

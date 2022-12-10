@@ -195,16 +195,16 @@
                     <!-- PAYMENT TAB -->
                     <!-- PAYMONGO MODIFIED START ################################################################# -->
                     <div class="proof-right">
-                    <?php
+                        <?php
                         if ($_SESSION['active'] == 'u-profile') {
-                    ?>
-                        <!-- TRAVELER VIEW -->
-                        <!-- PAY-PENDING -->
-                        <form id="upForm" style="display: none;" onsubmit="return refresh()">
-                            <div id="waiting-status" class="file-upload" style="flex-direction: column; height: 300px; display:none;">
-                                <img src="https://img.icons8.com/plasticine/100/null/cash-in-hand.png"/>
-                                <h2 style="text-align: center; color: white;">Waiting for payment...</h2>
-                            </div>
+                        ?>
+                            <!-- TRAVELER VIEW -->
+                            <!-- PAY-PENDING -->
+                            <form id="upForm" style="display: none;" onsubmit="return refresh()" target="_self">
+                                <div id="waiting-status" class="file-upload" style="flex-direction: column; height: 300px; display:none;">
+                                    <img src="https://img.icons8.com/plasticine/100/null/cash-in-hand.png" />
+                                    <h2 style="text-align: center; color: white;">Waiting for payment...</h2>
+                                </div>
 
 
                                 <input type="number" name="current-bookingID" id="current-bookingID" hidden>
@@ -212,43 +212,116 @@
                                 <input type="text" name="current-transacNum" id="current-transacNum" hidden>
                                 <input type="number" name="current-packageID" id="current-packageID" hidden>
                                 <input type="number" name="current-slots" id="current-slots" hidden>
-                            
-                            <div class="proof-buttons">
-                        
-                                <a href="" target="_blank"class="btn btn-long" id="submit-proof" style="text-align: center; font-size: 13.33px">Go to Payment Link</a>
-                                <button type="submit" class="btn btn-long" id="check-payment">Check Status</button>
 
+                                <div class="proof-buttons">
+
+                                    <a href="" target="_blank" class="btn btn-long" id="submit-proof" style="text-align: center; font-size: 13.33px">Go to Payment Link</a>
+                                    <button type="submit" class="btn btn-long" id="check-payment" style="background: #34495E;">Check Status</button>
+                                    <button type="button" class="btn btn-long modal-login" id="cancel-payment" style="background: #ED2939;">Cancel Booking</button>
+
+                                </div>
+                            </form>
+
+                            <!-- PAY-COMPLETE -->
+                            <div id="trip-confirmed" class="file-upload" style="flex-direction: column; height: 300px; display:none;">
+                                <img src="https://img.icons8.com/plasticine/100/null/checked--v1.png" />
+                                <h2 style="text-align: center; color: white;">Your Payment has been confirmed!</h2>
                             </div>
-                        </form>
 
-                        <!-- PAY-COMPLETE -->
-                        <div id="trip-confirmed" class="file-upload" style="flex-direction: column; height: 300px; display:none;">
-                            <img src="https://img.icons8.com/plasticine/100/null/checked--v1.png" />
-                            <h2 style="text-align: center; color: white;">Your Payment has been confirmed!</h2>
-                        </div>
-
+                            <!-- CANCELLED -->
+                            <div id="trip-cancelled" class="file-upload" style="flex-direction: column; height: 300px; display:none;">
+                            <img src="https://img.icons8.com/clouds/100/null/cancel.png"/>
+                                <h2 style="text-align: center; color: white;">Your Booking has been cancelled!</h2>
+                            </div>
+                            
                         <?php
                         } else {
                         ?>
-                        <!-- TRAVELER VIEW -->      
-                        <!-- PAY-PENDING -->
-                        <div id="waiting-status" class="file-upload" style="flex-direction: column; height: 300px; display:none;">
+                            <!-- TRAVEL AGENCY VIEW -->
+                            <!-- PAY-PENDING -->
+                            <div id="waiting-status" class="file-upload" style="flex-direction: column; height: 300px; display:none;">
                                 <img src="https://img.icons8.com/plasticine/100/null/submit-progress.png" />
                                 <h2 style="text-align: center; color: white;">Waiting for the Traveler Payment...</h2>
-                        </div>
+                            </div>
 
-                        <!-- PAY-COMPLETE -->
-                        <div id="trip-confirmed" class="file-upload" style="flex-direction: column; height: 300px; display:none;">
+                            <!-- PAY-COMPLETE -->
+                            <div id="trip-confirmed" class="file-upload" style="flex-direction: column; height: 300px; display:none;">
                                 <img src="https://img.icons8.com/plasticine/100/null/checked--v1.png" />
                                 <h2 style="text-align: center; color: white;">Payment have been confirmed!</h2>
-                        </div>
+                            </div>
+                            
+                            <!-- CANCELLED -->
+                            <div id="trip-cancelled" class="file-upload" style="flex-direction: column; height: 300px; display:none;">
+                            <img src="https://img.icons8.com/clouds/100/null/cancel.png"/>
+                                <h2 style="text-align: center; color: white;">This Booking has been cancelled!</h2>
+                            </div>
+                          
                         
-                        <?php       
+                        <?php
                         }
                         ?>
 
                     </div>
-                
+                    <div class="modal-container" id="cancel_modal">
+                        <div class="user-modal">
+                            <h1>Booking Cancellation</h1>
+                            <p>You are about to <strong>Cancel</strong> this booking. By cancelling this booking the travel agency will be informed of your decision</p>
+                            <br><input type="text" name="confirm" id="confirm" placeholder="I Understand"><br>
+                            <form action="" method="POST" id="cancel-booking-form">
+                                <div class="buttons">
+                                    <button type="submit" id="modalDelete" class="modal-login">Cancel Booking</button>
+                                    <a id="modalDClose" class="btn">Nevermind</a>
+                                </div>
+                            </form>
+                        </div>
+                        <script>
+                            const submitproof = document.getElementById('submit-proof');
+                            const checkpay = document.getElementById('check-payment');
+
+                            // const eopen = document.getElementById('modalEOpen');
+                            const cancelbutton = document.getElementById('cancel-payment');
+                            const cancel_modal = document.getElementById('cancel_modal');
+                            const dclose = document.getElementById('modalDClose');
+                            const form = document.getElementById('cancel-booking-form');
+                            const confirm = document.getElementById('confirm');
+                            const bookingID = document.getElementById('current-bookingID');
+
+                            submitproof.addEventListener('click', () => {
+                                cancelbutton.disabled = true;
+                            })
+
+                            checkpay.addEventListener('click', () => {
+                                cancelbutton.disabled = false;
+                            })
+
+                            // dopeners.forEach(dopen => {
+                            cancelbutton.addEventListener('click', function handleClick(event) {
+                                cancel_modal.classList.add('show');
+
+                                console.log(bookingID.value);
+
+
+                                form.action = "../../backend/booking/booking_cancellation.php?booking_id=" + bookingID.value;
+
+
+                            });
+                            // });
+
+                            document.getElementById('modalDelete').disabled = true;
+                            confirm.addEventListener('input', function() {
+                                if (this.value == "I Understand") {
+                                    document.getElementById('modalDelete').disabled = false;
+                                } else {
+                                    document.getElementById('modalDelete').disabled = true;
+                                }
+                            });
+
+                            dclose.addEventListener('click', () => {
+                                cancel_modal.classList.remove('show');
+                            })
+                        </script>
+                    </div>
+
                     <!-- PAYMONGO MODIFIED END ################################################################# -->
                     <div class="proof-right" style="display: none;">
                         <?php
@@ -371,27 +444,235 @@
                     <!-- TRIP SCHEDULED TAB -->
                     <div class="sched-right">
                         <!-- TRIP-SCHED -->
-                        <div class="gray-area" id="before-trip">
+                        <!-- <div class="gray-area" id="before-trip">
                             <div class="message"></div>
-                            <?php
-                            if ($_SESSION['active'] == 'u-profile') {
-                                echo <<<END
-                            <button class="btn btn-long" style="margin-bottom: 15px; background: #34495E;" id="contact-agency-btn">Contact Travel Agency</button>
-                            END;
-                            } else {
-                                echo <<<END
-                            <button class="btn btn-long" style="margin-bottom: 15px; background: #34495E;" id="contact-cust-btn">Contact Customer</button>
-                            END;
-                            }
-                            ?>
+
                             <button class="btn btn-long">Download Receipt</button>
+                            <?php
+                            // if ($_SESSION['active'] == 'u-profile') {
+                            //     echo <<<END
+                            // <button class="btn btn-long" style="margin-bottom: 15px; background: #34495E;" id="contact-agency-btn">Contact Travel Agency</button>
+                            // END;
+                            // echo <<<END
+                            // <button class="btn btn-long" style="margin-bottom: 15px; background: #34495E;" id="refund-btn">Request Refund</button>
+                            // END;
+                            // } else {
+                            //     echo <<<END
+                            // <button class="btn btn-long" style="margin-bottom: 15px; background: #34495E;" id="contact-cust-btn">Contact Customer</button>
+                            // END;
+                            // echo <<<END
+                            // <button class="btn btn-long" style="margin-bottom: 15px; background: #ED2939; display: none;" id="respond-refund-btn">Refund Request</button>
+                            // END;
+                            // }
+                            ?>
+                            
+                        </div> -->
+                        
+
+                        <?php
+                        if ($_SESSION['active'] == 'u-profile') {
+                        ?>
+                         <div class="gray-area" id="before-trip">
+                            <div class="message"></div>
+
+                            <button class="btn btn-long">Download Receipt</button>
+                        
+                            <button class="btn btn-long" style="margin-bottom: 15px; background: #34495E;" id="contact-agency-btn">Contact Travel Agency</button>
+                            <button class="btn btn-long" style="margin-bottom: 15px; background: #34495E;" id="refund-btn">Request Refund</button>
+                          
                         </div>
+
+                        <div id="refund-requested" class="file-upload" style="flex-direction: column; height: 300px;">
+                            <img src="https://img.icons8.com/external-victoruler-linear-colour-victoruler/64/null/external-refund-food-and-delivery-victoruler-linear-colour-victoruler.png"/>
+                            <h2 style="text-align: center; color: white;">You requested a refund <br>for this booking!</h2>
+                        </div>
+
+                        <div id="trip-refunded" class="file-upload" style="flex-direction: column; height: 300px;">
+                        <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/null/external-refund-web-store-flaticons-lineal-color-flat-icons.png"/>
+                            <h2 style="text-align: center; color: white;">You've successfully <br>refunded and cancelled!</h2>
+                        </div>
+
+
+                        <?php
+                        } else {
+                        ?>
+
+                            <div class="gray-area" id="before-trip-agency">
+                                <div class="message"></div>
+
+                                <button class="btn btn-long">Download Receipt</button>
+
+                                <button class="btn btn-long" style="margin-bottom: 15px; background: #34495E;" id="contact-cust-btn">Contact Customer</button>
+                                <button class="btn btn-long" style="margin-bottom: 15px; background: #ED2939; display: none;" id="respond-refund-btn">Refund Request</button>
+                          
+                            </div>
+                            
+                            <div id="trip-refunded" class="file-upload" style="flex-direction: column; height: 300px;">
+                            <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/null/external-refund-web-store-flaticons-lineal-color-flat-icons.png"/>
+                                <h2 style="text-align: center; color: white;">Traveler has refunded<br> and cancelled their booking!</h2>
+                            </div>
+
+                        <?php
+                        }
+                        ?>
+
                         <!-- RATE-PENDING -->
+
+                        
+
                         <div id="trip-done" class="file-upload" style="flex-direction: column; height: 300px;">
                             <img src="https://img.icons8.com/plasticine/100/null/checked--v1.png" />
                             <h2 style="text-align: center; color: white;">Your Trip has been<br>completed!</h2>
                         </div>
                     </div>
+
+                    <!-- REQUEST REFUND MODAL -->
+
+                    <div class="modal-container" id="refund_modal">
+                        <div class="user-modal">
+                            <h1>Request Refund</h1>
+                            <p>You are about to <strong>Refund</strong> this scheduled booking. To proceed with your refund, please enter a reason why you are refunding</p>
+                            <br>
+                            <form action="" method="POST" id="refund-booking-form">
+            
+                                <select type="text" name="refund_confirm" id="refund_confirm" placeholder="I Understand">
+                                <option value="duplicate" selected>Duplicate Payment</option>
+                                <option value="fraudulent">Fraudulent</option>
+                                <option value="requested_by_customer">I changed my mind</option>
+                                </select><br>
+                                <div class="buttons">
+                                    <button type="submit" id="modalRefund" class="modal-login">Request Refund</button>
+                                    <a id="modalRClose" class="btn">Nevermind</a>
+                                </div> 
+                                
+                                
+                            </form>
+                        </div>
+                        <script>
+                            // const eopen = document.getElementById('modalEOpen');
+                            
+                            const refund_modal = document.getElementById('refund_modal');
+                            const refundclose = document.getElementById('modalRClose');
+                            const refundform = document.getElementById('refund-booking-form');
+                            const refundconfirm = document.getElementById('refund_confirm');
+                            const refbookingID = document.getElementById('current-bookingID');
+                           
+                            const refundbutton = document.getElementById('refund-btn');
+                            refundbutton.addEventListener('click', function handleClick(event) {
+                                refund_modal.classList.add('show');
+
+                                console.log(bookingID.value);
+
+                                refundform.action = "../../backend/booking/booking_requestrefund.php?bookingrequest_id=" + refbookingID.value;
+                            });
+                            
+                            // dopeners.forEach(dopen => {
+                           
+                          
+                            // });
+                            
+                            // document.getElementById('modalRefund').disabled = true;
+                            // refundconfirm.addEventListener('input', function() {
+                            //     if (this.value == null) {
+                            //         document.getElementById('modalRefund').disabled = false;
+                            //     } else {
+                            //         document.getElementById('modalRefund').disabled = true;
+                            //     }
+                            // });
+
+                            refundclose.addEventListener('click', () => {
+                                refund_modal.classList.remove('show');
+                            })
+                        </script>
+                    </div>
+               
+                        <div class="modal-container" id="request_modal">
+                            <div class="user-modal">
+                                <h1>Request Refund</h1>
+                                <p>You are about to <strong>Refund</strong> this traveler. To proceed with your refund, please enter the percentage of the refund</p>
+                                <br>
+                                <form action="" method="POST" id="refundrequest-booking-form">
+                                    <label for="current-refundReason">Traveler Reason:</label>
+                                    <input type="text" name="current-refundReason" id="current-refundReason" style="cursor: not-allowed;" readonly><br>
+                                    
+                                    <label for="refundrequest_confirm">Request Decision:</label>
+                                    <select name="refundrequest_confirm" id="refund_confirm" onchange="decisionChange()">
+                                        <option value="decline" selected>Decline</option>
+                                        <option value="accept">Accept</option>
+                                    </select><br>
+                                    
+                                    <label for="current-refundPrice">Refund Amount:</label>
+                                    <input type="number" name="current-refundPrice" id="current-refundPrice"><br>
+                                    
+                                    <input type="text" name="current-transacNum" id="current-transacNum" hidden>
+                                    <div class="buttons">
+                                        <button type="submit" id="modalRefund" class="modal-login">Confirm</button>
+                                        <a id="modalQClose" class="btn">Nevermind</a>
+                                    </div>
+                                    
+                                    
+                                </form>
+                            </div>
+                            <script>
+                                // const eopen = document.getElementById('modalEOpen');
+                                
+                                const refundrequest_modal = document.getElementById('request_modal');
+                                const refundrequestclose = document.getElementById('modalQClose');
+                                const refundrequestform = document.getElementById('refundrequest-booking-form');
+                                const refundrequestconfirm = document.getElementById('refundrequest_confirm');
+                                // const bookingID = document.getElementById('current-bookingID');
+                            
+                                const refundrequestbutton = document.getElementById('respond-refund-btn');
+                                const decision =  document.getElementById('refund_confirm');
+                                const reqamount = document.getElementById('current-refundPrice');
+                                const reqbookingID = document.getElementById('current-bookingID');
+                                
+                                refundrequestbutton.addEventListener('click', function handleClick(event) {
+                                    refundrequest_modal.classList.add('show');
+
+                                    // console.log(bookingID.value);
+
+                                    refundrequestform.action = "../../backend/booking/booking_requestreply.php?bookingrefund_id=" + reqbookingID.value;
+                                });
+                                
+                                // dopeners.forEach(dopen => {
+                            
+                            
+                                // });
+                                
+                                // document.getElementById('modalRefund').disabled = true;
+                                // refundconfirm.addEventListener('input', function() {
+                                //     if (this.value == null) {
+                                //         document.getElementById('modalRefund').disabled = false;
+                                //     } else {
+                                //         document.getElementById('modalRefund').disabled = true;
+                                //     }
+                                // });
+                                document.getElementById('current-refundPrice').disabled = true;
+
+                                function decisionChange() {
+                                    if (this.value == 'decline') {
+                                        document.getElementById('current-refundPrice').disabled = true;
+                                    } else {
+                                        document.getElementById('current-refundPrice').disabled = false;
+                                    }
+                                }
+                               
+                                // decision.addEventListener("onchange", () => {
+                                //     if(this.value == 'accept'){
+                                //         document.getElementById('current-refundPrice').disabled = false;
+                                //     }else document.getElementById('current-refundPrice').disabled = true;
+                                // })
+
+                                refundrequestclose.addEventListener('click', () => {
+                                    refundrequest_modal.classList.remove('show');
+                                })
+                            </script>
+                        </div>
+                    
+
+                    
+
 
                     <!-- RATE PACKAGE TAB -->
                     <div class="rate-right">
@@ -421,7 +702,7 @@
                                 // Rating Text
                                 function ratingText(inputname, textclass) {
                                     var rating = $("input[name='" + inputname + "']:checked").val();
-                                    
+
                                     rating == 5 ? text = "Excellent" :
                                         rating == 4 ? text = "Very Good" :
                                         rating == 3 ? text = "Good" :
@@ -431,11 +712,11 @@
                                     $(textclass).text(text);
                                 }
 
-                                $("input[name='pack-rating']").on('change', function () {
-                                    ratingText("pack-rating", "#p-rating-text");   
+                                $("input[name='pack-rating']").on('change', function() {
+                                    ratingText("pack-rating", "#p-rating-text");
                                 });
-                                $("input[name='agency-rating']").on('change', function () {
-                                    ratingText("agency-rating", "#a-rating-text")   
+                                $("input[name='agency-rating']").on('change', function() {
+                                    ratingText("agency-rating", "#a-rating-text")
                                 });
 
                                 // Save Rating
@@ -544,9 +825,9 @@
             $userid = mysqli_fetch_array($sqlquery);
             if ($userid[0] == $_SESSION['id']) {
         ?>
-            $('#info').removeClass('active');
-            $('#travel-order').addClass('active');
-            requestData(<?php echo $_GET['orderID'] ?>);
+                $('#info').removeClass('active');
+                $('#travel-order').addClass('active');
+                requestData(<?php echo $_GET['orderID'] ?>);
         <?php
             }
         }

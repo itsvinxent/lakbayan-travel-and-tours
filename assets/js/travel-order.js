@@ -29,7 +29,7 @@ function requestData(bookingID) {
             $('input[name="current-userID"]').val(parseInt(response.inq['id_user']));
             $('input[name="current-packageID"]').val(parseInt(response.inq['packageID']));
             $('input[name="current-transacNum"]').val(response.inq['bookingTransacNum']);
-
+           
             setTabs(response.inq['bookingStatus']);
             setBooking(response);
             setPayment(response);
@@ -53,6 +53,15 @@ function setTabs(status) {
             limit = 2;
             break;
         case 'trip-sched':
+            limit = 4;
+            break;
+        case 'refund-request':
+            limit = 4;
+            break;
+        case 'refund-denied':
+            limit = 4;
+            break;
+        case 'refunded':
             limit = 4;
             break;
         case 'rate-pending':
@@ -173,6 +182,12 @@ function setPayment(response) {
     $('#before-rate').css('display', 'none');
     $('#trip-done').css('display', 'none');
     $('#transaction-complete').css('display', 'none');
+    $('#trip-cancelled').css('display', 'none');
+
+    $('#respond-refund-btn').css('display', 'none');
+    $('#refund-requested').css('display', 'none');
+    $('#trip-refunded').css('display', 'none');
+    $('#before-trip-agency').css('display', 'none');
 
     $('.method-selection').css('display', 'none');
     $('.rating-sheet').css('display', 'none');
@@ -185,13 +200,31 @@ function setPayment(response) {
     } else if (inq['bookingStatus'] == 'confirm-pending') {
         $('#approveForm').css('display', 'block'); // Agency
         $('#waiting-confirm').css('display', 'flex'); // Traveler
+    } else if (inq['bookingStatus'] == 'cancelled'){
+        $('#trip-cancelled').css('display', 'flex');
     } else {
         $('#trip-confirmed').css('display', 'flex');
     }
 
-    if (inq['bookingStatus'] == 'trip-sched') {
+    if (inq['bookingStatus'] == 'trip-sched' || inq['bookingStatus'] == 'refund-denied') {
         $('#before-trip').css('display', 'block');
-    } else {
+        $('#before-trip-agency').css('display', 'block');
+    } else if(inq['bookingStatus'] == 'refund-request') { //REQUEST REFUND
+        $('#refund-requested').css('display', 'flex')
+        $('#before-trip-agency').css('display', 'block');
+        $('#respond-refund-btn').css('display', 'block');
+
+        $('#current-refundReason').val(inq['bookingProofImg']);
+        $('#current-refundPrice').attr({
+            "value" : inq['bookingPrice'],
+            "max" : inq['bookingPrice'],
+            "min" : inq['bookingPrice'] * .90
+        });
+
+    } else if(inq['bookingStatus'] == 'refunded'){
+        $('#trip-refunded').css('display', 'flex');
+    }
+    else {
         $('#trip-done').css('display', 'flex');
     }
 
@@ -258,6 +291,18 @@ function statusText(status, method, isUser) {
         case 'rate-pending':
             if (isUser) text = 'Awaiting for your package rating and review.';
             else text = 'Awaiting for the rating of the customer.';
+            break;
+        case 'refund-request':
+            if (isUser) text = 'You requested a refund';
+            else text = 'Traveler requested for a refund';
+            break;
+        case 'refund-denied':
+            if (isUser) text = 'Your refund has been denied';
+            else text = 'You denied the refund request';
+            break;    
+        case 'refunded':
+            if (isUser) text = 'Your refund has been granted';
+            else text = 'You accepted the refund request';
             break;
         case 'complete':
             text = 'The transaction is completed. Thank you!';
@@ -371,12 +416,18 @@ function refresh() {
         .then((code) => {
             if(code == 1){
                 alert("Payment Succeeded!.");
+                let inq = currentResponse.inq;
+                requestData(inq['bookingID']);
             }
             else if(code == 4){
                 alert("ERROR Code " + code + " - Paymongo link is null.");
             }
             else {
-                alert("ERROR Code " + code + " - Payment still on process.");
+                alert("Payment still on process.");
+                let inq = currentResponse.inq;
+                requestData(inq['bookingID']);
             }
         })
+        .catch(err => console.error(err));
+    return false;
 }
