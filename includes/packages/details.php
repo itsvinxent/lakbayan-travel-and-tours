@@ -256,7 +256,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                 $cartItem = mysqli_fetch_array($qry_exist);
   
                 if (isset($cartItem['id']) == true) {
-                  $query = "SELECT bookingID from traveldb.booking_tbl WHERE inquiryInfoID = {$cartItem['id']} AND bookingStatus != 'complete'";
+                  $query = "SELECT bookingID from traveldb.booking_tbl WHERE inquiryInfoID = {$cartItem['id']} AND (bookingStatus != 'complete' AND bookingStatus != 'cancelled' AND bookingStatus != 'refunded')";
                   $qry_exist = mysqli_query($conn, $query);
                   $cartItem = mysqli_fetch_array($qry_exist);
                   if (isset($cartItem['bookingID']) == true) {

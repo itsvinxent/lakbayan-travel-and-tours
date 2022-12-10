@@ -5,6 +5,7 @@ require 'booking_status.php';
 include '../connect/dbCon.php';
 
 $transac = mysqli_real_escape_string($conn, $_POST['current-transacNum']);
+$bookingID = mysqli_real_escape_string($conn, $_POST['current-bookingID']);
 
 if ($transac == null)
     echo 4;
@@ -14,7 +15,7 @@ else{
     $payment_status = $payload['data']['attributes']['status'];
 
     if($payment_status != "paid"){
-        echo 0;
+        return 0;
     }
     else{
         $status = 'trip-sched';
@@ -26,11 +27,13 @@ else{
                 $slotquery = "UPDATE traveldb.package_tbl SET packageSlots = {$_POST['current-slots']} WHERE packageID = {$_POST['current-packageID']}";
 
             if (mysqli_query($conn, $slotquery)) {
-                echo 1;
+                return 1;
             } else {
-                echo -1;
+                return -1;
             }
         }
     }
 }
 ?>
+
+<meta http-equiv="refresh" content="0;URL=../../user-profile.php?orderID=<?php echo $bookingID;?>" />
