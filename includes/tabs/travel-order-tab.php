@@ -396,6 +396,12 @@
                     <!-- RATE PACKAGE TAB -->
                     <div class="rate-right">
                         <!-- RATE-PENDING -->
+                        <?php if ($_SESSION['active'] == 'a-profile') { ?>
+                        <div id="a-before-rate" class="file-upload" style="flex-direction: column; height: 300px; display:none;">
+                                <img src="https://img.icons8.com/plasticine/100/null/submit-progress.png" />
+                                <h2 style="text-align: center; color: white;">Waiting for the<br>Customer Rating...</h2>
+                        </div>
+                        <?php } else { ?>
                         <div class="gray-area" id="before-rate">
                             <div class="message-rate"></div>
                             <button class="btn btn-long" style="margin-bottom: 15px;" id="rate-pack-btn">Rate Package</button>
@@ -467,6 +473,7 @@
                                 })
                             </script>
                         </div>
+                        <?php } ?>
                         <!-- COMPLETE -->
                         <div id="transaction-complete" class="file-upload" style="flex-direction: column; height: 300px;">
                             <img src="https://img.icons8.com/plasticine/100/null/checked--v1.png" />

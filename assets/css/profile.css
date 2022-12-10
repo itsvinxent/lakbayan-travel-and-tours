@@ -593,7 +593,8 @@
 }
 
 .package-search button#reset-search,
-.package-search button#b-reset-search {
+.package-search button#b-reset-search,
+.package-search button#v-reset-search {
   background-color: #34495e;
 }
 
@@ -949,4 +950,32 @@
 /* Verifications Tab */
 .tab-content .verifications.active {
   margin-bottom: 3rem;
+}
+
+.tab-content .dashboard.active {
+  padding: 2rem;
+}
+
+.dashboard .card-container, 
+.dashboard .stat-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.dashboard .card-wrapper {
+  background-color: #34495E;
+  color: white;
+  font-weight: bold;
+  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  width: 23%;
+  padding: 20px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.dashboard .card-wrapper span > *:not(:last-child) {
+  margin-right: 5px;
 }

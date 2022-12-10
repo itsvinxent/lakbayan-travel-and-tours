@@ -19,7 +19,7 @@
 
         <div class="buttons">
             <span><button id="v-get-search">Search</button></span>
-            <span><button id="reset-search">Reset</button></span>
+            <span><button id="v-reset-search">Reset</button></span>
         </div>
     </div>
 
@@ -82,6 +82,7 @@
             <span id="close-ver" style="position: absolute; top: 5px; right: 10px; font-size: 20px; cursor: pointer;"><i class="fas fa-times"></i></span>
         </div>
     </div>
+    <script src="assets/js/search-filters.js"></script>
     <script>
         // Reload Table
         function reloadAgencyTable() {

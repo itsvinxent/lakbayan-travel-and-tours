@@ -34,11 +34,25 @@ include "backend\auth\getagency.php";
         <?php 
         if ($_SESSION['setVerStat'] == 'verified') { 
           echo<<<END
-            <li data-tab-target="#package" class="tab" style="margin-bottom: 5px;" id="pack-active" onclick="returnForm()">
+            <li data-tab-target="#dashboard" class="tab" id="load-charts">
           END;
         } else {
           echo<<<END
-            <li class="tab" style="margin-bottom: 5px; cursor: not-allowed; opacity: .7;" id="pack-active">
+            <li class="tab" style="cursor: not-allowed; opacity: .7;">
+          END;
+        }
+        ?>
+          <img src="https://img.icons8.com/plasticine/50/null/analytics.png"/>
+          My Stats
+        </li>
+        <?php 
+        if ($_SESSION['setVerStat'] == 'verified') { 
+          echo<<<END
+            <li data-tab-target="#package" class="tab" id="pack-active" onclick="returnForm()">
+          END;
+        } else {
+          echo<<<END
+            <li class="tab" style="cursor: not-allowed; opacity: .7;" id="pack-active">
           END;
         }
         ?>
@@ -64,6 +78,9 @@ include "backend\auth\getagency.php";
 
     <div class="main-panel" style="position: relative; width: 100%;">
       <div class="tab-content" id="tab-content">
+        <!-- Dashboard -->
+        <?php include "includes/tabs/dashboard.php"; ?>
+
         <!-- My Account Tab -->
         <?php include "includes/tabs/account-tab.php"; ?>
 

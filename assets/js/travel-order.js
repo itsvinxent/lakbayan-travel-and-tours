@@ -197,6 +197,7 @@ function setPayment(response) {
 
     if (inq['bookingStatus'] == 'rate-pending') {
         $('#before-rate').css('display', 'block');
+        $('#a-before-rate').css('display', 'flex');
     } else {
         $('#transaction-complete').css('display', 'flex');
     }

@@ -12,8 +12,8 @@
     $agency_rating = (int) $_POST['agency_rating'];
     $star = $agency_rating."_star";
 
-    $packratingquery = "INSERT INTO traveldb.packagerating_tbl (`userID_rating`, `packageID_rated`, `package_rating`, `package_review`, `ratingDate`)
-                    VALUES($userID, $packageID, $package_rating, '$review', now())";
+    $packratingquery = "INSERT INTO traveldb.packagerating_tbl (`userID_rating`, `packageID_rated`, `bookingID_rated`, `package_rating`, `package_review`, `ratingDate`)
+                    VALUES($userID, $packageID, $bookingID,$package_rating, '$review', now())";
 
     if (mysqli_query($conn, $packratingquery)) {
         $ratingsummary_query_string = "SELECT COUNT(if(package_rating = 5,1,null)) AS `5_starCount`,

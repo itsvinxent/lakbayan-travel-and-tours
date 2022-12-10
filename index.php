@@ -63,7 +63,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
             }
             ?> id="container">
         <div class="form-container sign-up-container" id="sign-up-container">
-          <form name="sign-up-form" id="sign-up-form" action="backend/auth/" method="POST">
+          <form name="sign-up-form" id="sign-up-form" action="backend/auth/signup.php" method="POST">
           <!-- <form> -->
             <h1>Create Account</h1>
             <!-- <div class="social-container">

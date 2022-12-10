@@ -43,6 +43,30 @@ if(isset($_SESSION['isLoggedIn']) == false) {
 </head>
 
 <body>
+  <script>
+    var visit_seconds = 0;
+    function visitduration(seconds){
+      var date = new Date();
+      $.ajax(
+      {
+          type:'POST',
+          url:'../../backend/statistics/visit-times.php', 
+          data: {
+            packageID: <?php echo $packageID; ?>,
+            userID: <?php echo $_SESSION['id']; ?>,
+            seconds: seconds,
+          },
+          success: function(data) 
+          {
+            console.log(data)
+          }
+      })
+    } 
+    
+    window.onbeforeunload = function () {
+      return visitduration(visit_seconds);
+    };
+  </script>
   <?php 
   include '../components/nav.php';
   include '../components/accountModal.php';

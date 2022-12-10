@@ -64,10 +64,13 @@ function timerAdd(){
     console.log(idletime);
     if(idletime == 2){
         clearInterval(getchatInterval);
+        visitduration(visit_seconds);
+        visit_seconds = 0;
     }
     else if(idletime == 1){
         clearInterval(getchatInterval);
         startInterval();
+        visit_seconds++;
     }
 }
 
