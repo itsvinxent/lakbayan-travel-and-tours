@@ -865,7 +865,7 @@ nav li a:hover {
   line-height: normal !important;
 }
 
-.notification__dropdown.show{
+.notification__wrapper.show{
   display: block;
 }
 
@@ -886,7 +886,7 @@ nav li a:hover {
 }
 
 
-.notification__dropdown{
+.notification__dropdown, .notification__wrapper{
   position: absolute;
   min-width: 500px;
   max-width: 500px;
@@ -905,17 +905,24 @@ nav li a:hover {
   border-radius: 16px;
 
   line-height: 1px !important;
-  overflow-y: scroll;
-  display: none;
+  
+  
+
   box-shadow: 0 0 32px rgb(0 0 0 / 8%), 
                   0 16px 16px -16px rgb(0 0 0 / 10%);
 }
 
+.notification__wrapper {
+  display: none;
+}
+
+.notification__dropdown{
+  overflow-y: scroll;
+}
 
 
 
-
-.notification__dropdown::before {
+.notification__wrapper::before {
   content: '';
 
   position: absolute;
@@ -927,7 +934,7 @@ nav li a:hover {
   border-color: transparent transparent #34495e transparent ;
   border-style: solid;
 
-  
+  z-index: 1000;
 }
 
 
@@ -967,3 +974,8 @@ nav li a:hover {
   border-bottom: 1px solid rgba(97, 97, 97, 0.756);
 }
 
+.notification__dropdown li span b.highlight{
+  background-color: #1a977e;
+  border-radius: 10px;
+  padding: 0 5px;
+}

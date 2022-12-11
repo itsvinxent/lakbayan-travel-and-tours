@@ -62,29 +62,37 @@
               </li>';
       }
       if (isset($_SESSION['isLoggedIn']) and $_SESSION['isLoggedIn'] == true) {
-        $show_notification = "SELECT * FROM notification_tbl WHERE notification_to='$_SESSION[id]' AND notification_status=0 ORDER BY notification_id DESC";
+        $show_notification = "SELECT * FROM notification_tbl WHERE notification_to='$_SESSION[id]' ORDER BY notification_id DESC";
+        $show_fresh = "SELECT * FROM notification_tbl WHERE notification_to='$_SESSION[id]' AND notification_status = 0 ORDER BY notification_id DESC";
         $result = mysqli_query($conn, $show_notification);
+        $resultfresh = mysqli_query($conn, $show_fresh);
         echo '<li class="notification" id="notification">
                 <a style="padding: 13px 0;">
                   <img style="width: 40px; height: 40px;" src="https://img.icons8.com/plasticine/100/null/appointment-reminders.png"/>
-                  <span>'.mysqli_num_rows($result).'</span>
+                  <span>'.mysqli_num_rows($resultfresh).'</span>
                 </a>
+                <div class="notification__wrapper" id="notification__wrapper">
                 <ul class="notification__dropdown" id="notification__dropdown">';
       
                   if(mysqli_num_rows($result)>0){
                     foreach($result as $item){
                    
                       echo  '<li>
-                        <span><b> '.$item['notification_category'].': </b> '.$item['notification_content'].'</span>
+                        <span>';
+                        if($item['notification_status']==0)
+                        echo '<b class="highlight">'.$item['notification_category'].':</b> '.$item['notification_content'].'</span>
                       </li>';
+                        else   echo '<b>'.$item['notification_category'].':</b> '.$item['notification_content'].'</span>
+                        </li>';
                     
                     } 
                    }else {
                       echo  '<li>
-                        <span>No more notifications</span>
+                        <span>No new notifications</span>
                       </li>';
                    }
              echo '</ul>
+                   </div>
             </li>';
         
         
@@ -173,6 +181,7 @@
 
   $("#notification").on("click", () =>{
     $("#notification__dropdown").toggleClass("show");
+    $("#notification__wrapper").toggleClass("show");
   })
 
   $(document).ready(()=>{
