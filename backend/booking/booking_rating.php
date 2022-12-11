@@ -1,6 +1,7 @@
 <?php 
     include "../connect/dbCon.php";
     require "booking_status.php";
+    include_once __DIR__.'\..\..\backend\notifications\notification_model.php';
 
     $bookingID = $_POST['bookingID'];
     $userID = $_POST['userID'];
@@ -46,6 +47,16 @@
 
         $updateRatingQuery = "UPDATE traveldb.package_tbl SET packageRating = $averageRating WHERE packageID = $packageID";
 
+        $qry_notif = "SELECT AG.agencyManID, CONCAT(US.fname, ' ', US.lname) AS fullname, PK.packageTitle FROM traveldb.booking_tbl AS BK
+        INNER JOIN traveldb.inquiry_tbl AS IQ ON BK.inquiryInfoID = IQ.id
+        INNER JOIN traveldb.user_tbl AS US ON IQ.id_user = US.id
+        INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID
+        INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+        WHERE BK.bookingID = $bookingID";
+
+        $send_to = mysqli_fetch_assoc(mysqli_query($conn, $qry_notif));    
+
+
         if (mysqli_query($conn, $updateRatingQuery)) {
             $isAgencyExisting = "SELECT * FROM traveldb.agencyrating_tbl WHERE agencyID = $agencyId ";
             $qry = mysqli_query($conn,$isAgencyExisting);
@@ -61,6 +72,7 @@
             
             if (mysqli_query($conn, $agencyratingquery)) {
                 setBookingStatus($conn, $bookingID, 'complete', true);
+                sendNotification($send_to['agencyManID'], "booking", "$send_to[fullname] rated your package $send_to[packageTitle] a $package_rating star!");
             } else {
                 echo -2; // FAILED ON AGENCY RATING UPDATE/INSERT
             }

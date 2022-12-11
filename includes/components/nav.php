@@ -55,16 +55,39 @@
       <a <?php echo setClass('about', 'about', 0);?>>About Us</a>
     </li>
     <?php 
-      if (isset($_SESSION['isLoggedIn']) and $_SESSION['isLoggedIn'] == true) {
+    include __DIR__.'/../../backend/connect/dbCon.php';
+      if (isset($_SESSION['utype']) and $_SESSION['utype'] == 'user') {
         echo '<li>
-                <a style="padding: 13px 0;"><img style="width: 40px; height: 40px;" src="https://img.icons8.com/plasticine/100/null/appointment-reminders.png"/></a>
+                <a href="includes/components/cart.php" style="padding: 13px 0;"><img style="width: 40px; height: 40px;" src="https://img.icons8.com/plasticine/100/null/worldwide-delivery.png"/></a>
               </li>';
+      }
+      if (isset($_SESSION['isLoggedIn']) and $_SESSION['isLoggedIn'] == true) {
+        $show_notification = "SELECT * FROM notification_tbl WHERE notification_to='$_SESSION[id]' AND notification_status=0 ORDER BY notification_id DESC";
+        $result = mysqli_query($conn, $show_notification);
+        echo '<li class="notification" id="notification">
+                <a style="padding: 13px 0;">
+                  <img style="width: 40px; height: 40px;" src="https://img.icons8.com/plasticine/100/null/appointment-reminders.png"/>
+                  <span>'.mysqli_num_rows($result).'</span>
+                </a>
+                <ul class="notification__dropdown" id="notification__dropdown">';
+      
+                  if(mysqli_num_rows($result)>0){
+                    foreach($result as $item){
+                   
+                      echo  '<li>
+                        <span><b> '.$item['notification_category'].': </b> '.$item['notification_content'].'</span>
+                      </li>';
+                    
+                    } 
+                   }else {
+                      echo  '<li>
+                        <span>No more notifications</span>
+                      </li>';
+                   }
+             echo '</ul>
+            </li>';
         
-        if (isset($_SESSION['utype']) and $_SESSION['utype'] == 'user') {
-          echo '<li>
-                  <a href="includes/components/cart.php" style="padding: 13px 0;"><img style="width: 40px; height: 40px;" src="https://img.icons8.com/plasticine/100/null/worldwide-delivery.png"/></a>
-                </li>';
-        }
+        
 
         if (isset($_SESSION['utype']) and $_SESSION['utype'] != 'admin') {
           echo "<li>
@@ -146,5 +169,22 @@
       $dropdown.removeClass("show");
     }
   });
+
+
+  $("#notification").on("click", () =>{
+    $("#notification__dropdown").toggleClass("show");
+  })
+
+  $(document).ready(()=>{
+    $("#notification").on("click",()=>{
+      $.ajax({
+        url: "..\\..\\backend\\notifications\\notification_read.php",
+        success: (res)=>{
+          $("#notification a span").text(0)
+        }
+        
+      })
+    })
+  })
   </script>
 </nav>

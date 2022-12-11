@@ -277,10 +277,6 @@ section {
     box-sizing: inherit;
 }
 
-* {
-    /* border: 1px solid green; */
-}
-
 :is(.wrapper, .wrapper-main) {
     /* border: 1px solid black; */
     border-radius: 15px;

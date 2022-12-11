@@ -844,3 +844,126 @@ nav li a:hover {
 
   /* max-width: 75px; */
 }
+
+.notification a span {
+  position: absolute;
+  background: rgb(194, 39, 62);
+  
+  top: 10px;
+  right: 120px;
+  border-radius: 50%;
+
+  height: 25px;
+  width: 25px;
+
+  text-align: center;
+  padding-top: 2px;
+
+  font-size: 14px;
+  
+  font-weight: 800;
+  line-height: normal !important;
+}
+
+.notification__dropdown.show{
+  display: block;
+}
+
+.notification__dropdown::-webkit-scrollbar{
+  width: 5px;
+}
+
+
+.notification__dropdown::-webkit-scrollbar-thumb{
+  border-radius: 10px;
+  background-color: #1ABC9C;
+
+  
+}
+
+.notification__dropdown::-webkit-scrollbar-thumb:hover{
+  background-color: #1a977e;
+}
+
+
+.notification__dropdown{
+  position: absolute;
+  min-width: 500px;
+  max-width: 500px;
+  min-height: min-content;
+  max-height: 800px;
+
+  margin: 0;
+
+  background: #34495e;
+
+  top: 120%;
+  right:20px;
+
+  /* padding: 0px 15px; */
+
+  border-radius: 16px;
+
+  line-height: 1px !important;
+  overflow-y: scroll;
+  display: none;
+  box-shadow: 0 0 32px rgb(0 0 0 / 8%), 
+                  0 16px 16px -16px rgb(0 0 0 / 10%);
+}
+
+
+
+
+
+.notification__dropdown::before {
+  content: '';
+
+  position: absolute;
+
+  top: -20px;
+  right: 120px;
+
+  border-width: 10px;
+  border-color: transparent transparent #34495e transparent ;
+  border-style: solid;
+
+  
+}
+
+
+.notification__dropdown li{
+  color: #ecf3f2;
+  min-width: 100%;
+  max-width: 100%;
+  padding: 10px 20px;
+  margin: 0;
+  box-sizing: border-box;
+
+  transition: 250ms background-color cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              250ms border-radius cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  max-height: 120px;
+  min-height: 60px;
+
+  /* word-wrap:normal; */
+  /* text-overflow: ellipsis; */
+  overflow: hidden;
+  /* white-space: nowrap; */
+  /* overflow-wrap: break-word; */
+  word-wrap: break-word;
+  display: block !important;
+  line-height: 25px !important;
+
+}
+
+.notification__dropdown li:hover{
+  background-color: #3d5974;
+  border-radius: 16px;
+  
+}
+
+
+.notification__dropdown li:not(:last-child){
+  border-bottom: 1px solid rgba(97, 97, 97, 0.756);
+}
+

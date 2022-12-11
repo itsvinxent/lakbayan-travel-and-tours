@@ -7,7 +7,9 @@
     include '../../backend/auth/imgverification.php';
     include '../../backend/connect/dbCon.php';
     include '../../backend/auth/dboperation.php';
+    include_once __DIR__.'\..\..\backend\notifications\notification_model.php';
     
+
     $featuredImg = $_FILES['featured-img'];
     $ftchk = image_verification($featuredImg);
 
@@ -222,7 +224,8 @@
                 }
             }
         }
-        
+        sendNotification($_SESSION['id'], "package", "Package creation success!");
+
         //echo "SUCCEEEEEEEEEEEEESS";
     }else ;
 ?>
