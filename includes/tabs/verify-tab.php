@@ -1,20 +1,20 @@
 <div id="package" data-tab-content class="data-tab-content verifications">
     <div class="package-search component">
         <div class="name">
-            <span><label for="">Agency Name</label></span>
-            <span><input type="search" name="" id="" placeholder="Enter Agency Name" style="width: 90%;"></span>
+            <span><label for="v-agency-name">Agency Name</label></span>
+            <span><input type="search" name="v-agency-name" id="v-agency-name" placeholder="Enter Agency Name" style="width: 90%;"></span>
         </div>
         <div class="dur">
-            <span><label for="">DOT #</label></span>
-            <span><input type="number" name="" id="" placeholder="Enter DOT Accreditation #"></span>
+            <span><label for="v-dot-num">DOT #</label></span>
+            <span><input type="text" name="v-dot-num" id="v-dot-num" placeholder="Enter DOT Accreditation #"></span>
         </div>
         <div class="cat">
-            <span><label for="b-package-category">Agency ID</label></span>
-            <span><input type="number" name="" id="" placeholder="Enter Agency ID"></span>
+            <span><label for="v-agency-id">Agency ID</label></span>
+            <span><input type="number" name="v-agency-id" id="v-agency-id" placeholder="Enter Agency ID"></span>
         </div>
         <div class="cust">
-            <span><label for="package-customer">Manager</label></span>
-            <span><input class="" type="text" name="" id="" placeholder="Enter Manager Name" style="width: 90%;"></span>
+            <span><label for="v-man-name">Manager</label></span>
+            <span><input class="" type="text" name="v-man-name" id="v-man-name" placeholder="Enter Manager Name" style="width: 90%;"></span>
         </div>
 
         <div class="buttons">
@@ -84,6 +84,34 @@
     </div>
     <script src="assets/js/search-filters.js"></script>
     <script>
+        $('#v-all').prop('checked', true);
+        $('#v-all').next().addClass('active');
+
+        $('#v-get-search').on('click', function() {
+            ver_agencyname = $('#v-agency-name').val();
+            ver_dotnum = $('#v-dot-num').val();
+            ver_agencyid = $('#v-agency-id').val();
+            ver_mgname = $('#v-man-name').val();
+
+            verify_data_input();
+
+            if (count != 0) {
+                filterTimeout(verpostdata, '#full-vtable');
+            }
+            count = 4;
+
+        });
+
+        $('#v-reset-search').on('click', function() {
+            verpostdata = {
+                verify: true
+            }
+
+            filterTimeout(verpostdata, '#full-vtable');
+        })
+
+        filterTable(".ver-inp", 'verstatus', verpostdata);
+
         // Reload Table
         function reloadAgencyTable() {
             $.ajax({

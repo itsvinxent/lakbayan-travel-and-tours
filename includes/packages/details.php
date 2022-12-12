@@ -43,6 +43,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
 </head>
 
 <body>
+  <?php if (isset($_SESSION['id']))?>
   <script>
     var visit_seconds = 0;
     function visitduration(seconds){
@@ -627,7 +628,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                                       COUNT(if(package_rating = 2,1,null)) AS `2_starCount`,
                                       COUNT(if(package_rating = 1,1,null)) AS `1_starCount`,
                                       COUNT(*) AS `totalCount`
-                                      FROM traveldb.packagerating_tbl WHERE packageID_rated = 11;";
+                                      FROM traveldb.packagerating_tbl WHERE packageID_rated = {$_GET['packageid']};";
         $sqlquery = mysqli_query($conn, $ratingsummary_query_string);
         $ratingCounts = mysqli_fetch_array($sqlquery);
 
@@ -638,8 +639,18 @@ if(isset($_SESSION['isLoggedIn']) == false) {
           2 => $ratingCounts['2_starCount'],
           1 => $ratingCounts['1_starCount']
         );
-        
-        $averageRating = $row['packageRating'];
+
+        $totalWeight = 0;
+        $totalReviews = 0;
+          
+        foreach ($rating_count_array as $weight => $numberofReviews) {
+            $WeightMultipliedByNumber = $weight * $numberofReviews;
+            $totalWeight += $WeightMultipliedByNumber;
+            $totalReviews += $numberofReviews;
+        } 
+        $averageRating = $totalWeight / $totalReviews;
+        $averageRating = number_format($averageRating, 1)
+        // $averageRating = $row['packageRating'];
       ?>
       <div class="ratings-selector">
         <div class="actual-rating">

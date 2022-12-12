@@ -33,9 +33,9 @@ if (isset($_SESSION['token']) == false and isset($_SESSION['recovery-email']) ==
 
 <body style="background-color: #f5f5f5;">
   <?php
-  include __DIR__.'../../includes/components/nav.php';
-  include __DIR__.'../../includes/components/accountModal.php';
-  include __DIR__.'../connect/dbCon.php';
+  include __DIR__.'/../../includes/components/nav.php';
+  include __DIR__.'/../../includes/components/accountModal.php';
+  include __DIR__.'/../connect/dbCon.php';
   ?>
 
   <section class="sections reset-email" style="margin-top: 100px;">
@@ -48,7 +48,7 @@ if (isset($_SESSION['token']) == false and isset($_SESSION['recovery-email']) ==
           <input type="password" id="password" class="form-control" name="password" required autofocus>
         </div>
         <div class="pass-field">
-          <label for="cpassword">New Password</label>
+          <label for="cpassword">Confirm Password</label>
           <input type="password" id="cpassword" class="form-control" name="cpassword" required>
         </div>
 

@@ -201,7 +201,7 @@
                             <!-- TRAVELER VIEW -->
                             <!-- PAY-PENDING -->
                             <form id="upForm" style="display: none;" onsubmit="return refresh()" target="_self">
-                                <div id="waiting-status" class="file-upload" style="flex-direction: column; height: 300px; display:none;">
+                                <div id="waiting-status" class="file-upload" style="flex-direction: column; height: auto; padding: 20px 0; display:none;">
                                     <img src="https://img.icons8.com/plasticine/100/null/cash-in-hand.png" />
                                     <h2 style="text-align: center; color: white;">Waiting for payment...</h2>
                                 </div>

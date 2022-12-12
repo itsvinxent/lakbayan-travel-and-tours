@@ -41,15 +41,23 @@ if(!$conn){
 
     $_SESSION['password'] = $password;
     $_SESSION['verified'] = $verification;
-    $_SESSION['birthday'] = $birthday;
+    
 
     $now = new DateTime(date("Y-m-d"));
-    $userbday = new DateTime($birthday);
-
-    $age =  date_diff($now, $userbday);
-
-    $_SESSION['age'] =  $age->format("%y");
-
+    if (!empty($birthday)) {
+        $_SESSION['birthday'] = $birthday;
+        $userbday = new DateTime($birthday);
+    } 
+    else {
+        $_SESSION['birthday'] = "";
+    }
+    if (!empty($birthday)) {
+        $age =  date_diff($now, $userbday);
+        $_SESSION['age'] =  $age->format("%y");
+    }
+    else {
+        $_SESSION['age'] = "";
+    }
     $_SESSION['gender'] = $gender;
     $_SESSION['race'] = $race;
     $_SESSION['religion'] = $religion;

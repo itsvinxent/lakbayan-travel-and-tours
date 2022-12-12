@@ -5,6 +5,7 @@
         <div class="details">
             <div class="left">
                 <div class="row">
+                    <input type="hidden" name="c-agency-id" id="c-agency-id">
                     <span><label for="c-package-name"><span style="color: red;">*</span>Package Name</label></span>
                     <span><input type="text" name="c-package-name" id="c-package-name" required></span>
                 </div>
@@ -520,65 +521,62 @@
         var reset = document.querySelectorAll('.resetting');
         var rowdatareq;
 
-        reset.forEach(r => {
-            $(r).on('click', () => {
-                // Reset the Form
-                $('#create-form')[0].reset();
-                $('#selected-cat-container').empty();
-                $('#selected-loc-container').empty();
-                cat_array = [];
-                loc_array = [];
+        $("#full-table").on("click", ".resetting", function() {
+            let r = $(this);
+            // Reset the Form
+            $('#create-form')[0].reset();
+            $('#selected-cat-container').empty();
+            $('#selected-loc-container').empty();
+            cat_array = [];
+            loc_array = [];
 
-                if (r === document.getElementById('package-create')) {
-                    $('#create-form .saveform-btn').text('Save New Package');
-                    removeupload.forEach(remover => {
-                        removeuploadimg(remover);
-                    })
-                    displayCal.clear();
-                    schedCal.clear();
-                    cutoffCal.clear();
-                } else {
-                    $('#create-form .saveform-btn').text('Save Changes');
-                    removeupload.forEach(remover => {
-                        removeuploadimg(remover);
-                    })
+            if (r === document.getElementById('package-create')) {
+                $('#create-form .saveform-btn').text('Save New Package');
+                removeupload.forEach(remover => {
+                    removeuploadimg(remover);
+                })
+                displayCal.clear();
+                schedCal.clear();
+                cutoffCal.clear();
+            } else {
+                $('#create-form .saveform-btn').text('Save Changes');
+                removeupload.forEach(remover => {
+                    removeuploadimg(remover);
+                })
 
-                    $tr = $(r).closest('tr');
+                $tr = $(r).closest('tr');
 
-                    var data = $tr.children('td').map(function() {
-                        return $(this).text();
-                    }).get();
+                var data = $tr.children('td').map(function() {
+                    return $(this).text();
+                }).get();
 
-                    var packageID = parseInt(data[1]);
-                    console.log(packageID);
-                    $.ajax({
-                        url: 'backend/package/packages_search.php',
-                        method: 'POST',
-                        dataType: 'json',
-                        data: {
-                            is_editing: 'true',
-                            packageID: packageID
-                        },
-                        async: true,
-                        context: this,
-                        success: function(response) {
-                            console.log("requesting");
-                            setDetails(response.details)
-                            setCategory(response.category)
-                            setLocation(response.location)
-                            setDates(response.details)
-                            setImages(response.images)
-                        }
-                    });
+                var packageID = parseInt(data[1]);
+                console.log(packageID);
+                $.ajax({
+                    url: 'backend/package/packages_search.php',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        is_editing: 'true',
+                        packageID: packageID
+                    },
+                    async: true,
+                    context: this,
+                    success: function(response) {
+                        setDetails(response.details)
+                        setCategory(response.category)
+                        setLocation(response.location)
+                        setDates(response.details)
+                        setImages(response.images)
+                    }
+                });
 
-                }
-
-            });
-
-        });
+            }
+        })
 
         function setDetails($row) {
             // Basic Travel Package Information
+            $("#c-agency-id").val($row['agencyManID']);
             $("#c-package-name").val($row['packageTitle']);
             $("#c-package-desc").val($row['packageDescription']);
 

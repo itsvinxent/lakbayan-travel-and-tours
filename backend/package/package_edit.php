@@ -33,7 +33,10 @@
      $upMaxHead = $_POST['headmax'];
      $upAvailHead = $upMaxHead;
 
-    $myid = $_SESSION['setID'];
+    if ($_SESSION['utype'] == 'manager')
+        $myid = $_SESSION['setID'];
+    else if ($_SESSION['utype'] == 'admin')
+        $myid = $_POST['c-agency-id'];
 
     $young = 0; $senior = 0;
 
@@ -253,6 +256,9 @@
     //  echo "NO IAMGE";
     // }else echo "FAILED";
  }
+ if ($_SESSION['utype'] == 'manager')
+    echo "<meta http-equiv=\"refresh\" content=\"0;URL=../../agency-profile.php\"/>";
+ else if ($_SESSION['utype'] == 'admin')
+    echo "<meta http-equiv=\"refresh\" content=\"0;URL=../../admin-panel.php\"/>";
 
- echo "<meta http-equiv=\"refresh\" content=\"0;URL=../../agency-profile.php\"/>";
 ?>

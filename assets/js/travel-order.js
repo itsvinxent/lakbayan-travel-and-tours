@@ -1,5 +1,5 @@
 var currentResponse;
-$('.to_travel_order').on('click', function () {
+$('#fullb-table').on('click', '.to_travel_order', function () {
     $tr = $(this).closest('tr');
     // var inquiryInfoID = parseInt($($tr.children('td')[1]).text());
     var bookingID = parseInt($($tr.children('td')[2]).text());

@@ -42,15 +42,31 @@ function fetch_packages($query_string, $conn, $editmode)
                 </p>
                 <div class="rating">
                     <?php
-                    $stars = 5;
-                    for ($i = 0; $i < $row['packageRating']; $i++) {
-                        echo '<i class="fas fa-star" style="padding-right: 3px;"></i>';
-                        $stars--;
-                    }
-                    for ($i=0; $i < $stars; $i++) { 
-                        echo '<i class="far fa-star" style="padding-right: 3px;"></i>';
-                    }
+                        $averageRating = $row['packageRating'];
+                        $stars = 5;
+                        $wholeNum = floor($averageRating);
+                        $decimal = $averageRating - $wholeNum;
+
+                        for ($i = 0; $i < $wholeNum; $i++) {
+                            echo '<i class="fas fa-star"></i>';
+                            $stars--;
+                        }
+
+                        if ($decimal != 0) {
+                            if ($decimal <= 0.5) {
+                            echo '<i class="fas fa-star-half-alt"></i>';
+                            } else {
+                            echo '<i class="fas fa-star"></i>';
+                            }
+                            $stars--;
+                        }
+
+                        for ($i=0; $i < $stars; $i++) { 
+                            echo '<i class="far fa-star"></i>';
+                        }
+            
                     ?>
+                    
                 </div>
                 <div class="price">
                     <p class="amt"><?php echo $row['fresult'] ?></p>
