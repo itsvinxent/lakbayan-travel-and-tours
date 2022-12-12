@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/example/public_html/
-    - /repositories/ -R lakbayan-travel-and-tours $DEPLOYPATH
+    - /repositories/lakbayan-travel-and-tours -R $DEPLOYPATH
