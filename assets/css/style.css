@@ -845,21 +845,25 @@ nav li a:hover {
   /* max-width: 75px; */
 }
 
+.notification {
+  position: relative;
+}
+
 .notification a span {
   position: absolute;
   background: rgb(194, 39, 62);
   
   top: 10px;
-  right: 120px;
+  right: 0;
   border-radius: 50%;
 
-  height: 25px;
-  width: 25px;
+  height: 20px;
+  width: 20px;
 
   text-align: center;
   padding-top: 2px;
 
-  font-size: 14px;
+  font-size: 13px;
   
   font-weight: 800;
   line-height: normal !important;
