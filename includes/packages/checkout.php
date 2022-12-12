@@ -3,6 +3,8 @@
     include "../../backend/connect/dbCon.php";
     include "../../backend/booking/booking_status.php";
     include __DIR__.'/../../backend/verify/payment.php';
+    include_once __DIR__.'\..\..\backend\notifications\notification_model.php';
+
     // $_POST['payment-method'];
     $id_user = $_SESSION['id'];
     $packageID = $_POST['packageid'];
@@ -31,6 +33,15 @@
             VALUES($addedID, 'pay-pending', now())";
 
             if(mysqli_query($conn, $bkstatusquery)) {
+            
+            $qry = "SELECT AG.agencyManID, PK.packageTitle FROM traveldb.inquiry_tbl AS IQ 
+                    INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID 
+                    INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                    WHERE IQ.id = $inquiry[id]";
+                    
+            $send_to = mysqli_fetch_assoc(mysqli_query($conn, $qry));
+
+            sendNotification($send_to['agencyManID'], "booking", "$send_to[packageTitle] got a booking!");
             $_SESSION['booking-stat'] = 'success';
             } else {
             echo 0;

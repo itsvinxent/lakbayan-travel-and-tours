@@ -1,7 +1,7 @@
 <?php
     include '../connect/dbCon.php';
     require 'booking_status.php';
-
+    include_once __DIR__.'\..\..\backend\notifications\notification_model.php';
 
     if(mysqli_connect_error()){
         echo<<<END
@@ -22,6 +22,17 @@
         //  mysqli_query($conn,$delete_query);
     
          if(setRefundRequest($conn, $bookingID, $request_reason, false)){
+            $qry = "SELECT AG.agencyManID, CONCAT(US.fname, ' ', US.lname) AS fullname FROM traveldb.booking_tbl AS BK
+                                INNER JOIN traveldb.inquiry_tbl AS IQ ON BK.inquiryInfoID = IQ.id
+                                INNER JOIN traveldb.user_tbl AS US ON IQ.id_user = US.id
+                                INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID
+                                INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                                WHERE BK.bookingID = $bookingID";
+
+                $send_to = mysqli_fetch_assoc(mysqli_query($conn, $qry));    
+
+                sendNotification($send_to['agencyManID'], "booking", "$send_to[fullname] requested for a refund for booking $bookingID!");
+
             echo<<<END
                 <script type ="text/JavaScript">  
                 alert("Booking {$bookingID} refund request sent")

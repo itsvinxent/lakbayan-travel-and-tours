@@ -57,6 +57,7 @@ if(!file_exists($placeban)){
 
 
 include '..\connect\dbCon.php';
+include_once __DIR__.'\..\..\backend\notifications\notification_model.php';
 
 // echo 'the email is '.$checking.' checked!';
 
@@ -119,6 +120,8 @@ if (isset($_POST['submit']) && $nope == 1){
                             WHERE id = $userID"; //Replace with Session
         
             if (mysqli_query($conn, $qry)){
+                sendNotification($userID, "profile", "You successfully edited your profile!");
+                
                 if ($img['error'] != 4) move_uploaded_file($img['tmp_name'], $uploadto);
                 if ($ban['error'] != 4) move_uploaded_file($ban['tmp_name'], $uploadban);
                 echo '<meta http-equiv="refresh" content="0;URL=../../user-profile.php" />';

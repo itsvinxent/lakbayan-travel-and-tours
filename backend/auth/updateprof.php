@@ -62,106 +62,7 @@ if(!file_exists($placebanhere)){
 }
 
 include '..\connect\dbCon.php';
-
-// $testing = isset($_FILES['profPicture']);
-
-// if ($testing == 0) echo 'no good bruh ';
-
-// echo $upImage.' '.$upAdd.' ';
-// IMAGE VERIFICATION
-
-
-// if (isset($_POST['submit']) && isset($_FILES['profPicture']) ){
-    
-
-//     echo $upAdd;
-//     if($imgError === 0){
-
-//         if(!($imgSize > 5000000)){
-//             $imgAllowed = pathinfo($imgName, PATHINFO_EXTENSION); 
-//             $toLower = strtolower($imgAllowed);
-//             $allowedExt = array("jpg", "jpeg", "png");
-
-//             if(in_array($toLower, $allowedExt)){
-//                 $updatedName = uniqid("PFP-", true).'.'.$toLower; //NAME TO PUT TO DATABASE
-//                 $uploadToFile = $placehere.$updatedName; //UPLOAD LOC
-            
-//             // END IMAGE VERIFICATION
-
-//             if (mysqli_connect_error()){
-//                 echo<<<END
-//                 <script type ="text/JavaScript">  
-//                 alert("Failed Connecting to Database")
-//                 </script>
-//                 END;
-//             }else{
-            
-//                 $qry = "UPDATE agency_tbl AS AG,
-//                                user_tbl AS US 
-//                                SET agencyName='$upName',
-//                                    agencyAddress='$upAdd',
-//                                    email='$upEmail',
-//                                    agencyTelNumber= $upTel,
-//                                    agencyPfPicture= '$updatedName'
-//                                 WHERE agencyID = $agencyID AND id=$userID"; //Replace with Session
-//                 echo 'SUCCESS';
-//                 if (mysqli_query($conn, $qry)){
-
-//                     //move_uploaded_file($imgTemp, $uploadToFile);
-//                     echo '<meta http-equiv="refresh" content="0;URL=../../agency-profile.php" />';
-//                 }else{
-//                     echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-//                 }
-//             }
-
-//             }else{
-
-//             }
-//         }else{ 
-//         //     echo<<<END
-//         //     <script type ="text/JavaScript">  
-//         //     alert("ERROR. Incorrect file type")
-//         //     </script>
-//         // END;
-
-           
-//         }
-//     }else if($imgError == 4){
-//         if (mysqli_connect_error()){
-//             echo<<<END
-//             <script type ="text/JavaScript">  
-//             alert("Failed Connecting to Database")
-//             </script>
-//             END;
-//         }else{
-        
-//             $qry = "UPDATE agency_tbl AS AG,
-//                            user_tbl AS US 
-//                            SET agencyName='$upName',
-//                                agencyAddress='$upAdd',
-//                                email='$upEmail',
-//                                agencyTelNumber= $upTel
-//                             WHERE agencyID = $agencyID AND id=$userID"; //Replace with Session
-        
-//             if (mysqli_query($conn, $qry)){
-
-//                 //move_uploaded_file($imgTemp, $uploadToFile);
-//                 echo '<meta http-equiv="refresh" content="0;URL=../../agency-profile.php" />';
-//             }else{
-//                 echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-//             }
-//         }
-//     }else{ 
-//         echo<<<END
-//         <script type ="text/JavaScript">  
-//         alert("ERROR. There's a problem with uploading the image")
-//         </script>
-//     END;
-
-//     }
-// }else{
-
-// }
+include_once __DIR__.'\..\..\backend\notifications\notification_model.php';
 
 if (isset($_POST['submitupdate']) ){
     $img = $_FILES['profPicture'];
@@ -195,8 +96,6 @@ if (isset($_POST['submitupdate']) ){
                 </script>
                 END;
             }else{
-            echo 'check done';
-
             $upDesc =  mysqli_real_escape_string($conn, $upDesc);
                 $qry = "UPDATE agency_tbl AS AG,
                                 user_tbl AS US 
@@ -213,6 +112,8 @@ if (isset($_POST['submitupdate']) ){
                                 WHERE agencyID = $agencyID AND id=$userID"; //Replace with Session
                 
             if (mysqli_query($conn, $qry)){
+
+                sendNotification($userID, "profile", "You successfully edited your agency profile!");
 
                 if($img['error'] != 4) move_uploaded_file($temploc, $uploc);
                 if($banner['error'] != 4) move_uploaded_file($templocbanner, $uplocban);
