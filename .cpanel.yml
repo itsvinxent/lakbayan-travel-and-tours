@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/example/public_html/
+    - export DEPLOYPATH=/home/uvfover/public_html/
     - /repositories/lakbayan-travel-and-tours -R $DEPLOYPATH
