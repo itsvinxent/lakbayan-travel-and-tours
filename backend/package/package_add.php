@@ -61,7 +61,10 @@
             }
         }
 
-        $myid = $_SESSION['setID'];
+        if ($_SESSION['utype'] == 'manager')
+            $myid = $_SESSION['setID'];
+        else if ($_SESSION['utype'] == 'admin')
+            $myid = $_POST['c-agency-id'];
 
 
         if(!$conn){

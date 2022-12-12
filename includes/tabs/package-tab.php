@@ -75,7 +75,7 @@
         <div id="full-table" class="fulltable">
             <?php
             if ($_SESSION['utype'] == 'manager') {
-                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName 
+                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName, AG.agencyManID
                                 FROM traveldb.package_tbl AS PK 
                                 INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                                 INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
@@ -84,7 +84,7 @@
 
                 fetch_packagetbl($query_string, $conn, true);
             } else if ($_SESSION['utype'] == 'admin') {
-                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName 
+                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName, AG.agencyManID
                                 FROM traveldb.package_tbl AS PK 
                                 INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                                 INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
@@ -166,7 +166,7 @@
         // });
 
         $('#dmodal_container #confirm').on('input', function() {
-            if ($(this).val() == "I Understand") {
+            if ($(this).val() == "I UNDERSTAND") {
                 $('#modalDelete').prop("disabled", false);
             } else {
                 $('#modalDelete').prop("disabled", true);

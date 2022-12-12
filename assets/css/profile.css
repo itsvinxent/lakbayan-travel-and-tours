@@ -594,7 +594,8 @@
 
 .package-search button#reset-search,
 .package-search button#b-reset-search,
-.package-search button#v-reset-search {
+.package-search button#v-reset-search,
+.package-search button#u-reset-search {
   background-color: #34495e;
 }
 
