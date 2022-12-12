@@ -902,7 +902,7 @@ nav li a:hover {
   background: #34495e;
 
   top: 120%;
-  right:20px;
+  right: -30px;
 
   /* padding: 0px 15px; */
 
@@ -932,7 +932,7 @@ nav li a:hover {
   position: absolute;
 
   top: -20px;
-  right: 120px;
+  right: 38px;
 
   border-width: 10px;
   border-color: transparent transparent #34495e transparent ;
