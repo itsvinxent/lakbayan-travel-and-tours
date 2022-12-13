@@ -2,7 +2,7 @@
 <?php 
     session_start();
     if (isset($_SESSION['isLoggedIn']) == false) {
-      header("location: ../../index.php");
+      // header("location: ../../index.php");
       exit;
     }
     include '../../backend/auth/getuser.php';
