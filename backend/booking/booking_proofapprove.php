@@ -10,9 +10,9 @@
 
         if (setBookingStatus($conn, $_POST['current-bookingID'], $status, false)) {
             if ($_POST['current-slots'] <= 0) 
-                $slotquery = "UPDATE traveldb.package_tbl SET packageSlots = {$_POST['current-slots']}, packageStatus = 1 WHERE packageID = {$_POST['current-packageID']}";
+                $slotquery = "UPDATE  package_tbl SET packageSlots = {$_POST['current-slots']}, packageStatus = 1 WHERE packageID = {$_POST['current-packageID']}";
             else 
-                $slotquery = "UPDATE traveldb.package_tbl SET packageSlots = {$_POST['current-slots']} WHERE packageID = {$_POST['current-packageID']}";
+                $slotquery = "UPDATE  package_tbl SET packageSlots = {$_POST['current-slots']} WHERE packageID = {$_POST['current-packageID']}";
 
             if (mysqli_query($conn, $slotquery)) {
                 echo 1;

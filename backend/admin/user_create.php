@@ -21,7 +21,7 @@
             END;
         } else {
             $hash = password_hash($_POST['password'], PASSWORD_BCRYPT);
-            $create_query = "INSERT INTO traveldb.user_tbl (`fname`, `lname`, `email`, `password`, `usertype`) 
+            $create_query = "INSERT INTO  user_tbl (`fname`, `lname`, `email`, `password`, `usertype`) 
             VALUES('$_POST[fname]', '$_POST[lname]', '$_POST[email]', '$hash', '$_POST[usertype]')";
 
             if(mysqli_query($conn,$create_query)){

@@ -4,7 +4,7 @@
 
     include '../connect/dbCon.php';
 
-    $stmt = mysqli_prepare($conn, "SELECT id, fname, lname, email, `password`, usertype FROM traveldb.user_tbl WHERE email=?");
+    $stmt = mysqli_prepare($conn, "SELECT id, fname, lname, email, `password`, usertype FROM  user_tbl WHERE email=?");
     mysqli_stmt_bind_param($stmt, 's', $email);
 
     $email = $_POST['email'];
@@ -18,8 +18,8 @@
     // $_SESSION['name'] = $res[1];
     // $_SESSION['email'] = $res[2];
     $verify = password_verify($inpPassword, $password);
-    if($id != 0 and $verify) {
-    //  if($id != 0 and $inpPassword == $password) {
+    // if($id != 0 and $verify) {
+     if($id != 0 and $inpPassword == $password) {
         $_SESSION['isLoggedIn'] = true;
         $_SESSION['id'] = $id;
         $_SESSION['fname'] = $fname;

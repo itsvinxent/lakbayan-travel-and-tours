@@ -105,10 +105,10 @@ $_SESSION['active'] = 'trips';
                     <div id="fullb-table" class="fulltable">
                         <?php
                         $query_string = "SELECT IQ.*, CONCAT(US.fname, ' ',US.lname) AS fullname, BK.*, PK.packageTitle
-                                  FROM traveldb.inquiry_tbl AS IQ
-                                  INNER JOIN traveldb.user_tbl AS US ON IQ.id_user = US.id
-                                  INNER JOIN traveldb.booking_tbl AS BK ON IQ.id = BK.inquiryInfoID 
-                                  INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID";
+                                  FROM  inquiry_tbl AS IQ
+                                  INNER JOIN  user_tbl AS US ON IQ.id_user = US.id
+                                  INNER JOIN  booking_tbl AS BK ON IQ.id = BK.inquiryInfoID 
+                                  INNER JOIN  package_tbl AS PK ON IQ.packageID = PK.packageID";
                         fetch_bookingtbl($query_string, $conn);
                         mysqli_close($conn);
                         ?>

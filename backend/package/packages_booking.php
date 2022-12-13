@@ -14,7 +14,7 @@
         $packageID = $_POST['packageid'];
 
         function isExisting($conn, $id_user, $packageID) {
-            $query = "SELECT * from traveldb.inquiry_tbl WHERE id_user = $id_user AND packageID = $packageID";
+            $query = "SELECT * from  inquiry_tbl WHERE id_user = $id_user AND packageID = $packageID";
             $qry_exist = mysqli_query($conn, $query);
             $cart = mysqli_fetch_array($qry_exist);
             return $cart;
@@ -38,10 +38,10 @@
             $cartItem = isExisting($conn, $id_user, $packageID);
             
             if (isset($cartItem['id']) == false) {
-                $query = "INSERT INTO traveldb.inquiry_tbl (`id_user`, `infantCount`, `childrenCount`, `adultCount`, `seniorCount`, `packageID`) 
+                $query = "INSERT INTO  inquiry_tbl (`id_user`, `infantCount`, `childrenCount`, `adultCount`, `seniorCount`, `packageID`) 
                 VALUES($id_user, $infantCount, $childrenCount, $adultCount, $seniorCount, $packageID)";
             } else {
-                $query = "UPDATE traveldb.inquiry_tbl SET infantCount = $infantCount,
+                $query = "UPDATE  inquiry_tbl SET infantCount = $infantCount,
                                                  childrenCount = $childrenCount,
                                                  adultCount = $adultCount,
                                                  seniorCount = $seniorCount
@@ -77,7 +77,7 @@
                 }
 
                 $bgurl = "../../assets/img/users/travelagent/{$row['packageCreator']}/package/{$row['packageID']}/img/$img[0]";
-                $query = "SELECT fname, lname, email, address, contactnumber from traveldb.user_tbl WHERE id = $id_user";
+                $query = "SELECT fname, lname, email, address, contactnumber from  user_tbl WHERE id = $id_user";
                 $qry_user = mysqli_query($conn, $query);
                 $user = mysqli_fetch_array($qry_user);
 

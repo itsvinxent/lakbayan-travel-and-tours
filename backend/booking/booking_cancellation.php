@@ -14,8 +14,8 @@
         if (isset($_GET['booking_id']))
         $bookingID = $_GET['booking_id'];
         // $currentDate = new DateTime();
-        // $delete_query = " DELETE FROM traveldb.user_tbl WHERE id = $usrid; " ;
-        // $delete_query = "UPDATE traveldb.user_tbl SET is_deleted = 1 WHERE id = $usrid; " ;
+        // $delete_query = " DELETE FROM  user_tbl WHERE id = $usrid; " ;
+        // $delete_query = "UPDATE  user_tbl SET is_deleted = 1 WHERE id = $usrid; " ;
 
         //  mysqli_query($conn,$delete_query);
     

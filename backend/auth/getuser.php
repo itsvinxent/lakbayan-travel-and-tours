@@ -23,7 +23,7 @@ if(!$conn){
                                           race, 
                                           religion,
                                           nationality
-                                           FROM traveldb.user_tbl WHERE id=?");
+                                           FROM  user_tbl WHERE id=?");
     mysqli_stmt_bind_param($stmt, 'i', $_SESSION['id']);
     
     mysqli_stmt_execute($stmt);

@@ -13,7 +13,7 @@
 
     if (isset($_POST['is_user']) and $_POST['is_user'] == 'true') {
         try {
-            $query_string = "SELECT *, CONCAT(fname, ' ', lname) AS fullname FROM traveldb.user_tbl where is_deleted = 0 ";
+            $query_string = "SELECT *, CONCAT(fname, ' ', lname) AS fullname FROM  user_tbl where is_deleted = 0 ";
             $has_previous_value = true;
 
             if (isset($_POST['email'])) {

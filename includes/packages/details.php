@@ -81,19 +81,19 @@ if(isset($_SESSION['isLoggedIn']) == false) {
   //                 -- DATEDIFF(packageStartDate, packageCutoff) AS packageCutdiffdate,
   //                 -- TIMEDIFF(packageStartDate, packageCutoff) AS packageCutdifftime,
   //                 AI.*, AG.agencyName 
-  //                 FROM traveldb.package_tbl AS PK 
-  //                 INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
-  //                 INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
+  //                 FROM  package_tbl AS PK 
+  //                 INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+  //                 INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
   //                 WHERE packageID = " . $packageID;
 
   // $qry_packages = mysqli_query($conn, $query_string);
   // $row = mysqli_fetch_array($qry_packages);
 
-  $package_qry = "SELECT PK.*, AG.agencyName, AG.agencyTelNumber, AG.agencyEmail FROM traveldb.package_tbl AS PK INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator WHERE PK.packageID = $packageID";
-  $categ_qry = "SELECT * FROM traveldb.packagecateg_tbl where packageID_from = $packageID";
-  $loc_qry =  "SELECT * FROM traveldb.packagedest_tbl INNER JOIN areas_tbl AS AT ON AT.cityID = packageAreasID WHERE packageDestID = $packageID";
-  $img_qry = "SELECT * FROM traveldb.packageimg_tbl WHERE packageIDFrom = $packageID";
-  $inc_qry = "SELECT * FROM traveldb.packageincl_tbl WHERE packageID_from = $packageID";
+  $package_qry = "SELECT PK.*, AG.agencyName, AG.agencyTelNumber, AG.agencyEmail FROM  package_tbl AS PK INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator WHERE PK.packageID = $packageID";
+  $categ_qry = "SELECT * FROM  packagecateg_tbl where packageID_from = $packageID";
+  $loc_qry =  "SELECT * FROM  packagedest_tbl INNER JOIN areas_tbl AS AT ON AT.cityID = packageAreasID WHERE packageDestID = $packageID";
+  $img_qry = "SELECT * FROM  packageimg_tbl WHERE packageIDFrom = $packageID";
+  $inc_qry = "SELECT * FROM  packageincl_tbl WHERE packageID_from = $packageID";
 
   $jsondata = fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $inc_qry, $conn);
   $jsondata = json_decode($jsondata, true);
@@ -252,12 +252,12 @@ if(isset($_SESSION['isLoggedIn']) == false) {
               $button_content = '<a id="modalBOpen" class="book-btn">Check Availability</a>';
 
               if (isset($_SESSION['isLoggedIn']) and $_SESSION['isLoggedIn']) {
-                $query = "SELECT id from traveldb.inquiry_tbl WHERE id_user = {$_SESSION['id']} AND packageID = $packageID";
+                $query = "SELECT id from  inquiry_tbl WHERE id_user = {$_SESSION['id']} AND packageID = $packageID";
                 $qry_exist = mysqli_query($conn, $query);
                 $cartItem = mysqli_fetch_array($qry_exist);
   
                 if (isset($cartItem['id']) == true) {
-                  $query = "SELECT bookingID from traveldb.booking_tbl WHERE inquiryInfoID = {$cartItem['id']} AND (bookingStatus != 'complete' AND bookingStatus != 'cancelled' AND bookingStatus != 'refunded')";
+                  $query = "SELECT bookingID from  booking_tbl WHERE inquiryInfoID = {$cartItem['id']} AND (bookingStatus != 'complete' AND bookingStatus != 'cancelled' AND bookingStatus != 'refunded')";
                   $qry_exist = mysqli_query($conn, $query);
                   $cartItem = mysqli_fetch_array($qry_exist);
                   if (isset($cartItem['bookingID']) == true) {
@@ -628,7 +628,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                                       COUNT(if(package_rating = 2,1,null)) AS `2_starCount`,
                                       COUNT(if(package_rating = 1,1,null)) AS `1_starCount`,
                                       COUNT(*) AS `totalCount`
-                                      FROM traveldb.packagerating_tbl WHERE packageID_rated = {$_GET['packageid']};";
+                                      FROM  packagerating_tbl WHERE packageID_rated = {$_GET['packageid']};";
         $sqlquery = mysqli_query($conn, $ratingsummary_query_string);
         $ratingCounts = mysqli_fetch_array($sqlquery);
 

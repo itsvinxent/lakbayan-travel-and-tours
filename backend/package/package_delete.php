@@ -11,8 +11,8 @@
         $pkgid = $_GET['id'];
         $usertype = $_GET['utype'];
         $currentDate = new DateTime();
-        // $delete_query = " DELETE FROM traveldb.user_tbl WHERE id = $usrid; " ;
-        $delete_query = "UPDATE traveldb.package_tbl SET is_deleted = 1 WHERE packageID = $pkgid; " ;
+        // $delete_query = " DELETE FROM  user_tbl WHERE id = $usrid; " ;
+        $delete_query = "UPDATE  package_tbl SET is_deleted = 1 WHERE packageID = $pkgid; " ;
         
          mysqli_query($conn,$delete_query);
     

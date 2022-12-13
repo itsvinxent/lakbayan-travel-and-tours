@@ -13,7 +13,7 @@
     $agency_rating = (int) $_POST['agency_rating'];
     $star = $agency_rating."_star";
 
-    $packratingquery = "INSERT INTO traveldb.packagerating_tbl (`userID_rating`, `packageID_rated`, `bookingID_rated`, `package_rating`, `package_review`, `ratingDate`)
+    $packratingquery = "INSERT INTO  packagerating_tbl (`userID_rating`, `packageID_rated`, `bookingID_rated`, `package_rating`, `package_review`, `ratingDate`)
                     VALUES($userID, $packageID, $bookingID,$package_rating, '$review', now())";
 
     if (mysqli_query($conn, $packratingquery)) {
@@ -23,7 +23,7 @@
                                       COUNT(if(package_rating = 2,1,null)) AS `2_starCount`,
                                       COUNT(if(package_rating = 1,1,null)) AS `1_starCount`,
                                       COUNT(*) AS `totalCount`
-                                      FROM traveldb.packagerating_tbl WHERE packageID_rated = $packageID;";
+                                      FROM  packagerating_tbl WHERE packageID_rated = $packageID;";
 
         $sqlquery = mysqli_query($conn, $ratingsummary_query_string);
         $ratingCounts = mysqli_fetch_array($sqlquery);
@@ -45,28 +45,28 @@
         } 
         $averageRating = $totalWeight / $totalReviews;
 
-        $updateRatingQuery = "UPDATE traveldb.package_tbl SET packageRating = $averageRating WHERE packageID = $packageID";
+        $updateRatingQuery = "UPDATE  package_tbl SET packageRating = $averageRating WHERE packageID = $packageID";
 
-        $qry_notif = "SELECT AG.agencyManID, CONCAT(US.fname, ' ', US.lname) AS fullname, PK.packageTitle FROM traveldb.booking_tbl AS BK
-        INNER JOIN traveldb.inquiry_tbl AS IQ ON BK.inquiryInfoID = IQ.id
-        INNER JOIN traveldb.user_tbl AS US ON IQ.id_user = US.id
-        INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID
-        INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+        $qry_notif = "SELECT AG.agencyManID, CONCAT(US.fname, ' ', US.lname) AS fullname, PK.packageTitle FROM  booking_tbl AS BK
+        INNER JOIN  inquiry_tbl AS IQ ON BK.inquiryInfoID = IQ.id
+        INNER JOIN  user_tbl AS US ON IQ.id_user = US.id
+        INNER JOIN  package_tbl AS PK ON IQ.packageID = PK.packageID
+        INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
         WHERE BK.bookingID = $bookingID";
 
         $send_to = mysqli_fetch_assoc(mysqli_query($conn, $qry_notif));    
 
 
         if (mysqli_query($conn, $updateRatingQuery)) {
-            $isAgencyExisting = "SELECT * FROM traveldb.agencyrating_tbl WHERE agencyID = $agencyId ";
+            $isAgencyExisting = "SELECT * FROM  agencyrating_tbl WHERE agencyID = $agencyId ";
             $qry = mysqli_query($conn,$isAgencyExisting);
             $result = mysqli_fetch_array($qry);
             
             if (isset($result['ratingID'])) {
                 $rating = $result[$star] + 1;
-                $agencyratingquery = "UPDATE traveldb.agencyrating_tbl SET $star = $rating WHERE agencyID = $agencyId";
+                $agencyratingquery = "UPDATE  agencyrating_tbl SET $star = $rating WHERE agencyID = $agencyId";
             } else {
-                $agencyratingquery = "INSERT INTO traveldb.agencyrating_tbl (`agencyID`, `$star`)
+                $agencyratingquery = "INSERT INTO  agencyrating_tbl (`agencyID`, `$star`)
                 VALUES($agencyId, 1)";
             }
             

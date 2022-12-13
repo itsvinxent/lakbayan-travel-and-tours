@@ -305,8 +305,8 @@ function fetch_booking_by_id($inq_qry, $status_qry, $conn) {
 if(isset($_POST['getData']) and $_POST['getData']=="ok") {
     include __DIR__."../../connect/dbCon.php";
     $rating_query_string = "SELECT PR.package_rating, PR.package_review, PR.ratingDate, CONCAT(US.fname, ' ', US.lname) AS fullname, US.profpicture, US.id
-                                FROM traveldb.packagerating_tbl AS PR
-                                INNER JOIN traveldb.user_tbl AS US ON PR.userID_rating = US.id
+                                FROM  packagerating_tbl AS PR
+                                INNER JOIN  user_tbl AS US ON PR.userID_rating = US.id
                                 WHERE packageID_rated = {$_POST['packageID']} ORDER BY ratingDate DESC";
 
     $sqlquery = mysqli_query($conn, $rating_query_string.' LIMIT '.$_REQUEST["start"].', '.$_REQUEST["limit"].' ');

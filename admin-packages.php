@@ -127,9 +127,9 @@ $_SESSION['active'] = 'packages';
                     <div id="full-table" class="fulltable">
                         <?php
                         $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName 
-                                        FROM traveldb.package_tbl AS PK 
-                                        INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
-                                        INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
+                                        FROM  package_tbl AS PK 
+                                        INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                                        INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
                                         GROUP BY AI.packageIDFrom";
 
                         fetch_packagetbl($query_string, $conn, false);

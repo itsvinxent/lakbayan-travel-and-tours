@@ -318,9 +318,9 @@ if (isset($_SESSION['booking-stat']) == false) {
 
           if(!empty($resultContent)) {$query_string .= " END AS 'preferred' ";}
 
-          $query_string .= "FROM traveldb.package_tbl AS PK 
-                            INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
-                            INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
+          $query_string .= "FROM  package_tbl AS PK 
+                            INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                            INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
                             WHERE (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) AND PK.is_deleted = 0 AND PK.packageStatus = 0
                             GROUP BY AI.packageIDFrom ";
           

@@ -27,7 +27,7 @@
 
             $verification = md5(rand(0, 1000));
             $hash = password_hash($_POST['password'], PASSWORD_BCRYPT);
-            $query = "INSERT INTO traveldb.user_tbl (`fname`, `lname`, `email`, `password`, `verification_code`) 
+            $query = "INSERT INTO  user_tbl (`fname`, `lname`, `email`, `password`, `verification_code`) 
             VALUES('$_POST[fname]', '$_POST[lname]', '$_POST[email]', '$hash', '$verification')";
 
             if(mysqli_query($conn,$query)){
