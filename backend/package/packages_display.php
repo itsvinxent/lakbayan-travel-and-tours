@@ -4,7 +4,7 @@
 function fetch_packages($query_string, $conn, $editmode)
 {   
 
-    $qry_packages = mysqli_query($conn, $query_string);
+    $qry_packages = mysqli_query($conn, $query_string) or die(mysqli_error($conn));
 
     while ($row = mysqli_fetch_array($qry_packages)) {
 ?>
