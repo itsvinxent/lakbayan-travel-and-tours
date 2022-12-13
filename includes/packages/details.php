@@ -69,12 +69,12 @@ if(isset($_SESSION['isLoggedIn']) == false) {
     };
   </script>
   <?php 
-  include '../components/nav.php';
-  include '../components/accountModal.php';
-  include '../../backend/connect/dbCon.php';
-  include '../../backend/package/packages_display.php';
+  include __DIR__.'/../components/nav.php';
+  include __DIR__.'/../components/accountModal.php';
+  include __DIR__.'/../../backend/connect/dbCon.php';
+  include __DIR__.'/../../backend/package/packages_display.php';
 
-  if($_SESSION['isLoggedIn']==true && isset($_SESSION['id'])) include '../../includes/components/chatbox.php';
+  if($_SESSION['isLoggedIn']==true && isset($_SESSION['id'])) include __DIR__.'/../../includes/components/chatbox.php';
 
   // $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, 
   //                 DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, 

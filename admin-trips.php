@@ -38,10 +38,10 @@ $_SESSION['active'] = 'trips';
 
 <body>
     <?php
-    include 'includes/components/admin-nav.php';
-    include 'includes/components/accountModal.php';
-    include 'backend/connect/dbCon.php';
-    include 'backend/package/packages_display.php'
+    include __DIR__.'/includes/components/admin-nav.php';
+    include __DIR__.'/includes/components/accountModal.php';
+    include __DIR__.'/backend/connect/dbCon.php';
+    include __DIR__.'/backend/package/packages_display.php'
     ?>
     <section class="sections admin-trips" id="admin-trips">
         <div class="banner-half">

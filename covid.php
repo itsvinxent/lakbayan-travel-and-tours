@@ -29,8 +29,8 @@ $_SESSION['active'] = 'map';
 
 <body>
     <?php 
-        include 'includes/components/nav.php';
-        include 'includes/components/accountModal.php';
+        include __DIR__.'/includes/components/nav.php';
+        include __DIR__.'/includes/components/accountModal.php';
     ?>
     <section class="sections mapping" id="interactive-map">
         <div class="banner-half">

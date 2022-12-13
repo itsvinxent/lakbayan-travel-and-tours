@@ -31,9 +31,9 @@ if (isset($_SESSION['booking-stat']) == false) {
 
 <body>
   <?php
-  include 'includes/components/nav.php';
-  include 'includes/components/accountModal.php';
-  include 'backend/connect/dbCon.php';
+  include __DIR__.'/includes/components/nav.php';
+  include __DIR__.'/includes/components/accountModal.php';
+  include __DIR__.'/backend/connect/dbCon.php';
 
   if ($_SESSION['booking-stat'] != 'none') {
     if ($_SESSION['booking-stat'] == 'success') {

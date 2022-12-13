@@ -1,5 +1,5 @@
 <?php 
-include '..\connect\dbCon.php';
+include __DIR__.'/..\connect\dbCon.php';
 
 
 if(isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['verification_code']) && !empty($_GET['verification_code'])){

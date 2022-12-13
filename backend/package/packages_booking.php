@@ -1,7 +1,7 @@
 <?php 
     session_start();
 
-    include '../connect/dbCon.php';
+    include __DIR__.'/../connect/dbCon.php';
 
     if(mysqli_connect_error()) {
         echo<<<END

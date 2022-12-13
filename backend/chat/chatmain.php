@@ -5,8 +5,8 @@
       // header("location: ../../index.php");
       exit;
     }
-    include '../../backend/auth/getuser.php';
-    include '..\..\backend\connect\dbCon.php';
+    include __DIR__.'/../../backend/auth/getuser.php';
+    include __DIR__.'/..\..\backend\connect\dbCon.php';
     
     $_SESSION['active'] = 'chat-main';
     $loc = "../../assets/img/logo.png";
@@ -57,8 +57,8 @@
 
 <body>
     <?php 
-          include '../../includes/components/nav.php';
-          include '../../includes/components/accountModal.php';?>
+          include __DIR__.'/../../includes/components/nav.php';
+          include __DIR__.'/../../includes/components/accountModal.php';?>
 <section class="chat-background">
     <video src="..\..\assets\media\waves.mp4" muted loop autoplay preload="auto"></video>
 

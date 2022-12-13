@@ -4,9 +4,9 @@
     //echo get_include_path();
     session_start();
 
-    include '../../backend/auth/imgverification.php';
-    include '../../backend/connect/dbCon.php';
-    include '../../backend/auth/dboperation.php';
+    include __DIR__.'/../../backend/auth/imgverification.php';
+    include __DIR__.'/../../backend/connect/dbCon.php';
+    include __DIR__.'/../../backend/auth/dboperation.php';
     include_once __DIR__.'\..\..\backend\notifications\notification_model.php';
     
 

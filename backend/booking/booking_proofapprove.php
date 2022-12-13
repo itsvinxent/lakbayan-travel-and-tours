@@ -1,6 +1,6 @@
 <?php 
     require 'booking_status.php';
-    include '../connect/dbCon.php';
+    include __DIR__.'/../connect/dbCon.php';
 
     if (isset($_POST['proof-decision']) and isset($_POST['current-bookingID'])) {
         if ($_POST['proof-decision'] == 'approved')  

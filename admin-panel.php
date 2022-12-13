@@ -44,7 +44,7 @@ if (isset($_SESSION['utype'])) {
 
 <body>
     <?php
-    include 'includes/components/nav.php';
+    include __DIR__.'/includes/components/nav.php';
     ?>
 
     <?php

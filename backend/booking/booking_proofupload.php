@@ -3,7 +3,7 @@
 
     require '../auth/imgverification.php';
     require 'booking_status.php';
-    include '../connect/dbCon.php';
+    include __DIR__.'/../connect/dbCon.php';
 
     if (isset($_FILES['payment-proof'])) {
         $gotVerify  = $_FILES['payment-proof'];

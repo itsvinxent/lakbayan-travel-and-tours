@@ -37,10 +37,10 @@ $_SESSION['active'] = 'packages';
 
 <body>
     <?php
-    include 'includes/components/admin-nav.php';
-    include 'includes/components/accountModal.php';
-    include 'backend/connect/dbCon.php';
-    include 'backend/package/packages_display.php'
+    include __DIR__.'/includes/components/admin-nav.php';
+    include __DIR__.'/includes/components/accountModal.php';
+    include __DIR__.'/backend/connect/dbCon.php';
+    include __DIR__.'/backend/package/packages_display.php'
     ?>
     <section class="sections admin-packages" id="admin-packages">
         <div class="banner-half" style="height: 30vh;">

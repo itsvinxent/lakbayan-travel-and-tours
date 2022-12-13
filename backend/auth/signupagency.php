@@ -2,7 +2,7 @@
 set_include_path(dirname(__FILE__));
 
 require 'imgverification.php';
-    include '../connect/dbCon.php';
+    include __DIR__.'/../connect/dbCon.php';
 
 // if (isset($_POST['submit']) && isset($_FILES['aPicture'] )){
     //     $imgName = $_FILES['aPicture']['name'];
