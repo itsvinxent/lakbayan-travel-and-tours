@@ -1,7 +1,7 @@
 <?php 
 
-    include "../connect/dbCon.php";
-    include "agency_display.php";
+    include __DIR__."/../connect/dbCon.php";
+    include __DIR__."/agency_display.php";
     
     // Function for determining the proper prefix/suffix to be added to the SQL Query
     function get_prefix() {

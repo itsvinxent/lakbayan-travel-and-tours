@@ -1,5 +1,5 @@
 <?php 
-    include "../connect/dbCon.php";
+    include __DIR__."/../connect/dbCon.php";
 
     // Badge notification for Administrator Verifications Tab
     function getPendingCount($conn) {

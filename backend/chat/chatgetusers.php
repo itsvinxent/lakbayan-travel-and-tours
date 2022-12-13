@@ -14,7 +14,7 @@ $sql = mysqli_query($conn, "SELECT * FROM user_tbl AS US INNER JOIN message_tbl 
 //     $output .= "No users available";
 // }
     if(mysqli_num_rows($sql) > 0 ){
-        include "users.php";
+        include __DIR__."/users.php";
 }
 echo $output;
 ?>

@@ -1,7 +1,7 @@
 <?php 
     session_start();
-    include "../../backend/connect/dbCon.php";
-    include "../../backend/booking/booking_status.php";
+    include __DIR__."/../../backend/connect/dbCon.php";
+    include __DIR__."/../../backend/booking/booking_status.php";
     include __DIR__.'/../../backend/verify/payment.php';
     include_once __DIR__."/../../backend/notifications/notification_model.php";
 

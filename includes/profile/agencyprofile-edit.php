@@ -1,8 +1,8 @@
 <?php
-include "backend/package/packages_display.php";
-include "backend/connect/dbCon.php";
+include __DIR__."/../../backend/package/packages_display.php";
+include __DIR__."/../../backend/connect/dbCon.php";
 
-include "backend\auth\getagency.php";
+include __DIR__."/../../backend\auth\getagency.php";
 ?>
 <script>
   var $nav = $("._nav");
@@ -79,22 +79,22 @@ include "backend\auth\getagency.php";
     <div class="main-panel" style="position: relative; width: 100%;">
       <div class="tab-content" id="tab-content">
         <!-- Dashboard -->
-        <?php include "includes/tabs/dashboard.php"; ?>
+        <?php include __DIR__."/../../includes/tabs/dashboard.php"; ?>
 
         <!-- My Account Tab -->
-        <?php include "includes/tabs/account-tab.php"; ?>
+        <?php include __DIR__."/../../includes/tabs/account-tab.php"; ?>
 
         <!-- Packages List Tab -->
-        <?php include "includes/tabs/package-tab.php"; ?>
+        <?php include __DIR__."/../../includes/tabs/package-tab.php"; ?>
 
         <!-- Create Packages Tab -->
-        <?php include "includes/tabs/createpkg-tab.php"; ?>
+        <?php include __DIR__."/../../includes/tabs/createpkg-tab.php"; ?>
 
         <!-- Bookings Tab -->
-        <?php include "includes/tabs/bookings-tab.php"; ?>
+        <?php include __DIR__."/../../includes/tabs/bookings-tab.php"; ?>
 
         <!-- Travel Order Tab -->
-        <?php include "includes/tabs/travel-order-tab.php"; ?>
+        <?php include __DIR__."/../../includes/tabs/travel-order-tab.php"; ?>
         
       </div>
       <div class="save-container" id="save-ch-btn" style="display: none;">

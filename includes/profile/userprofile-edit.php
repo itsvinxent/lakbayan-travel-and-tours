@@ -1,8 +1,8 @@
 <?php
-include "backend/package/packages_display.php";
-include "backend/connect/dbCon.php";
+include __DIR__."/../../backend/package/packages_display.php";
+include __DIR__."/../../backend/connect/dbCon.php";
 
-include "backend/auth/getuser.php";
+include __DIR__."/../../backend/auth/getuser.php";
 ?>
 <link rel="stylesheet" href="assets/css/profile-edit.css">
 <link rel="stylesheet" href="assets/css/travel-order.css">
@@ -390,7 +390,7 @@ include "backend/auth/getuser.php";
         </div>
 
         <!-- Travel Order Tab -->
-        <?php include "includes/tabs/travel-order-tab.php"; ?>
+        <?php include __DIR__."/../../includes/tabs/travel-order-tab.php"; ?>
 
     </div>
     <div class="save-container" id="save-ch-btn" style="display: none;">

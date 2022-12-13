@@ -1,5 +1,5 @@
 <?php 
-    include "../connect/dbCon.php";
+    include __DIR__."/../connect/dbCon.php";
 
     if (isset($_POST['payment_option']) and isset($_POST['bookingID'])) {
         $paymentquery = "UPDATE  booking_tbl SET bookingMethod = '{$_POST['payment_option']}' WHERE bookingID = {$_POST['bookingID']}";

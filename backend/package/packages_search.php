@@ -1,6 +1,6 @@
 <?php
 require_once "../connect/dbCon.php";
-include "packages_display.php";
+include __DIR__."/packages_display.php";
 
 session_start();
 
