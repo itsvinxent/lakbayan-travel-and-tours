@@ -96,7 +96,7 @@ if(!$conn){
                                          INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                                          INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
                                          WHERE agencyID = $testdata
-                                         GROUP BY AI.packageIDFrom");
+                                         GROUP BY AI.packageIDFrom, AI.packageImgID");
    
 }
 
@@ -114,7 +114,7 @@ function view_otherpack($conn, $id){
                                 INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                                 LEFT JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
                                 WHERE packageCreator = $id AND (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL)
-                                GROUP BY AI.packageIDFrom");
+                                GROUP BY AI.packageIDFrom, AI.packageImgID");
     // $got = mysqli_fetch_array($sql);
     return $sql;
 }
