@@ -2,7 +2,7 @@
 include __DIR__."/../../backend/package/packages_display.php";
 include __DIR__."/../../backend/connect/dbCon.php";
 
-include __DIR__."/../../backend\auth\getagency.php";
+include __DIR__."/../../backend/auth/getagency.php";
 ?>
 <script>
   var $nav = $("._nav");
