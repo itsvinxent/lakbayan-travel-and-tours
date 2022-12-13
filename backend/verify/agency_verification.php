@@ -189,16 +189,22 @@ function getAccreditation(string $region, string $DOT): string{
     // print_r($filtered_array);
 
     $key = array_search($DOT, array_column($extractedElements, 'Accreditation'));
-
+    
+    if($key === false) $key = null;
     // echo $key;
 
-    if (!empty($key)){
+    // echo '<pre>';
+    // print_r($extractedElements);
+    // echo '</pre>';
+
+
+    if (!is_null($key)){
         // echo "FOUND";
         // $key = array_search("DOT-R09-HTL-00254-2021", $extractedElements);
 
         // echo $key;
         return $extractedElements[$key]['Agency'];
-        //echo $filtered_name[$key];
+        // echo $filtered_name[$key];
     }else return "NOT FOUND";
 }
 
