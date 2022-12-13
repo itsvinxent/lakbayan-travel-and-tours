@@ -3,7 +3,7 @@
 require __DIR__.'/../../backend/verify/payment.php';
 require 'booking_status.php';
 include __DIR__.'/../connect/dbCon.php';
-include_once __DIR__.'/../../backend/notifications/notification_model.php';
+include_once __DIR__."/../../backend/notifications/notification_model.php";
 
 $transac = mysqli_real_escape_string($conn, $_POST['current-transacNum']);
 $bookingID = mysqli_real_escape_string($conn, $_POST['current-bookingID']);

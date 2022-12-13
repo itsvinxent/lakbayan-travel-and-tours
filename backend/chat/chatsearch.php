@@ -1,7 +1,7 @@
 <?php 
 
 session_start();
-include_once "..\..\backend\connect\dbCon.php";
+include_once __DIR__."/../../backend/connect/dbCon.php";
 $user = mysqli_real_escape_string($conn, $_SESSION['id']);
 $searchterm = mysqli_real_escape_string($conn, $_POST['searchTerm']);
 $output = "";

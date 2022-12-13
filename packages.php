@@ -286,7 +286,7 @@ if (isset($_SESSION['booking-stat']) == false) {
         </div>
         <div class="card-container" id="card-container">
           <?php
-          include_once "backend/package/packages_display.php";
+          include_once __DIR__."/backend/package/packages_display.php";
           include_once __DIR__."/backend/package/collaborative_filtering.php";
           include_once __DIR__."/backend/package/contentbased_filtering.php";
 

@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include_once "..\..\backend\connect\dbCon.php";
+include_once __DIR__."/../../backend/connect/dbCon.php";
 
 $pass = true;
 if($pass == true){

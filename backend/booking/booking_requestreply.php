@@ -2,7 +2,7 @@
     include __DIR__.'/../connect/dbCon.php';
     require 'booking_status.php';
     require_once __DIR__.'/../../backend/verify/payment.php';
-    include_once __DIR__.'/../../backend/notifications/notification_model.php';
+    include_once __DIR__."/../../backend/notifications/notification_model.php";
 
 
     if(mysqli_connect_error()){
