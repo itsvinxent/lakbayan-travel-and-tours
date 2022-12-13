@@ -57,7 +57,7 @@ if(!file_exists($placeban)){
 
 
 include __DIR__.'/..\connect\dbCon.php';
-include_once __DIR__.'\..\..\backend\notifications\notification_model.php';
+include_once __DIR__.'/../../backend/notifications/notification_model.php';
 
 // echo 'the email is '.$checking.' checked!';
 

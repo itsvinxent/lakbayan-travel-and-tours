@@ -1,4 +1,3 @@
-
 <?php 
     session_start();
     if (isset($_SESSION['isLoggedIn']) == false) {
@@ -6,7 +5,7 @@
       exit;
     }
     include __DIR__.'/../../backend/auth/getuser.php';
-    include __DIR__.'/..\..\backend\connect\dbCon.php';
+    include __DIR__.'/../../backend/connect/dbCon.php';
     
     $_SESSION['active'] = 'chat-main';
     $loc = "../../assets/img/logo.png";

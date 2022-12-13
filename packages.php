@@ -322,7 +322,7 @@ if (isset($_SESSION['booking-stat']) == false) {
                             INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                             INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
                             WHERE (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) AND PK.is_deleted = 0 AND PK.packageStatus = 0
-                            GROUP BY AI.packageIDFrom ";
+                            GROUP BY AI.packageIDFrom, AI.packageImgID ";
           
           // IF THERES COLLABORATIVE BASED FILTERING
           if(!empty($result))   {$query_string .= "ORDER BY priority DESC";}

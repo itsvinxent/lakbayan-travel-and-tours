@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__.'\..\..\backend\connect\dbCon.php';
+include __DIR__.'/../../backend/connect/dbCon.php';
 
 $testdata = 1;
 $managertest = 19;

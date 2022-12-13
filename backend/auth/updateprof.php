@@ -62,7 +62,7 @@ if(!file_exists($placebanhere)){
 }
 
 include __DIR__.'/..\connect\dbCon.php';
-include_once __DIR__.'\..\..\backend\notifications\notification_model.php';
+include_once __DIR__.'/../../backend/notifications/notification_model.php';
 
 if (isset($_POST['submitupdate']) ){
     $img = $_FILES['profPicture'];

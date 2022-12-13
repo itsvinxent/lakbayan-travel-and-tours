@@ -3,7 +3,7 @@
     include "../../backend/connect/dbCon.php";
     include "../../backend/booking/booking_status.php";
     include __DIR__.'/../../backend/verify/payment.php';
-    include_once __DIR__.'\..\..\backend\notifications\notification_model.php';
+    include_once __DIR__.'/../../backend/notifications/notification_model.php';
 
     // $_POST['payment-method'];
     $id_user = $_SESSION['id'];
