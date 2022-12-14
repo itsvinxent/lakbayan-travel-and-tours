@@ -424,7 +424,7 @@ function refresh() {
                 alert("ERROR Code " + code + " - Paymongo link is null.");
             }
             else {
-                alert("Payment still on process.");
+                alert(code + " Payment still on process.");
                 let inq = currentResponse.inq;
                 requestData(inq['bookingID']);
             }

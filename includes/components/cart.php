@@ -1,8 +1,8 @@
 <?php 
     session_start();
-    include "../../backend/connect/dbCon.php";
+    include __DIR__."/../../backend/connect/dbCon.php";
     
-    $query_string = "SELECT * FROM traveldb.inquiry_tbl WHERE id_user = {$_SESSION['id']}";
+    $query_string = "SELECT * FROM  inquiry_tbl WHERE id_user = {$_SESSION['id']}";
     $qry_cart = mysqli_query($conn, $query_string);
 
     while($cart = mysqli_fetch_array($qry_cart)) {

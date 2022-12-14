@@ -27,8 +27,8 @@
   </head>
   <body>
     <?php 
-      include '../components/nav.php';
-      include '../components/accountModal.php';
+      include __DIR__.'/../components/nav.php';
+      include __DIR__.'/../components/accountModal.php';
     ?>
     <section class="destination-pages">
       <div class="banner-half">

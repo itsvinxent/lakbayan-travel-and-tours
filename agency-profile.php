@@ -51,12 +51,12 @@ $isAgency = true;
 
 <body>
 <?php
-  include 'includes/components/nav.php';
+  include __DIR__.'/includes/components/nav.php';
 
   if ($mode == 0 or $_GET['mode'] ?? null == 'view'){
-    include 'includes/profile/agencyprofile-view.php';
+    include __DIR__.'/includes/profile/agencyprofile-view.php';
   } else {
-    include 'includes/profile/agencyprofile-edit.php';
+    include __DIR__.'/includes/profile/agencyprofile-edit.php';
   }
 ?>
 

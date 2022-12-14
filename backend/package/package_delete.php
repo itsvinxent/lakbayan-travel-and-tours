@@ -1,5 +1,5 @@
 <?php
-    include '../connect/dbCon.php';
+    include __DIR__.'/../connect/dbCon.php';
     if(mysqli_connect_error()){
         echo<<<END
             <script type ="text/JavaScript">  
@@ -11,8 +11,8 @@
         $pkgid = $_GET['id'];
         $usertype = $_GET['utype'];
         $currentDate = new DateTime();
-        // $delete_query = " DELETE FROM traveldb.user_tbl WHERE id = $usrid; " ;
-        $delete_query = "UPDATE traveldb.package_tbl SET is_deleted = 1 WHERE packageID = $pkgid; " ;
+        // $delete_query = " DELETE FROM  user_tbl WHERE id = $usrid; " ;
+        $delete_query = "UPDATE  package_tbl SET is_deleted = 1 WHERE packageID = $pkgid; " ;
         
          mysqli_query($conn,$delete_query);
     

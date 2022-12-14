@@ -1,22 +1,22 @@
 <?php
 require_once "../connect/dbCon.php";
-include "packages_display.php";
+include __DIR__."/packages_display.php";
 
 session_start();
 
 // Default Table Query
-$query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName, AG.agencyManID
-                    FROM traveldb.package_tbl AS PK 
-                    INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
-                    INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom";
+$query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.packageImg_Name, AG.agencyName, AG.agencyManID
+                    FROM  package_tbl AS PK 
+                    INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                    INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom";
 
 $has_previous_value;
 
 // Search By Package Name
 // This is for real-time search bar
 if (isset($_POST['query'])) {
-  $query_string .= " WHERE PK.packageTitle LIKE '%{$_POST['query']}%'
-                    GROUP BY AI.packageIDFrom";
+  $query_string .= " WHERE PK.packageTitle LIKE '%{$_POST['query']}%' AND (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) 
+                     GROUP BY PK.packageID, AI.packageImg_Name ";
 
   fetch_packages($query_string, $conn, false);
 }
@@ -41,7 +41,7 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
     }
 
     if (isset($_POST['name'])) {
-      $query_string .= get_prefix() . "PK.packageTitle LIKE '%{$_POST['name']}%'";
+      $query_string .= get_prefix() . "PK.packageTitle LIKE '%{$_POST['name'] }%'";
       $has_previous_value = true;
     }
 
@@ -87,8 +87,8 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
     // }
 
   } finally {
-    $query_string .= get_prefix() ."PK.is_deleted = 0";
-    $query_string .= " GROUP BY AI.packageIDFrom";
+    $query_string .= get_prefix() ."PK.is_deleted = 0 AND (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) ";
+    $query_string .= " GROUP BY AI.packageIDFrom, AI.packageImg_Name ";
     if(isset($_POST['logged_user']) and $_POST['logged_user'] == 'agency') {
       $query_string .= "AND PK.packageStatus = 0";
       fetch_packagetbl($query_string, $conn, true);
@@ -106,10 +106,10 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
 if (isset($_POST['booking']) and $_POST['booking'] == 'true') {
   try {
     $query_string = "SELECT IQ.*, CONCAT(US.fname, ' ',US.lname) AS fullname, BK.*, PK.packageTitle
-                        FROM traveldb.inquiry_tbl AS IQ
-                        INNER JOIN traveldb.user_tbl AS US ON IQ.id_user = US.id
-                        INNER JOIN traveldb.booking_tbl AS BK ON IQ.id = BK.inquiryInfoID 
-                        INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID";
+                        FROM  inquiry_tbl AS IQ
+                        INNER JOIN  user_tbl AS US ON IQ.id_user = US.id
+                        INNER JOIN  booking_tbl AS BK ON IQ.id = BK.inquiryInfoID 
+                        INNER JOIN  package_tbl AS PK ON IQ.packageID = PK.packageID";
 
     $has_previous_value = false;
 
@@ -158,11 +158,11 @@ if (isset($_POST['booking']) and $_POST['booking'] == 'true') {
 
 // Package Edit Form UI
 if (isset($_POST['is_editing']) and $_POST['is_editing'] == 'true') {
-  $package_qry = "SELECT PK.* FROM traveldb.package_tbl AS PK WHERE PK.packageID = {$_POST['packageID']}";
-  $categ_qry = "SELECT * FROM traveldb.packagecateg_tbl where packageID_from = {$_POST['packageID']}";
-  $loc_qry =  "SELECT * FROM traveldb.packagedest_tbl INNER JOIN areas_tbl AS AT ON AT.cityID = packageAreasID WHERE packageDestID = {$_POST['packageID']}";
-  $img_qry = "SELECT * FROM traveldb.packageimg_tbl WHERE packageIDFrom = {$_POST['packageID']}";
-  $inc_qry = "SELECT * FROM traveldb.packageincl_tbl WHERE packageID_from = {$_POST['packageID']}";
+  $package_qry = "SELECT PK.* FROM  package_tbl AS PK WHERE PK.packageID = {$_POST['packageID']}";
+  $categ_qry = "SELECT * FROM  packagecateg_tbl where packageID_from = {$_POST['packageID']}";
+  $loc_qry =  "SELECT * FROM  packagedest_tbl INNER JOIN areas_tbl AS AT ON AT.cityID = packageAreasID WHERE packageDestID = {$_POST['packageID']}";
+  $img_qry = "SELECT * FROM  packageimg_tbl WHERE packageIDFrom = {$_POST['packageID']}";
+  $inc_qry = "SELECT * FROM  packageincl_tbl WHERE packageID_from = {$_POST['packageID']}";
 
   $jsondata = fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $inc_qry, $conn);
   echo $jsondata;
@@ -172,17 +172,17 @@ if (isset($_POST['is_editing']) and $_POST['is_editing'] == 'true') {
 if (isset($_POST['is_travel']) and $_POST['is_travel'] == 'true') {
   $inq_qry = "SELECT IQ.*, CONCAT(US.fname, ' ',US.lname) AS fullname, US.email, US.contactnumber, US.address, BK.*, 
               AG.agencyManID, AG.agencyPfPicture, AG.agencyName, PK.packageCreator, PK.packageTitle, PK.packagePrice, PK.packagePriceChild, PK.packagePriceSenior, PK.packagePersonMax, PK.packagePersonMin, PK.packageStartDate, PK.packageEndDate, PK.packageSlots, AI.packageImg_Name
-              FROM traveldb.inquiry_tbl AS IQ
-              INNER JOIN traveldb.user_tbl AS US ON IQ.id_user = US.id
-              INNER JOIN traveldb.booking_tbl AS BK ON IQ.id = BK.inquiryInfoID 
-              INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID
-              INNER JOIN traveldb.agency_tbl AS AG ON PK.packageCreator = AG.agencyID
-              INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
+              FROM  inquiry_tbl AS IQ
+              INNER JOIN  user_tbl AS US ON IQ.id_user = US.id
+              INNER JOIN  booking_tbl AS BK ON IQ.id = BK.inquiryInfoID 
+              INNER JOIN  package_tbl AS PK ON IQ.packageID = PK.packageID
+              INNER JOIN  agency_tbl AS AG ON PK.packageCreator = AG.agencyID
+              INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
               WHERE (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL)
               and BK.bookingID = {$_POST['bookingID']}";
   // BK.inquiryInfoID = {$_POST['inquiryInfoID']} AND 
 
-  $status_qry = "SELECT * FROM traveldb.bookingstatus_tbl WHERE bookingInfoID = {$_POST['bookingID']}";
+  $status_qry = "SELECT * FROM  bookingstatus_tbl WHERE bookingInfoID = {$_POST['bookingID']}";
 
   $jsondata = fetch_booking_by_id($inq_qry, $status_qry, $conn);
   

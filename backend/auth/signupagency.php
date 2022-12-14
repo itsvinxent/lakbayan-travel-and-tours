@@ -2,7 +2,7 @@
 set_include_path(dirname(__FILE__));
 
 require 'imgverification.php';
-    include '../connect/dbCon.php';
+    include __DIR__.'/../connect/dbCon.php';
 
 // if (isset($_POST['submit']) && isset($_FILES['aPicture'] )){
     //     $imgName = $_FILES['aPicture']['name'];
@@ -40,7 +40,7 @@ require 'imgverification.php';
                 
     //                 } else {
     //                     // Checks if email exists
-    //                     $emailCheck = "SELECT EXISTS(SELECT * FROM traveldb.user_tbl WHERE email='$_POST[aEmail]')";
+    //                     $emailCheck = "SELECT EXISTS(SELECT * FROM  user_tbl WHERE email='$_POST[aEmail]')";
     //                     $result = mysqli_fetch_row(mysqli_query($conn, $emailCheck));
                         
     //                     if($result[0]=='1'){
@@ -52,7 +52,7 @@ require 'imgverification.php';
                 
     //                     }else{
     //                         $hash = password_hash($_POST['aPassword'], PASSWORD_BCRYPT);
-    //                         $addManager = "INSERT INTO traveldb.user_tbl (fname, lname, email, `password`, usertype) 
+    //                         $addManager = "INSERT INTO  user_tbl (fname, lname, email, `password`, usertype) 
     //                                     VALUES('$_POST[aMFName]', '$_POST[aMLName]', '$_POST[aEmail]', '$hash', 'manager' )";
                 
     //                         if(mysqli_query($conn, $addManager)){
@@ -64,7 +64,7 @@ require 'imgverification.php';
     //                                 $gotID = $row['id'];
     //                             }
 
-    //                             $addAgency = "INSERT INTO traveldb.agency_tbl (`agencyName`, `agencyAddress`, `agencyDescription`, `agencyManID`, `agencyManPass`, agencyPfpicture) 
+    //                             $addAgency = "INSERT INTO  agency_tbl (`agencyName`, `agencyAddress`, `agencyDescription`, `agencyManID`, `agencyManPass`, agencyPfpicture) 
     //                                         VALUES ('$_POST[aName]', '$_POST[aAddress]', '$_POST[aDesc]', '$gotID', '$hash', '$updatedName')";
                                 
     //                             if (mysqli_query($conn, $addAgency)){
@@ -143,7 +143,7 @@ if(isset($_POST['aTerms']) && isset($_FILES['aVerify'])) {
 
             } else {
                 // Checks if email exists
-                $emailCheck = "SELECT EXISTS(SELECT * FROM traveldb.user_tbl WHERE email='$_POST[aEmail]')";
+                $emailCheck = "SELECT EXISTS(SELECT * FROM  user_tbl WHERE email='$_POST[aEmail]')";
                 $result = mysqli_fetch_row(mysqli_query($conn, $emailCheck));
                 
                 if($result[0]=='1'){
@@ -158,14 +158,14 @@ if(isset($_POST['aTerms']) && isset($_FILES['aVerify'])) {
                     $updated = rename_image($gotVerify, "DOT-");
 
                     $hash = password_hash($_POST['aPassword'], PASSWORD_BCRYPT);
-                    $addManager = "INSERT INTO traveldb.user_tbl (fname, lname, email, `password`, usertype) 
+                    $addManager = "INSERT INTO  user_tbl (fname, lname, email, `password`, usertype) 
                                 VALUES('$_POST[aMFName]', '$_POST[aMLName]', '$_POST[aEmail]', '$hash', 'manager' )";
 
                     if(mysqli_query($conn, $addManager)){
 
                         $gotID = mysqli_insert_id($conn);
 
-                        $addAgency = "INSERT INTO traveldb.agency_tbl (`agencyName`, `agencyAddress`, `agencyManID`, agencyImageProof, `agencyAccreditation`,`is_found`) 
+                        $addAgency = "INSERT INTO  agency_tbl (`agencyName`, `agencyAddress`, `agencyManID`, agencyImageProof, `agencyAccreditation`,`is_found`) 
                                     VALUES ('$_POST[aName]', '$_POST[aAddress]', '$gotID', '$updated', '$_POST[aDot]', $_POST[is_found])";
                         
                         if (mysqli_query($conn, $addAgency)){

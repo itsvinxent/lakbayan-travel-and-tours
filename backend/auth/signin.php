@@ -2,9 +2,9 @@
     session_start();
     $_SESSION['isLoggedIn'] = false;
 
-    include '../connect/dbCon.php';
+    include __DIR__.'/../connect/dbCon.php';
 
-    $stmt = mysqli_prepare($conn, "SELECT id, fname, lname, email, `password`, usertype FROM traveldb.user_tbl WHERE email=?");
+    $stmt = mysqli_prepare($conn, "SELECT id, fname, lname, email, `password`, usertype FROM  user_tbl WHERE email=?");
     mysqli_stmt_bind_param($stmt, 's', $email);
 
     $email = $_POST['email'];

@@ -65,7 +65,7 @@ final class Header
      * Splits a HTTP header defined to contain a comma-separated list into
      * each individual value. Empty values will be removed.
      *
-     * Example headers include 'accept', 'cache-control' and 'if-none-match'.
+     * Example headers include __DIR__.'/accept', 'cache-control' and 'if-none-match'.
      *
      * This method must not be used to parse headers that are not defined as
      * a list, such as 'user-agent' or 'set-cookie'.

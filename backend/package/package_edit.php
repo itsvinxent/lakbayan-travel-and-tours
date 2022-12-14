@@ -1,10 +1,10 @@
 <?php 
  session_start();
 
- include '../../backend/auth/imgverification.php';
- include '../../backend/connect/dbCon.php';
- include '../../backend/auth/dboperation.php';
- include '../../backend/package/packages_display.php';
+ include __DIR__.'/../../backend/auth/imgverification.php';
+ include __DIR__.'/../../backend/connect/dbCon.php';
+ include __DIR__.'/../../backend/auth/dboperation.php';
+ include __DIR__.'/../../backend/package/packages_display.php';
 
  if(isset($_POST['submitpack'])){ 
 //TO PACKAGE TABLE PROCESS ================================================================================================

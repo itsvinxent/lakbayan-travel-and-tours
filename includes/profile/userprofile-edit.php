@@ -1,8 +1,8 @@
 <?php
-include "backend/package/packages_display.php";
-include "backend/connect/dbCon.php";
+include __DIR__."/../../backend/package/packages_display.php";
+include __DIR__."/../../backend/connect/dbCon.php";
 
-include "backend/auth/getuser.php";
+include __DIR__."/../../backend/auth/getuser.php";
 ?>
 <link rel="stylesheet" href="assets/css/profile-edit.css">
 <link rel="stylesheet" href="assets/css/travel-order.css">
@@ -338,10 +338,10 @@ include "backend/auth/getuser.php";
             <div id="fullb-table" class="fulltable">
               <?php
               $query_string = "SELECT IQ.*, CONCAT(US.fname, ' ',US.lname) AS fullname, BK.*, PK.packageTitle
-                                  FROM traveldb.inquiry_tbl AS IQ
-                                  INNER JOIN traveldb.user_tbl AS US ON IQ.id_user = US.id
-                                  INNER JOIN traveldb.booking_tbl AS BK ON IQ.id = BK.inquiryInfoID 
-                                  INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID
+                                  FROM  inquiry_tbl AS IQ
+                                  INNER JOIN  user_tbl AS US ON IQ.id_user = US.id
+                                  INNER JOIN  booking_tbl AS BK ON IQ.id = BK.inquiryInfoID 
+                                  INNER JOIN  package_tbl AS PK ON IQ.packageID = PK.packageID
                                   WHERE IQ.id_user = {$_SESSION['id']}";
               fetch_bookingtbl($query_string, $conn);
 
@@ -390,7 +390,7 @@ include "backend/auth/getuser.php";
         </div>
 
         <!-- Travel Order Tab -->
-        <?php include "includes/tabs/travel-order-tab.php"; ?>
+        <?php include __DIR__."/../../includes/tabs/travel-order-tab.php"; ?>
 
     </div>
     <div class="save-container" id="save-ch-btn" style="display: none;">
