@@ -64,15 +64,15 @@
                 
                 $mail = new PHPMailer;
                 $mail->isSMTP();
-                $mail->Host='smtp.gmail.com';
-                $mail->Port=587;
+                $mail->Host='mail.lakbaysabayan.com';
+                $mail->Port=465;
                 $mail->SMTPAuth=true;
-                $mail->SMTPSecure='tls';
+                $mail->SMTPSecure='ssl';
     
                 $mail->Username=$mail_address;
                 $mail->Password=$mail_pass;
     
-                $mail->setFrom('lakbaysabayan@gmail.com', 'OTP Verification');
+                $mail->setFrom('no-reply@lakbaysabayan.com', 'OTP Verification');
                 $mail->addAddress($_POST["email"]);
                 
                 $mail->isHTML(true);
@@ -85,7 +85,7 @@
                 But before that, verify your account now!
 
                 Just click the link below to complete the verification: </p>
-                http://localhost/Finals/backend/auth/verifyuser.php?email='.$sendto.'&verification_code='.$verification.'
+                https://lakbaysabayan.com/backend/auth/verifyuser.php?email='.$sendto.'&verification_code='.$verification.'
                 ';
 
                 if(!$mail->send()){
