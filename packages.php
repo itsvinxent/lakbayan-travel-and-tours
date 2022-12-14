@@ -301,7 +301,7 @@ if (isset($_SESSION['booking-stat']) == false) {
           $query_string = "SELECT PK.*, 
                                   FORMAT(PK.packagePrice, 0) AS fresult, 
                                   DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, 
-                                  AI.*, 
+                                  AI.packageImg_Name,
                                   AG.agencyName ";
           if(!empty($result))   {$query_string .= ", CASE ";} //COLLAB-BASED      
           
@@ -322,7 +322,7 @@ if (isset($_SESSION['booking-stat']) == false) {
                             INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                             INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
                             WHERE (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) AND PK.is_deleted = 0 AND PK.packageStatus = 0
-                            GROUP BY AI.packageIDFrom, AI.packageImgID ";
+                            GROUP BY PK.packageID, AI.packageImg_Name ";
           
           // IF THERES COLLABORATIVE BASED FILTERING
           if(!empty($result))   {$query_string .= "ORDER BY priority DESC";}

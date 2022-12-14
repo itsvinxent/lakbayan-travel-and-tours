@@ -47,4 +47,3 @@ else{
 }
 ?>
 
-<meta http-equiv="refresh" content="0;URL=../../user-profile.php?orderID=<?php echo $bookingID;?>" />

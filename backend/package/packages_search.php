@@ -5,7 +5,7 @@ include __DIR__."/packages_display.php";
 session_start();
 
 // Default Table Query
-$query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName, AG.agencyManID
+$query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, , AI.packageImg_Name, AG.agencyName, AG.agencyManID
                     FROM  package_tbl AS PK 
                     INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                     INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom";
@@ -15,8 +15,8 @@ $has_previous_value;
 // Search By Package Name
 // This is for real-time search bar
 if (isset($_POST['query'])) {
-  $query_string .= " WHERE PK.packageTitle LIKE '%{$_POST['query']}%'
-                    GROUP BY AI.packageIDFrom";
+  $query_string .= " WHERE PK.packageTitle LIKE '%{$_POST['query']}%' AND (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) 
+                     GROUP BY PK.packageID, AI.packageImg_Name ";
 
   fetch_packages($query_string, $conn, false);
 }
@@ -41,7 +41,7 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
     }
 
     if (isset($_POST['name'])) {
-      $query_string .= get_prefix() . "PK.packageTitle LIKE '%{$_POST['name']}%'";
+      $query_string .= get_prefix() . "PK.packageTitle LIKE '%{$_POST['name'] }%'";
       $has_previous_value = true;
     }
 
@@ -87,8 +87,8 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
     // }
 
   } finally {
-    $query_string .= get_prefix() ."PK.is_deleted = 0";
-    $query_string .= " GROUP BY AI.packageIDFrom";
+    $query_string .= get_prefix() ."PK.is_deleted = 0 AND (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) ";
+    $query_string .= " GROUP BY AI.packageIDFrom, AI.packageImg_Name ";
     if(isset($_POST['logged_user']) and $_POST['logged_user'] == 'agency') {
       $query_string .= "AND PK.packageStatus = 0";
       fetch_packagetbl($query_string, $conn, true);

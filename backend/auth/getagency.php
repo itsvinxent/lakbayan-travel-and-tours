@@ -91,12 +91,12 @@ if(!$conn){
 
     // AGENCY PACKAGES
     
-    $qry_packages = mysqli_query($conn, "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult,  AI.*
-                                         FROM  package_tbl AS PK 
-                                         INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
-                                         INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
-                                         WHERE agencyID = $testdata
-                                         GROUP BY AI.packageIDFrom, AI.packageImgID");
+    $qry_packages = mysqli_query($conn, "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult,  AI.packageIDFrom, COUNT(AI.packageImgID) AS Count, COUNT(AI.packageImg_Name) AS Num
+                                            FROM  package_tbl AS PK 
+                                            INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                                            INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
+                                            WHERE agencyID = 1
+                                            GROUP BY AI.packageIDFrom, PK.packageID;");
    
 }
 
@@ -109,12 +109,12 @@ function view_other($conn, $id){
 
 function view_otherpack($conn, $id){
     $id = mysqli_real_escape_string($conn, $id);
-    $sql = mysqli_query($conn, "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult,  AI.*
+    $sql = mysqli_query($conn, "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, AI.packageIDFrom, COUNT(AI.packageImgID) AS Count, AI.packageImg_Name 
                                 FROM  package_tbl AS PK 
                                 INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                                 LEFT JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
                                 WHERE packageCreator = $id AND (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL)
-                                GROUP BY AI.packageIDFrom, AI.packageImgID");
+                                GROUP BY AI.packageIDFrom, AI.packageImg_Name, PK.packageID");
     // $got = mysqli_fetch_array($sql);
     return $sql;
 }
