@@ -1,6 +1,9 @@
 <?php
 session_start();
 $_SESSION['active'] = 'map';
+if (isset($_SESSION['isLoggedIn']) == false) {
+    $_SESSION['isLoggedIn'] = false;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,191 +35,84 @@ $_SESSION['active'] = 'map';
         include __DIR__.'/includes/components/nav.php';
         include __DIR__.'/includes/components/accountModal.php';
     ?>
-    <section class="sections mapping" id="interactive-map">
-        <div class="banner-half">
+    <section class="sections mapping" id="interactive-map" style="margin-top: 2rem;">
+        <!-- <div class="banner-half">
             <video src="assets/media/arch.mp4" muted loop autoplay preload="auto"></video>
             <div class="text">
                 <h1>Lakbayan Map</h1>
                 <h2>An interactive map containing COVID-19 Information.</h2>
             </div>
-        </div>
+        </div> -->
 
         <div class="map-container">
             <div id="map"></div>
             <div class="map-content">
-                <div id="bacolod" style="opacity: 1;" class="content">
-                    <div class="top">
-                        <span>
-                            <h1>Bacolod City</h1>
-                            <h2>The City of Smiles</h2>
-                        </span>
-                        <span class="alert">
-                            <h3>COMMUNITY ALERT LEVEL 1</h3>
-                            <p>As of July 15, 2022</p>
-                        </span>
+                <div id="right-container" class="content">
+                    <div class="main" style="display: none;">
+                        <div class="top">
+                            <span>
+                                <h1 id="city-name"></h1>
+                                <h2 id="region"></h2>
+                            </span>
+                        </div>
+                        <br>
+
+                        <div class="card-container" id="dashboard-container">
+                            <div class="card-wrapper active-cases">
+                                <h3>Active Cases</h3>
+                                <span>
+                                    <h2 id="active"></h2>
+                                    <p id="newcases"></p>
+                                </span>
+                                <img src="assets/img/activecases.png" alt="">
+                            </div>
+                            <div class="card-wrapper recovery">
+                                <h3>Recoveries</h3>
+                                <span>
+                                    <h2 id="recovery"></h2>
+                                    <p id="recoveryrate"></p>
+                                </span>
+                                <img src="assets/img/recoveries.png" alt="">
+                            </div>
+
+                            <div class="card-wrapper death">
+                                <h3>Deaths</h3>
+                                <span>
+                                    <h2 id="deaths"></h2>
+                                    <p id="deathrate"></p>
+                                </span>
+                                <img src="assets/img/deaths.png" alt="">
+                            </div>
+
+                            <div class="card-wrapper total">
+                                <h3>Total Cases</h3>
+                                <span>
+                                    <h2 id="totalcases"></h2>
+                                </span>
+                                <img src="assets/img/totalcases.png" alt="">
+                            </div>
+
+                        </div>
+
+                        <div id="requirements">
+
+                        </div>
                     </div>
-                    <br>
-                    <p class="title">COVID-19 Health and Travel Requirements</p>
-                    <p>FULLY VACCINATED INDIVIDUALS</p>
-                    <ul>
-                        <li>Valid ID</li>
-                        <li>Online BacTRAC registration</li>
-                    </ul>
-                    <p>PARTIALLY / UNVACCINATED INDIVIDUALS</p>
-                    <ul>
-                        <li>Valid ID</li>
-                        <li>Online BacTRAC registration</li>
-                        <li>Negative Rapid Antigen Test Result taken from any DOH-accredited laboratories <br> valid within 
-                            forty-eight (48) hours prior departure or arrival. 
-                        </li>
-                    </ul>
-                    <p><strong style="font-size: 14px;">NOTE:</strong> Passengers have the option to undergo Rapid Antigen Test upon arrival c/o LGU's account.</p>
-                    <br>
-                    <p class="title">Negros Occidental Provincial Government Travel Requirements</p>
-                    <p>FULLY VACCINATED INDIVIDUALS</p>
-                    <ul>
-                        <li>S-PaSS Permit (Electronic or Printed Copy)</li>
-                        <li>Valid ID</li>
-                        <li>Valid Vaccination Card or Certificate</li>
-                    </ul>
-                    <p>PARTIALLY / UNVACCINATED INDIVIDUALS</p>
-                    <ul>
-                        <li>S-PaSS Permit (Electronic or Printed Copy)</li>
-                        <li>Valid ID</li>
-                        <li>Negative Non-reactive Rapid Antigen Test Result taken from any DOH-accredited laboratories valid within 
-                            forty-eight (48) hours prior departure or arrival. 
-                        </li>
-                    </ul>
-                </div>
-    
-                <div id="talisay" style="opacity: 0;" class="content">
-                    <div class="top">
-                        <span>
-                            <h1>Talisay City</h1>
-                            <h2>Negros Occidental</h2>
-                        </span>
-                        <span class="alert">
-                            <h3>COMMUNITY ALERT LEVEL 1</h3>
-                            <p>As of July 15, 2022</p>
-                        </span>
+                    <div id="no-content" style="display: flex; align-items:center; justify-content: center;">
+                        <p style="text-align: center; padding: 36vh 0;">Please select a location in the map.</p>
                     </div>
-                    <br>
-                    <p class="title">Negros Occidental COVID-19 Health and Travel Requirements</p>
-                    <p>FULLY VACCINATED INDIVIDUALS</p>
-                    <ul>
-                        <li>S-PaSS Permit (Electronic or Printed Copy)</li>
-                        <li>Valid ID</li>
-                        <li>Valid Vaccination Card or Certificate</li>
-                    </ul>
-                    <p>PARTIALLY / UNVACCINATED INDIVIDUALS</p>
-                    <ul>
-                        <li>S-PaSS Permit (Electronic or Printed Copy)</li>
-                        <li>Valid ID</li>
-                        <li>Negative Non-reactive Rapid Antigen Test Result taken from any DOH-accredited laboratories valid within 
-                            forty-eight (48) hours prior departure or arrival. 
-                        </li>
-                        <li>Rapid Antigen Test Result to be conducted by the Province of Negros Occidental free of charge upon arrival.</li>
-                    </ul>
                 </div>
 
-                <div id="silay" style="opacity: 0;" class="content">
-                    <div class="top">
-                        <span>
-                            <h1>Silay City</h1>
-                            <h2>Paris of Negros</h2>
-                        </span>
-                        <span class="alert">
-                            <h3>COMMUNITY ALERT LEVEL 1</h3>
-                            <p>As of July 15, 2022</p>
-                        </span>
-                    </div>
-                    <br>
-                    <p class="title">Negros Occidental COVID-19 Health and Travel Requirements</p>
-                    <p>FULLY VACCINATED INDIVIDUALS</p>
-                    <ul>
-                        <li>S-PaSS Permit (Electronic or Printed Copy)</li>
-                        <li>Valid ID</li>
-                        <li>Valid Vaccination Card or Certificate</li>
-                    </ul>
-                    <p>PARTIALLY / UNVACCINATED INDIVIDUALS</p>
-                    <ul>
-                        <li>S-PaSS Permit (Electronic or Printed Copy)</li>
-                        <li>Valid ID</li>
-                        <li>Negative Non-reactive Rapid Antigen Test Result taken from any DOH-accredited laboratories valid within 
-                            forty-eight (48) hours prior departure or arrival. 
-                        </li>
-                        <li>Rapid Antigen Test Result to be conducted by the Province of Negros Occidental free of charge upon arrival.</li>
-                    </ul>
-                </div>
 
-                <div id="cadiz" style="opacity: 0;" class="content">
-                    <div class="top">
-                        <span>
-                            <h1>Cadiz City</h1>
-                            <h2>Negros Occidental</h2>
-                        </span>
-                        <span class="alert">
-                            <h3>COMMUNITY ALERT LEVEL 1</h3>
-                            <p>As of July 15, 2022</p>
-                        </span>
-                    </div>
-                    <br>
-                    <p class="title">Negros Occidental COVID-19 Health and Travel Requirements</p>
-                    <p>FULLY VACCINATED INDIVIDUALS</p>
-                    <ul>
-                        <li>S-PaSS Permit (Electronic or Printed Copy)</li>
-                        <li>Valid ID</li>
-                        <li>Valid Vaccination Card or Certificate</li>
-                    </ul>
-                    <p>PARTIALLY / UNVACCINATED INDIVIDUALS</p>
-                    <ul>
-                        <li>S-PaSS Permit (Electronic or Printed Copy)</li>
-                        <li>Valid ID</li>
-                        <li>Negative Non-reactive Rapid Antigen Test Result taken from any DOH-accredited laboratories valid within 
-                            forty-eight (48) hours prior departure or arrival. 
-                        </li>
-                        <li>Rapid Antigen Test Result to be conducted by the Province of Negros Occidental free of charge upon arrival.</li>
-                    </ul>
-                </div>
-
-                <div id="sipalay" style="opacity: 0;" class="content">
-                    <div class="top">
-                        <span>
-                            <h1>Sipalay City</h1>
-                            <h2>Negros Occidental</h2>
-                        </span>
-                        <span class="alert">
-                            <h3>COMMUNITY ALERT LEVEL 1</h3>
-                            <p>As of July 15, 2022</p>
-                        </span>
-                    </div>
-                    <br>
-                    <p class="title">Negros Occidental COVID-19 Health and Travel Requirements</p>
-                    <p>FULLY VACCINATED INDIVIDUALS</p>
-                    <ul>
-                        <li>S-PaSS Permit (Electronic or Printed Copy)</li>
-                        <li>Valid ID</li>
-                        <li>Valid Vaccination Card or Certificate</li>
-                    </ul>
-                    <p>PARTIALLY / UNVACCINATED INDIVIDUALS</p>
-                    <ul>
-                        <li>S-PaSS Permit (Electronic or Printed Copy)</li>
-                        <li>Valid ID</li>
-                        <li>Negative Non-reactive Rapid Antigen Test Result taken from any DOH-accredited laboratories valid within 
-                            forty-eight (48) hours prior departure or arrival. 
-                        </li>
-                        <li>Rapid Antigen Test Result to be conducted by the Province of Negros Occidental free of charge upon arrival.</li>
-                    </ul>
-                </div>
             </div>
         </div>
-        
+
     </section>
 
     <!-- <script type="text/javascript" src="assets/js/geochart.js"></script>
       <script type="text/javascript" src="assets/js/geojson/provinces_1.js"></script>
       <script type="text/javascript" src="assets/js/geojson/provinces_2.js"></script> -->
-    
+
     <footer class="site-footer">
         <div class="container">
             <div class="logo">
@@ -270,11 +166,8 @@ $_SESSION['active'] = 'map';
 
     <script>
         $(function() {
-            $(document).scroll(function() {
-                var $nav = $("._nav");
-
-                $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
-            });
+            var $nav = $("._nav");
+            $nav.toggleClass("scrolled", true);
         });
     </script>
 

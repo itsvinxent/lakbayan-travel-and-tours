@@ -14,15 +14,19 @@ function getData($month, $qry)
 if (isset($_POST['dateValue'])) {
     $sales = getData(
         $_POST['dateValue'],
-        "SELECT SUM(`bookingPrice`) AS total_sales FROM bookingstatus_tbl AS BS 
+        "SELECT SUM(`bookingPrice`) AS total_sales  FROM bookingstatus_tbl AS BS 
                         INNER JOIN booking_tbl AS BT ON BT.bookingID = BS.bookingInfoID 
-                        WHERE BS.bookingStatus = 'complete'"
+                        INNER JOIN inquiry_tbl AS IQ ON BT.inquiryInfoID = IQ.id
+                        INNER JOIN package_tbl AS PK ON IQ.packageID = PK.packageID
+                        WHERE BS.bookingStatus = 'complete' AND PK.packageCreator = {$_POST['agencyID']}"
     );
     $bookings = getData(
         $_POST['dateValue'],
         "SELECT COUNT(*) AS total_bookings FROM booking_tbl AS BT 
                         INNER JOIN bookingstatus_tbl AS BS ON BT.bookingID = BS.bookingInfoID 
-                        WHERE BS.bookingStatus = 'pay-pending'"
+                        INNER JOIN inquiry_tbl AS IQ ON BT.inquiryInfoID = IQ.id
+                        INNER JOIN package_tbl AS PK ON IQ.packageID = PK.packageID
+                        WHERE BS.bookingStatus = 'pay-pending' AND PK.packageCreator = {$_POST['agencyID']}"
     );
     $unique = getData(
         $_POST['dateValue'],
@@ -101,11 +105,11 @@ function getSalesChart($month) {
                 INNER JOIN booking_tbl AS BT ON BS.bookingInfoID = BT.bookingID
                 INNER JOIN inquiry_tbl AS IQ ON BT.inquiryInfoID = IQ.id
                 INNER JOIN package_tbl AS PK ON IQ.packageID = PK.packageID
-                WHERE BS.bookingStatus = 'complete'";
+                WHERE BS.bookingStatus = 'complete' AND packageCreator = {$_POST['agencyID']} ";
     if ($month != 'all-time') {
         $qry .= " AND DATE_FORMAT(`timestamp`, '%Y %m') = '$month'";
     }
-    $qry .= "GROUP BY PK.packageID ORDER BY total_sales DESC LIMIT 10";
+    $qry .= " GROUP BY PK.packageID ORDER BY total_sales DESC LIMIT 10";
 
     $result = mysqli_query($conn, $qry);
     $dataPoints = array();
