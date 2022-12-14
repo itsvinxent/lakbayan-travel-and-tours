@@ -5,7 +5,7 @@ include __DIR__."/packages_display.php";
 session_start();
 
 // Default Table Query
-$query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, , AI.packageImg_Name, AG.agencyName, AG.agencyManID
+$query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.packageImg_Name, AG.agencyName, AG.agencyManID
                     FROM  package_tbl AS PK 
                     INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                     INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom";
