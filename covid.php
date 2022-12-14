@@ -32,8 +32,8 @@ if (isset($_SESSION['isLoggedIn']) == false) {
 
 <body>
     <?php 
-        include __DIR__.'/../../includes/components/nav.php';
-        include __DIR__.'/../../includes/components/accountModal.php';
+        include __DIR__.'/includes/components/nav.php';
+        include __DIR__.'/includes/components/accountModal.php';
     ?>
     <section class="sections mapping" id="interactive-map" style="margin-top: 2rem;">
         <!-- <div class="banner-half">
