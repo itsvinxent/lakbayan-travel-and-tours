@@ -618,9 +618,6 @@ if(isset($_SESSION['isLoggedIn']) == false) {
       </div>
     </div> -->
     
-    
-    <div class="ratings-container">
-      <h1>Package Ratings</h1>
       <?php 
         $ratingsummary_query_string = "SELECT COUNT(if(package_rating = 5,1,null)) AS `5_starCount`,
                                       COUNT(if(package_rating = 4,1,null)) AS `4_starCount`,
@@ -648,10 +645,13 @@ if(isset($_SESSION['isLoggedIn']) == false) {
             $totalWeight += $WeightMultipliedByNumber;
             $totalReviews += $numberofReviews;
         } 
+        if ($totalReviews != 0) {
         $averageRating = $totalWeight / $totalReviews;
         $averageRating = number_format($averageRating, 1)
         // $averageRating = $row['packageRating'];
       ?>
+    <div class="ratings-container">
+      <h1>Package Ratings</h1>
       <div class="ratings-selector">
         <div class="actual-rating">
           <div class="text">
@@ -728,7 +728,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
         });
       </script>
     </div>
-
+    <?php } ?>
   </section>
 
   <footer class="site-footer">
@@ -779,7 +779,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
 
   <script>
     var $nav = $("._nav");
-    $nav.toggleClass("scrolled");
+    $nav.toggleClass("scrolled", true);
   </script>
   <script>
     flatpickr("input[type=datetime-local]", {
