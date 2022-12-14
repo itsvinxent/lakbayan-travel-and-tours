@@ -75,21 +75,21 @@
         <div id="full-table" class="fulltable">
             <?php
             if ($_SESSION['utype'] == 'manager') {
-                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName, AG.agencyManID
-                                FROM  package_tbl AS PK 
-                                INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
-                                INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
-                                WHERE packageCreator = $_SESSION[setID] AND PK.is_deleted = 0
-                                GROUP BY AI.packageIDFrom";
+                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.packageImg_Name, AG.agencyName, AG.agencyManID
+                                    FROM  package_tbl AS PK 
+                                    INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                                    INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
+                                    WHERE packageCreator = $_SESSION[setID] AND PK.is_deleted = 0 AND (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL)
+                                    GROUP BY PK.packageID, AI.packageImg_Name "; 
 
                 fetch_packagetbl($query_string, $conn, true);
             } else if ($_SESSION['utype'] == 'admin') {
-                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName, AG.agencyManID
-                                FROM  package_tbl AS PK 
-                                INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
-                                INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
-                                WHERE PK.is_deleted = 0
-                                GROUP BY AI.packageIDFrom";
+                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.packageImg_Name, AG.agencyName, AG.agencyManID
+                                    FROM  package_tbl AS PK 
+                                    INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                                    INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
+                                    WHERE PK.is_deleted = 0 AND (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL)
+                                    GROUP BY PK.packageID, AI.packageImg_Name ";
 
                 fetch_packagetbl($query_string, $conn, false);
             }

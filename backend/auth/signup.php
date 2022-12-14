@@ -66,7 +66,7 @@
                 
                 $mail = new PHPMailer;
                 $mail->isSMTP();
-                $mail->Host='smtp.gmail.com';
+                $mail->Host='mail.lakbaysabayan.com';
                 $mail->Port=587;
                 $mail->SMTPAuth=true;
                 $mail->SMTPSecure='tls';
@@ -74,7 +74,7 @@
                 $mail->Username=$mail_address;
                 $mail->Password=$mail_pass;
     
-                $mail->setFrom('lakbaysabayan@gmail.com', 'OTP Verification');
+                $mail->setFrom('no-reply@lakbaysabayan.com', 'OTP Verification');
                 $mail->addAddress($_POST["email"]);
                 
                 $mail->isHTML(true);
