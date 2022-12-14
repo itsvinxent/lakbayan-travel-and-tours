@@ -8,7 +8,7 @@
 	// console.log(provinceData);
 	
 
-    var map = L.map('map').setView([10.015, 123],9);
+    var map = L.map('map').setView([14.5, 121],9);
 	// var map = L.map('map', {
 	// 	center: [10.015, 123],
 	// 	zoom: 9,
@@ -26,28 +26,23 @@
 
     pinfo.onAdd = function (map) {
       this._div = L.DomUtil.create('div', 'pinfo');
-	// const con = document.getElementById('bacolod');
-	// console.log(con);
-	  this.con = document.getElementById('bacolod');
       this.update();
       return this._div;
     };
 
     pinfo.update = function (props) {
       this._div.innerHTML = '<h4>Active Cases in the Area</h4>' +  (props ?
-        '<b>' + props.province + '</b><br />' + props.cases + ' cases' : 'Hover over a municipality');
-	  
-		// this.con.style.color = "red";
+        '<b>' + props.province + '</b><br />' + props.cases + ' cases' : 'Hover over a municipality')
     };
 
     pinfo.addTo(map);
 
   function getColor(d) {
       return d > 1000 ? '#d73027' :
-             d > 500  ? '#fc8d59' :
-             d > 100  ? '#fee08b' :
-             d > 50   ? '#d9ef8b' :
-             d > 10   ? '#91cf60' :
+             d > 500  ? '#f46d43' :
+             d > 100  ? '#fdae61' :
+             d > 50   ? '#a6d96a' :
+             d > 10   ? '#66bd63' :
 			 			'#1a9850';
   }
 
@@ -80,19 +75,18 @@
 	}
 
 var geojson;
-var prev = document.getElementById('city of talisay');
 
 	function resetHighlight(e) {
 		geojson.resetStyle(e.target);
 		pinfo.update();
 	}
-
+	
 	function clickFeature(e) {
 		var layer = e.target;
 		map.fitBounds(layer.getBounds());
 		// var con = 'bacolod';
-		var con = (String(layer.feature.properties.province).toLowerCase());
-		var muni = document.getElementById(con);
+		// var con = (String(layer.feature.properties.province));
+		// var muni = document.getElementById(con);
 		
 		jQuery(function($) {
 			$(".content").each(function(){
@@ -105,14 +99,40 @@ var prev = document.getElementById('city of talisay');
 				}
 			})
 		});
-
-		// prev.style.opacity = 0;
-		// muni.style.opacity = 1;
-		// prev = muni;		
 		
-		// console.log(document.getElementById(con));
-		// console.log(layer.feature.properties.name);
-		// console.log((name.toLowerCase()).indexOf(con) != -1);
+		$('#right-container .main').css('display', 'block')
+
+		$('#requirements').html(`
+		<p class="title">COVID-19 Health and Travel Requirements</p>
+		<p>FULLY VACCINATED INDIVIDUALS</p>
+		<ul>
+			<li>Valid ID</li>
+			<li>VaxCertPH Vaccination Certificate</li>
+		</ul>
+		<p>PARTIALLY / UNVACCINATED INDIVIDUALS</p>
+		<ul>
+			<li>Valid ID</li>
+			<li>Negative Rapid Antigen Test Result taken from any DOH-accredited laboratories <br> valid within 
+				forty-eight (48) hours prior departure or arrival. 
+			</li>
+		</ul>`);
+
+		$('#no-content').remove();
+		
+		$('#city-name').text(String(layer.feature.properties.province))
+		$('#region').text(String(layer.feature.properties.region))
+
+		$('#active').text(String(layer.feature.properties.cases))
+		$('#deaths').text(String(layer.feature.properties.deaths))
+		$('#deathrate').text(String(layer.feature.properties.deathrate) +" rate")
+		$('#newcases').text("+" + String(layer.feature.properties.newcases) +" new")
+		$('#recovery').text(String(layer.feature.properties.recovery))
+		$('#recoveryrate').text(String(layer.feature.properties.recoveryrate) +" rate")
+		$('#totalcases').text(String(layer.feature.properties.totalcases))
+
+		$('.active-cases').css('background-color', getColor(parseInt(layer.feature.properties.cases.replace(/,/g, ''), 10)))
+		
+		// $('#population').text(String(layer.feature.properties.population))
 	}
 
 	function onEachFeature(feature, layer) {

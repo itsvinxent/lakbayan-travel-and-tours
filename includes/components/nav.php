@@ -187,7 +187,7 @@
   $(document).ready(()=>{
     $("#notification").on("click",()=>{
       $.ajax({
-        url: "..\\..\\backend\\notifications\\notification_read.php",
+        url: "<?php echo $prefix;?>backend\\notifications\\notification_read.php",
         success: (res)=>{
           $("#notification a span").text(0)
         }

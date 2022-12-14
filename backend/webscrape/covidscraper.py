@@ -4,55 +4,69 @@ import pandas as pd
 import os
 import json
 
-# url = "https://public.tableau.com/views/COVID-19CasesandDeathsinthePhilippines_15866705872710/Cases?%3AshowVizHome=no"
+url = "https://public.tableau.com/views/COVID-19CasesandDeathsinthePhilippines_15866705872710/Cases?%3AshowVizHome=no"
 
-# ts = TS()
-# ts.loads(url)
+ts = TS()
+ts.loads(url)
 
-# ws = (ts.getWorksheet("C_Table")).data
+ws = (ts.getWorksheet("C_Table")).data
 
 # Data Cleaning
-# ws = ws.drop(ws[ws['ProvinceCity Clean-value'] == "%null%"].index)
-# clean_columns = ws[["ProvinceCity Clean-value", "RegionRes Clean-value", "Measure Names-alias", "Measure Values-alias"]]
-# clean_columns.columns = ['Municipality', 'Region', 'Measures', 'Value']
+ws = ws.drop(ws[ws['ProvinceCity Clean-value'] == "%null%"].index)
+clean_columns = ws[["ProvinceCity Clean-value", "RegionRes Clean-value", "Measure Names-alias", "Measure Values-alias"]]
+clean_columns.columns = ['Municipality', 'Region', 'Measures', 'Value']
 
-# # Pivot Table Contents
-# final_df = clean_columns.pivot_table(index=['Region', 'Municipality'],
-#                           columns=['Measures'],
-#                           values='Value',
-#                           aggfunc=lambda x: ' '.join(x))
+# Pivot Table Contents
+final_df = clean_columns.pivot_table(index=['Region', 'Municipality'],
+                          columns=['Measures'],
+                          values='Value',
+                          aggfunc=lambda x: ' '.join(x))
 
 # Export to CSV
-# final_df.to_csv('covidData.csv', index=True)
+final_df.to_csv(os.getcwd() + 'public_html\\backend\\webscrape\\covidData.csv', index=True)
 
 
 # Adding COVID-19 data to geoJson files
 def getMunicipalityList():
     # Import from existing CSV
-    filepath = os.getcwd() + "\\backend\\webscrape"
+    filepath = os.getcwd() + "public_html\\backend\\webscrape"
     df = pd.read_csv(filepath + "\\covidData.csv")
     fmuni = df['Municipality'].tolist()
    
-    fullpath = os.getcwd() + "\\geojson"
+    fullpath = os.getcwd() + "public_html\\geojson"
     dir_list = os.listdir(fullpath)
     
     count = 0
     for file in dir_list:
-        file = (f"{fullpath}\\{file}")
+        file = (fullpath+"\\"+file)
         print(file)
         with open(file, "r") as jsonFile:
             data = json.load(jsonFile)
             for i in range(0, len(data['features'])):
                 pr = str()
-                if "ph18-" in file or "ph0" in file:
-                    pr = data['features'][i]['properties']['name'].upper() 
-                else:
-                    pr = data['features'][i]['properties']['province'].upper()
+                # if "ph18-" in file or "ph0" in file:
+                #     pr = data['features'][i]['properties']['name'].upper() 
+                # else:
+                pr = data['features'][i]['properties']['province'].upper()
                 
                 match = process.extractOne(pr, fmuni, scorer=fuzz.token_sort_ratio)
                 cases = df.loc[df['Municipality'] == match[0], 'Active Cases'].iloc[0]
+                deaths = df.loc[df['Municipality'] == match[0], 'Deaths'].iloc[0]
+                deathrate = df.loc[df['Municipality'] == match[0], 'Fatality Rate'].iloc[0]
+                newcases = df.loc[df['Municipality'] == match[0], 'New Cases'].iloc[0]
+                population = df.loc[df['Municipality'] == match[0], 'ProvinceCityPopulation'].iloc[0]
+                recovery = df.loc[df['Municipality'] == match[0], 'Recoveries'].iloc[0]
+                recoveryrate = df.loc[df['Municipality'] == match[0], 'Recovery Rate'].iloc[0]
+                totalcases = df.loc[df['Municipality'] == match[0], 'Total Cases'].iloc[0]
 
-                data['features'][i]['properties']['cases'] = cases 
+                data['features'][i]['properties']['cases'] = str(cases)
+                data['features'][i]['properties']['deaths'] = str(deaths)
+                data['features'][i]['properties']['deathrate'] = str(deathrate)
+                data['features'][i]['properties']['newcases'] = str(newcases)
+                data['features'][i]['properties']['population'] = str(population)
+                data['features'][i]['properties']['recovery'] = str(recovery)
+                data['features'][i]['properties']['recoveryrate'] = str(recoveryrate)
+                data['features'][i]['properties']['totalcases'] = str(totalcases)
 
                 print(data['features'][i]['properties']['cases'])
                 

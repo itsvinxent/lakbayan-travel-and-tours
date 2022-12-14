@@ -716,9 +716,9 @@ nav li a:hover {
   }
 
   .about-us .colored .mission {
-    /* display: flex;
-    flex-wrap: wrap;
-    justify-content: center; */
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
     /* grid-template-columns: .5fr 2fr; */
     margin: 1rem auto;
     max-width: 100%;

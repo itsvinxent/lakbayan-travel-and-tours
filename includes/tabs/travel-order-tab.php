@@ -475,7 +475,10 @@
                          <div class="gray-area" id="before-trip">
                             <div class="message"></div>
 
-                            <button class="btn btn-long">Download Receipt</button>
+                            <form action="backend/booking/booking_generatereceipt.php" method="POST">
+                                <input type="hidden" name="current-bookingID">
+                                <button type="submit" class="btn btn-long" id="download-receipt" style="margin-bottom: 5px; background: #1abc9c;">Download Receipt</button>
+                            </form>
                         
                             <button class="btn btn-long" style="margin-bottom: 15px; background: #34495E;" id="contact-agency-btn">Contact Travel Agency</button>
                             <button class="btn btn-long" style="margin-bottom: 15px; background: #34495E;" id="refund-btn">Request Refund</button>
@@ -500,7 +503,10 @@
                             <div class="gray-area" id="before-trip-agency">
                                 <div class="message"></div>
 
-                                <button class="btn btn-long">Download Receipt</button>
+                                <form action="backend/booking/booking_generatereceipt.php" method="POST">
+                                    <input type="hidden" name="current-bookingID">
+                                    <button type="submit" class="btn btn-long" id="download-receipt" style="margin-bottom: 5px; background: #1abc9c;">Download Receipt</button>
+                                </form>
 
                                 <button class="btn btn-long" style="margin-bottom: 15px; background: #34495E;" id="contact-cust-btn">Contact Customer</button>
                                 <button class="btn btn-long" style="margin-bottom: 15px; background: #ED2939; display: none;" id="respond-refund-btn">Refund Request</button>

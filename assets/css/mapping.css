@@ -50,7 +50,7 @@
   margin-right: 0;
   /* display: block; */
   width: 500px;
-  height: 750px;
+  height: 80vh;
   border: solid 1px black;
   z-index: var(--z-tooltip);
   border-radius: 10px;
@@ -79,4 +79,51 @@
 #map .pinfo h4 {
   margin: 0 0 5px;
   color: #777;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.card-wrapper {
+  color: white;
+  font-weight: bold;
+  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  width: 24%;
+  padding: 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  position: relative;
+}
+
+.card-wrapper.recovery {
+  background-color: #1ABC9C;
+}
+
+.card-wrapper.death {
+  background-color: #ED2939;
+}
+
+.card-wrapper.total {
+  background-color: var(--logo-blue-light);
+}
+
+.card-wrapper span > *:not(:last-child) {
+  margin-right: 5px;
+}
+
+.card-wrapper img {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 35px;
+  height: 35px;
+}
+
+.card-wrapper.recovery img {
+  right: 0;
 }

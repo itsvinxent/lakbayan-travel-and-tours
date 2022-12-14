@@ -25,14 +25,7 @@ $_SESSION['active'] = 'about';
     include 'includes/components/nav.php';
     include 'includes/components/accountModal.php';
   ?>
-  <section class="sections about-us" id="about-us">
-    <div class="banner-half">
-      <video src="assets/media/windmills.mp4" muted loop autoplay preload="auto"></video>
-      <div class="text">
-        <h1>About Us</h1>
-        <h2>LEARN MORE ABOUT THE TEAM</h2>
-      </div>
-    </div>
+  <section class="sections about-us" id="about-us" style="margin-top: 5rem;">
 
     <div class="content">
       <h1>We aspire to make a difference in everything we do.</h1>
@@ -52,9 +45,6 @@ $_SESSION['active'] = 'about';
     </div>
     <div class="colored">
       <div class="mission">
-        <span>
-          <video class="center" src="assets/media/travel.mp4" muted loop autoplay preload="auto"></video>
-        </span>
         <span class="inf">
           <h2>MISSION</h2>
           <p>To provide a great travel tour and experience to it's customer in the Philippines, Lakbayan Travel
@@ -67,9 +57,6 @@ $_SESSION['active'] = 'about';
             and to have a great experience following the travel booking.
           </p>
         </span>
-      </div>
-
-      <div class="goal" id="goal">
         <span class="inf">
           <h2>VISION</h2>
           <p>Our vision is to create a comfortable atmosphere where the customer can travel with confidence and expect to have
@@ -77,12 +64,6 @@ $_SESSION['active'] = 'about';
               when it comes to promoting the tourist industry in the Philippines through the use of IT Solutions for travel inquiries and fulfilling our customers' needs
           </p>
         </span>
-        <span>
-          <video class="center" src="assets/media/biker.mp4" muted loop autoplay preload="auto"></video>
-        </span>
-      </div>
-      <div class="explore">
-        <a href="destinations.php"><button class="btn">CHECK OUT OUR DESTINATIONS!</button></a>
       </div>
     </div>
 
@@ -96,9 +77,19 @@ $_SESSION['active'] = 'about';
           <p>Project Manager</p>
         </div>
         <div class="card">
+          <img src="assets/img/aj.png" alt="">
+          <h3>Jeremiah Galzote</h3>
+          <p>Project Manager</p>
+        </div>
+        <div class="card">
           <img src="assets/img/JV.jpg" alt="">
           <h3>John Vincent Ayala</h3>
-          <p>Lead Programmer</p>
+          <p>Front-end Developer</p>
+        </div>
+        <div class="card">
+          <img src="assets/img/vash.png" alt="" style="background: white;">
+          <h3>Jeanne Francis Rivas</h3>
+          <p>Back-end Developer</p>
         </div>
       </div>
     </div>
@@ -154,11 +145,8 @@ $_SESSION['active'] = 'about';
 
   <script>
     $(function() {
-      $(document).scroll(function() {
-        var $nav = $("._nav");
-
-        $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
-      });
+      var $nav = $("._nav");
+      $nav.toggleClass("scrolled", true);
     });
   </script>
 
