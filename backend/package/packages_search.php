@@ -47,7 +47,7 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
       $has_previous_value = true;
     }
 
-    if (isset($_POST['name'])) {
+    if (isset($_POST['name']) and $_POST['name'] != "") {
       $query_string .= get_prefix() . "PK.packageTitle LIKE '%{$_POST['name']}%'";
       $has_previous_value = true;
     }
