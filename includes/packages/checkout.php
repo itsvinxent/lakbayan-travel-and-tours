@@ -34,7 +34,7 @@
 
             if(mysqli_query($conn, $bkstatusquery)) {
             
-            $qry = "SELECT AG.agencyManID, PK.packageTitle FROM  inquiry_tbl AS IQ 
+            $qry = "SELECT AG.agencyManID, PK.packageTitle, AG.agencyName FROM  inquiry_tbl AS IQ 
                     INNER JOIN  package_tbl AS PK ON IQ.packageID = PK.packageID 
                     INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                     WHERE IQ.id = $inquiry[id]";
@@ -42,6 +42,8 @@
             $send_to = mysqli_fetch_assoc(mysqli_query($conn, $qry));
 
             sendNotification($send_to['agencyManID'], "booking", "$send_to[packageTitle] got a booking!");
+            sendNotification($id_user, "booking", "$send_to[agencyName] is awaiting for your payment!");
+
             $_SESSION['booking-stat'] = 'success';
             } else {
             echo 0;

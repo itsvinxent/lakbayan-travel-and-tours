@@ -100,7 +100,7 @@
     <div class="modal-container" id="dmodal_container">
         <div class="user-modal">
             <h1>Confirmation</h1>
-            <p>You are about to <strong>delete</strong> a Travel Package. By doing this, all of the related transactions for this Travel Package will be cancelled/delete as well. Type in "I Understand" to confirm. </p>
+            <p>You are about to <strong>delete</strong> a Travel Package. Type in "I Understand" to confirm. </p>
             <br><input type="text" name="confirm" id="confirm" placeholder="I Understand"><br>
             <form action="" method="POST" id="del-action">
                 <div class="buttons">
@@ -166,7 +166,7 @@
         // });
 
         $('#dmodal_container #confirm').on('input', function() {
-            if ($(this).val() == "I UNDERSTAND") {
+            if ($(this).val() == "I Understand") {
                 $('#modalDelete').prop("disabled", false);
             } else {
                 $('#modalDelete').prop("disabled", true);

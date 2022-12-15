@@ -356,13 +356,12 @@ include __DIR__."/../../backend/auth/getuser.php";
             $('#s-all').prop('checked', true);
             $('#s-all').next().addClass('active');
 
-
+            bookingpostdata['logged_user'] = 'user';
             $('#b-get-search').on('click', function() {
               pack_name = $('#b-package-name').val();
               pack_transact = $('#b-package-transact').val();
               pack_id = $('#b-package-id').val();
               pack_customer = $('#package-customer').val();
-              bookingpostdata['logged_user'] = 'user';
 
               booking_data_input();
 

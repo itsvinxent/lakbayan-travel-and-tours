@@ -10,7 +10,8 @@
         END;
     } else {
         // Check if the email is existing
-        $isExisting = "SELECT EXISTS(SELECT * FROM user_tbl WHERE email='$_POST[email]')";
+        $sendto = mysqli_real_escape_string($conn, $_POST['email']);
+        $isExisting = "SELECT EXISTS(SELECT * FROM user_tbl WHERE email='$sendto')";
         $result = mysqli_fetch_row(mysqli_query($conn,$isExisting));
 
         
@@ -22,15 +23,16 @@
                 </script>
             END;
         } else {
-            $sendto = $_POST['email'];
-            $name = $_POST['lname'];
+            
+            $fname =  mysqli_real_escape_string($conn, $_POST['fname']);
+            $lname =  mysqli_real_escape_string($conn, $_POST['lname']);
             $date = new DateTime();
             $date_now = $date->format('y-m-d m:s');
 
             $verification = md5(rand(0, 1000));
-            $hash = password_hash($_POST['password'], PASSWORD_BCRYPT);
+            $hash = password_hash(mysqli_real_escape_string($conn, $_POST['password']), PASSWORD_BCRYPT);
             $query = "INSERT INTO  user_tbl (`fname`, `lname`, `email`, `password`, `verification_code`) 
-            VALUES('$_POST[fname]', '$_POST[lname]', '$_POST[email]', '$hash', '$verification')";
+            VALUES('$fname', '$lname', '$sendto', '$hash', '$verification')";
 
             if(mysqli_query($conn,$query)){
                 // INSERT USER PREFERENCES
@@ -75,7 +77,11 @@
                 $mail->Password=$mail_pass;
     
                 $mail->setFrom('no-reply@lakbaysabayan.com', 'OTP Verification');
-                $mail->addAddress($_POST["email"]);
+
+                $mail->addAddress($sendto);
+
+             
+
                 
                 $mail->isHTML(true);
                 $mail->Subject="LAKBAYAN VERIFICATION";

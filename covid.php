@@ -35,7 +35,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
         include __DIR__.'/includes/components/nav.php';
         include __DIR__.'/includes/components/accountModal.php';
     ?>
-    <section class="sections mapping" id="interactive-map" style="margin-top: 2rem;">
+    <section class="sections mapping" id="interactive-map" style="margin-top: 4rem;">
         <!-- <div class="banner-half">
             <video src="assets/media/arch.mp4" muted loop autoplay preload="auto"></video>
             <div class="text">

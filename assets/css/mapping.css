@@ -1,23 +1,23 @@
 /* COVID-19 */
 .mapping .map-container {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1.3fr 1.8fr;
+  max-width: 95%;
+  margin: auto;
+  padding: 1rem 0;
+  gap: 1rem;
 }
 
 .mapping .map-content {
   background-color: #34495e;
-  margin: 3rem 2rem;
+  /* margin: 3rem 2rem; */
+  /* margin-left: auto;
+  margin-right: 0; */
   padding: 1rem 1.5rem;
   color: white;
   border-radius: 10px;
-  width: 811px;
-}
-
-.mapping .map-content .content {
-  position: absolute;
-  text-align: justify;
-  width: 760px;
-  /* list-style-type: disc !important */
+  width: 100%;
+  height: 80vh;
 }
 
 .mapping .map-content .content .top {
@@ -46,10 +46,10 @@
 }
 
 #map {
-  margin: 3rem;
+  /* margin: 3rem; */
   margin-right: 0;
   /* display: block; */
-  width: 500px;
+  width: 100%;
   height: 80vh;
   border: solid 1px black;
   z-index: var(--z-tooltip);

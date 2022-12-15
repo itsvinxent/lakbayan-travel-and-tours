@@ -1,10 +1,13 @@
 <?php
 
 // Function for displaying in the Main Package Page and the Travel Agency Profile Page (View Mode)
-function fetch_packages($query_string, $conn, $editmode)
+function fetch_packages($query_string, $conn, $editmode, $limit, $page)
 {   
-
-    $qry_packages = mysqli_query($conn, $query_string) or die(mysqli_error($conn));
+    $start_from = ($page - 1) * $limit;
+    $limit_string = $query_string ." LIMIT $start_from, $limit";
+    // echo $limit_string;
+    $qry_packages = mysqli_query($conn, $limit_string) or die(mysqli_error($conn));
+    
 
     while ($row = mysqli_fetch_array($qry_packages)) {
 ?>
@@ -68,9 +71,24 @@ function fetch_packages($query_string, $conn, $editmode)
                     ?>
                     
                 </div>
-                <div class="price">
-                    <p class="amt"><?php echo $row['fresult'] ?></p>
-                    <p style="font-size: 12px;">PER PERSON</p>
+                <div class="price" style="display: flex; justify-content: space-between; align-items: self-end;">
+                    <span>
+                        <p class="amt"><?php echo $row['fresult'] ?></p>
+                        <p style="font-size: 12px;">PER PERSON</p>
+                    </span>
+                    <p>
+                    <?php 
+                        $starting_date = new DateTime($row['packageStartDate']);
+                        $ending_date = new DateTime($row['packageEndDate']);
+                        $duration = $starting_date->diff($ending_date);
+
+                        if ($duration->days != 0) {
+                            echo $duration->days .'-day trip';
+                        } else {
+                            echo $duration->h .'-hour trip';
+                        }
+                    ?> 
+                    </p>
                 </div>
             </div>
             <?php if ($editmode) { 
@@ -100,8 +118,40 @@ function fetch_packages($query_string, $conn, $editmode)
             
         </div>
     <?php
-    }
+    } 
+    $qry_packages = mysqli_query($conn, $query_string);
+    $total_records = mysqli_num_rows($qry_packages);
+    $total_pages = ceil($total_records/$limit);
+    if ($total_pages != 0) {
+        if ($total_pages != 1) {
+    ?>
+        <div id="app" class="container">  
+            <ul class="page">
+                <li class="page__btn" id="<?php if ($page > 1) echo $page - 1; ?>"><i class="fas fa-chevron-left"></i></li>
+                <?php 
+                    
+                    for ($i=1; $i <= $total_pages; $i++) { 
+                        $class = 'page__numbers';
+                        if ($i == $page) {
+                            $class .= ' active';
+                        }
+                        echo "<li class='$class'>$i</li>";
+                    }
+                ?>
+                <li class="page__btn" id="<?php if ($page < $total_pages) echo $page + 1;?>"><i class="fas fa-chevron-right"></i></li>
+            </ul>
+        </div>
+<?php
     // mysqli_close($conn);
+        }
+    } else {
+        echo<<<END
+        <div class="loading" id="no-results" style="display: flex; flex-direction: column; justify-content: center; margin: auto; align-items: center; gap: 15px;">
+          <img src="https://img.icons8.com/fluency/48/null/unknown-results.png"/> <h3>No Results. Try another filter/keyword.</h3>
+        </div>
+        END;
+    }
+    
 }
 
 // Function for displaying Package Table in the Administrator Packages Page
@@ -267,6 +317,7 @@ function fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $inc_
     
     while ($inclusion = mysqli_fetch_assoc($qry_incl)) {
         $inc_array[] = $inclusion['packageInclusion'];
+        $_SESSION['INCLUSIONS_GOT'] = $inc_array;
     }
 
     $jsondata = json_encode(

@@ -20,8 +20,8 @@
 
     if(isset($_POST['submitpack']) && $ftchk == true && $adchk == true){
         //TO PACKAGE TABLE PROCESS ================================================================================================
-        $packName = $_POST['c-package-name']; //INSERT TO PACKAGE_TBL
-        $packDesc = $_POST['c-package-desc']; //INSERT TO PACKAGE_TBL
+        $packName = mysqli_real_escape_string($conn, $_POST['c-package-name']); //INSERT TO PACKAGE_TBL
+        $packDesc = $conn->real_escape_string($_POST['c-package-desc']); //INSERT TO PACKAGE_TBL
 
         $datechosen = $_POST['resdate'];
         $divdate = explode("to", $datechosen);
@@ -34,8 +34,11 @@
        
         $minage = 0; $maxage = 0;
 
-        $minage = $_POST['agemin']; //INSERT TO PACKAGE_TBL
-        $maxage = $_POST['agemax']; //INSERT TO PACKAGE_TBL
+        $is_checked = $_POST['isagelimited'] ?? null;
+        if($is_checked != null){
+            $minage = $_POST['agemin'] ?? 0; //INSERT TO PACKAGE_TBL
+            $maxage = $_POST['agemax'] ?? 0; //INSERT TO PACKAGE_TBL
+        }
 
         $headmin = $_POST['headmin']; //INSERT TO PACKAGE_TBL
         $headmax = $_POST['headmax']; //INSERT TO PACKAGE_TBL
@@ -169,7 +172,7 @@
         for($i=0; $i<count($inclusionsGot); $i++){
             $data = array(
                 'packageID_from' => $gotpkID,
-                'packageInclusion' => $inclusionsGot[$i]
+                'packageInclusion' => mysqli_real_escape_string($conn,$inclusionsGot[$i])
             );
 
             multi_insertdb($conn, $data, "packageincl_tbl");
@@ -187,8 +190,8 @@
         // print_r($addImg);
 
         if($ftchk == true && $adchk == true ){
-            echo '<br>';
-            echo 'pass';
+            // echo '<br>';
+            // echo 'pass';
 
             $placehere = '../../assets/img/users/travelagent/'.$myid.'/package/'.$gotpkID.'/img/';
             if(!file_exists($placehere)){
@@ -227,7 +230,7 @@
                 }
             }
         }
-        sendNotification($_SESSION['id'], "package", "Package creation success!");
+        sendNotification($_SESSION['id'], "package", "Package ".$packName." creation success!");
 
         //echo "SUCCEEEEEEEEEEEEESS";
     }else ;
