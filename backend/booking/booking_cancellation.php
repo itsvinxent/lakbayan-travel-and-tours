@@ -12,7 +12,7 @@
     }
     else{
         if (isset($_GET['booking_id']))
-        $bookingID = $_GET['booking_id'];
+        $bookingID = mysqli_real_escape_string($conn,$_GET['booking_id']);
         // $currentDate = new DateTime();
         // $delete_query = " DELETE FROM  user_tbl WHERE id = $usrid; " ;
         // $delete_query = "UPDATE  user_tbl SET is_deleted = 1 WHERE id = $usrid; " ;

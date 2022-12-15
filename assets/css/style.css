@@ -355,7 +355,7 @@ nav li a:hover {
     font-size: 16px;
   }
 } */
-@media (max-width: 1024px) {
+@media (max-width: 1085px) {
   .checkbtn {
     display: block;
   }
@@ -408,7 +408,7 @@ nav li a:hover {
 }
 
 
-@media (min-width: 481px) and (max-width: 1024px) {
+@media (min-width: 481px) and (max-width: 1085px) {
   
   /* Destination Specific Pages */
   .destination-pages .content {
@@ -982,4 +982,8 @@ nav li a:hover {
   background-color: #1a977e;
   border-radius: 10px;
   padding: 0 5px;
+}
+
+.banner-logo img {
+  object-fit: cover;
 }

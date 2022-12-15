@@ -7,7 +7,7 @@
     $stmt = mysqli_prepare($conn, "SELECT id, fname, lname, email, `password`, usertype FROM  user_tbl WHERE email=?");
     mysqli_stmt_bind_param($stmt, 's', $email);
 
-    $email = $_POST['email'];
+    $email =  mysqli_real_escape_string($conn, $_POST['email']);
     $inpPassword = mysqli_real_escape_string($conn, $_POST['password']);
     
     mysqli_stmt_execute($stmt);

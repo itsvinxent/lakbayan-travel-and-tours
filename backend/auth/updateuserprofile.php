@@ -1,6 +1,7 @@
 <?php
 set_include_path(dirname(__FILE__));
 
+include __DIR__.'/../connect/dbCon.php';
 require 'imgverification.php';
 session_start();
 
@@ -39,6 +40,20 @@ if (empty($inRace)) $inRace = $_SESSION['race'];
 if (empty($inNat)) $inNat = $_SESSION['nationality'];
 if (empty($inReligion)) $inReligion = $_SESSION['religion'];
 
+//SQL FILTER 
+$firstName = mysqli_real_escape_string($conn, $firstName);
+$lastName = mysqli_real_escape_string($conn, $lastName);
+$inEmail = mysqli_real_escape_string($conn, $inEmail);
+$inPass = mysqli_real_escape_string($conn, $inPass);
+
+$inTel = mysqli_real_escape_string($conn, $inTel);
+$inAdd = mysqli_real_escape_string($conn, $inAdd);
+$inGender = mysqli_real_escape_string($conn, $inGender);
+$inRace = mysqli_real_escape_string($conn, $inRace);
+$inNat = mysqli_real_escape_string($conn, $inNat);
+$inReligion = mysqli_real_escape_string($conn, $inReligion);
+
+
 
 $userID = $_SESSION['id'];
 
@@ -55,8 +70,6 @@ if(!file_exists($placeban)){
     mkdir($placeban, 0777, true);
 }
 
-
-include __DIR__.'/../connect/dbCon.php';
 include_once __DIR__."/../../backend/notifications/notification_model.php";
 
 // echo 'the email is '.$checking.' checked!';
