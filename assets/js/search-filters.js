@@ -7,7 +7,7 @@ var bookingpostdata = {
   b_name: "",
   customer_name: "",
   trn: "",
-  package_id: undefined,
+  package_id: 0,
   status: "s-all"
 }
 var pack_name, pack_location, pack_cat, pack_duration = 0;
@@ -17,7 +17,7 @@ var postdata = {
   name: "",
   location: "",
   category: "",
-  duration: undefined,
+  duration: 0,
   availability: "a-all"
 }
 var ver_agencyname, ver_dotnum, ver_agencyid = 0, ver_mgname;
@@ -79,7 +79,7 @@ function postdata_append(postdata, name, value) {
   if ((value != undefined) & (value != '') & (value != null)) {
     postdata[name] = value;
   } else {
-    delete postdata[name];
+    // delete postdata[name];
     count--;
   }
   return postdata
