@@ -73,7 +73,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
   include __DIR__.'/../components/accountModal.php';
   include __DIR__.'/../../backend/connect/dbCon.php';
   include __DIR__.'/../../backend/package/packages_display.php';
-  include __DIR__.'../../backend/package/package_hearts.php';
+  include __DIR__.'/../../backend/package/package_hearts.php';
 
   if($_SESSION['isLoggedIn']==true && isset($_SESSION['id'])) include __DIR__.'/../../includes/components/chatbox.php';
 

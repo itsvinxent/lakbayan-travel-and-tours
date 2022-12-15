@@ -45,8 +45,8 @@ if(isset($_POST['aTerms']) && isset($_FILES['aVerify'])) {
                     $gotMLName =  mysqli_real_escape_string($conn, $_POST['aMLName']);
 
                     $hash = password_hash(mysqli_real_escape_string($conn, $_POST['aPassword']), PASSWORD_BCRYPT);
-                    $addManager = "INSERT INTO  user_tbl (fname, lname, email, `password`, usertype) 
-                                VALUES('$gotMFName', '$gotMLName', '$gotEmail', '$hash', 'manager' )";
+                    $addManager = "INSERT INTO  user_tbl (fname, lname, email, `password`, usertype, is_verified) 
+                                VALUES('$gotMFName', '$gotMLName', '$gotEmail', '$hash', 'manager', 1 )";
 
                     if(mysqli_query($conn, $addManager)){
 
