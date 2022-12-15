@@ -358,7 +358,7 @@
                         </span>
                         <span class="toggle" style="position: relative;">
                             <label class="toggleswitch">
-                                <input id="agelimit-switch" name='isagelimited' type="checkbox" class="switch__input" checked>
+                                <input id="agelimit-switch" name='isagelimited' type="checkbox" class="switch__input" value="1" checked>
                                 <span class="slider-circle"></span>
                             </label>
                         </span>
@@ -527,9 +527,11 @@
             $('#create-form')[0].reset();
             $('#selected-cat-container').empty();
             $('#selected-loc-container').empty();
+            $('#selected-inc-container').empty();
             cat_array = [];
             loc_array = [];
-
+            inc_array = [];
+            
             if (r === document.getElementById('package-create')) {
                 $('#create-form .saveform-btn').text('Save New Package');
                 removeupload.forEach(remover => {
@@ -568,6 +570,7 @@
                         setLocation(response.location)
                         setDates(response.details)
                         setImages(response.images)
+                        setInc(response.inclusions)
                     }
                 });
 
@@ -656,6 +659,27 @@
                     "style": "margin-left: 10px; font-size: 12px; cursor: pointer;"
                 })
                 document.getElementById("hidden-location").value = loc_array;
+                $div.append($close);
+
+            });
+        }
+
+        function setInc(inclutions) {
+            console.log(inclutions)
+            inclutions.forEach(inc => {
+                inc_array.push(inc);
+                var $div = $("<div>", {
+                    "class": "selected-loc",
+                    "text": inc
+                });
+
+                $("#selected-inc-container").append($div);
+
+                var $close = $("<i>", {
+                    "class": "fas fa-times remove-inc",
+                    "style": "margin-left: 10px; font-size: 12px; cursor: pointer;"
+                })
+                document.getElementById("hidden-inclusions").value = inc_array;
                 $div.append($close);
 
             });

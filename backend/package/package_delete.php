@@ -8,7 +8,7 @@
         END;
     }
     else{
-        $pkgid = $_GET['id'];
+        $pkgid = mysqli_real_escape_string($conn,$_GET['id']);
         $usertype = $_GET['utype'];
         $currentDate = new DateTime();
 

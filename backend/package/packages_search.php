@@ -20,12 +20,21 @@ if (isset($_POST['page'])) {
 
 // Search By Package Name
 // This is for real-time search bar
+
 if (isset($_POST['query']) and $_POST['query'] == 'true') {
   $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, 
   DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, 
   AG.agencyName, AG.agencyManID " . $_SESSION['recommendedQuery'];
   // echo $query_string;
   fetch_packages($query_string, $conn, false, $limit, $page);
+
+// if (isset($_POST['query'])) {
+//  $search = mysqli_real_escape_string($conn, $_POST['query']);
+//  $query_string .= " WHERE PK.packageTitle LIKE '%{$search}%' AND (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) 
+//                     GROUP BY PK.packageID, AI.packageImg_Name ";
+
+//  fetch_packages($query_string, $conn, false);
+
 }
 
 // Function for determining the proper prefix/suffix to be added to the SQL Query
@@ -48,7 +57,8 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
     }
 
     if (isset($_POST['name']) and $_POST['name'] != "") {
-      $query_string .= get_prefix() . "PK.packageTitle LIKE '%{$_POST['name']}%'";
+      $name_search = mysqli_real_escape_string($conn, $_POST['name']);
+      $query_string .= get_prefix() . "PK.packageTitle LIKE '%{$name_search }%'";
       $has_previous_value = true;
     }
 
@@ -131,8 +141,10 @@ if (isset($_POST['booking']) and $_POST['booking'] == 'true') {
       }
     }
 
+
     if (isset($_POST['b_name']) and $_POST['b_name'] != "") {
-      $query_string .= get_prefix() . "PK.packageTitle LIKE '%{$_POST['b_name']}%'";
+      $bname_search = mysqli_real_escape_string($conn, $_POST['b_name']);
+      $query_string .= get_prefix() . "PK.packageTitle LIKE '%{$bname_search}%'";
       $has_previous_value = true;
     }
 
@@ -146,8 +158,10 @@ if (isset($_POST['booking']) and $_POST['booking'] == 'true') {
       $has_previous_value = true;
     }
 
+
     if (isset($_POST['customer_name']) and $_POST['customer_name'] != "") {
-      $query_string .= " HAVING fullname LIKE '%{$_POST['customer_name']}%'";
+      $bcname_search = mysqli_real_escape_string($conn, $_POST['customer_name']);
+      $query_string .= " HAVING fullname LIKE '%{$bcname_search}%'";
       $has_previous_value = true;
     }
 

@@ -166,7 +166,7 @@
         // });
 
         $('#dmodal_container #confirm').on('input', function() {
-            if ($(this).val() == "I UNDERSTAND") {
+            if ($(this).val() == "I Understand") {
                 $('#modalDelete').prop("disabled", false);
             } else {
                 $('#modalDelete').prop("disabled", true);

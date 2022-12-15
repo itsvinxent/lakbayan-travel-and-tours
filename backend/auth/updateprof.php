@@ -1,6 +1,7 @@
 <?php 
 set_include_path(dirname(__FILE__));
 
+include __DIR__.'/../connect/dbCon.php';
 require 'imgverification.php';
     // echo $_POST['id'];
     // echo $_POST['picturefile'];
@@ -46,6 +47,16 @@ if (empty($upfb)) $upfb = $_SESSION['setfblink'];
 if (empty($uptw)) $uptw = $_SESSION['settwlink'];
 if (empty($upig)) $upig = $_SESSION['setiglink'];
 
+//SQL FILTER 
+$upName = mysqli_real_escape_string($conn, $upName);
+$upDesc = mysqli_real_escape_string($conn, $upDesc);
+$upAdd = mysqli_real_escape_string($conn, $upAdd);
+$upEmail = mysqli_real_escape_string($conn, $upEmail);
+$upTel = mysqli_real_escape_string($conn, $upTel);
+$upfb = mysqli_real_escape_string($conn, $upfb);
+$uptw = mysqli_real_escape_string($conn, $uptw);
+$upig = mysqli_real_escape_string($conn, $upig);
+
 $agencyID = $_SESSION['setID'];
 $userID = $_SESSION['id'];
 
@@ -61,7 +72,6 @@ if(!file_exists($placebanhere)){
     mkdir($placebanhere, 0777, true);
 }
 
-include __DIR__.'/../connect/dbCon.php';
 include_once __DIR__."/../../backend/notifications/notification_model.php";
 
 if (isset($_POST['submitupdate']) ){
@@ -96,7 +106,7 @@ if (isset($_POST['submitupdate']) ){
                 </script>
                 END;
             }else{
-            $upDesc =  mysqli_real_escape_string($conn, $upDesc);
+            
                 $qry = "UPDATE agency_tbl AS AG,
                                 user_tbl AS US 
                                 SET agencyName='$upName',

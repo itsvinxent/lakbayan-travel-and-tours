@@ -36,10 +36,20 @@ function image_verification($image, ?bool $ismultiple = false): bool{
 							
 						}else {
 							// echo "<br> WRONG TYPE";
+							echo<<<END
+								<script type ="text/JavaScript">  
+								alert("ERROR. Wrong Image Type.")
+								</script>
+							END;
 							return false;
 						}
 					}else {
 						// echo "<br> TOO BIG";
+						echo<<<END
+								<script type ="text/JavaScript">  
+								alert("ERROR. File size exceeds the maximum.")
+								</script>
+							END;
 						return false;
 					}
 				}else {
@@ -49,6 +59,11 @@ function image_verification($image, ?bool $ismultiple = false): bool{
 			
 			}else {
 				// echo "<br> NO PHOTO";
+				echo<<<END
+					<script type ="text/JavaScript">  
+					alert("ERROR. No Image Uploaded.")
+					</script>
+				END;
 				return false;
 			}
 		}
@@ -79,19 +94,35 @@ function image_verification($image, ?bool $ismultiple = false): bool{
 						
 					}else {
 						// echo "<br> WRONG TYPE";
+						echo<<<END
+								<script type ="text/JavaScript">  
+								alert("ERROR. Wrong Image Type.")
+								</script>
+							END;
 						return false;
 					}
 				}else {
 					// echo "<br> TOO BIG";
+					echo<<<END
+								<script type ="text/JavaScript">  
+								alert("ERROR. File size exceeds the maximum.")
+								</script>
+							END;
 					return false;
 				}
 			}else {
 				// echo "<br> ERROR";
+				
 				return false;
 			}
 		
 		}else {
 			// echo "<br> NO PHOTO";
+			echo<<<END
+					<script type ="text/JavaScript">  
+					alert("ERROR. No Image Uploaded.")
+					</script>
+				END;
 			return false;
 		}
 
@@ -99,6 +130,15 @@ function image_verification($image, ?bool $ismultiple = false): bool{
 
 }
 
+
+/**
+ * Renames the uploaded image 
+ *
+ * @param array $image Image to be renamed
+ * @param string $prefix Prefix of image name before the actual name - Defaults to IMG-
+ * 
+ * @return string $newname Returns the renamed image
+ */ 
 function rename_image($image, ?string $prefix = "IMG-"){
 
 	$image['tmp_name'];

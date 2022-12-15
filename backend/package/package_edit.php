@@ -8,9 +8,9 @@
 
  if(isset($_POST['submitpack'])){ 
 //TO PACKAGE TABLE PROCESS ================================================================================================
-     $upName = $_POST['c-package-name']; 
+     $upName = mysqli_real_escape_string($conn, $_POST['c-package-name']); 
      
-     $upDesc = $_POST['c-package-desc'];
+     $upDesc = mysqli_real_escape_string($conn, $_POST['c-package-desc']);
 
     
     $upDateChosen = $_POST['resdate'];
@@ -24,10 +24,13 @@
     $upCutoff = $_POST['cutdate'];
      $cutoff = date('Y-m-d h:i:s', strtotime($upCutoff));
 
-    
-     $upMin = $_POST['agemin']; 
-     $upMax = $_POST['agemax'];
+     $upMin = 0; $upMax = 0;
 
+    $is_checked = $_POST['isagelimited'] ?? null;
+    if($is_checked != null){
+        $upMin = $_POST['agemin'] ?? 0 ; //INSERT TO PACKAGE_TBL
+        $upMax = $_POST['agemax'] ?? 0; //INSERT TO PACKAGE_TBL
+    }
     
      $upMinHead = $_POST['headmin']; 
      $upMaxHead = $_POST['headmax'];
@@ -119,7 +122,7 @@
     }
 
 
-//TO PACKAGECATEG_TBL PROCESS ================================================================================================
+//TO PACKAGELOC_TBL PROCESS ================================================================================================
 
     $locationsGot = array();
     $packLocation = $_POST['hidden-location']; //INSERT TO PACKAGELOC_TBL
@@ -165,16 +168,43 @@
     }
     //echo print_r($areasidadded);
 
-//TO PACKAGECATEG_TBL PROCESS ================================================================================================
+//TO PACKAGELOC_TBL PROCESS ================================================================================================
+    $inclusionsGot = array();
+    $packInclusion = $_POST['hidden-inclusions']; //INSERT TO PACKAGELOC_TBL
+    if(strstr($packInclusion, ',')) $inclusionsGot = explode(",", $packInclusion);
+    else array_push($inclusionsGot, $packInclusion);
+
+    $removedInclusions = array();
+    if(!empty($inclusionsGot))$removedInclusions = array_merge(array_diff($_SESSION['INCLUSIONS_GOT'], $inclusionsGot));
+
+    for($i = 0; $i < count(array_filter($removedInclusions)) ; $i++){
+        $data = array(
+            'packageInclusion' => $removedInclusions[$i]
+        );
+        multi_deletedb($conn, $data, "packageincl_tbl", "packageID_From", $_SESSION['PACKAGE_ID']);
+    }
+
+    $addedInclusions = array();
+    if(!empty($inclusionsGot))$addedInclusions = array_merge(array_diff($inclusionsGot, $_SESSION['INCLUSIONS_GOT']));
+
+    for($i = 0; $i < count(array_filter($addedInclusions)) ; $i++){
+        $data = array(
+            'packageID_From' => $_SESSION['PACKAGE_ID'],
+            'packageInclusion' => mysqli_real_escape_string($conn, $addedInclusions[$i])
+        );
+        multi_insertdb($conn, $data, "packageincl_tbl");
+    }
+
+//TO PACKAGEIMG_TBL PROCESS ================================================================================================
 
     //Get Featured Image
     $newFeat = $_FILES['featured-img'];
     $oldFeat = $_POST['featured-img-name'];
     $ftchk = image_verification($newFeat);
-    echo $oldFeat;
+    // echo $oldFeat;
 
     //Get Additional Image
-    echo '<br>';
+    // echo '<br>';
     $newAdd = $_FILES['additional'];
     $adchk = image_verification($newAdd, true);
 

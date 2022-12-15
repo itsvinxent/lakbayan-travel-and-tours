@@ -317,6 +317,7 @@ function fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $inc_
     
     while ($inclusion = mysqli_fetch_assoc($qry_incl)) {
         $inc_array[] = $inclusion['packageInclusion'];
+        $_SESSION['INCLUSIONS_GOT'] = $inc_array;
     }
 
     $jsondata = json_encode(
