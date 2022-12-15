@@ -1,5 +1,5 @@
 <?php 
-//include '..\..\backend\connect\dbCon.php';
+//include __DIR__.'/..\..\backend\connect\dbCon.php';
 
 function multi_insertdb($conn, $data, $table){
     foreach($data as $key => $val){

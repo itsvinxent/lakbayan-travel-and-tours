@@ -31,9 +31,9 @@ if (isset($_SESSION['booking-stat']) == false) {
 
 <body>
   <?php
-  include 'includes/components/nav.php';
-  include 'includes/components/accountModal.php';
-  include 'backend/connect/dbCon.php';
+  include __DIR__.'/includes/components/nav.php';
+  include __DIR__.'/includes/components/accountModal.php';
+  include __DIR__.'/backend/connect/dbCon.php';
 
   if ($_SESSION['booking-stat'] != 'none') {
     if ($_SESSION['booking-stat'] == 'success') {
@@ -362,7 +362,7 @@ if (isset($_SESSION['booking-stat']) == false) {
         </div> -->
         <div class="card-container" id="card-container">
           <?php
-          include_once "backend/package/packages_display.php";
+          include_once __DIR__."/backend/package/packages_display.php";
           include_once __DIR__."/backend/package/collaborative_filtering.php";
           include_once __DIR__."/backend/package/contentbased_filtering.php";
 
@@ -378,7 +378,7 @@ if (isset($_SESSION['booking-stat']) == false) {
           $query_string = "SELECT PK.*, 
                                   FORMAT(PK.packagePrice, 0) AS fresult, 
                                   DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, 
-                                  AI.*, 
+                                  AI.packageImg_Name,
                                   AG.agencyName ";
           if(!empty($result))   {$algo_cases .= ", CASE ";} //COLLAB-BASED      
           
@@ -395,11 +395,11 @@ if (isset($_SESSION['booking-stat']) == false) {
 
           if(!empty($resultContent)) {$algo_cases .= " END AS 'preferred' ";}
 
-          $algo_cases .= "FROM traveldb.package_tbl AS PK 
-                            INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
-                            INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
+          $algo_cases .= "FROM  package_tbl AS PK 
+                            INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                            INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
                             WHERE (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) AND PK.is_deleted = 0 AND PK.packageStatus = 0
-                            GROUP BY AI.packageIDFrom ";
+                            GROUP BY PK.packageID, AI.packageImg_Name ";
           
           // IF THERES COLLABORATIVE BASED FILTERING
           if(!empty($result))   {$algo_cases .= "ORDER BY priority DESC";}

@@ -1,7 +1,7 @@
 <?php
-    include '../connect/dbCon.php';
+    include __DIR__.'/../connect/dbCon.php';
     require 'booking_status.php';
-    include_once __DIR__.'\..\..\backend\notifications\notification_model.php';
+    include_once __DIR__."/../../backend/notifications/notification_model.php";
 
     if(mysqli_connect_error()){
         echo<<<END
@@ -16,17 +16,17 @@
 
         $request_reason = mysqli_real_escape_string($conn, $_POST['refund_confirm']);
         // $currentDate = new DateTime();
-        // $delete_query = " DELETE FROM traveldb.user_tbl WHERE id = $usrid; " ;
-        // $delete_query = "UPDATE traveldb.user_tbl SET is_deleted = 1 WHERE id = $usrid; " ;
+        // $delete_query = " DELETE FROM  user_tbl WHERE id = $usrid; " ;
+        // $delete_query = "UPDATE  user_tbl SET is_deleted = 1 WHERE id = $usrid; " ;
 
         //  mysqli_query($conn,$delete_query);
     
          if(setRefundRequest($conn, $bookingID, $request_reason, false)){
-            $qry = "SELECT AG.agencyManID, CONCAT(US.fname, ' ', US.lname) AS fullname FROM traveldb.booking_tbl AS BK
-                                INNER JOIN traveldb.inquiry_tbl AS IQ ON BK.inquiryInfoID = IQ.id
-                                INNER JOIN traveldb.user_tbl AS US ON IQ.id_user = US.id
-                                INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID
-                                INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+            $qry = "SELECT AG.agencyManID, CONCAT(US.fname, ' ', US.lname) AS fullname FROM  booking_tbl AS BK
+                                INNER JOIN  inquiry_tbl AS IQ ON BK.inquiryInfoID = IQ.id
+                                INNER JOIN  user_tbl AS US ON IQ.id_user = US.id
+                                INNER JOIN  package_tbl AS PK ON IQ.packageID = PK.packageID
+                                INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                                 WHERE BK.bookingID = $bookingID";
 
                 $send_to = mysqli_fetch_assoc(mysqli_query($conn, $qry));    

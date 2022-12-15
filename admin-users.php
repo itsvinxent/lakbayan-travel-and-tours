@@ -40,8 +40,8 @@ $_SESSION['active'] = 'users';
 
 <body>
     <?php
-    include 'includes/components/admin-nav.php';
-    include 'includes/components/accountModal.php';
+    include __DIR__.'/includes/components/admin-nav.php';
+    include __DIR__.'/includes/components/accountModal.php';
 
     ?>
     <section class="sections admin-usr" id="admin-usr" style="margin-top: 5rem;">
@@ -77,7 +77,7 @@ $_SESSION['active'] = 'users';
                     <!-- User Account Table -->
                     <div data-tab-content class="data-tab-content content-users active">
                         <h1>User Accounts</h1>
-                        <?php include 'backend/admin/user_display.php'; ?>
+                        <?php include __DIR__.'/backend/admin/user_display.php'; ?>
                     </div>
 
                     <!-- Edit Account Modal -->

@@ -1,7 +1,7 @@
 
 <?php 
-    include '../../backend/auth/getagency.php';
-    include '..\..\backend\connect\dbCon.php';
+    include __DIR__.'/../../backend/auth/getagency.php';
+    include __DIR__.'/../../backend/connect/dbCon.php';
     
     $loc = "../../assets/img/logo.png";
        

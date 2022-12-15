@@ -44,14 +44,14 @@ if (isset($_SESSION['utype'])) {
 
 <body>
     <?php
-    include 'includes/components/nav.php';
+    include __DIR__.'/includes/components/nav.php';
     ?>
 
     <?php
-    include "backend/package/packages_display.php";
-    include "backend/admin/agency_display.php";
-    include "backend/admin/user_display.php";
-    include "backend/connect/dbCon.php";
+    include __DIR__."/../../backend/package/packages_display.php";
+    include __DIR__."/../../backend/admin/agency_display.php";
+    include __DIR__."/../../backend/admin/user_display.php";
+    include __DIR__."/../../backend/connect/dbCon.php";
 
     ?>
     <script>
@@ -109,19 +109,19 @@ if (isset($_SESSION['utype'])) {
             <div class="main-panel" style="position: relative; width: 100%;">
                 <div class="tab-content pack-active" id="tab-content">
                     <!-- Account Tab -->
-                    <?php include "includes/tabs/user-tab.php"; ?>
+                    <?php include __DIR__."/../../includes/tabs/user-tab.php"; ?>
 
                     <!-- Verifications Tab -->
-                    <?php include "includes/tabs/verify-tab.php"; ?>
+                    <?php include __DIR__."/../../includes/tabs/verify-tab.php"; ?>
                     
                     <!-- Packages List Tab -->
-                    <?php include "includes/tabs/package-tab.php"; ?>
+                    <?php include __DIR__."/../../includes/tabs/package-tab.php"; ?>
 
                     <!-- Create Packages Tab -->
-                    <?php include "includes/tabs/createpkg-tab.php"; ?>
+                    <?php include __DIR__."/../../includes/tabs/createpkg-tab.php"; ?>
 
                     <!-- Bookings Tab -->
-                    <?php include "includes/tabs/bookings-tab.php"; ?>
+                    <?php include __DIR__."/../../includes/tabs/bookings-tab.php"; ?>
 
                 </div>
                 <div class="save-container" id="save-ch-btn" style="display: none;">

@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__.'\..\..\backend\connect\dbCon.php';
+include __DIR__.'/../../backend/connect/dbCon.php';
 
 $testdata = 1;
 $managertest = 19;
@@ -15,8 +15,8 @@ if(!$conn){
                                 US.email, 
                                 CONCAT(US.fname, ' ' ,US.lname) AS fullname,
                                 US.contactnumber
-                                FROM traveldb.agency_tbl AS AG
-                                INNER JOIN traveldb.user_tbl AS US ON AG.agencyManID = US.id
+                                FROM  agency_tbl AS AG
+                                INNER JOIN  user_tbl AS US ON AG.agencyManID = US.id
                                 WHERE agencyManID = ?");
     mysqli_stmt_bind_param($qry, 'i',  $_SESSION['id']); //sets the parameters (?) above
 
@@ -91,12 +91,12 @@ if(!$conn){
 
     // AGENCY PACKAGES
     
-    $qry_packages = mysqli_query($conn, "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult,  AI.*
-                                         FROM traveldb.package_tbl AS PK 
-                                         INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
-                                         INNER JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
-                                         WHERE agencyID = $testdata
-                                         GROUP BY AI.packageIDFrom");
+    $qry_packages = mysqli_query($conn, "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult,  AI.packageIDFrom, COUNT(AI.packageImgID) AS Count, COUNT(AI.packageImg_Name) AS Num
+                                            FROM  package_tbl AS PK 
+                                            INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                                            INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
+                                            WHERE agencyID = 1
+                                            GROUP BY AI.packageIDFrom, PK.packageID;");
    
 }
 
@@ -109,12 +109,12 @@ function view_other($conn, $id){
 
 function view_otherpack($conn, $id){
     $id = mysqli_real_escape_string($conn, $id);
-    $sql = mysqli_query($conn, "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult,  AI.*
-                                FROM traveldb.package_tbl AS PK 
-                                INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
-                                LEFT JOIN traveldb.packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
+    $sql = mysqli_query($conn, "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, AI.packageIDFrom, COUNT(AI.packageImgID) AS Count, AI.packageImg_Name 
+                                FROM  package_tbl AS PK 
+                                INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                                LEFT JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
                                 WHERE packageCreator = $id AND (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL)
-                                GROUP BY AI.packageIDFrom");
+                                GROUP BY AI.packageIDFrom, AI.packageImg_Name, PK.packageID");
     // $got = mysqli_fetch_array($sql);
     return $sql;
 }

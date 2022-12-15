@@ -1,7 +1,7 @@
 <?php 
 
-    include "../connect/dbCon.php";
-    include "agency_display.php";
+    include __DIR__."/../connect/dbCon.php";
+    include __DIR__."/agency_display.php";
     
     // Function for determining the proper prefix/suffix to be added to the SQL Query
     function get_prefix() {
@@ -13,7 +13,7 @@
     
     if (isset($_POST['isReloadingTable']) and $_POST['isReloadingTable'] == 'true') {
         $query_string = "SELECT agencyID, agencyName, verificationStat, agencyImageProof, agencyAccreditation, is_found, CONCAT(US.fname, ' ',US.lname) AS fullname 
-        FROM traveldb.agency_tbl AS AG INNER JOIN traveldb.user_tbl AS US ON AG.agencyManID = US.id";
+        FROM  agency_tbl AS AG INNER JOIN  user_tbl AS US ON AG.agencyManID = US.id";
         fetch_agencytbl($query_string, $conn);
     }
 
@@ -21,7 +21,7 @@
         try {
 
             $query_string = "SELECT agencyID, agencyName, verificationStat, agencyImageProof, agencyAccreditation, is_found, CONCAT(US.fname, ' ',US.lname) AS fullname 
-            FROM traveldb.agency_tbl AS AG INNER JOIN traveldb.user_tbl AS US ON AG.agencyManID = US.id";
+            FROM  agency_tbl AS AG INNER JOIN  user_tbl AS US ON AG.agencyManID = US.id";
             $has_previous_value = false;
 
             if (isset($_POST['agency_name'])) {

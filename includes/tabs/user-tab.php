@@ -45,7 +45,7 @@
         </div>
         <div id="full-utable" class="fulltable">
             <?php
-            $query_string = "SELECT * FROM traveldb.user_tbl where is_deleted = 0; ";
+            $query_string = "SELECT * FROM  user_tbl where is_deleted = 0; ";
 
             fetch_user_accounts($query_string, $conn)
             ?>

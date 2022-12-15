@@ -31,9 +31,9 @@ if (isset($_SESSION['isLoggedIn']) == false) {
 </head>
 
 <body>
-    <?php
-    include 'includes/components/nav.php';
-    include 'includes/components/accountModal.php';
+    <?php 
+        include __DIR__.'/includes/components/nav.php';
+        include __DIR__.'/includes/components/accountModal.php';
     ?>
     <section class="sections mapping" id="interactive-map" style="margin-top: 4rem;">
         <!-- <div class="banner-half">

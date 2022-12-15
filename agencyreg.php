@@ -30,8 +30,8 @@ if(isset($_SESSION['isLoggedIn']) == false) {
 <body>
 
 <?php 
-    include 'includes/components/nav.php';
-    include 'includes/components/accountModal.php';
+    include __DIR__.'/includes/components/nav.php';
+    include __DIR__.'/includes/components/accountModal.php';
 ?>
 <!-- FORM FIELD -->
 

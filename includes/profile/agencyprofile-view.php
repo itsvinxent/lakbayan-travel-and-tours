@@ -1,5 +1,5 @@
 <?php
-  include 'backend/auth/getagency.php';
+  include __DIR__.'/../../backend/auth/getagency.php';
 
   $disMEmail = $_SESSION['setMEmail'];
   $disEmail = $_SESSION['setEmail'];
@@ -74,7 +74,7 @@
             echo '</div>';
                   // <p class="agency-email">'.$display['agencyEmail'].'</p>';
             
-            $ratingsummary_query_string = "SELECT * FROM traveldb.agencyrating_tbl WHERE agencyID= $viewID";
+            $ratingsummary_query_string = "SELECT * FROM  agencyrating_tbl WHERE agencyID= $viewID";
 
             $sqlquery = mysqli_query($conn, $ratingsummary_query_string);
             $ratingCounts = mysqli_fetch_array($sqlquery);

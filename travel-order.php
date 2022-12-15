@@ -30,8 +30,8 @@ if (isset($_SESSION['booking-stat']) == false) {
 
 <body>
   <?php
-  include 'includes/components/nav.php';
-  include 'includes/components/accountModal.php';
+  include __DIR__.'/includes/components/nav.php';
+  include __DIR__.'/includes/components/accountModal.php';
   ?>
 
   <section class="sections t-order" id="t-order" style="margin-top: 100px;">

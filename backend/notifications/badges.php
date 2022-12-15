@@ -1,9 +1,9 @@
 <?php 
-    include "../connect/dbCon.php";
+    include __DIR__."/../connect/dbCon.php";
 
     // Badge notification for Administrator Verifications Tab
     function getPendingCount($conn) {
-        $count = mysqli_fetch_array(mysqli_query($conn, "SELECT COUNT(*) FROM traveldb.agency_tbl WHERE verificationStat = 'pending'"));
+        $count = mysqli_fetch_array(mysqli_query($conn, "SELECT COUNT(*) FROM  agency_tbl WHERE verificationStat = 'pending'"));
         echo $count[0];
     }
     

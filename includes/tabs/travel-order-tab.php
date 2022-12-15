@@ -833,7 +833,7 @@
         // Travel Order redirect
         <?php
         if (isset($_GET['orderID'])) {
-            $orderdispquery = "SELECT id_user FROM traveldb.booking_tbl AS BK INNER JOIN traveldb.inquiry_tbl AS IQ ON BK.inquiryInfoID = IQ.id WHERE BK.bookingID = {$_GET['orderID']}";
+            $orderdispquery = "SELECT id_user FROM  booking_tbl AS BK INNER JOIN  inquiry_tbl AS IQ ON BK.inquiryInfoID = IQ.id WHERE BK.bookingID = {$_GET['orderID']}";
             $sqlquery = mysqli_query($conn, $orderdispquery);
             $userid = mysqli_fetch_array($sqlquery);
             if ($userid[0] == $_SESSION['id']) {

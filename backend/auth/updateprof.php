@@ -61,8 +61,8 @@ if(!file_exists($placebanhere)){
     mkdir($placebanhere, 0777, true);
 }
 
-include '..\connect\dbCon.php';
-include_once __DIR__.'\..\..\backend\notifications\notification_model.php';
+include __DIR__.'/../connect/dbCon.php';
+include_once __DIR__."/../../backend/notifications/notification_model.php";
 
 if (isset($_POST['submitupdate']) ){
     $img = $_FILES['profPicture'];

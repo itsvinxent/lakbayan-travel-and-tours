@@ -1,8 +1,8 @@
 <?php
-    include '../connect/dbCon.php';
+    include __DIR__.'/../connect/dbCon.php';
     require 'booking_status.php';
     require_once __DIR__.'/../../backend/verify/payment.php';
-    include_once __DIR__.'\..\..\backend\notifications\notification_model.php';
+    include_once __DIR__."/../../backend/notifications/notification_model.php";
 
 
     if(mysqli_connect_error()){
@@ -34,11 +34,11 @@
         }
         }
 
-        $qry = "SELECT US.id, AG.agencyName FROM traveldb.booking_tbl AS BK
-                                INNER JOIN traveldb.inquiry_tbl AS IQ ON BK.inquiryInfoID = IQ.id
-                                INNER JOIN traveldb.user_tbl AS US ON IQ.id_user = US.id
-                                INNER JOIN traveldb.package_tbl AS PK ON IQ.packageID = PK.packageID
-                                INNER JOIN traveldb.agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+        $qry = "SELECT US.id, AG.agencyName FROM  booking_tbl AS BK
+                                INNER JOIN  inquiry_tbl AS IQ ON BK.inquiryInfoID = IQ.id
+                                INNER JOIN  user_tbl AS US ON IQ.id_user = US.id
+                                INNER JOIN  package_tbl AS PK ON IQ.packageID = PK.packageID
+                                INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                                 WHERE BK.bookingID = $bookingID";
 
         $send_to = mysqli_fetch_assoc(mysqli_query($conn, $qry)); 

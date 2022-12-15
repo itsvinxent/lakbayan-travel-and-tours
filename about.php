@@ -22,8 +22,8 @@ $_SESSION['active'] = 'about';
 
 <body>
   <?php 
-    include 'includes/components/nav.php';
-    include 'includes/components/accountModal.php';
+    include __DIR__.'/includes/components/nav.php';
+    include __DIR__.'/includes/components/accountModal.php';
   ?>
   <section class="sections about-us" id="about-us" style="margin-top: 5rem;">
 

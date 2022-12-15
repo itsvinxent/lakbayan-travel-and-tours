@@ -39,13 +39,13 @@ $mode = 1;
 
 <body>
   <?php
-  include 'includes/components/nav.php';
-  include 'includes/components/accountModal.php';
+  include __DIR__.'/includes/components/nav.php';
+  include __DIR__.'/includes/components/accountModal.php';
 
   if ($mode == 0 or $_GET['mode'] ?? null == 'view'){
-    include 'includes/profile/userprofile-view.php';
+    include __DIR__.'/includes/profile/userprofile-view.php';
   } else {
-    include 'includes/profile/userprofile-edit.php';
+    include __DIR__.'/includes/profile/userprofile-edit.php';
   }
 
   ?>

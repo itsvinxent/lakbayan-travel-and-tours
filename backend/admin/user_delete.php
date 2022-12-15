@@ -1,5 +1,5 @@
 <?php
-    include '../connect/dbCon.php';
+    include __DIR__.'/../connect/dbCon.php';
     if(mysqli_connect_error()){
         echo<<<END
             <script type ="text/JavaScript">  
@@ -10,8 +10,8 @@
     else{
         $usrid = $_GET['id'];
         $currentDate = new DateTime();
-        // $delete_query = " DELETE FROM traveldb.user_tbl WHERE id = $usrid; " ;
-        $delete_query = "UPDATE traveldb.user_tbl SET is_deleted = 1 WHERE id = $usrid; " ;
+        // $delete_query = " DELETE FROM  user_tbl WHERE id = $usrid; " ;
+        $delete_query = "UPDATE  user_tbl SET is_deleted = 1 WHERE id = $usrid; " ;
         
          mysqli_query($conn,$delete_query);
     

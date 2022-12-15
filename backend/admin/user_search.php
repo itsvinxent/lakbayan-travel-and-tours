@@ -1,7 +1,7 @@
 <?php 
 
-    include "../connect/dbCon.php";
-    include "user_display.php";
+    include __DIR__."/../connect/dbCon.php";
+    include __DIR__."/user_display.php";
     
     // Function for determining the proper prefix/suffix to be added to the SQL Query
     function get_prefix() {
@@ -13,7 +13,7 @@
 
     if (isset($_POST['is_user']) and $_POST['is_user'] == 'true') {
         try {
-            $query_string = "SELECT *, CONCAT(fname, ' ', lname) AS fullname FROM traveldb.user_tbl where is_deleted = 0 ";
+            $query_string = "SELECT *, CONCAT(fname, ' ', lname) AS fullname FROM  user_tbl where is_deleted = 0 ";
             $has_previous_value = true;
 
             if (isset($_POST['email'])) {
