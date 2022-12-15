@@ -77,7 +77,11 @@
                 $mail->Password=$mail_pass;
     
                 $mail->setFrom('no-reply@lakbaysabayan.com', 'OTP Verification');
+
                 $mail->addAddress($sendto);
+
+             
+
                 
                 $mail->isHTML(true);
                 $mail->Subject="LAKBAYAN VERIFICATION";
