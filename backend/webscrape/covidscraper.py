@@ -23,22 +23,22 @@ final_df = clean_columns.pivot_table(index=['Region', 'Municipality'],
                           aggfunc=lambda x: ' '.join(x))
 
 # Export to CSV
-final_df.to_csv(os.getcwd() + 'public_html\\backend\\webscrape\\covidData.csv', index=True)
+final_df.to_csv(os.getcwd() + '/public_html/backend/webscrape/covidData.csv', index=True)
 
 
 # Adding COVID-19 data to geoJson files
 def getMunicipalityList():
     # Import from existing CSV
-    filepath = os.getcwd() + "public_html\\backend\\webscrape"
-    df = pd.read_csv(filepath + "\\covidData.csv")
+    filepath = os.getcwd() + "/public_html/backend/webscrape"
+    df = pd.read_csv(filepath + "/covidData.csv")
     fmuni = df['Municipality'].tolist()
    
-    fullpath = os.getcwd() + "public_html\\geojson"
+    fullpath = os.getcwd() + "/public_html/geojson"
     dir_list = os.listdir(fullpath)
     
     count = 0
     for file in dir_list:
-        file = (fullpath+"\\"+file)
+        file = (fullpath+"/"+file)
         print(file)
         with open(file, "r") as jsonFile:
             data = json.load(jsonFile)

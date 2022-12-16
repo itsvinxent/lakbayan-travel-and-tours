@@ -43,7 +43,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
 </head>
 
 <body>
-  <?php if (isset($_SESSION['id']))?>
+  <?php if (isset($_SESSION['id'])) { ?>
   <script>
     var visit_seconds = 0;
     function visitduration(seconds){
@@ -69,6 +69,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
     };
   </script>
   <?php 
+  }
   include __DIR__.'/../components/nav.php';
   include __DIR__.'/../components/accountModal.php';
   include __DIR__.'/../../backend/connect/dbCon.php';
@@ -101,7 +102,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
   $row = $jsondata['details'];
   
   $img = $jsondata['images'];
-  $imgCount = count($img)-1;
+  $imgCount = count($img);
 
   $incl = $jsondata['inclusions'];
   $inclCount = count($incl);
@@ -138,8 +139,8 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                 echo "<input type='radio' name='nav-btn' id='btn$i' />";
               }
             
-              for ($i=1; $i <= $imgCount ; $i++) { 
-                $i==1 ? $class = "slide first": $class = "slide";
+              for ($i=0; $i <= $imgCount ; $i++) { 
+                $i==0 ? $class = "slide first": $class = "slide";
                 echo <<<END
                   <div class="$class">
                     <img src="../../assets/img/users/travelagent/{$row['packageCreator']}/package/{$row['packageID']}/img/$img[$i]" alt="" />
@@ -193,16 +194,25 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                   <img src="../../assets/img/chatAgency.png" alt="" style="width: 25px; height: 25px;">
                 </span>
                 <span style="margin-top: 5px; font-size: 25px;">
-                  <label for="is-liked" id="like-this" style="cursor: pointer; color: #F15B6C;">
+                  
                     <?php 
-                      $is_liked_check = has_liked($conn, $packageID, $_SESSION['id']);
-                      if (isset($is_liked_check['packageHeartID']) and $is_liked_check['packageHeartID'] != 0 ) {
-                        echo '<i class="fas fa-heart"></i></label>';
-                        echo '<input type="checkbox" name="is-liked" id="is-liked" checked hidden>';
+                      if ($_SESSION['isLoggedIn'] == true) {
+                        $is_liked_check = has_liked($conn, $packageID, $_SESSION['id']);
+                        if (isset($is_liked_check['packageHeartID']) and $is_liked_check['packageHeartID'] != 0 ) {
+                          echo '<label for="is-liked" id="like-this" style="cursor: pointer; color: #F15B6C;">';
+                          echo '<i class="fas fa-heart"></i></label>';
+                          echo '<input type="checkbox" name="is-liked" id="is-liked" checked hidden>';
+                        } else {
+                          echo '<label for="is-liked" id="like-this" style="cursor: pointer; color: #F15B6C;">';
+                          echo '<i class="far fa-heart"></i></label>';
+                          echo '<input type="checkbox" name="is-liked" id="is-liked" hidden>';
+                        }
                       } else {
+                        echo '<label style="cursor: pointer; color: #F15B6C;">';
                         echo '<i class="far fa-heart"></i></label>';
-                        echo '<input type="checkbox" name="is-liked" id="is-liked" hidden>';
+                        echo '<input type="checkbox" hidden>';
                       }
+                      
                       ?>
                 </span>
               </span>
@@ -261,7 +271,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
             
             <?php 
               $button_content = '<a id="modalBOpen" class="book-btn">Check Availability</a>';
-
+              $is_interfering = false;
               if (isset($_SESSION['isLoggedIn']) and $_SESSION['isLoggedIn']) {
                 if ($row['packageSlots'] == 0) {
                   $button_content = '<a class="book-btn">Fully Booked</a>';
@@ -276,9 +286,27 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                     $cartItem = mysqli_fetch_array($qry_exist);
                     if (isset($cartItem['bookingID']) == true) {
                       $button_content = '<a href="../../user-profile.php?orderID='.$cartItem['bookingID'].'" class="book-btn">Check Booking Status</a>';
+                    } else {
+                      $query = "SELECT count(*) AS inter_count  from booking_tbl AS BK
+                              INNER JOIN inquiry_tbl AS IQ ON BK.inquiryInfoID = IQ.id
+                              INNER JOIN package_tbl AS PK ON IQ.packageID = PK.packageID 
+                              WHERE '{$row['packageStartDate']}' BETWEEN PK.packageStartDate
+                              AND PK.packageEndDate 
+                              AND BK.bookingStatus = 'trip-sched'
+                              AND IQ.id_user = {$_SESSION['id']}";
+                    
+                      $qry_interfere = mysqli_query($conn, $query);
+                      $ItemInter = mysqli_fetch_array($qry_interfere);
+                      if ($ItemInter['inter_count'] != 0) {
+                        $button_content = '<a id="modalBOpen" class="book-btn">Schedule Issue</a>';
+                        $is_interfering = true;
+                      }
                     } 
                   } 
                 }
+                    
+
+                
               }
               echo $button_content;
             ?>
@@ -309,6 +337,15 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                 <a id=\"modalBClose\" class=\"btn\">Maybe next time</a>
               </div>";
             } else {
+              if ($is_interfering) {
+                echo "<div class='modal'>
+                <h1>Schedule Issue!</h1>
+                <p><strong>{$ItemInter['inter_count']}</strong> of your scheduled trips coincides with the schedule of this trip! Please try booking this after your other trips.</p>
+                <div class='buttons' style='justify-content: center;'>
+                  <a id='modalBClose' class='btn'>Got it!</a>
+                </div>
+                </div>";
+              } else {
             ?>
               <div class="booking-modal" id="booking-form" style="width: 1000px;">
                   <input type="hidden" name="inserting" value="true">
@@ -367,6 +404,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                 
               </div>
             <?php
+              }
             }
             ?>
           </div>
@@ -393,7 +431,14 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                 $bookcontainer.removeClass("show");
               }
             });
- 
+
+            $('#booking-summary').on('click', function (e) {
+              if ($("#booking-summary").has(e.target).length === 0) {
+                $('#booking-summary').removeClass("show");
+              }
+            });
+            
+            <?php if(isset($_SESSION['id'])) { ?>
             var displayCal = $('#date-display').flatpickr({
                 monthSelectorType: "static",
                 yearSelectorType: "static",
@@ -478,12 +523,6 @@ if(isset($_SESSION['isLoggedIn']) == false) {
               });
             });
 
-            $('#booking-summary').on('click', function (e) {
-              if ($("#booking-summary").has(e.target).length === 0) {
-                $('#booking-summary').removeClass("show");
-              }
-            });
-
             var like_timeout, like_req;
             function likePackage() {
               like_req = $.ajax({
@@ -523,7 +562,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
               }, 1000);
               
             })
-           
+           <?php } ?>
           </script>
           
 
@@ -787,6 +826,26 @@ if(isset($_SESSION['isLoggedIn']) == false) {
           loadingSpeed	:	10,
           packageID     : <?php echo $packageID;?>
         });
+
+        // $('#ratings-list-el').on('click', '.hide-comment', function() {
+        //   let ratingID = $(this).children('input').val();
+
+        //   $.ajax({
+        //     url: '../../backend/package/package_hearts.php',
+        //     method: 'POST',
+        //     data: {
+        //      packageID: <?php //echo $packageID; ?>,
+        //       userID: <?php //echo $_SESSION['id']; ?>,
+        //       is_liked: $('#is-liked').is(':checked')
+        //     },
+        //     async: true,
+        //     context: this,
+        //     beforeSend: function() {
+        //     },
+        //     success: function(data) {   
+        //     }
+        //   })
+        // })
       </script>
     </div>
     <?php } ?>
