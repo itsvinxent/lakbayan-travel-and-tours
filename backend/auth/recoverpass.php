@@ -35,9 +35,9 @@
 
             $mail->isSMTP();
             $mail->Host='mail.lakbaysabayan.com';
-            $mail->Port=587;
+            $mail->Port=465;
             $mail->SMTPAuth=true;
-            $mail->SMTPSecure='tls';
+            $mail->SMTPSecure='ssl';
 
             $mail->Username=$_ENV['MAIL_ADDRESS'];
             $mail->Password=$_ENV['MAIL_PASS'];

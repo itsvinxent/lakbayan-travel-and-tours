@@ -40,9 +40,11 @@
                     WHERE IQ.id = $inquiry[id]";
                     
             $send_to = mysqli_fetch_assoc(mysqli_query($conn, $qry));
+            $sendtopackage = mysqli_real_escape_string($conn, $send_to['packageTitle']);
+            $sendtoagency = mysqli_real_escape_string($conn, $send_to['agencyName']);
 
-            sendNotification($send_to['agencyManID'], "booking", "$send_to[packageTitle] got a booking!");
-            sendNotification($id_user, "booking", "$send_to[agencyName] is awaiting for your payment!");
+            sendNotification($send_to['agencyManID'], "booking", "$sendtopackage got a booking!");
+            sendNotification($id_user, "booking", "$sendtoagency is awaiting for your payment!");
 
             $_SESSION['booking-stat'] = 'success';
             } else {
