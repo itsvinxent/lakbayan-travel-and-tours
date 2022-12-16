@@ -355,7 +355,7 @@ function fetch_booking_by_id($inq_qry, $status_qry, $conn) {
 
 if(isset($_POST['getData']) and $_POST['getData']=="ok") {
     include __DIR__."../../connect/dbCon.php";
-    $rating_query_string = "SELECT PR.package_rating, PR.package_review, PR.ratingDate, CONCAT(US.fname, ' ', US.lname) AS fullname, US.profpicture, US.id
+    $rating_query_string = "SELECT PR.ratingID, PR.package_rating, PR.package_review, PR.ratingDate, PR.is_hidden, CONCAT(US.fname, ' ', US.lname) AS fullname, US.profpicture, US.id
                                 FROM  packagerating_tbl AS PR
                                 INNER JOIN  user_tbl AS US ON PR.userID_rating = US.id
                                 WHERE packageID_rated = {$_POST['packageID']} ORDER BY ratingDate DESC";
@@ -398,8 +398,11 @@ if(isset($_POST['getData']) and $_POST['getData']=="ok") {
               ?>
             </div>
             <p class="rating-date"><?php echo $ratings['ratingDate']; ?></p>
-            <p class="review-body"><?php echo $ratings['package_review']; ?></p>
+            <p class="review-body"><?php if ($ratings['is_hidden'] != 1) echo $ratings['package_review']; ?></p>
           </div>
+          <!-- <div>
+            <p class="hide-comment" style="cursor: pointer;">Hide<input type="hidden" name="packageRatingID" value="<?php //echo $ratings['ratingID']?>"></p>
+          </div> -->
         </div>
     <?php  
         }

@@ -34,49 +34,7 @@ if (isset($_SESSION['booking-stat']) == false) {
   include __DIR__.'/includes/components/nav.php';
   include __DIR__.'/includes/components/accountModal.php';
   include __DIR__.'/backend/connect/dbCon.php';
-
-  if ($_SESSION['booking-stat'] != 'none') {
-    if ($_SESSION['booking-stat'] == 'success') {
-      echo <<<END
-        <div class="modal-container show" id="amodal_container">
-        <div class='modal'>
-          <h1>Hooray!</h1>
-          <p>Your booking information has been sent. We'll contact you as soon as possible.</p>
-          <div class="buttons">
-            <a id="modalBClose" class="btn">Got it!</a>
-          </div>
-        </div>
-        </div>  
-        END;
-    } else {
-      echo <<<END
-        <div class="modal-container show" id="amodal_container">
-        <div class='modal'>
-          <h1>Oops!</h1>
-          <p>We are not able to process your inquiry. Maybe try again later?</p>
-          <div class="buttons">
-            <a id="modalBClose" class="btn">Alright!</a>
-          </div>
-        </div>
-        </div>  
-        END;
-    }
-    $_SESSION['booking-stat'] = 'none';
-  }
-
   ?>
-  <script>
-    $('#modalBClose').on("click", function() {
-      $("#amodal_container").removeClass("show");
-    });
-
-    $("#amodal_container").on('click', function (e) {
-      if ($("#amodal_container").has(e.target).length === 0) {
-        $("#amodal_container").removeClass("show");
-      }
-    });    
-  </script>
-
   <section class="sections packages" id="destinations">
     <div class="banner-half" style="height: 35vh;">
       <video src="assets/media/falls.mp4" muted loop autoplay preload="auto" style="height: 35vh;"></video>
