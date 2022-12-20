@@ -33,7 +33,7 @@ $_SESSION['active'] = 'about';
         Are you having trouble finding a good website where you can choose
         your trip and book a stay at the same time? This website is dedicated
         to you. </p>
-      <video class="center" src="assets/media/balloons.mp4" muted loop autoplay preload="auto"></video>
+      <video class="center" src="http://da6gltgyhi54u.cloudfront.net/media/balloons.mp4" muted loop autoplay preload="auto"></video>
       <p>Lakbayan Travel and Tours will provide a convenient and
         premium travel and tour service for local destination in the
         Philippines, specifically in the Negros Occidental province. 
@@ -72,22 +72,22 @@ $_SESSION['active'] = 'about';
       <h1>Meet the Lakbayan Team</h1>
       <div class="card-container">
         <div class="card">
-          <img src="assets/img/JM.jpeg" alt="">
+          <img src="http://da6gltgyhi54u.cloudfront.net/img/JM.jpeg" alt="">
           <h3>John Mark De Ocampo</h3>
           <p>Project Manager</p>
         </div>
         <div class="card">
-          <img src="assets/img/aj.png" alt="">
+          <img src="http://da6gltgyhi54u.cloudfront.net/img/aj.png" alt="">
           <h3>Jeremiah Galzote</h3>
           <p>Project Manager</p>
         </div>
         <div class="card">
-          <img src="assets/img/JV.jpg" alt="">
+          <img src="http://da6gltgyhi54u.cloudfront.net/img/JV.jpg" alt="">
           <h3>John Vincent Ayala</h3>
           <p>Front-end Developer</p>
         </div>
         <div class="card">
-          <img src="assets/img/vash.png" alt="" style="background: white;">
+          <img src="http://da6gltgyhi54u.cloudfront.net/img/vash.png" alt="" style="background: white;">
           <h3>Jeanne Francis Rivas</h3>
           <p>Back-end Developer</p>
         </div>
