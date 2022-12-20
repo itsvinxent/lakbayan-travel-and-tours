@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/uvrfocer/public_html/
+    - /bin/cp /repositories/lakbayan-travel-and-tours -R * $DEPLOYPATH
