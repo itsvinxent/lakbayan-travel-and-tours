@@ -17,7 +17,9 @@
     $inquiry = mysqli_fetch_array($qry_exist);
     $bookingNum = $id_user.date("-ymd").$inquiry['id'];
 
-    $payload = generatePaymongoLink($totalPrice);
+    $paymongo =  new PaymongoOperation();
+
+    $payload = $paymongo->generatePaymongoLink($totalPrice);
     $redirect = $payload['data']['attributes']['checkout_url'];
     $reference = $payload['data']['attributes']['reference_number'];
 

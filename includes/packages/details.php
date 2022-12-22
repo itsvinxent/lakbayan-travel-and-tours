@@ -559,7 +559,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                 likePackage().then(function (data) {
                   $('#like-count').text(data+' people ')
                 });
-              }, 1000);
+              }, 200);
               
             })
            <?php } ?>

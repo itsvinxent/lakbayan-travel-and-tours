@@ -4,7 +4,7 @@
     require_once __DIR__.'/../../backend/verify/payment.php';
     include_once __DIR__."/../../backend/notifications/notification_model.php";
 
-
+    $paymongo = new PaymongoOperation();
     if(mysqli_connect_error()){
         echo<<<END
             <script type ="text/JavaScript">  
@@ -23,7 +23,7 @@
         $payment_id = null; 
 
         if(isset($paymongo_reference)){
-        $payload = getPaymongoLink($paymongo_reference);
+        $payload = $paymongo->getPaymongoLink($paymongo_reference);
 
         $ctr = 0;
         foreach ($payload['data']['attributes']['payments'] as $key => $decodes){
@@ -42,13 +42,11 @@
                                 WHERE BK.bookingID = $bookingID";
 
         $send_to = mysqli_fetch_assoc(mysqli_query($conn, $qry)); 
-
+        $agencyName = mysqli_real_escape_string($conn, $send_to['agencyName']);
         
         if($request_decision == 'decline'){
             if(setBookingStatus($conn, $bookingID, "refund-denied", false)){
-                   
-
-                sendNotification($send_to['id'], "booking", "$send_to[agencyName] denied your refund request for booking $bookingID!");
+                sendNotification($send_to['id'], "booking", "$agencyName denied your refund request for booking $bookingID!");
 
                 echo<<<END
                 <script type ="text/JavaScript">  
@@ -65,8 +63,8 @@
         }else {
             if(setBookingStatus($conn, $bookingID, "refunded", false)){
 
-                generateRefund($refund_amount, $payment_id, $refund_reason, $notes); 
-                sendNotification($send_to['id'], "booking", "$send_to[agencyName] accepted your refund request for booking $bookingID!");
+                $paymongo->generateRefund($refund_amount, $payment_id, $refund_reason, $notes); 
+                sendNotification($send_to['id'], "booking", "$agencyName accepted your refund request for booking $bookingID!");
                 echo<<<END
                     <script type ="text/JavaScript">  
                     alert("Booking {$bookingID} refund success")

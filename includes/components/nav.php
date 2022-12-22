@@ -180,8 +180,8 @@
 
 
   $("#notification").on("click", () =>{
-    $("#notification__dropdown").toggleClass("show");
-    $("#notification__wrapper").toggleClass("show");
+    $("#notification__dropdown").toggleClass("appear");
+    $("#notification__wrapper").toggleClass("appear");
   })
 
   $(document).ready(()=>{
