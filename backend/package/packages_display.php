@@ -1,4 +1,7 @@
 <?php
+require __DIR__.'/vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__."/../");
+$dotenv->load();
 
 // Function for displaying in the Main Package Page and the Travel Agency Profile Page (View Mode)
 function fetch_packages($query_string, $conn, $editmode, $limit, $page)
@@ -33,8 +36,8 @@ function fetch_packages($query_string, $conn, $editmode, $limit, $page)
                 <?php
                 // echo '<img src="data:image/jpg;base64,' . base64_encode($row['packageImg_Name']) . '" alt="" style="height: 160px;"/>';
                 if (isset($row['packageImg_Name'])){
-                    echo '<img src="assets/img/users/travelagent/'.$row['packageCreator'].'/package/'.$row['packageID'].'/img/'.$row['packageImg_Name'].'" alt=""/>';}
-                else echo '<img src="assets/img/Missing.jpeg" alt=""/>';
+                    echo '<img src="'.$_ENV['CLD_MEDIA_LINKS'].'assets/img/users/travelagent/'.$row['packageCreator'].'/package/'.$row['packageID'].'/img/'.$row['packageImg_Name'].'" alt=""/>';}
+                else echo '<img src="/assets/img/Missing.jpeg" alt=""/>';
                 // echo '<img src="users/travelagent/' .$row['packageCreator']. 'package/' .$row['packageID']. '//img//' . $row['packageImg_Name'] . " alt="" style="height: 160px;"/>';
                 ?>
             </div>
