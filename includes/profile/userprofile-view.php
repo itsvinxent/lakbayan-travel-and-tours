@@ -1,5 +1,6 @@
 <?php 
     include __DIR__.'/../../backend/auth/getuser.php';
+    include __DIR__."/../../backend/auth/function.resize.php";
 
 if(isset($_GET['id'])){
     $viewID = $_GET['id'];

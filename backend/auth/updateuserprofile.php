@@ -1,9 +1,18 @@
 <?php
+
+
+
 set_include_path(dirname(__FILE__));
 
 include __DIR__.'/../connect/dbCon.php';
 require 'imgverification.php';
+include __DIR__.'/../cloudinary/cloudinary_instance.php';
+
+
 session_start();
+
+
+
 
 // ACCOUNT INFORMATION
 $firstName = $_POST['fname'];
@@ -59,6 +68,7 @@ $userID = $_SESSION['id'];
 
 // IMAGE DIRECTORY CHECK
 $placehere = '../../assets/img/users/traveler/'.$userID.'/pfp/';
+$placecloud = 'assets/img/users/traveler/'.$userID.'/pfp/';
 //checks if dir exist and makes one if it does not
 if(!file_exists($placehere)){
     mkdir($placehere, 0777, true);
@@ -99,6 +109,7 @@ if (isset($_POST['submit']) && $nope == 1){
 
         //PROFILE
         $updated = rename_image($img, "PFP-TR-");
+        $trimmed_img = trim($updated, '.'.strtolower(pathinfo($img['name'],PATHINFO_EXTENSION)).'');
         $uploadto = $placehere.$updated;
 
         if($img['error'] == 4) $updated = $inImage; 
@@ -135,7 +146,15 @@ if (isset($_POST['submit']) && $nope == 1){
             if (mysqli_query($conn, $qry)){
                 sendNotification($userID, "profile", "You successfully edited your profile!");
                 
-                if ($img['error'] != 4) move_uploaded_file($img['tmp_name'], $uploadto);
+                if ($img['error'] != 4) {
+                    $cloudinary->uploadApi()->upload("$img[tmp_name]", [
+                        'folder' => $placecloud,
+                        'public_id' => $trimmed_img
+                    ]);
+                    move_uploaded_file($img['tmp_name'], $uploadto);
+                }
+                    
+                    
                 if ($ban['error'] != 4) move_uploaded_file($ban['tmp_name'], $uploadban);
                 echo '<meta http-equiv="refresh" content="0;URL=../../user-profile.php" />';
             }else{
