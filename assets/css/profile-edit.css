@@ -68,7 +68,7 @@ body {
 }
 
 .tab-content {
-  height: 80vh;
+  height: 85vh;
   overflow-y: scroll;
   overflow-x: hidden;
   /* border: 1px solid black; */
@@ -85,7 +85,7 @@ body {
   overflow-y: hidden;
   background-color: transparent;
   box-shadow: none;
-  height: 85vh;
+  /* height: 85vh; */
   /* position: relative; */
   width: 100%;
 }

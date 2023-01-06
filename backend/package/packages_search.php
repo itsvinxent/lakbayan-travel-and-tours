@@ -22,7 +22,7 @@ if (isset($_POST['page'])) {
 // This is for real-time search bar
 if (isset($_POST['query']) and $_POST['query'] == 'true') {
   $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, 
-  DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, 
+  DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.packageIDFrom, AI.packageImg_Name, 
   AG.agencyName, AG.agencyManID " . $_SESSION['recommendedQuery'];
   // echo $query_string;
   fetch_packages($query_string, $conn, false, $limit, $page);
