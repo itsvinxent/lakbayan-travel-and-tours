@@ -17,6 +17,7 @@ var postdata = {
   name: "",
   location: "",
   category: "",
+  searchbar: 'false',
   duration: 0,
   availability: "a-all"
 }
@@ -39,6 +40,7 @@ var usrpostdata = {
 }
 
 function filterTimeout($postdata, $tableid) {
+  console.log($postdata);
   if (filter_timeout) {
     clearTimeout(filter_timeout);
   }
@@ -79,7 +81,7 @@ function postdata_append(postdata, name, value) {
   if ((value != undefined) & (value != '') & (value != null)) {
     postdata[name] = value;
   } else {
-    // delete postdata[name];
+    delete postdata[name];
     count--;
   }
   return postdata
@@ -90,6 +92,7 @@ function package_data_input() {
   postdata = postdata_append(postdata, 'location', pack_location)
   postdata = postdata_append(postdata, 'category', pack_cat)
   postdata = postdata_append(postdata, 'duration', pack_duration)
+  console.log(postdata, pack_name)
 }
 
 function booking_data_input() {

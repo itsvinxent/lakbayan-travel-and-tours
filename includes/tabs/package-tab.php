@@ -141,8 +141,14 @@
         $('#reset-search').on('click', function() {
             postdata = {
                 is_filtering: true,
+                searchbar: false,
                 logged_user: usertp
             }
+
+            $('#package-name').val('');
+            $('#package-location').val('');
+            $('#package-category').val('');
+            $('#package-duration').val('');
 
             filterTimeout(postdata, '#full-table');
         })
