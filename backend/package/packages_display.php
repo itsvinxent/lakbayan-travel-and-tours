@@ -183,7 +183,7 @@ function fetch_packagetbl($query_string, $conn, $withAdd)
                   <th>Package Name</th>
                   <th></th>
                   <th>Duration(Days)</th>
-                  <th>Price</th>
+                  <th>Status</th>
                   <th>Rating</th>
                   <th>Action</th>
                 </tr>
@@ -202,7 +202,7 @@ function fetch_packagetbl($query_string, $conn, $withAdd)
                 <i class="far fa-heart" style="margin-right: 3px;"></i><?php echo $row['packageHearts'] ?>
             </td>
             <td><?php echo $row['packagePeriod'] ?></td>
-            <td><?php echo $row['fresult'] ?></td>
+            <td><?php if ($row['packageStatus'] == 0) echo "Available"; else echo "Unlisted"; ?></td>
             <td>
                 <div class="rating">
                     <?php
@@ -217,9 +217,11 @@ function fetch_packagetbl($query_string, $conn, $withAdd)
                     ?>
                 </div>
             </td>
+            <td hidden><?php echo $row['packageCreator'] ?></td>
             <td>
-                <button type="button" data-tab-target="#create-package" id="modalEOpen" class="pack-edit-btn resetting" onclick='changeForm()'><i class="far fa-edit"></i></button>
-                <button type="button" id="modalDOpen" class="delete-btn"><i class="fas fa-trash-alt"></i></button>
+                <button title="View Package" type="button" class="pack-view-btn" onclick="viewPackage(this);"><i class="far fa-eye"></i></button>
+                <button title="Edit Package" type="button" data-tab-target="#create-package" id="modalEOpen" class="pack-edit-btn resetting" onclick='changeForm()'><i class="far fa-edit"></i></button>
+                <button title="Unlist/Delist Package" type="button" id="modalDOpen" class="delete-btn"><i class="fas fa-ban"></i></button>
             </td>
         </tr>
 <?php

@@ -1,4 +1,9 @@
 <?php
+    if (isset($_GET['id']) == false || isset($_GET['stat']) == false || isset($_GET['utype']) == false ||
+        $_GET['id'] == '' || $_GET['stat'] == '' || $_GET['utype'] == ''){
+        header("Location: http://".$_SERVER['HTTP_HOST'] ."/Finals/index.php");
+        exit;
+    }
     include __DIR__.'/../connect/dbCon.php';
     if(mysqli_connect_error()){
         echo<<<END
@@ -9,6 +14,7 @@
     }
     else{
         $pkgid = $_GET['id'];
+        $stat = $_GET['stat'];
         $usertype = $_GET['utype'];
         $currentDate = new DateTime();
 
@@ -27,21 +33,21 @@
             END;
         } else {
             // $delete_query = " DELETE FROM  user_tbl WHERE id = $usrid; " ;
-            $delete_query = "UPDATE  package_tbl SET is_deleted = 1 WHERE packageID = $pkgid; " ;
+            $delete_query = "UPDATE  package_tbl SET is_deleted = $stat, packageStatus = $stat WHERE packageID = $pkgid; " ;
             
             mysqli_query($conn,$delete_query);
     
             if(mysqli_query($conn,$delete_query)){
             echo<<<END
                 <script type ="text/JavaScript">  
-                alert("Record successfully deleted")
+                alert("Status successfully updated.")
                 </script>
             END;
             }
             else{
             echo<<<END
                 <script type ="text/JavaScript">  
-                alert("ERROR. Record not deleted.")
+                alert("ERROR. Unable to update status.")
                 </script>
             END;
             }
