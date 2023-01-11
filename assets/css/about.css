@@ -33,7 +33,7 @@
 
 .about-us .colored .mission {
   display: grid;
-  grid-template-columns: 0.5fr 2fr;
+  grid-template-columns: 2fr 2fr;
   margin: 1rem auto;
   max-width: 80%;
 }
@@ -53,7 +53,7 @@
 
 .about-us .colored span {
   padding: 20px;
-  width: 50%;
+  width: 100%;
 }
 
 .about-us .colored .explore {
