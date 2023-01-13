@@ -25,10 +25,10 @@
         $qry_chk = mysqli_query($conn, $check_query);
         $has_pending = mysqli_fetch_assoc($qry_chk);
 
-        if ((int)$has_pending['pending_transactions'] != 0) {
+        if ((int)$has_pending['pending_transactions'] != 0 AND $stat == 1) {
             echo<<<END
             <script type ="text/JavaScript">  
-            alert("ERROR. Unable to delete package, finish all pending transactions first!")
+            alert("ERROR. Unable to UNLIST package, finish all pending transactions first!")
             </script>
             END;
         } else {

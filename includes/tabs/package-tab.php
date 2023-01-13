@@ -13,12 +13,12 @@
             <span>
                 <select name="package-category" id="package-category">
                     <option value="" disabled selected hidden style="opacity: .5;">Select a Category</option>
-                    <option value="beaches">Beaches and Resorts</option>
-                    <option value="mountains">Mountains</option>
-                    <option value="islands">Islands</option>
-                    <option value="animals">Animal Life</option>
-                    <option value="recreation">Recreation</option>
-                    <option value="historical">Historical Landmarks</option>
+                    <option value="Beaches and Resorts">Beaches and Resorts</option>
+                    <option value="Mountains">Mountains</option>
+                    <option value="Islands">Islands</option>
+                    <option value="Animal Life">Animal Life</option>
+                    <option value="Recreation">Recreation</option>
+                    <option value="Historical Landmarks">Historical Landmarks</option>
                 </select>
             </span>
         </div>
@@ -75,7 +75,7 @@
         <div id="full-table" class="fulltable">
             <?php
             if ($_SESSION['utype'] == 'manager') {
-                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName, AG.agencyManID
+                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AG.agencyName, AG.agencyManID
                                 FROM  package_tbl AS PK 
                                 INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                                 INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
@@ -85,7 +85,7 @@
 
                 fetch_packagetbl($query_string, $conn, true);
             } else if ($_SESSION['utype'] == 'admin') {
-                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, AG.agencyName, AG.agencyManID
+                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AG.agencyName, AG.agencyManID
                                 FROM  package_tbl AS PK 
                                 INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                                 INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
@@ -151,6 +151,10 @@
             $('#package-category').val('');
             $('#package-duration').val('');
 
+            pack_name = '';
+            pack_location = '';
+            pack_cat = '';
+            pack_duration = '';
             filterTimeout(postdata, '#full-table');
         })
 

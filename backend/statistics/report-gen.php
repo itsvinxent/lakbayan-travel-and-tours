@@ -193,5 +193,5 @@
     }
 
     saveAsExcel();
-    // window.close();
+    window.close();
 </script>

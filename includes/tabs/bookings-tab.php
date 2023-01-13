@@ -6,7 +6,7 @@
         </div>
         <div class="dur">
             <span><label for="b-package-transact">TRN</label></span>
-            <span><input type="number" name="b-package-transact" id="b-package-transact" placeholder="Enter Transaction Number"></span>
+            <span><input type="text" name="b-package-transact" id="b-package-transact" placeholder="Enter Transaction Number"></span>
         </div>
         <div class="cat">
             <span><label for="b-package-category">Package ID</label></span>
@@ -31,20 +31,28 @@
                 <label for="s-all"><span>All</span></label>
             </span>
             <span>
-                <input class="stat-inp" type="radio" name="stat-fil" value="s-unpaid" id="s-unpaid" style="display: none;">
+                <input class="stat-inp" type="radio" name="stat-fil" value="pay-pending" id="s-unpaid" style="display: none;">
                 <label for="s-unpaid"><span>Unpaid</span></label>
             </span>
             <span>
-                <input class="stat-inp" type="radio" name="stat-fil" value="s-processing" id="s-processing" style="display: none;">
-                <label for="s-processing"><span>Processing</span></label>
+                <input class="stat-inp" type="radio" name="stat-fil" value="rate-pending" id="s-unrated" style="display: none;">
+                <label for="s-unrated"><span>Unrated</span></label>
             </span>
             <span>
-                <input class="stat-inp" type="radio" name="stat-fil" value="s-completed" id="s-completed" style="display: none;">
+                <input class="stat-inp" type="radio" name="stat-fil" value="trip-sched" id="s-processing" style="display: none;">
+                <label for="s-processing"><span>Scheduled</span></label>
+            </span>
+            <span>
+                <input class="stat-inp" type="radio" name="stat-fil" value="complete" id="s-completed" style="display: none;">
                 <label for="s-completed"><span>Completed</span></label>
             </span>
             <span>
-                <input class="stat-inp" type="radio" name="stat-fil" value="s-cancelled" id="s-cancelled" style="display: none;">
+                <input class="stat-inp" type="radio" name="stat-fil" value="cancelled" id="s-cancelled" style="display: none;">
                 <label for="s-cancelled"><span>Cancelled</span></label>
+            </span>
+            <span>
+                <input class="stat-inp" type="radio" name="stat-fil" value="refunded" id="s-refunded" style="display: none;">
+                <label for="s-refunded"><span>Refunded</span></label>
             </span>
         </div>
 
@@ -98,6 +106,15 @@
                 logged_user: 'agency'
             }
 
+            $('#b-package-name').val('');
+            $('#b-package-transact').val('');
+            $('#b-package-id').val('');
+            $('#package-customer').val('');
+
+            pack_name = '';
+            pack_transact = '';
+            pack_id = '';
+            pack_customer = '';
             filterTimeout(bookingpostdata, '#fullb-table');
         });
 

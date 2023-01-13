@@ -268,7 +268,17 @@ function fetch_bookingtbl($query_string, $conn) {
             <td><?php echo $row['fullname'] ?></td>
             <td><?php echo $row['packageTitle'] ?></td>
             <td><?php echo $row['bookingPrice'] ?></td>
-            <td><?php echo $row['bookingStatus'] ?></td>
+            <td>
+                <?php 
+                    if($row['bookingStatus'] == 'complete') echo "Completed";
+                    else if($row['bookingStatus'] == 'pay-pending') echo "Unpaid";
+                    else if($row['bookingStatus'] == 'rate-pending') echo "Unrated";
+                    else if($row['bookingStatus'] == 'trip-sched' || $row['bookingStatus'] == 'refund-denied') echo "Scheduled";
+                    else if($row['bookingStatus'] == 'cancelled') echo "Cancelled";
+                    else if($row['bookingStatus'] == 'refunded') echo "Refunded";
+
+                ?>
+            </td>
             <td data-tab-target="#travel-order" style="cursor: pointer;" class="to_travel_order">
                 <!-- <i class="fas fa-ellipsis-h"></i> -->
                 <img style="display: inline-block; height: 100%; vertical-align: middle;" src="https://img.icons8.com/ios-glyphs/30/null/dots-loading--v3.png"/>
