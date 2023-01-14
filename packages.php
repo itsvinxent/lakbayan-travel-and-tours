@@ -374,7 +374,7 @@ if (isset($_SESSION['booking-stat']) == false) {
           // $query_string .= " LIMIT 0, 8";
           
           $_SESSION['recommendedQuery'] = $algo_cases;
-          fetch_packages($query_string, $conn, false, 8, 1);
+          fetch_packages($query_string, $conn, false, 9, 1);
           // echo $query_string;
 
           ?>

@@ -4,135 +4,19 @@ set_include_path(dirname(__FILE__));
 require 'imgverification.php';
     include __DIR__.'/../connect/dbCon.php';
 
-// if (isset($_POST['submit']) && isset($_FILES['aPicture'] )){
-    //     $imgName = $_FILES['aPicture']['name'];
-    //     $imgSize = $_FILES['aPicture']['size'];
-    //     $imgTemp = $_FILES['aPicture']['tmp_name'];
-    //     $imgError = $_FILES['aPicture']['error'];
-
-    //     if ($imgError === 0){
-    //         if ($imgSize > 5000000){
-    //             echo<<<END
-    //             <script type ="text/JavaScript">  
-    //             alert("ERROR. File must be smaller than 20mb")
-    //             </script>
-    //         END;
-    //         }
-    //         else {
-    //             $imgAllowed = pathinfo($imgName, PATHINFO_EXTENSION);
-    //             $toLower = strtolower($imgAllowed);
-
-    //             $allowedExt = array("jpg", "jpeg", "png");
-
-    //             if(in_array($toLower, $allowedExt)){
-    //                 $updatedName = uniqid("PFP-", true).'.'.$toLower;
-    //                 $uploadToFile = '../../assets/img/agencypfp/'.$updatedName;
-
-    //             // VERIFY OTHER INFO
-
-
-    //                 if(mysqli_connect_error()) {
-    //                     echo<<<END
-    //                         <script type ="text/JavaScript">  
-    //                         alert("ERROR. Failed connecting to databasee")
-    //                         </script>
-    //                     END;
-                
-    //                 } else {
-    //                     // Checks if email exists
-    //                     $emailCheck = "SELECT EXISTS(SELECT * FROM  user_tbl WHERE email='$_POST[aEmail]')";
-    //                     $result = mysqli_fetch_row(mysqli_query($conn, $emailCheck));
-                        
-    //                     if($result[0]=='1'){
-    //                         echo<<<END
-    //                         <script type ="text/JavaScript">  
-    //                         alert("An account with this email already exists. Use another email.")
-    //                         </script>
-    //                         END;
-                
-    //                     }else{
-    //                         $hash = password_hash($_POST['aPassword'], PASSWORD_BCRYPT);
-    //                         $addManager = "INSERT INTO  user_tbl (fname, lname, email, `password`, usertype) 
-    //                                     VALUES('$_POST[aMFName]', '$_POST[aMLName]', '$_POST[aEmail]', '$hash', 'manager' )";
-                
-    //                         if(mysqli_query($conn, $addManager)){
-                
-    //                             $getManager = "SELECT * FROM user_tbl WHERE lname='$_POST[aMLName]' AND email='$_POST[aEmail]' LIMIT 1";
-    //                             $res = mysqli_query($conn, $getManager) or die(mysqli_connect_error());
-                
-    //                             while($row = mysqli_fetch_assoc($res)){
-    //                                 $gotID = $row['id'];
-    //                             }
-
-    //                             $addAgency = "INSERT INTO  agency_tbl (`agencyName`, `agencyAddress`, `agencyDescription`, `agencyManID`, `agencyManPass`, agencyPfpicture) 
-    //                                         VALUES ('$_POST[aName]', '$_POST[aAddress]', '$_POST[aDesc]', '$gotID', '$hash', '$updatedName')";
-                                
-    //                             if (mysqli_query($conn, $addAgency)){
-
-    //                                 move_uploaded_file($imgTemp, $uploadToFile);
-                                    
-    //                                 echo<<<END
-    //                                 <script type ="text/JavaScript">  
-    //                                 alert("Record successfully added")
-    //                                 </script>
-    //                             END;
-                
-    //                             } else {
-    //                                 echo<<<END
-    //                                 <script type ="text/JavaScript">  
-    //                                 alert("ERROR. Record not added.")
-    //                                 </script>
-    //                             END;
-    //                             }
-    //                         }
-    //                         else{
-    //                             echo<<<END
-    //                             <script type ="text/JavaScript">  
-    //                             alert("ERROR. Query Error")
-    //                             </script>
-    //                             END;
-    //                         }
-                            
-    //                     }
-    //                 }
-                
-
-
-    //             // VERIFY OTHER INFO END
-
-    //             }
-    //             else {
-    //                 echo<<<END
-    //                 <script type ="text/JavaScript">  
-    //                 alert("ERROR. Incorrect file type")
-    //                 </script>
-    //             END;
-    //             }
-    //         }
-
-    //     }
-    //     else {
-    //         echo<<<END
-    //         <script type ="text/JavaScript">  
-    //         alert("ERROR. There's a problem with uploading the image")
-    //         </script>
-    //     END;
-    //     }
-    // }
-
-    
-    // mysqli_close($conn);
-    // $nope = 0;
-    // && $nope == 1
 if(isset($_POST['aTerms']) && isset($_FILES['aVerify'])) {
 
         $gotVerify  = $_FILES['aVerify'];
         $chk =  image_verification($gotVerify);
 
         if($chk == false){
-            echo "Upload your photo";
+            echo<<<END
+                <script type ="text/JavaScript">  
+                alert("ERROR. Upload your verification photo")
+                </script>
+            END;
         }else{
-            echo "BOINGO";
+            // echo "BOINGO";
 
             if(mysqli_connect_error()) {
             echo<<<END
@@ -143,7 +27,8 @@ if(isset($_POST['aTerms']) && isset($_FILES['aVerify'])) {
 
             } else {
                 // Checks if email exists
-                $emailCheck = "SELECT EXISTS(SELECT * FROM  user_tbl WHERE email='$_POST[aEmail]')";
+                $gotEmail =  mysqli_real_escape_string($conn, $_POST['aEmail']);
+                $emailCheck = "SELECT EXISTS(SELECT * FROM  user_tbl WHERE email='$gotEmail')";
                 $result = mysqli_fetch_row(mysqli_query($conn, $emailCheck));
                 
                 if($result[0]=='1'){
@@ -156,17 +41,24 @@ if(isset($_POST['aTerms']) && isset($_FILES['aVerify'])) {
                 }else{
                     
                     $updated = rename_image($gotVerify, "DOT-");
+                    $gotMFName =  mysqli_real_escape_string($conn, $_POST['aMFName']);
+                    $gotMLName =  mysqli_real_escape_string($conn, $_POST['aMLName']);
 
-                    $hash = password_hash($_POST['aPassword'], PASSWORD_BCRYPT);
-                    $addManager = "INSERT INTO  user_tbl (fname, lname, email, `password`, usertype) 
-                                VALUES('$_POST[aMFName]', '$_POST[aMLName]', '$_POST[aEmail]', '$hash', 'manager' )";
+                    $hash = password_hash(mysqli_real_escape_string($conn, $_POST['aPassword']), PASSWORD_BCRYPT);
+                    $addManager = "INSERT INTO  user_tbl (fname, lname, email, `password`, usertype, is_verified) 
+                                VALUES('$gotMFName', '$gotMLName', '$gotEmail', '$hash', 'manager', 1 )";
 
                     if(mysqli_query($conn, $addManager)){
 
                         $gotID = mysqli_insert_id($conn);
+                        
+                        $gotAName =  mysqli_real_escape_string($conn, $_POST['aName']);
+                        $gotAAddress =  mysqli_real_escape_string($conn, $_POST['aAddress']);
+                        $gotAccred =  mysqli_real_escape_string($conn, $_POST['aDot']);
+                        $isFound =  mysqli_real_escape_string($conn, $_POST['is_found']);
 
                         $addAgency = "INSERT INTO  agency_tbl (`agencyName`, `agencyAddress`, `agencyManID`, agencyImageProof, `agencyAccreditation`,`is_found`) 
-                                    VALUES ('$_POST[aName]', '$_POST[aAddress]', '$gotID', '$updated', '$_POST[aDot]', $_POST[is_found])";
+                                    VALUES ('$gotAName', '$gotAAddress', '$gotID', '$updated', '$gotAccred', $isFound)";
                         
                         if (mysqli_query($conn, $addAgency)){
 

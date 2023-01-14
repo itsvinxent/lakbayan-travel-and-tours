@@ -75,32 +75,37 @@
                   // <p class="agency-email">'.$display['agencyEmail'].'</p>';
             
             $ratingsummary_query_string = "SELECT * FROM  agencyrating_tbl WHERE agencyID= $viewID";
-
             $sqlquery = mysqli_query($conn, $ratingsummary_query_string);
             $ratingCounts = mysqli_fetch_array($sqlquery);
-            $rating_count_array = array(
-              5 => $ratingCounts['5_star'],
-              4 => $ratingCounts['4_star'],
-              3 => $ratingCounts['3_star'],
-              2 => $ratingCounts['2_star'],
-              1 => $ratingCounts['1_star']
-            );
-
             $totalWeight = 0;
             $totalReviews = 0;
+            if ($ratingCounts != 0){
+              $rating_count_array = array(
+                5 => $ratingCounts['5_star'],
+                4 => $ratingCounts['4_star'],
+                3 => $ratingCounts['3_star'],
+                2 => $ratingCounts['2_star'],
+                1 => $ratingCounts['1_star']
+              );
 
-            foreach ($rating_count_array as $weight => $numberofReviews) {
-            $WeightMultipliedByNumber = $weight * $numberofReviews;
-            $totalWeight += $WeightMultipliedByNumber;
-            $totalReviews += $numberofReviews;
-            } 
-            $averageRating = $totalWeight / $totalReviews;
+              
+
+              foreach ($rating_count_array as $weight => $numberofReviews) {
+              $WeightMultipliedByNumber = $weight * $numberofReviews;
+              $totalWeight += $WeightMultipliedByNumber;
+              $totalReviews += $numberofReviews;
+              } 
+              $averageRating = $totalWeight / $totalReviews;
+            }
+
 
             // echo "<div>$averageRating out of 5 <i class='fas fa-star' style='padding-right: 3px; color: var(--logo-yellow-dark);'></i> ($totalReviews)</div>";
           ?>
           <div class="rating agency" style="font-size: 20px; display: flex;">
             <?php
               $stars = 5;
+              
+              if ($ratingCounts != 0){
               $wholeNum = floor($averageRating);
               $decimal = $averageRating - $wholeNum;
 
@@ -116,6 +121,7 @@
                   echo '<i class="fas fa-star"></i>';
                 }
                 $stars--;
+              }
               }
 
               for ($i=0; $i < $stars; $i++) { 

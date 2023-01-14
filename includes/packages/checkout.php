@@ -44,6 +44,8 @@
                 $send_to = mysqli_fetch_assoc(mysqli_query($conn, $qry));
     
                 sendNotification($send_to['agencyManID'], "booking", "$send_to[packageTitle] got a booking!");
+                sendNotification($id_user, "booking", "$send_to[agencyName] is awaiting for your payment!");
+
                 $_SESSION['booking-stat'] = 'success';
                 } else {
                 echo 0;

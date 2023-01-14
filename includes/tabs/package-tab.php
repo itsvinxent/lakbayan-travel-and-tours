@@ -79,7 +79,7 @@
                                 FROM  package_tbl AS PK 
                                 INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                                 INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
-                                WHERE packageCreator = $_SESSION[setID]
+                                WHERE packageCreator = $_SESSION[setID] AND PK.is_deleted = 0
                                 GROUP BY AI.packageIDFrom
                                 ORDER BY PK.packageStatus";
 
@@ -89,7 +89,8 @@
                                 FROM  package_tbl AS PK 
                                 INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                                 INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
-                                GROUP BY AI.packageIDFrom
+                                WHERE AND PK.is_deleted = 0
+                                GROUP BY AI.packageIDFrom 
                                 ORDER BY PK.packageStatus";
 
                 fetch_packagetbl($query_string, $conn, false);
@@ -196,7 +197,7 @@
         // });
 
         $('#dmodal_container #confirm').on('input', function() {
-            if ($(this).val() == "I UNDERSTAND") {
+            if ($(this).val() == "I Understand") {
                 $('#modalDelete').prop("disabled", false);
             } else {
                 $('#modalDelete').prop("disabled", true);

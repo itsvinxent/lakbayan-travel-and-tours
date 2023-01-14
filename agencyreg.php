@@ -39,67 +39,6 @@ if(isset($_SESSION['isLoggedIn']) == false) {
   <source src="assets\media\Sunset.mp4" type="video/mp4" >
 </video>
 
-<!-- <section>
-  <div class="form-container mt-2 mb-2">
-      <form id="register-agency" action="backend/auth/signupagency.php" method="POST" enctype="multipart/form-data">
-
-        <div id="stepwizard">
-          <div>
-            <div class="form-agency-part" id="step1">
-              <img src="assets/img/Umbrella.png" id="designUmbrella"> 
-              <h3><legend>REGISTER YOUR AGENCY NOW 🏖️</legend></h3>
-
-              <div class="content">
-              <label for="aName">Enter Agency Name:</label>
-              <input type="text" name="aName" id="aName" required><br>
-
-              <label for="aEmail">Enter Agency Email:</label>
-              <input type="text" name="aEmail" id="aEmail" required><br>
-
-              <label for="aAddress">Enter Agency Address:</label>
-              <input type="text" name="aAddress" id="aAddress" required><br>
-
-              <label for="aDesc">Enter Agency Description:</label>
-              <textarea name="aDesc" id="aDesc" rows="4" required></textarea><br>
-
-              <label for="aPicture">Select Agency Profile Picture</label>
-              <input type="file" name="aPicture" id="aPicture" accept="image/gif, image/jpeg, image/png" onchange="prevImage(event)"><br>
-
-              <input type="button" value="Next" onclick="showman()" class="shownext">
-              
-              <div class="preview-image-container" id="prev-container">
-                <div class="preview-image">
-                  <img id="prev" src="#" alt="previmage" > 
-                </div>
-              </div>  
-              </div>
-
-            </div>
-
-            <div class="form-manager-part" id="step2">
-              <img src="assets/img/Palmtree.png" id="backgroundTree"> 
-              <h3><legend> 👨 AGENCY MANAGER 👩</legend></h3>
-
-              <div class="content">
-              <label for="aMFName">Enter First Name:</label>
-              <input type="text" name="aMFName" id="aMFName" required><br>
-
-              <label for="aMLName">Enter Last Name:</label>
-              <input type="text" name="aMLName" id="aMLName" required><br>
-
-              <label for="aMPassword">Enter Password:</label>
-              <input type="password" name="aPassword" id="aPassword" required><br>
-              </div>
-
-              <input type="submit" name="submit"> 
-            </div>
-          </div>
-        </div>
-      </form>
-  </div>
-</section>
- -->
-
  <div class="wrapper">
             <form action="backend\auth\signupagency.php" id="wizard" method="POST" enctype="multipart/form-data">
         		<!-- SECTION 1 -->
@@ -132,7 +71,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                             <input type="email" name="aEmail" id="aEmail" placeholder="Agency Email" class="form-control" >
                           </div>
                           <div class="form-holder"> 
-                            <input type="text" name="aNumber" id="aNumber" placeholder="Agency Number" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="11" >
+                            <input type="text" name="aNumber" id="aNumber" placeholder="Phone Number" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="11" >
                           </div>
                         </div>
                         <div class="form-row">

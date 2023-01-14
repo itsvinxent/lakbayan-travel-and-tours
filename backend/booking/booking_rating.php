@@ -3,11 +3,11 @@
     require "booking_status.php";
     include_once __DIR__."/../../backend/notifications/notification_model.php";
 
-    $bookingID = $_POST['bookingID'];
-    $userID = $_POST['userID'];
-    $packageID = $_POST['packageID'];
-    $package_rating = $_POST['package_rating'];
-    $review = $_POST['review'];
+    $bookingID = mysqli_real_escape_string($conn,$_POST['bookingID']);
+    $userID = mysqli_real_escape_string($conn,$_POST['userID']);
+    $packageID = mysqli_real_escape_string($conn,$_POST['packageID']);
+    $package_rating = mysqli_real_escape_string($conn,$_POST['package_rating']);
+    $review = mysqli_real_escape_string($conn,$_POST['review']);
 
     $agencyId = $_POST['agencyID'];
     $agency_rating = (int) $_POST['agency_rating'];
