@@ -26,8 +26,7 @@ tabs.forEach(tab => {
         if (tab == document.getElementById('pack-active') || 
         tab == document.getElementById('sub-pack-active') ||
         tab == document.getElementById('sub-book-active') ||
-        tab == document.getElementById('verifications') ||
-        tab == document.getElementById('acc-active')) {
+        tab == document.getElementById('verifications')) {
             document.getElementById('tab-content').classList.add('pack-active')
         } else {
             document.getElementById('tab-content').classList.remove('pack-active')

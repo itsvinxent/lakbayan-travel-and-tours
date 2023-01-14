@@ -17,6 +17,7 @@ var postdata = {
   name: "",
   location: "",
   category: "",
+  searchbar: 'false',
   duration: 0,
   availability: "a-all"
 }
@@ -79,7 +80,7 @@ function postdata_append(postdata, name, value) {
   if ((value != undefined) & (value != '') & (value != null)) {
     postdata[name] = value;
   } else {
-    // delete postdata[name];
+    delete postdata[name];
     count--;
   }
   return postdata
@@ -127,17 +128,20 @@ function filterTable($inputclass, $type, $post) {
         this.labels[0].classList.remove('active');
       }
     });
-    $post = postdata_append($post, $type, $(checkbox).val())
     if ($type == 'availability') {
+      $post = postdata_append(postdata, $type, $(checkbox).val())
       package_data_input();
       filterTimeout($post, '#full-table');
     } else if ($type == 'verstatus') {
+      $post = postdata_append(verpostdata, $type, $(checkbox).val())
       verify_data_input();
       filterTimeout($post, '#full-vtable');
     } else if ($type == 'usertype') {
+      $post = postdata_append(usrpostdata, $type, $(checkbox).val())
       user_data_input();
       filterTimeout($post, '#full-utable');
     } else {
+      $post = postdata_append(bookingpostdata, $type, $(checkbox).val())
       booking_data_input();
       filterTimeout($post, '#fullb-table');
     }

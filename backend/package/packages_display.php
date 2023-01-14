@@ -183,7 +183,7 @@ function fetch_packagetbl($query_string, $conn, $withAdd)
                   <th>Package Name</th>
                   <th></th>
                   <th>Duration(Days)</th>
-                  <th>Price</th>
+                  <th>Status</th>
                   <th>Rating</th>
                   <th>Action</th>
                 </tr>
@@ -202,7 +202,7 @@ function fetch_packagetbl($query_string, $conn, $withAdd)
                 <i class="far fa-heart" style="margin-right: 3px;"></i><?php echo $row['packageHearts'] ?>
             </td>
             <td><?php echo $row['packagePeriod'] ?></td>
-            <td><?php echo $row['fresult'] ?></td>
+            <td><?php if ($row['packageStatus'] == 0) echo "Available"; else echo "Unlisted"; ?></td>
             <td>
                 <div class="rating">
                     <?php
@@ -217,9 +217,11 @@ function fetch_packagetbl($query_string, $conn, $withAdd)
                     ?>
                 </div>
             </td>
+            <td hidden><?php echo $row['packageCreator'] ?></td>
             <td>
-                <button type="button" data-tab-target="#create-package" id="modalEOpen" class="pack-edit-btn resetting" onclick='changeForm()'><i class="far fa-edit"></i></button>
-                <button type="button" id="modalDOpen" class="delete-btn"><i class="fas fa-trash-alt"></i></button>
+                <button title="View Package" type="button" class="pack-view-btn" onclick="viewPackage(this);"><i class="far fa-eye"></i></button>
+                <button title="Edit Package" type="button" data-tab-target="#create-package" id="modalEOpen" class="pack-edit-btn resetting" onclick='changeForm()'><i class="far fa-edit"></i></button>
+                <button title="Unlist/Delist Package" type="button" id="modalDOpen" class="delete-btn"><i class="fas fa-ban"></i></button>
             </td>
         </tr>
 <?php
@@ -266,7 +268,17 @@ function fetch_bookingtbl($query_string, $conn) {
             <td><?php echo $row['fullname'] ?></td>
             <td><?php echo $row['packageTitle'] ?></td>
             <td><?php echo $row['bookingPrice'] ?></td>
-            <td><?php echo $row['bookingStatus'] ?></td>
+            <td>
+                <?php 
+                    if($row['bookingStatus'] == 'complete') echo "Completed";
+                    else if($row['bookingStatus'] == 'pay-pending') echo "Unpaid";
+                    else if($row['bookingStatus'] == 'rate-pending') echo "Unrated";
+                    else if($row['bookingStatus'] == 'trip-sched' || $row['bookingStatus'] == 'refund-denied') echo "Scheduled";
+                    else if($row['bookingStatus'] == 'cancelled') echo "Cancelled";
+                    else if($row['bookingStatus'] == 'refunded') echo "Refunded";
+
+                ?>
+            </td>
             <td data-tab-target="#travel-order" style="cursor: pointer;" class="to_travel_order">
                 <!-- <i class="fas fa-ellipsis-h"></i> -->
                 <img style="display: inline-block; height: 100%; vertical-align: middle;" src="https://img.icons8.com/ios-glyphs/30/null/dots-loading--v3.png"/>
@@ -317,7 +329,6 @@ function fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $inc_
     
     while ($inclusion = mysqli_fetch_assoc($qry_incl)) {
         $inc_array[] = $inclusion['packageInclusion'];
-        $_SESSION['INCLUSIONS_GOT'] = $inc_array;
     }
 
     $jsondata = json_encode(
@@ -408,4 +419,5 @@ if(isset($_POST['getData']) and $_POST['getData']=="ok") {
         }
     }
 }
+
 ?>

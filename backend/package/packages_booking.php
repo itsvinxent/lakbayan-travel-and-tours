@@ -14,7 +14,7 @@
         $packageID = $_POST['packageid'];
 
         function isExisting($conn, $id_user, $packageID) {
-            $query = "SELECT * from  inquiry_tbl WHERE id_user = $id_user AND packageID = $packageID";
+            $query = "SELECT * from  inquiry_tbl WHERE id_user = $id_user AND packageID = $packageID and is_booked = 0";
             $qry_exist = mysqli_query($conn, $query);
             $cart = mysqli_fetch_array($qry_exist);
             return $cart;

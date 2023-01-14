@@ -5,12 +5,22 @@ include __DIR__."/packages_display.php";
 session_start();
 
 // Default Table Query
-$query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.packageImg_Name, AG.agencyName, AG.agencyManID
+$query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, 
+                    DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, 
+                    AI.packageImg_Name, AG.agencyName, AG.agencyManID, 
+                    GROUP_CONCAT(ART.City) AS Cities,
+                    GROUP_CONCAT(PC.packageCategory) AS Categories
                     FROM  package_tbl AS PK 
                     INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
-                    INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom";
+                    INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
+                    INNER JOIN packagedest_tbl AS PD ON PK.packageID = PD.packageDestID
+                    INNER JOIN areas_tbl AS ART ON PD.packageAreasID = ART.cityID
+                    INNER JOIN packagecateg_tbl AS PC ON PK.packageID = PC.packageID_from";
 
 $has_previous_value;
+$has_loc;
+$has_cat;
+$has_cust_name;
 $limit = 8;
 if (isset($_POST['page'])) {
   $page = $_POST['page'];
@@ -23,7 +33,7 @@ if (isset($_POST['page'])) {
 
 if (isset($_POST['query']) and $_POST['query'] == 'true') {
   $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, 
-  DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.*, 
+  DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.packageIDFrom, AI.packageImg_Name, 
   AG.agencyName, AG.agencyManID " . $_SESSION['recommendedQuery'];
   // echo $query_string;
   fetch_packages($query_string, $conn, false, $limit, $page);
@@ -46,17 +56,27 @@ function get_prefix()
   return " WHERE ";
 }
 
+function get_having_prefix()
+{
+  global $has_previous_value;
+  if ($has_previous_value)
+    return " AND ";
+  return " HAVING ";
+}
+
 // Filter Queries for Packages Table
 if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
   try {
     $has_previous_value = false;
+    $has_loc = false;
+    $has_cat = false;
 
     if(isset($_POST['logged_user']) and $_POST['logged_user'] == 'agency') {
       $query_string .= " WHERE agencyID = $_SESSION[setID]";
       $has_previous_value = true;
     }
 
-    if (isset($_POST['name']) and $_POST['name'] != "") {
+    if (isset($_POST['name']) and $_POST['name'] != "" and isset($_POST['searchbar']) and $_POST['searchbar'] == 'false') {
       $name_search = mysqli_real_escape_string($conn, $_POST['name']);
       $query_string .= get_prefix() . "PK.packageTitle LIKE '%{$name_search }%'";
       $has_previous_value = true;
@@ -88,26 +108,48 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
       }
     }
 
-    // if (isset($_POST['location'])) {
-    //   $query_string .= get_prefix() . "PK.packageLocation LIKE '%{$_POST['location']}%'";
-    //   $has_previous_value = true;
-    // }
+    if (isset($_POST['location']) and $_POST['location'] != "") {
+      $has_loc = true;
+    }
 
-    // if (isset($_POST['category'])) {
-    //   $query_string .= get_prefix() . "PK.packageCategory = '{$_POST['category']}'";
-    //   $has_previous_value = true;
-    // }
+    if (isset($_POST['category']) and $_POST['category'] != "") {
+      $has_cat = true;
+    }
 
-    // if (isset($_POST['availability'])) {
-    //   $query_string .= get_prefix() . "PK.packageAvailability = '{$_POST['availability']}'";
-    //   $has_previous_value = true;
-    // }
+    if (isset($_POST['availability']) and $_POST['availability'] != "a-all" and $_POST['availability'] != "") {
+      if ($_POST['availability'] == "a-available") {
+        $avail_value = 0;
+      } else {
+        $avail_value = 1;
+      }
+      $query_string .= get_prefix() . "PK.is_deleted = '$avail_value' AND PK.packageStatus = '$avail_value'";
+      $has_previous_value = true;
+    }
 
   } finally {
-    $query_string .= get_prefix() ."PK.is_deleted = 0 AND (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) ";
+    $query_string .= get_prefix() ."(packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) ";
     $query_string .= " GROUP BY AI.packageIDFrom, AI.packageImg_Name ";
+    if (isset($_POST['searchbar']) and $_POST['searchbar'] == 'true') {
+      $query_string .= " HAVING CONCAT(',', Cities, ',') REGEXP ',{$_POST['location']}[^,]*,' 
+                        OR PK.packageTitle LIKE '%{$_POST['name']}%'";
+      $has_loc = false;
+    } else {
+      $has_previous_value = false;
+      if ($has_loc) {
+        $query_string .= get_having_prefix() ."CONCAT(',', Cities, ',') REGEXP ',{$_POST['location']}[^,]*,'";
+        $has_loc = false;
+        $has_previous_value = true;
+      }
+      
+      if ($has_cat) {
+        $query_string .= get_having_prefix() ."FIND_IN_SET('{$_POST['category']}', Categories)";
+        $has_cat = false;
+        $has_previous_value = true;
+      }
+    }
+
     if(isset($_POST['logged_user']) and $_POST['logged_user'] == 'agency') {
-      $query_string .= "AND PK.packageStatus = 0";
+      // $query_string .= "AND PK.packageStatus = 0"; 
       fetch_packagetbl($query_string, $conn, true);
     }
     else if(isset($_POST['logged_user']) and $_POST['logged_user'] == 'admin') {
@@ -130,6 +172,7 @@ if (isset($_POST['booking']) and $_POST['booking'] == 'true') {
                         INNER JOIN  package_tbl AS PK ON IQ.packageID = PK.packageID";
 
     $has_previous_value = false;
+    $has_cust_name = false;
 
     if(isset($_POST['logged_user'])) {
       if($_POST['logged_user'] == 'agency') {
@@ -149,7 +192,7 @@ if (isset($_POST['booking']) and $_POST['booking'] == 'true') {
     }
 
     if (isset($_POST['trn']) and $_POST['trn'] != "") {
-      $query_string .= get_prefix() . "BK.bookingTransacNum = '{$_POST['trn']}'";
+      $query_string .= get_prefix() . "BK.bookingNumber LIKE '%{$_POST['trn']}%'";
       $has_previous_value = true;
     }
 
@@ -160,19 +203,21 @@ if (isset($_POST['booking']) and $_POST['booking'] == 'true') {
 
 
     if (isset($_POST['customer_name']) and $_POST['customer_name'] != "") {
-      $bcname_search = mysqli_real_escape_string($conn, $_POST['customer_name']);
-      $query_string .= " HAVING fullname LIKE '%{$bcname_search}%'";
-      $has_previous_value = true;
+      $has_cust_name = true;
     }
 
-    // if (isset($_POST['status'])) {
-    //   $query_string .= get_prefix() . "BK.bookingStatus = '{$_POST['status']}'";
-    //   $has_previous_value = true;
-    // }
+    if (isset($_POST['status']) and $_POST['status'] != "s-all") {
+      $query_string .= get_prefix() . "BK.bookingStatus = '{$_POST['status']}'";
+      $has_previous_value = true;
+    }
 
   } finally {
     // $query_string .= " GROUP BY AI.packageIDFrom";
     // if(isset($_POST['profile']) and $_POST['profile'] and isset($_POST['agencyid'])) {
+    if ($has_cust_name) {
+      $bcname_search = mysqli_real_escape_string($conn, $_POST['customer_name']);
+      $query_string .= " HAVING fullname LIKE '%{$bcname_search}%'";
+    }
     fetch_bookingtbl($query_string, $conn);
     // echo $query_string;
   }
