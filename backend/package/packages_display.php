@@ -276,7 +276,7 @@ function fetch_bookingtbl($query_string, $conn) {
                     else if($row['bookingStatus'] == 'trip-sched' || $row['bookingStatus'] == 'refund-denied') echo "Scheduled";
                     else if($row['bookingStatus'] == 'cancelled') echo "Cancelled";
                     else if($row['bookingStatus'] == 'refunded') echo "Refunded";
-
+                    else echo "Refund Requested";
                 ?>
             </td>
             <td data-tab-target="#travel-order" style="cursor: pointer;" class="to_travel_order">

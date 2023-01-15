@@ -44,6 +44,16 @@ body {
 
 .sections {
   z-index: var(--z-tooltip);
+
+}
+
+.sections:is(.packages, .mapping, .profile-view, .profile-user) {
+  min-width: 1220px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+
+  /* transform: scale(.1); */
 }
 
 nav {
@@ -574,7 +584,7 @@ nav li a:hover {
   }
 }
 
-@media (min-width:1025px) and (max-width: 1280px) {
+@media (min-width:1085px) and (max-width: 1280px) {
   label.logo {
     padding-left: 100px;
     padding-right: 140px;
