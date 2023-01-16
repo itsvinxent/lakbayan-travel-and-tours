@@ -339,3 +339,11 @@ body {
 .rating-body .review-body {
   margin-top: 10px;
 }
+
+i.fa-heart {
+  transition: 250ms cubic-bezier(0.78, -0.36, 0.18, 1.54) transform;
+}
+
+i.fa-heart:hover {
+  transform: scale(1.2);
+}

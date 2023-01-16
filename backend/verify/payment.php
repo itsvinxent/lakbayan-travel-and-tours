@@ -2,86 +2,92 @@
 <?php
 require_once('vendor/autoload.php');
 
+class PaymongoOperation {
 
-function generatePaymentLink(int $totalAmount, ?int $bookingID = null): array{
-  $client = new \GuzzleHttp\Client();
-  $totalAmount = $totalAmount*100;
-  $response = $client->request('POST', 'https://api.paymongo.com/v1/sources', [
-    'body' => '{"data":
-                      {"attributes":
-                        {"amount":'.$totalAmount.',
-                          "redirect":
-                          {"success":"http://localhost:3000/backend/verify/payment_success.php?orderID='.$bookingID.'",
-                            "failed":"http://localhost:3000/backend/verify/payment_failed.php?orderID='.$bookingID.'"},
-                            "type":"gcash",
-                            "currency":"PHP"}}}',
-    'headers' => [
-      'accept' => 'application/json',
-      'authorization' => 'Basic c2tfdGVzdF9MS212a29xM241N2FTRXRqNnpRR1lYUjM6',
-      'content-type' => 'application/json',
-    ],
-  ]);
+  protected $P_KEY = 'Basic c2tfdGVzdF9MS212a29xM241N2FTRXRqNnpRR1lYUjM6';
 
- return json_decode($response->getBody(), true);
-  // echo '<br>';
-  // echo $src_id = $content['data']['id'];
-  // echo '<br>';
-  // echo $src_amount = $content['data']['attributes']['amount'];
-  // echo '<br>';
-  // echo $src_url = $content['data']['attributes']['redirect']['checkout_url'];
-
-}
-
-function generatePaymongoLink(int $totalAmount): array {
-  $client = new \GuzzleHttp\Client();
-  $totalAmount = $totalAmount*100;
-  $response = $client->request('POST', 'https://api.paymongo.com/v1/links', [
-    'body' => '{"data":
-                      {"attributes":
-                        {"amount": '.$totalAmount.',
-                                "description":"Payment to Lakbayan",
-                                "remarks":"Keep this for proof of payment"}}}',
-    'headers' => [
-      'accept' => 'application/json',
-      'authorization' => 'Basic c2tfdGVzdF9MS212a29xM241N2FTRXRqNnpRR1lYUjM6',
-      'content-type' => 'application/json',
-    ],
-  ]);
+  public function generatePaymentLink(int $totalAmount, ?int $bookingID = null): array{
+    $client = new \GuzzleHttp\Client();
+    $totalAmount = $totalAmount*100;
+    $response = $client->request('POST', 'https://api.paymongo.com/v1/sources', [
+      'body' => '{"data":
+                        {"attributes":
+                          {"amount":'.$totalAmount.',
+                            "redirect":
+                            {"success":"http://localhost:3000/backend/verify/payment_success.php?orderID='.$bookingID.'",
+                              "failed":"http://localhost:3000/backend/verify/payment_failed.php?orderID='.$bookingID.'"},
+                              "type":"gcash",
+                              "currency":"PHP"}}}',
+      'headers' => [
+        'accept' => 'application/json',
+        'authorization' => $this->P_KEY,
+        'content-type' => 'application/json',
+      ],
+    ]);
 
   return json_decode($response->getBody(), true);
+    // echo '<br>';
+    // echo $src_id = $content['data']['id'];
+    // echo '<br>';
+    // echo $src_amount = $content['data']['attributes']['amount'];
+    // echo '<br>';
+    // echo $src_url = $content['data']['attributes']['redirect']['checkout_url'];
+
+  }
+
+
+  public function generatePaymongoLink(int $totalAmount): array {
+    $client = new \GuzzleHttp\Client();
+    $totalAmount = $totalAmount*100;
+    $response = $client->request('POST', 'https://api.paymongo.com/v1/links', [
+      'body' => '{"data":
+                        {"attributes":
+                          {"amount": '.$totalAmount.',
+                           "description":"Payment to Lakbayan",
+                           "remarks":"Keep this for proof of payment"}}}',
+      'headers' => [
+        'accept' => 'application/json',
+        'authorization' => $this->P_KEY,
+        'content-type' => 'application/json',
+      ],
+    ]);
+
+    return json_decode($response->getBody(), true);
+  }
+
+
+  public function getPaymongoLink(string $linkReference): array{
+    $client = new \GuzzleHttp\Client();
+    $response = $client->request('GET', 'https://api.paymongo.com/v1/links/'.$linkReference.'', [
+      'headers' => [
+        'accept' => 'application/json',
+        'authorization' => $this->P_KEY,
+        'content-type' => 'application/json',
+      ],
+    ]);
+
+    return json_decode($response->getBody(), true);
+  }
+
+
+  public function generateRefund($amount, $payment_id, $reason, $notes){
+    $amount = $amount * 100;
+    $client = new \GuzzleHttp\Client();
+    $response = $client->request('POST', 'https://api.paymongo.com/refunds', [
+      'body' => '{"data":
+                      {"attributes":
+                                {"amount": '.$amount.',
+                                  "payment_id": "'.$payment_id.'",
+                                  "reason": "'.$reason.'",
+                                  "notes": "'.$notes.'"}}}',
+      'headers' => [
+        'accept' => 'application/json',
+        'authorization' => $this->P_KEY,
+        'content-type' => 'application/json',
+      ],
+    ]);
+  }
 }
-
-function getPaymongoLink(string $linkReference): array{
-  $client = new \GuzzleHttp\Client();
-  $response = $client->request('GET', 'https://api.paymongo.com/v1/links/'.$linkReference.'', [
-    'headers' => [
-      'accept' => 'application/json',
-      'authorization' => 'Basic c2tfdGVzdF9MS212a29xM241N2FTRXRqNnpRR1lYUjM6',
-      'content-type' => 'application/json',
-    ],
-  ]);
-
-  return json_decode($response->getBody(), true);
-}
-
-function generateRefund($amount, $payment_id, $reason, $notes){
-  $amount = $amount * 100;
-  $client = new \GuzzleHttp\Client();
-  $response = $client->request('POST', 'https://api.paymongo.com/refunds', [
-    'body' => '{"data":
-                    {"attributes":
-                               {"amount": '.$amount.',
-                                "payment_id": "'.$payment_id.'",
-                                "reason": "'.$reason.'",
-                                "notes": "'.$notes.'"}}}',
-    'headers' => [
-      'accept' => 'application/json',
-      'authorization' => 'Basic c2tfdGVzdF9MS212a29xM241N2FTRXRqNnpRR1lYUjM6',
-      'content-type' => 'application/json',
-    ],
-  ]);
-}
-
 
 // TEST ENVIRONMENT ====================================================================================================================
 // $generated = generatePaymentLink(173);
@@ -173,7 +179,11 @@ function generateRefund($amount, $payment_id, $reason, $notes){
 //   $ctr = $ctr+1;
 // }
 
+// $pay = new PaymongoOperation();
 
+// $link = $pay->generatePaymentLink(50000, 50);
+
+// echo $link['data']['attributes']['redirect']['checkout_url'];
 
 
 // generatePaymentLink(900200);

@@ -28,12 +28,15 @@ if (isset($_SESSION['isLoggedIn']) == false) {
 
 <body>
   <?php
+  require __DIR__.'/backend/package/vendor/autoload.php';
   include __DIR__.'/includes/components/nav.php';
   // include __DIR__.'/includes/components/accountModal.php';
+  $dotenv = Dotenv\Dotenv::createImmutable(__DIR__."/backend");
+  $dotenv->load();
   ?>
   <section class="main-page vidban">
     <div id="bann" class="banner">
-      <video src="assets/media/waves.mp4" muted loop autoplay preload="auto"></video>
+      <video src="<?php echo $_ENV['AWS_MEDIA_LINKS']?>/media/waves.mp4" muted loop autoplay preload="auto"></video>
       <div id="goto" class="text">
         <h1>Explore without limits</h1>
         <h2>Your travel starts here, with us.</h2>
@@ -49,7 +52,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
   </section>
   <section id="login" class="main-page login">
     <div class="login-banner">
-      <video src="assets/media/Foggy.mp4" muted loop autoplay preload="auto"></video>
+      <video src="<?php echo $_ENV['AWS_MEDIA_LINKS']?>/media/Foggy.mp4" muted loop autoplay preload="auto"></video>
 
       <div <?php
             if (isset($_SESSION['toSignIn'])) {
@@ -227,7 +230,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
   </script>
   <section class="main-page user-pref">
     <div class="login-banner">
-      <video src="assets/media/plane.mp4" muted loop autoplay preload="auto"></video>
+      <video src="<?php echo $_ENV['AWS_MEDIA_LINKS']?>/media/plane.mp4" muted loop autoplay preload="auto"></video>
 
       <div class="pref-form-container">
         <div class="page-one" id="page-one">
@@ -236,32 +239,32 @@ if (isset($_SESSION['isLoggedIn']) == false) {
           <div class="checklist">
             <input type="checkbox" id="beaches" name="select-preferences" value="Beaches and Resorts">
             <label class="choice" for="beaches">
-              <img src="assets/img/beaches.jpg" alt="">
+              <img src="<?php echo $_ENV['AWS_MEDIA_LINKS']?>/img/beaches.jpg" alt="">
               <div class="text">Beaches and Resorts</div>
             </label>
             <input type="checkbox" id="mountain" name="select-preferences" value="Mountains">
               <label class="choice" for="mountain">
-              <img src="assets/img/mountains.jpg" alt="">
+              <img src="<?php echo $_ENV['AWS_MEDIA_LINKS']?>/img/mountains.jpg" alt="">
               <div class="text">Mountains</div>
             </label>
             <input type="checkbox" id="island" name="select-preferences" value="Islands">
               <label class="choice" for="island">
-              <img src="assets/img/islands.jpg" alt="">
+              <img src="<?php echo $_ENV['AWS_MEDIA_LINKS']?>/img/islands.jpg" alt="">
               <div class="text">Islands</div>
             </label>
             <input type="checkbox" id="animal" name="select-preferences" value="Animal Life">
             <label class="choice" for="animal">
-              <img src="assets/img/animals.jpg" alt="">
+              <img src="<?php echo $_ENV['AWS_MEDIA_LINKS']?>/img/animals.jpg" alt="">
               <div class="text">Animal Life</div>
             </label>
             <input type="checkbox" id="recreation" name="select-preferences" value="Recreation">
             <label class="choice" for="recreation">
-              <img src="assets/img/recreation.jpg" alt="">
+              <img src="<?php echo $_ENV['AWS_MEDIA_LINKS']?>/img/recreation.jpg" alt="">
               <div class="text">Recreation</div>
             </label>
             <input type="checkbox" id="history" name="select-preferences" value="Historical Landmarks">
             <label class="choice" for="history">
-              <img src="assets/img/history.jpeg" alt="">
+              <img src="<?php echo $_ENV['AWS_MEDIA_LINKS']?>/img/history.jpeg" alt="">
               <div class="text">Historical Landmarks</div>
             </label>
           </div>

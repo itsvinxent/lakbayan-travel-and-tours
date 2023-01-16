@@ -365,7 +365,7 @@ nav li a:hover {
     font-size: 16px;
   }
 } */
-@media (max-width: 1085px) {
+@media (max-width: 1150px) {
   .checkbtn {
     display: block;
   }
@@ -418,7 +418,7 @@ nav li a:hover {
 }
 
 
-@media (min-width: 481px) and (max-width: 1085px) {
+@media (min-width: 481px) and (max-width: 1150px) {
   
   /* Destination Specific Pages */
   .destination-pages .content {
@@ -879,7 +879,7 @@ nav li a:hover {
   line-height: normal !important;
 }
 
-.notification__wrapper.show{
+.notification__wrapper.appear{
   display: block;
 }
 

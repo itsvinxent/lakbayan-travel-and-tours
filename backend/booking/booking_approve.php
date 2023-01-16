@@ -8,10 +8,12 @@ include_once __DIR__."/../../backend/notifications/notification_model.php";
 $transac = mysqli_real_escape_string($conn, $_POST['current-transacNum']);
 $bookingID = mysqli_real_escape_string($conn, $_POST['current-bookingID']);
 
+$paymongo = new PaymongoOperation();
+
 if ($transac == null)
     echo 4;
 else{
-    $payload = getPaymongoLink($transac);
+    $payload = $paymongo->getPaymongoLink($transac);
 
     $payment_status = $payload['data']['attributes']['status'];
 
