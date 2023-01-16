@@ -3,6 +3,8 @@ set_include_path(dirname(__FILE__));
 
 include __DIR__.'/../connect/dbCon.php';
 require 'imgverification.php';
+include __DIR__ . '/../cloudinary/cloudinary_instance.php';
+
     // echo $_POST['id'];
     // echo $_POST['picturefile'];
     // echo $_POST['fname'];
@@ -61,7 +63,10 @@ $agencyID = $_SESSION['setID'];
 $userID = $_SESSION['id'];
 
 $placehere = '../../assets/img/users/travelagent/'.$agencyID.'/pfp/';
+$pfpcloud = 'assets/img/users/travelagent/'.$agencyID.'/pfp/';
+
 $placebanhere = '../../assets/img/users/travelagent/'.$agencyID.'/banner/';
+$bancloud = 'assets/img/users/travelagent/'.$agencyID.'/banner/';
 
 //checks if dir exist and makes one if it does not
 if(!file_exists($placehere)){
@@ -84,16 +89,13 @@ if (isset($_POST['submitupdate']) ){
     if ($chk == false && $chkbanner == false && $img['error'] != 4){
 
     }else{
-        $temploc = $img['tmp_name'];
-        $extension = strtolower(pathinfo($img['name'], PATHINFO_EXTENSION));
-        $updated = uniqid("PFP-", true).'.'.$extension;
 
+        $updated = rename_image($img, "PFP-"); 
+        $trimmed_img = trim($updated, '.' . strtolower(pathinfo($img['name'], PATHINFO_EXTENSION)) . '');
         $uploc = $placehere.$updated;
 
-        $templocbanner = $banner['tmp_name'];
-        $extensionban = strtolower(pathinfo($banner['name'], PATHINFO_EXTENSION));
-        $updatedban = uniqid("PFB-", true).'.'.$extensionban;
-
+        $updatedban = rename_image($banner, "PFB-"); 
+        $trimmed_ban = trim($updatedban, '.' . strtolower(pathinfo($banner['name'], PATHINFO_EXTENSION)) . '');
         $uplocban = $placebanhere.$updatedban;
 
         if($img['error'] == 4) $updated = $upImage;
@@ -125,8 +127,24 @@ if (isset($_POST['submitupdate']) ){
 
                 sendNotification($userID, "profile", "You successfully edited your agency profile!");
 
-                if($img['error'] != 4) move_uploaded_file($temploc, $uploc);
-                if($banner['error'] != 4) move_uploaded_file($templocbanner, $uplocban);
+                if($img['error'] != 4) {
+                    $cloudinary->uploadApi()->upload("$img[tmp_name]", [
+                        'folder' => $pfpcloud,
+                        'public_id' => $trimmed_img
+                    ]);
+
+                    move_uploaded_file($temploc, $uploc);
+                }
+
+                if($banner['error'] != 4) {
+                    $cloudinary->uploadApi()->upload("$banner[tmp_name]", [
+                        'folder' => $bancloud,
+                        'public_id' => $trimmed_ban
+                    ]);
+
+                    move_uploaded_file($templocbanner, $uplocban);
+                }
+                
                 echo '<meta http-equiv="refresh" content="0;URL=../../agency-profile.php" />';
             }else{
                 echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);

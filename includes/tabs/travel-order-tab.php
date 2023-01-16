@@ -475,7 +475,7 @@
                          <div class="gray-area" id="before-trip">
                             <div class="message"></div>
 
-                            <form action="backend/booking/booking_generatereceipt.php" method="POST">
+                            <form target="_blank" action="backend/booking/booking_generatereceipt.php" method="POST">
                                 <input type="hidden" name="current-bookingID">
                                 <button type="submit" class="btn btn-long" id="download-receipt" style="margin-bottom: 5px; background: #1abc9c;">Download Receipt</button>
                             </form>
@@ -503,7 +503,7 @@
                             <div class="gray-area" id="before-trip-agency">
                                 <div class="message"></div>
 
-                                <form action="backend/booking/booking_generatereceipt.php" method="POST">
+                                <form target="_blank" action="backend/booking/booking_generatereceipt.php" method="POST">
                                     <input type="hidden" name="current-bookingID">
                                     <button type="submit" class="btn btn-long" id="download-receipt" style="margin-bottom: 5px; background: #1abc9c;">Download Receipt</button>
                                 </form>

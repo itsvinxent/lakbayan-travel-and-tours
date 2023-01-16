@@ -13,12 +13,12 @@
             <span>
                 <select name="package-category" id="package-category">
                     <option value="" disabled selected hidden style="opacity: .5;">Select a Category</option>
-                    <option value="beaches">Beaches and Resorts</option>
-                    <option value="mountains">Mountains</option>
-                    <option value="islands">Islands</option>
-                    <option value="animals">Animal Life</option>
-                    <option value="recreation">Recreation</option>
-                    <option value="historical">Historical Landmarks</option>
+                    <option value="Beaches and Resorts">Beaches and Resorts</option>
+                    <option value="Mountains">Mountains</option>
+                    <option value="Islands">Islands</option>
+                    <option value="Animal Life">Animal Life</option>
+                    <option value="Recreation">Recreation</option>
+                    <option value="Historical Landmarks">Historical Landmarks</option>
                 </select>
             </span>
         </div>
@@ -75,21 +75,23 @@
         <div id="full-table" class="fulltable">
             <?php
             if ($_SESSION['utype'] == 'manager') {
-                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.packageImg_Name, AG.agencyName, AG.agencyManID
-                                    FROM  package_tbl AS PK 
-                                    INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
-                                    INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
-                                    WHERE packageCreator = $_SESSION[setID] AND PK.is_deleted = 0 AND (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL)
-                                    GROUP BY PK.packageID, AI.packageImg_Name "; 
+                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AG.agencyName, AG.agencyManID
+                                FROM  package_tbl AS PK 
+                                INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                                INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
+                                WHERE packageCreator = $_SESSION[setID] AND PK.is_deleted = 0
+                                GROUP BY AI.packageIDFrom
+                                ORDER BY PK.packageStatus";
 
                 fetch_packagetbl($query_string, $conn, true);
             } else if ($_SESSION['utype'] == 'admin') {
-                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AI.packageImg_Name, AG.agencyName, AG.agencyManID
-                                    FROM  package_tbl AS PK 
-                                    INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
-                                    INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
-                                    WHERE PK.is_deleted = 0 AND (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL)
-                                    GROUP BY PK.packageID, AI.packageImg_Name ";
+                $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult, DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, AG.agencyName, AG.agencyManID
+                                FROM  package_tbl AS PK 
+                                INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
+                                INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
+                                WHERE AND PK.is_deleted = 0
+                                GROUP BY AI.packageIDFrom 
+                                ORDER BY PK.packageStatus";
 
                 fetch_packagetbl($query_string, $conn, false);
             }
@@ -100,11 +102,11 @@
     <div class="modal-container" id="dmodal_container">
         <div class="user-modal">
             <h1>Confirmation</h1>
-            <p>You are about to <strong>delete</strong> a Travel Package. Type in "I Understand" to confirm. </p>
-            <br><input type="text" name="confirm" id="confirm" placeholder="I Understand"><br>
+            <p>You are about to <span style="font-weight: bold;" id="packstat">unlist</span> a Travel Package. Type in "I Understand" to confirm. </p>
+            <br><input type="text" name="confirm" id="confirm" placeholder="I UNDERSTAND"><br>
             <form action="" method="POST" id="del-action">
                 <div class="buttons">
-                    <button type="submit" id="modalDelete" class="modal-login" disabled>Delete Account</button>
+                    <button type="submit" id="modalDelete" class="modal-login" disabled>Unlist Package</button>
                     <a id="modalDClose" class="btn">Cancel</a>
                 </div>
             </form>
@@ -141,13 +143,32 @@
         $('#reset-search').on('click', function() {
             postdata = {
                 is_filtering: true,
+                searchbar: false,
                 logged_user: usertp
             }
 
+            $('#package-name').val('');
+            $('#package-location').val('');
+            $('#package-category').val('');
+            $('#package-duration').val('');
+
+            pack_name = '';
+            pack_location = '';
+            pack_cat = '';
+            pack_duration = '';
             filterTimeout(postdata, '#full-table');
         })
 
         filterTable(".avail-inp", 'availability', postdata);
+
+        // View Travel Package Functions
+        function viewPackage(clickedButton) {
+            $tr = $(clickedButton).closest('tr');
+            var data = $tr.children('td').map(function() {
+                return $(this).text();
+            }).get();
+            window.location.href = "includes/packages/details.php?packageid="+data[1]+"&agentid="+data[7];
+        }
 
         // Delete Travel Package Functions
         // $('#full-table .delete-btn').each(function() {
@@ -159,8 +180,18 @@
                 return $(this).text();
             }).get();
 
-            $('#del-action').prop("action", "backend/package/package_delete.php?utype=agency&id=" + data[1]);
+            // IF THE PACKAGE IS CURRENTLY LISTED
+            if(data[5] == 'Available') {
+                $('#packstat').text('unlist');
+                $('#modalDelete').text('Unlist Package');
+                var setstat = 1;
+            } else {
+                $('#packstat').text('list');
+                $('#modalDelete').text('List Package');
+                var setstat = 0;
+            }
 
+            $('#del-action').prop("action", "backend/package/package_delete.php?utype="+ usertp +"&id=" + data[1] +"&stat=" + setstat);
         })
 
         // });

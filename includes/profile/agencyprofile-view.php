@@ -35,9 +35,7 @@
     });
   });
 </script>
-<section class="sections profile-view" id="profile-view">
-
-    <div class="banner-half">
+<div class="banner-half">
     <?php if (isset($display['agencyBanner'])) 
         {
         echo '<img id="img-banner" src="assets/img/users/travelagent/'.$display['agencyID'].'/banner/'.$display['agencyBanner'].'" alt="">';
@@ -46,7 +44,10 @@
         echo '<img id="img-banner" src="assets/img/users/travelagent/DefaultBannerAgent.jpg" alt="">';
         }
         ?> 
-    </div>
+</div>
+<section class="sections profile-view" id="profile-view">
+
+   
 
     <div class="profile-container">
       <div class="banner-logo">

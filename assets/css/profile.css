@@ -910,7 +910,7 @@
 .fulltable #modalEOpen,
 .fullb-table #modalEOpen {
   color: var(--logo-blue-dark);
-  margin-right: 10px;
+  /* margin-right: 10px; */
 }
 
 .fulltable #modalDOpen,

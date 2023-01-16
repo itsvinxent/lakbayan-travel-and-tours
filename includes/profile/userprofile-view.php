@@ -1,5 +1,6 @@
 <?php 
     include __DIR__.'/../../backend/auth/getuser.php';
+    // include __DIR__."/../../backend/auth/function.resize.php";
 
 if(isset($_GET['id'])){
     $viewID = $_GET['id'];
@@ -37,19 +38,19 @@ if(isset($_GET['id'])){
     });
 </script>
 
+<div class="banner-half profile">
+        <?php if (isset($display['userbanner'])) 
+    {
+    echo '<img id="img-banner" src="assets/img/users/traveler/'.$display['id'].'/banner/'.$display['userbanner'].'" alt="">';
+    }
+    else {
+    echo '<img id="img-banner" src="assets/img/users/traveler/DefaultBanner.jpg" alt="">';
+    }
+    ?> 
+</div>
+
 <section class="sections profile-user" id="packages">
-
-    <div class="banner-half profile">
-         <?php if (isset($display['userbanner'])) 
-        {
-        echo '<img id="img-banner" src="assets/img/users/traveler/'.$display['id'].'/banner/'.$display['userbanner'].'" alt="">';
-        }
-        else {
-        echo '<img id="img-banner" src="assets/img/users/traveler/DefaultBanner.jpg" alt="">';
-        }
-        ?> 
-    </div>
-
+    
     <div class="profile-container">
         <div class="banner-logo profile">
             <div class="image">

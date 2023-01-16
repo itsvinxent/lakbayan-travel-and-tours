@@ -142,6 +142,7 @@ if (isset($_SESSION['booking-stat']) == false) {
             rating: 0,
             duration: 0,
             name: "",
+            location: "",
             price_min: 0,
             price_max: 0,
             page: 1
@@ -274,6 +275,8 @@ if (isset($_SESSION['booking-stat']) == false) {
               postdata['rating'] = 0;
               postdata['duration'] = 0;
               postdata['name'] = '';
+              postdata['location'] = '';
+              postdata['searchbar'] = 'false';
               postdata['price_min'] = 0;
               postdata['price_max'] = 0;
 
@@ -340,7 +343,8 @@ if (isset($_SESSION['booking-stat']) == false) {
                                   FORMAT(PK.packagePrice, 0) AS fresult, 
                                   DATEDIFF(packageEndDate, packageStartDate) AS packagePeriod, 
                                   AI.packageImg_Name,
-                                  AG.agencyName ";
+                                  AG.agencyName, 
+                                  GROUP_CONCAT(ART.City) AS Cities ";
           if(!empty($result))   {$algo_cases .= ", CASE ";} //COLLAB-BASED      
           
           foreach($result as $key => $results){
@@ -359,6 +363,8 @@ if (isset($_SESSION['booking-stat']) == false) {
           $algo_cases .= "FROM  package_tbl AS PK 
                             INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                             INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
+                            INNER JOIN packagedest_tbl AS PD ON PK.packageID = PD.packageDestID
+                            INNER JOIN areas_tbl AS ART ON PD.packageAreasID = ART.cityID
                             WHERE (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) AND PK.is_deleted = 0 AND PK.packageStatus = 0
                             GROUP BY PK.packageID, AI.packageImg_Name ";
           
@@ -371,7 +377,7 @@ if (isset($_SESSION['booking-stat']) == false) {
           // $query_string .= " LIMIT 0, 8";
           
           $_SESSION['recommendedQuery'] = $algo_cases;
-          fetch_packages($query_string, $conn, false, 9, 1);
+          fetch_packages($query_string, $conn, false, 8, 1);
           // echo $query_string;
 
           ?>
@@ -387,6 +393,8 @@ if (isset($_SESSION['booking-stat']) == false) {
               if (query.length >= 2) {
                 has_searched = true;
                 postdata['name'] = query;
+                postdata['location'] = query;
+                postdata['searchbar'] = 'true';
                 setSearch();
                 filterTimeout();
               } else if (query.length == 0) {

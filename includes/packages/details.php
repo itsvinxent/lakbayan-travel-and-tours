@@ -276,37 +276,33 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                 if ($row['packageSlots'] == 0) {
                   $button_content = '<a class="book-btn">Fully Booked</a>';
                 } else {
-                  $query = "SELECT id from  inquiry_tbl WHERE id_user = {$_SESSION['id']} AND packageID = $packageID";
+                  $query = "SELECT bookingID from  booking_tbl AS BT 
+                            INNER JOIN inquiry_tbl AS IQ ON BT.inquiryInfoID = IQ.id
+                            WHERE IQ.id_user = {$_SESSION['id']} AND IQ.packageID = $packageID AND 
+                            (BT.bookingStatus != 'complete' AND BT.bookingStatus != 'cancelled' AND BT.bookingStatus != 'refunded')";
                   $qry_exist = mysqli_query($conn, $query);
                   $cartItem = mysqli_fetch_array($qry_exist);
-    
-                  if (isset($cartItem['id']) == true) {
-                    $query = "SELECT bookingID from  booking_tbl WHERE inquiryInfoID = {$cartItem['id']} AND (bookingStatus != 'complete' AND bookingStatus != 'cancelled' AND bookingStatus != 'refunded')";
-                    $qry_exist = mysqli_query($conn, $query);
-                    $cartItem = mysqli_fetch_array($qry_exist);
-                    if (isset($cartItem['bookingID']) == true) {
-                      $button_content = '<a href="../../user-profile.php?orderID='.$cartItem['bookingID'].'" class="book-btn">Check Booking Status</a>';
-                    } else {
-                      $query = "SELECT count(*) AS inter_count  from booking_tbl AS BK
-                              INNER JOIN inquiry_tbl AS IQ ON BK.inquiryInfoID = IQ.id
-                              INNER JOIN package_tbl AS PK ON IQ.packageID = PK.packageID 
-                              WHERE '{$row['packageStartDate']}' BETWEEN PK.packageStartDate
-                              AND PK.packageEndDate 
-                              AND BK.bookingStatus = 'trip-sched'
-                              AND IQ.id_user = {$_SESSION['id']}";
+
+                  if (isset($cartItem['bookingID']) == true) {
+                    $button_content = '<a href="../../user-profile.php?orderID='.$cartItem['bookingID'].'" class="book-btn">Check Booking Status</a>';
+                  } else {
+                    $query =  "SELECT count(*) AS inter_count  from booking_tbl AS BK
+                                INNER JOIN inquiry_tbl AS IQ ON BK.inquiryInfoID = IQ.id
+                                INNER JOIN package_tbl AS PK ON IQ.packageID = PK.packageID 
+                                WHERE PK.packageStartDate <= '{$row['packageEndDate']}' 
+                                AND PK.packageEndDate >= '{$row['packageStartDate']}'
+                                AND (BK.bookingStatus = 'trip-sched' OR BK.bookingStatus = 'refund-denied')
+                                AND IQ.id_user = {$_SESSION['id']}"; 
                     
-                      $qry_interfere = mysqli_query($conn, $query);
-                      $ItemInter = mysqli_fetch_array($qry_interfere);
-                      if ($ItemInter['inter_count'] != 0) {
-                        $button_content = '<a id="modalBOpen" class="book-btn">Schedule Issue</a>';
-                        $is_interfering = true;
-                      }
-                    } 
+                    $qry_interfere = mysqli_query($conn, $query);
+                    $ItemInter = mysqli_fetch_array($qry_interfere);
+                    if ($ItemInter['inter_count'] != 0) {
+                      $button_content = '<a id="modalBOpen" class="book-btn">Schedule Issue</a>';
+                      $is_interfering = true;
+                    }
                   } 
                 }
-                    
 
-                
               }
               echo $button_content;
             ?>

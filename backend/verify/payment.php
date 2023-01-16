@@ -1,3 +1,4 @@
+
 <?php
 require_once('vendor/autoload.php');
 
@@ -92,44 +93,44 @@ class PaymongoOperation {
 // $generated = generatePaymentLink(173);
 // echo $generated['data']['attributes']['redirect']['checkout_url'];
 
-$client = new \GuzzleHttp\Client();
+// $client = new \GuzzleHttp\Client();
 
 
-$response = $client->request('POST', 'https://api.paymongo.com/v1/payment_methods', [
-  'body' => '{"data":{"attributes":{"type":"paymaya"}}}',
-  'headers' => [
-    'Content-Type' => 'application/json',
-    'accept' => 'application/json',
-    'authorization' => 'Basic cGtfdGVzdF9tdWRjUFZkWEpNamRMVkN3SjNKTTkzMTI6',
-  ],
-]);
+// $response = $client->request('POST', 'https://api.paymongo.com/v1/payment_methods', [
+//   'body' => '{"data":{"attributes":{"type":"paymaya"}}}',
+//   'headers' => [
+//     'Content-Type' => 'application/json',
+//     'accept' => 'application/json',
+//     'authorization' => 'Basic cGtfdGVzdF9tdWRjUFZkWEpNamRMVkN3SjNKTTkzMTI6',
+//   ],
+// ]);
 
 //Create Payment Methods
-$response1 = $client->request('POST', 'https://api.paymongo.com/v1/payment_methods', [
-  'body' => '{"data":{"attributes":{"details":{"card_number":"4343434343434345","exp_month":12,"exp_year":22,"cvc":"343","bank_code":"test_bank_one"},"billing":{"name":"Testing Payment","email":"test@gmail.com","phone":"09952001867"},"type":"card"}}}',
-  'headers' => [
-    'Content-Type' => 'application/json',
-    'accept' => 'application/json',
-    'authorization' => 'Basic c2tfdGVzdF9MS212a29xM241N2FTRXRqNnpRR1lYUjM6',
-  ],
-]); //pm_j6DEa3VtGmmHS1tWV35muhM7
+// $response1 = $client->request('POST', 'https://api.paymongo.com/v1/payment_methods', [
+//   'body' => '{"data":{"attributes":{"details":{"card_number":"4343434343434345","exp_month":12,"exp_year":22,"cvc":"343","bank_code":"test_bank_one"},"billing":{"name":"Testing Payment","email":"test@gmail.com","phone":"09952001867"},"type":"card"}}}',
+//   'headers' => [
+//     'Content-Type' => 'application/json',
+//     'accept' => 'application/json',
+//     'authorization' => 'Basic c2tfdGVzdF9MS212a29xM241N2FTRXRqNnpRR1lYUjM6',
+//   ],
+// ]); //pm_j6DEa3VtGmmHS1tWV35muhM7
 
 //Create Source
-$response2 = $client->request('POST', 'https://api.paymongo.com/v1/sources', [
-  'body' => '{"data":
-                    {"attributes":
-                      {"amount":15000,
-                        "redirect":
-                        {"success":"http://localhost:3000/backend/verify/payment_success.php",
-                          "failed":"http://localhost:3000/backend/verify/payment_failed.php"},
-                          "type":"gcash",
-                          "currency":"PHP"}}}',
-  'headers' => [
-    'accept' => 'application/json',
-    'authorization' => 'Basic c2tfdGVzdF9MS212a29xM241N2FTRXRqNnpRR1lYUjM6',
-    'content-type' => 'application/json',
-  ],
-]);
+// $response2 = $client->request('POST', 'https://api.paymongo.com/v1/sources', [
+//   'body' => '{"data":
+//                     {"attributes":
+//                       {"amount":15000,
+//                         "redirect":
+//                         {"success":"http://localhost:3000/backend/verify/payment_success.php",
+//                           "failed":"http://localhost:3000/backend/verify/payment_failed.php"},
+//                           "type":"gcash",
+//                           "currency":"PHP"}}}',
+//   'headers' => [
+//     'accept' => 'application/json',
+//     'authorization' => 'Basic c2tfdGVzdF9MS212a29xM241N2FTRXRqNnpRR1lYUjM6',
+//     'content-type' => 'application/json',
+//   ],
+// ]);
 
 //Create Link
 // $response = $client->request('POST', 'https://api.paymongo.com/v1/links', [

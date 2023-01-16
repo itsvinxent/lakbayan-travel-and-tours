@@ -610,6 +610,7 @@ a {
 .chat-area-free{
     height: 500px;
     min-width: 250px;
+    max-width: 360px;
 }
 
 .chat-area-free div {
