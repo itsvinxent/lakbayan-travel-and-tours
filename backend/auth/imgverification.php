@@ -9,7 +9,7 @@
  * 
  * @return string $newname Returns the renamed image
  */
-function image_verification(array $image, ?bool $ismultiple = false): bool
+function image_verification(array $image, ?bool $ismultiple = false)
 {
 	$allowedExt = array("jpg", "jpeg", "png"); //Allowed Formats
 

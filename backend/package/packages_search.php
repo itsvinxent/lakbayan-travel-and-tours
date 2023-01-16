@@ -122,12 +122,12 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
       } else {
         $avail_value = 1;
       }
-      $query_string .= get_prefix() . "PK.is_deleted = '$avail_value' AND PK.packageStatus = '$avail_value'";
+      $query_string .= get_prefix() . " PK.packageStatus = '$avail_value' ";
       $has_previous_value = true;
     }
 
   } finally {
-    $query_string .= get_prefix() ."(packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) ";
+    $query_string .= get_prefix() ." (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) AND PK.is_deleted = 0 ";
     $query_string .= " GROUP BY AI.packageIDFrom, AI.packageImg_Name ";
     if (isset($_POST['searchbar']) and $_POST['searchbar'] == 'true') {
       $query_string .= " HAVING CONCAT(',', Cities, ',') REGEXP ',{$_POST['location']}[^,]*,' 
