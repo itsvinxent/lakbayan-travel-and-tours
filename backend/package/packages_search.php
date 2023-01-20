@@ -15,7 +15,7 @@ $query_string = "SELECT PK.*, FORMAT(PK.packagePrice, 0) AS fresult,
                     INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom
                     INNER JOIN packagedest_tbl AS PD ON PK.packageID = PD.packageDestID
                     INNER JOIN areas_tbl AS ART ON PD.packageAreasID = ART.cityID
-                    INNER JOIN packagecateg_tbl AS PC ON PK.packageID = PC.packageID_from";
+                    INNER JOIN packagecateg_tbl AS PC ON PK.packageID = PC.packageID_from ";
 
 $has_previous_value;
 $has_loc;
@@ -122,12 +122,12 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
       } else {
         $avail_value = 1;
       }
-      $query_string .= get_prefix() . " PK.packageStatus = '$avail_value' ";
+      $query_string .= get_prefix() . " PK.packageStatus = $avail_value ";
       $has_previous_value = true;
     }
 
   } finally {
-    $query_string .= get_prefix() ." (packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) AND PK.is_deleted = 0 ";
+    $query_string .= get_prefix() ." (packageImg_Name LIKE 'PCK-F%' or packageImg_Name IS NULL) AND PK.is_deleted = 0  ";
     $query_string .= " GROUP BY AI.packageIDFrom, AI.packageImg_Name ";
     if (isset($_POST['searchbar']) and $_POST['searchbar'] == 'true') {
       $query_string .= " HAVING CONCAT(',', Cities, ',') REGEXP ',{$_POST['location']}[^,]*,' 

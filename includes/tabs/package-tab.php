@@ -89,7 +89,7 @@
                                 FROM  package_tbl AS PK 
                                 INNER JOIN  agency_tbl AS AG ON AG.agencyID = PK.packageCreator
                                 INNER JOIN  packageimg_tbl AS AI ON PK.packageID = AI.packageIDFrom 
-                                WHERE AND PK.is_deleted = 0
+                                WHERE PK.is_deleted = 0
                                 GROUP BY AI.packageIDFrom 
                                 ORDER BY PK.packageStatus";
 

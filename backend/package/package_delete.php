@@ -33,7 +33,7 @@
             END;
         } else {
             // $delete_query = " DELETE FROM  user_tbl WHERE id = $usrid; " ;
-            $delete_query = "UPDATE  package_tbl SET is_deleted = $stat, packageStatus = $stat WHERE packageID = $pkgid; " ;
+            $delete_query = "UPDATE  package_tbl SET packageStatus = $stat WHERE packageID = $pkgid; " ;
             
             mysqli_query($conn,$delete_query);
     
