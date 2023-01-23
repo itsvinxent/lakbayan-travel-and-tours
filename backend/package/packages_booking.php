@@ -87,10 +87,10 @@
                     style=\"background: url($bgurl) no-repeat center;
                     background-size:auto;\">
                 
-                    <div class='previousPage' id='previousPage'> <i class='fas fa-angle-left'></i> Back</div>
+                    <!-- <div class='previousPage' id='previousPage'> <i class='fas fa-angle-left'></i> Back</div> -->
 
                     <div class='text-cover'>
-                        <h1>{$row['packageTitle']}</h1>
+                        <div class='top'><h1>{$row['packageTitle']}</h1><span id='m-closesummary' class='closesummary'><i class='fas fa-times'></i></span></div>
                         <p class='price'><span>₱</span> $packagePrice</p>
                         <p>Booked for $persons Persons</p>
                         <p>$startdate to $enddate</p>
@@ -119,7 +119,7 @@
                     </div>
                 </div><div class='payment'>
                     <div class='receipt-box'>
-                    <div class='closePage'> <h3>Booking Summary</h3> <span id='closesummary'><i class='fas fa-times'></i></span></div>
+                    <div class='closePage'> <h3>Booking Summary</h3> <span id='closesummary' class='closesummary'><i class='fas fa-times'></i></span></div>
 
                     
                     <table class='table'>
@@ -198,6 +198,7 @@
                                 </fieldset>
 
                                 <input class="btn"type="submit" value="Proceed to Checkout">
+                                <input class="btn back-btn" id='previousPage' type="button" value="Go Back">
                             </form>
                         </div>
                     </div>
@@ -217,7 +218,7 @@
                             $('#booking-summary').removeClass("show");
                             $("#bmodal_container").toggleClass("show");
                           });
-                          $('#closesummary').on('click', function() {
+                          $('.closesummary').on('click', function() {
                             $('#booking-summary').removeClass("show");
                           })
                     </script>

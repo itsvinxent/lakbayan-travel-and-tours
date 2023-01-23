@@ -480,8 +480,9 @@ nav li a:hover {
 
   .packages-pages .left {
     margin-right: 0;
-    padding: 15px;
+    padding: 10px;
     color: white;
+    width: 100%;
   }
 
   .packages-pages .left h1 {
@@ -570,7 +571,7 @@ nav li a:hover {
   }
 
   .site-footer .container {
-    max-width: 90%;
+    max-width: 90% !important;
   }
 }
 
@@ -581,7 +582,7 @@ nav li a:hover {
   }
 }
 
-@media (max-width: 1440px) {
+@media (min-width: 1025px) and (max-width: 1440px) {
   .slider,
   .slide img {
     width: 750px;

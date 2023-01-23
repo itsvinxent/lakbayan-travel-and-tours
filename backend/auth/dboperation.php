@@ -56,11 +56,11 @@ function multi_deletedb($conn, $data, $table, $idname, $id){
     $name = implode(",", $name);
     $value = implode(",", $value);
 
-    echo '<br>'. $name. ' ' .$value;
+    // echo '<br>'. $name. ' ' .$value;
 
     //$sql = "".$this->insert."".$table."($name)".$this->values."($value)";
     $sql = "DELETE FROM ".$table." WHERE ".$name."=".$value." AND ".$idname."=".$id."";
-    echo '<br>'.$sql;
+    // echo '<br>'.$sql;
 
     
     

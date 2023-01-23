@@ -181,3 +181,28 @@ a#modalBClose.btn{
 #refundrequest-booking-form select {
   margin-left: -4.9px;
 }
+
+@media (max-width: 480px) {
+  .modal {
+    width: 360px;
+  }
+
+  .modal .buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal button {
+    width: 100%;
+    margin: 0;
+  }
+
+  .modal .modal-login {
+    margin: 0;
+  }
+
+  a#modalClose.btn {
+    margin: 0;
+    width: 100%;
+  }
+}

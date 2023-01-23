@@ -95,7 +95,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
             <span>or use your account</span> -->
             <input type="email" name="email" placeholder="Email" required />
             <input type="password" name="password" placeholder="Password" required />
-            <a id="remodal-open" style="cursor: pointer;">Forgot your password?</a>
+            <a class="remodal-open" style="cursor: pointer;">Forgot your password?</a>
             <button type="submit">Sign In</button>
           </form>
         </div>
@@ -118,7 +118,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
 
       <div id="mobile-container" class="container">
         <div class="form-container sign-up-container" id="msign-up-container">
-          <form name="sign-up-form" action="backend/auth/signup.php" method="post">
+          <form name="msign-up-form" id="msign-up-form" action="backend/auth/signup.php" method="post">
           <!-- <form> -->
             <h1>Create Account</h1>
             <!-- <div class="social-container">
@@ -133,7 +133,8 @@ if (isset($_SESSION['isLoggedIn']) == false) {
             </div>
             <input type="email" name="email" placeholder="Email" required />
             <input type="password" name="password" placeholder="Password" required />
-            <button class="reg-user" type="submit" name="Submit" value="Submit">Sign Up</button>
+            <input type="hidden" name="trav-preferences" id="mtrav-preferences">
+            <button class="reg-user" type="button" name="Submit">Next</button>
             <a href="agencyreg.php" style="color: black; text-decoration: underline;">Register as a Travel Agency</a>
 
           </form>
@@ -149,7 +150,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
             <span>or use your account</span> -->
             <input type="email" name="email" placeholder="Email" required />
             <input type="password" name="password" placeholder="Password" required />
-            <a href="#">Forgot your password?</a>
+            <a class="remodal-open" style="cursor: pointer;">Forgot your password?</a>
             <button type="submit">Sign In</button>
           </form>
         </div>
@@ -211,7 +212,7 @@ if (isset($_SESSION['isLoggedIn']) == false) {
         </div>
     </div>
     <script>
-      $('#remodal-open').on("click", function() {
+      $('.remodal-open').on("click", function() {
         $("#re-modal_container").addClass("show");
       });
       
@@ -265,18 +266,23 @@ if (isset($_SESSION['isLoggedIn']) == false) {
               <div class="text">Historical Landmarks</div>
             </label>
           </div>
-          <span class="btn-cont" style="display: flex; justify-content: space-between; margin-top: 10px;">
-            <label style="display: flex; align-items: center; cursor: pointer;">
-              <input type="checkbox" name="" id="terms" style="cursor: pointer; display: block; margin-right: 10px;"> I have read the <a href="includes/components/terms-and-conditions.php" style="text-decoration: underline; color: var(--first-color); font-weight: bold; margin-left: 5px;"> Terms and Conditions</a>
-            </label>
+          <span class="bot-cont" style="display: flex; justify-content: space-between;">
+            <span class="btn-cont" style="display: flex; margin-top: 10px;">
+              <input type="checkbox" name="" id="terms" style="cursor: pointer; display: block; margin-right: 10px;">
+              <label for="terms" style="cursor: pointer;">
+                I have read the <a href="includes/components/terms-and-conditions.php" style="text-decoration: underline; color: var(--first-color); font-weight: bold;"> Terms and Conditions</a>
+              </label>
+            </span>
             <button id="complete-reg" type="submit" disabled>Register</button>
           </span>
+          
         </div>
       </div>
 
       <script>
         checkbox = document.getElementById("terms");
         button = document.getElementById('complete-reg');
+        var travPref = '#trav-preferences';
         $('#terms').on('change', function(e) {
           if ($(this).is(":checked")) {
             $('#complete-reg').prop("disabled", false);
@@ -286,18 +292,6 @@ if (isset($_SESSION['isLoggedIn']) == false) {
         });
 
         $("#page-one input[type='checkbox']").prop('checked', false); 
-        $("#complete-reg").on('click', function(event) {
-            event.preventDefault();
-            getPref = $("#page-one input[name='select-preferences']:checked").map(function(){
-              return $(this).val();
-            }).get();
-            console.log(getPref)
-            $('#trav-preferences').val(getPref);
-            if (getPref.length > 0)
-              $('#sign-up-form').submit();
-            else 
-              alert('Please select atleast ONE (1) preferred destination type.');
-        });
 
         
       </script>
@@ -325,6 +319,13 @@ if (isset($_SESSION['isLoggedIn']) == false) {
       document.body.style.overflow = 'visible';
       window.scrollTo(0, 0);
       document.body.style.overflow = 'hidden';
+
+      $("#page-one input[name='select-preferences']").each(function() {
+        $(this).prop("checked", false);
+      });
+
+      $('#terms').prop("checked", false);
+      $('#complete-reg').prop("disabled", true);
     }; 
     $(function() {
 
@@ -370,27 +371,67 @@ if (isset($_SESSION['isLoggedIn']) == false) {
       $(window).resize(function() {
         scrollOnClick(pagePositon);
       });
+
+      var container = '#sign-up-container';
+      var $container;
+
+      function setContainer() {
+        if ($('#container').css('display') == 'none') {
+          container = '#msign-up-container';
+          travPref = '#mtrav-preferences';
+        } else {
+          container = '#sign-up-container';
+          travPref = '#trav-preferences';
+        }
+
+        $container = $(container);
+        
+        $('#login').find($container).find("button").click(function(e){
+          if($container.find('input[name="fname"]').val() == '' || 
+            $container.find('input[name="lname"]').val() == '' ||
+            $container.find('input[name="email"]').val() == '' ||
+            $container.find('input[name="password"]').val() == '') {
+              $container.find("input").each(function() {
+                if ($(this).val() == '')
+                  $(this).addClass("missing");
+              })
+              alert('All fields must be filled up before proceeding!')
+            } else {
+              // $('.pref-form-container').css('opacity', '1');
+              // scrollByButton = true;
+              scrollOnClick(2);
+            }
+        });
+
+        $container.find("input").bind('click change', function() {
+          $(this).removeClass("missing");
+        });
+
+        $("#complete-reg").on('click', function(event) {
+            event.preventDefault();
+            getPref = $("#page-one input[name='select-preferences']:checked").map(function(){
+              return $(this).val();
+            }).get();
+            console.log(getPref)
+            $(travPref).val(getPref);
+            if (getPref.length > 0) {
+              if (container === '#msign-up-container') {
+                $('#msign-up-form').submit();
+              } else {
+                $('#sign-up-form').submit();
+              }
+            }
+            else 
+              alert('Please select atleast ONE (1) preferred destination type.');
+        });
+      }
       
-      $('#sign-up-container button').click(function(e) {
-        if($('input[name="fname"]').val() == '' || 
-          $('input[name="lname"]').val() == '' ||
-          $('input[name="email"]').val() == '' ||
-          $('input[name="password"]').val() == '') {
-            $('#sign-up-container input').each(function() {
-              if ($(this).val() == '')
-                $(this).addClass("missing");
-            })
-            alert('All fields must be filled up before proceeding!')
-          } else {
-            // $('.pref-form-container').css('opacity', '1');
-            // scrollByButton = true;
-            scrollOnClick(2);
-          }
+      window.addEventListener("resize", function() {
+        // var width = window.innerWidth;
+        setContainer();  
       });
 
-      $('#sign-up-container input').bind('click change', function() {
-        $(this).removeClass("missing");
-      })
+      setContainer();
 
       //Update position func:
       function upPos() {

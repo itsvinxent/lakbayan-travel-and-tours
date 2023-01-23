@@ -56,11 +56,11 @@
     </li>
     <?php 
     include __DIR__.'/../../backend/connect/dbCon.php';
-      if (isset($_SESSION['utype']) and $_SESSION['utype'] == 'user') {
-        echo '<li>
-                <a href="includes/components/cart.php" style="padding: 13px 0;"><img style="width: 40px; height: 40px;" src="https://img.icons8.com/plasticine/100/null/worldwide-delivery.png"/></a>
-              </li>';
-      }
+      // if (isset($_SESSION['utype']) and $_SESSION['utype'] == 'user') {
+      //   echo '<li>
+      //           <a href="includes/components/cart.php" style="padding: 13px 0;"><img style="width: 40px; height: 40px;" src="https://img.icons8.com/plasticine/100/null/worldwide-delivery.png"/></a>
+      //         </li>';
+      // }
       if (isset($_SESSION['isLoggedIn']) and $_SESSION['isLoggedIn'] == true) {
         $show_notification = "SELECT * FROM notification_tbl WHERE notification_to='$_SESSION[id]' ORDER BY notification_id DESC";
         $show_fresh = "SELECT * FROM notification_tbl WHERE notification_to='$_SESSION[id]' AND notification_status = 0 ORDER BY notification_id DESC";

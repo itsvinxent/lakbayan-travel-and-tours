@@ -5,20 +5,22 @@
     if(mysqli_connect_error()) {
         echo<<<END
             <script type ="text/JavaScript">  
-            alert("ERROR. Failed connecting to databasee")
+            alert("ERROR. Failed connecting to databasee");
+            window.location.replace("../../index.php");
             </script>
         END;
     } else {
         // Check if the email is existing
-        $isExisting = "SELECT EXISTS(SELECT * FROM user_tbl WHERE email='$_POST[email]')";
+        $isExisting = "SELECT id, email, is_verified FROM user_tbl WHERE email='$_POST[email]'";
         $result = mysqli_fetch_row(mysqli_query($conn,$isExisting));
 
         
         // If it already exists
-        if ($result[0] == '1') {
+        if (isset($result[0]) and $result[0] != 0 and $result[2] == '1') {
             echo<<<END
                 <script type ="text/JavaScript">  
-                alert("An account with this email already exists. Use another email.")
+                alert("An account with this email already exists. Use another email.");
+                window.location.replace("../../index.php");
                 </script>
             END;
         } else {
@@ -29,8 +31,16 @@
 
             $verification = md5(rand(0, 1000));
             $hash = password_hash($_POST['password'], PASSWORD_BCRYPT);
+
             $query = "INSERT INTO  user_tbl (`fname`, `lname`, `email`, `password`, `verification_code`) 
             VALUES('$_POST[fname]', '$_POST[lname]', '$_POST[email]', '$hash', '$verification')";
+
+            if (isset($result[0]) and $result[0] != 0 and $result[2] == '0') {
+                $query = "UPDATE  user_tbl SET `fname`='$_POST[fname]', `lname`='$_POST[lname]',
+                `email`='$_POST[email]', `password`='$hash', `verification_code`='$verification' WHERE `id`='$result[0]'";
+                $hasSent = true;
+            }
+            
 
             if(mysqli_query($conn,$query)){
                 // INSERT USER PREFERENCES
@@ -38,7 +48,32 @@
                 $userPref = $_POST['trav-preferences'];
                 if(strstr($userPref, ',')) $preferencesGot = explode(",", $userPref);
                 else array_push($preferencesGot, $userPref);
+
+                // SET USER ID
                 $userID = mysqli_insert_id($conn);
+                if ($hasSent) {
+                    $userID = $result[0];
+            
+                    // GET CURRENT PREFERENCES FROM DATABASE
+                    $currPref = "SELECT GROUP_CONCAT(userPreferences) FROM traveldb.userpreference_tbl where userID ='$userID'";
+                    $result = mysqli_fetch_row(mysqli_query($conn,$currPref));
+
+                    // STORE CURRENT PREFERENCES TO AN ARRAY
+                    $removedPreferencesGot = array();
+                    $currPref = $result[0];
+                    if(strstr($currPref, ',')) $removedPreferencesGot = explode(",", $currPref);
+                    else array_push($removedPreferencesGot, $currPref);
+
+                    // DELETE CURRENT PREFERENCES FROM THE DATABASE
+                    for($i = 0; $i < count(array_filter($removedPreferencesGot)) ; $i++){
+                        $data = array(
+                            'userPreferences' => $removedPreferencesGot[$i]
+                        );
+                        multi_deletedb($conn, $data, "userpreference_tbl", "userID", $userID);
+                    }
+
+                }
+
                 for($i=0; $i<count($preferencesGot); $i++){
                     $data = array(
                         'userID' => $userID,
@@ -56,7 +91,7 @@
                 }
 
                 require __DIR__.'/../package/vendor/autoload.php';
-                require "Mail/phpmailer/PHPMailerAutoload.php";
+                // require "Mail/phpmailer/PHPMailerAutoload.php";
                 
                 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__."/../");
                 $dotenv->load();
@@ -64,7 +99,7 @@
                 $mail_address = $_ENV['MAIL_ADDRESS'];
                 $mail_pass = $_ENV['MAIL_PASS'];
                 
-                $mail = new PHPMailer;
+                $mail = new PHPMailer\PHPMailer\PHPMailer;
                 $mail->isSMTP();
                 $mail->Host='smtp.gmail.com';
                 $mail->Port=587;
@@ -355,6 +390,7 @@
                     ?>
                         <script>
                             alert("Registration Failed! Invalid Email.");
+                            window.location.replace("../../index.php");
                         </script>
                     <?php
                 }else{
@@ -370,6 +406,7 @@
                 echo<<<END
                     <script type ="text/JavaScript">  
                     alert("ERROR. Record not added.")
+                    window.location.replace("../../index.php");
                     </script>
                 END;
             }

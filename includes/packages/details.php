@@ -251,7 +251,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
           </div>
 
           <div class="booking">
-            <span>
+            <div>
               <?php 
                 $priceChild = (int) $row['packagePriceChild'];
                 $priceSenior = (int) $row['packagePriceSenior'];
@@ -267,52 +267,55 @@ if(isset($_SESSION['isLoggedIn']) == false) {
               ?>
                 <h2>₱<?php echo $packagePrice; ?></h2>
                 <p style="font-size: 11px;"><?php echo $lowerdesc;?></p>
-            </span>
-            
-            <?php 
-              $button_content = '<a id="modalBOpen" class="book-btn">Check Availability</a>';
-              $is_interfering = false;
-              if (isset($_SESSION['isLoggedIn']) and $_SESSION['isLoggedIn']) {
-                if ($row['packageSlots'] == 0) {
-                  $button_content = '<a class="book-btn">Fully Booked</a>';
-                } else {
-                  $query = "SELECT bookingID from  booking_tbl AS BT 
-                            INNER JOIN inquiry_tbl AS IQ ON BT.inquiryInfoID = IQ.id
-                            WHERE IQ.id_user = {$_SESSION['id']} AND IQ.packageID = $packageID AND 
-                            (BT.bookingStatus != 'complete' AND BT.bookingStatus != 'cancelled' AND BT.bookingStatus != 'refunded')";
-                  $qry_exist = mysqli_query($conn, $query);
-                  $cartItem = mysqli_fetch_array($qry_exist);
-
-                  if (isset($cartItem['bookingID']) == true) {
-                    $button_content = '<a href="../../user-profile.php?orderID='.$cartItem['bookingID'].'" class="book-btn">Check Booking Status</a>';
+          
+              <?php 
+                $button_content = '<a id="modalBOpen" class="book-btn">Check Availability</a>';
+                $is_interfering = false;
+                if (isset($_SESSION['isLoggedIn']) and $_SESSION['isLoggedIn']) {
+                  if ($row['packageSlots'] == 0) {
+                    $button_content = '<a class="book-btn">Fully Booked</a>';
                   } else {
-                    $query = "SELECT count(*) AS inter_count  from booking_tbl AS BK
-                              INNER JOIN inquiry_tbl AS IQ ON BK.inquiryInfoID = IQ.id
-                              INNER JOIN package_tbl AS PK ON IQ.packageID = PK.packageID 
-                              WHERE '{$row['packageStartDate']}' BETWEEN PK.packageStartDate
-                              AND PK.packageEndDate 
-                              AND BK.bookingStatus = 'trip-sched'
-                              AND IQ.id_user = {$_SESSION['id']}";
-                    
-                    $qry_interfere = mysqli_query($conn, $query);
-                    $ItemInter = mysqli_fetch_array($qry_interfere);
-                    if ($ItemInter['inter_count'] != 0) {
-                      $button_content = '<a id="modalBOpen" class="book-btn">Schedule Issue</a>';
-                      $is_interfering = true;
-                    }
-                  } 
-                }
+                    $query = "SELECT bookingID from  booking_tbl AS BT 
+                              INNER JOIN inquiry_tbl AS IQ ON BT.inquiryInfoID = IQ.id
+                              WHERE IQ.id_user = {$_SESSION['id']} AND IQ.packageID = $packageID AND 
+                              (BT.bookingStatus != 'complete' AND BT.bookingStatus != 'cancelled' AND BT.bookingStatus != 'refunded')";
+                    $qry_exist = mysqli_query($conn, $query);
+                    $cartItem = mysqli_fetch_array($qry_exist);
 
-              }
-              echo $button_content;
-            ?>
-            <div class="justify">
-              <p class="sml-txt">
-                <span>Reserve now & pay later:</span>
-                <span>Save your spot free of</span>
-                <span>charge with flexible booking.</span>
-              </p>
+                    if (isset($cartItem['bookingID']) == true) {
+                      $button_content = '<a href="../../user-profile.php?orderID='.$cartItem['bookingID'].'" class="book-btn">Check Booking Status</a>';
+                    } else {
+                      $query = "SELECT count(*) AS inter_count  from booking_tbl AS BK
+                                INNER JOIN inquiry_tbl AS IQ ON BK.inquiryInfoID = IQ.id
+                                INNER JOIN package_tbl AS PK ON IQ.packageID = PK.packageID 
+                                WHERE PK.packageStartDate <= '{$row['packageEndDate']}' 
+                                AND PK.packageEndDate >= '{$row['packageStartDate']}'
+                                AND BK.bookingStatus = 'trip-sched'
+                                AND IQ.id_user = {$_SESSION['id']}";
+                      
+                      $qry_interfere = mysqli_query($conn, $query);
+                      $ItemInter = mysqli_fetch_array($qry_interfere);
+                      if ($ItemInter['inter_count'] != 0) {
+                        $button_content = '<a id="modalBOpen" class="book-btn">Schedule Issue</a>';
+                        $is_interfering = true;
+                      }
+                    } 
+                  }
+
+                }
+                echo $button_content;
+              ?>
             </div>
+              <div class="justify">
+                <p class="sml-txt">
+                  <span>Reserve now & pay later:</span>
+                  <span>Save your spot free of</span>
+                  <span>charge with flexible booking.</span>
+                </p>
+              </div>
+              
+            
+
           </div>
           <?php
             if (isset($_SESSION['isLoggedIn']) and $_SESSION['isLoggedIn']) {
@@ -417,20 +420,24 @@ if(isset($_SESSION['isLoggedIn']) == false) {
 
             $bookopener.on("click", function() {
               $bookcontainer.toggleClass("show");
+              $(".chat-container").css("display", "none");
             });
             $bookremover.on("click", function() {
               $bookcontainer.removeClass("show");
+              $(".chat-container").css("display", "block");
             });
 
             $($bookcontainer).on('click', function (e) {
               if ($("#bmodal_container").has(e.target).length === 0) {
                 $bookcontainer.removeClass("show");
+              $(".chat-container").css("display", "block");
               }
             });
 
             $('#booking-summary').on('click', function (e) {
               if ($("#booking-summary").has(e.target).length === 0) {
                 $('#booking-summary').removeClass("show");
+              $(".chat-container").css("display", "block");
               }
             });
             
@@ -566,37 +573,37 @@ if(isset($_SESSION['isLoggedIn']) == false) {
       </div>
 
       <div class="left">
-        <div style="padding-bottom: 15px;">
+        <div class="row-inc">
           <h2>About</h2>
           <p style="text-align: justify;"><?php echo $row['packageDescription'] ?></p>
           </div>
-        <div style="padding: 15px 0; border-top: 1px solid white;">
+        <div class="row-inc" style="border-top: 1px solid white;">
           <h2>Inclusions</h2>
           <?php 
             for ($i=0; $i < $inclCount; $i++) { 
-              echo "<div class='info' style='margin: 5px 0;'>
+              echo "<div class='info'>
               <span><i class='fas fa-check'></i></span>
               <p>$incl[$i]</p>
               </div>";
             }
           ?>
         </div>
-        <div style="padding: 15px 0; border-top: 1px solid white;">
+        <div class="row-inc" style="border-top: 1px solid white;">
           <h2>Locations</h2>
           <?php 
             for ($i=0; $i < $locCount; $i++) { 
-              echo "<div class='info' style='margin: 5px 0;'>
+              echo "<div class='info'>
               <span><i class='fas fa-map-marker-alt'></i></span>
               <p>$loc[$i]</p>
               </div>";
             }
           ?>
         </div>
-        <div style="padding: 15px 0; border-top: 1px solid white;">
+        <div class="row-inc" style="border-top: 1px solid white;">
           <h2>Categories</h2>
           <?php 
             for ($i=0; $i < $catCount; $i++) { 
-              echo "<div class='info' style='margin: 5px 0;'>
+              echo "<div class='info'>
               <span><i class='fas fa-compass'></i></span>
               <p>$categ[$i]</p>
               </div>";
@@ -780,29 +787,29 @@ if(isset($_SESSION['isLoggedIn']) == false) {
           </div>
         </div>
         <div class="availability-filter">
-            <span style="margin-right: 10px;">
+            <span>
                 <input class="avail-inp" type="radio" name="avail-fil" value="a-all" id="a-all" style="display: none;">
                 <label for="a-all"><span>All</span></label>
             </span>
-            <span style="margin-right: 10px;">
+            <span>
                 <input class="avail-inp" type="radio" name="avail-fil" value="a-available" id="a-available" style="display: none;">
-                <label for="a-available"><span>5 Star (<?php echo $rating_count_array['5'];?>)</span></label>
+                <label for="a-available">5 Stars (<?php echo $rating_count_array['5'];?>)</label>
             </span>
-            <span style="margin-right: 10px;">
+            <span>
                 <input class="avail-inp" type="radio" name="avail-fil" value="a-available" id="a-available" style="display: none;">
-                <label for="a-available"><span>4 Star (<?php echo $rating_count_array['4'];?>)</span></label>
+                <label for="a-available">4 Stars (<?php echo $rating_count_array['4'];?>)</label>
             </span>
-            <span style="margin-right: 10px;">
+            <span>
                 <input class="avail-inp" type="radio" name="avail-fil" value="a-available" id="a-available" style="display: none;">
-                <label for="a-available"><span>3 Star (<?php echo $rating_count_array['3'];?>)</span></label>
+                <label for="a-available">3 Stars (<?php echo $rating_count_array['3'];?>)</label>
             </span>
-            <span style="margin-right: 10px;">
+            <span>
                 <input class="avail-inp" type="radio" name="avail-fil" value="a-available" id="a-available" style="display: none;">
-                <label for="a-available"><span>2 Star (<?php echo $rating_count_array['2'];?>)</span></label>
+                <label for="a-available">2 Stars (<?php echo $rating_count_array['2'];?>)</label>
             </span>
-            <span style="margin-right: 10px;">
+            <span>
                 <input class="avail-inp" type="radio" name="avail-fil" value="a-available" id="a-available" style="display: none;">
-                <label for="a-available"><span>1 Star (<?php echo $rating_count_array['1'];?>)</span></label>
+                <label for="a-available">1 Star (<?php echo $rating_count_array['1'];?>)</label>
             </span>
         </div>
       </div>
