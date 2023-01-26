@@ -110,6 +110,10 @@ nav li a:hover {
   border-bottom: 5px solid #1abc9c;
 }
 
+.icons-container {
+  display: unset;
+}
+
 .checkbtn,
 .closebtn {
   font-size: 20px;
@@ -138,7 +142,7 @@ nav li a:hover {
   background-color: #34495e;
   z-index: var(--z-fixed);
   border-radius: 10px;
-  margin: 10px;
+  margin-right: 10px;
   flex: 0 0 17rem;
   padding: 10px;
   box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
@@ -302,51 +306,6 @@ nav li a:hover {
 }
 
 /*========== Media Responsive ==========*/
-/* Smartphones (portrait) ----------- */
-@media (max-width: 480px) {
-  label.logo {
-    padding-left: 25px;
-    padding-right: 0;
-    font-size: 20px;
-  }
-
-  nav .logo img {
-    padding-right: 15px;
-  }
-
-  .checkbtn, .closebtn {
-    margin-right: 25px;
-  }
-
-  #check:checked ~ .closebtn {
-    display: block;
-    transition: all 0.5s;
-    margin-right: 25px !important;
-  }
-
-  .banner {
-    padding-left: 50px;
-  }
-
-  .banner .text h1 {
-    font-size: 3em;
-  }
-
-  .banner .text h2 {
-    font-size: 1.2em;
-  }
-
-  .banner-half .text h2 {
-    width: 90%;
-    margin: auto;
-  }
-
-  .banner-half, .banner-half video {
-    height: 35vh;
-  }
-
-}
-
 /* @media (max-width: 952px) {
   label.logo {
     padding-left: 50px;
@@ -358,6 +317,8 @@ nav li a:hover {
 @media (max-width: 1024px) {
   .checkbtn {
     display: block;
+    position: absolute;
+    right: 0;
   }
 
   nav ul {
@@ -405,6 +366,111 @@ nav li a:hover {
     display: none;
     transition: all 0.5s;
   }
+
+  .nav-icons {
+    position: fixed !important;
+    top: 0;
+    margin: 0 70px 0 0;
+    line-height: 60px !important;
+  }
+
+  .notification {
+    right: 40px;
+  }
+
+  .cht {
+    right: 80px;
+  }
+
+  .usrlog {
+    right: 0;
+  }
+
+  .notification__dropdown, .notification__wrapper{
+    top: 100% !important;
+    right: -25px !important;
+    max-width: 90vw !important;
+    min-width: 80vw !important;
+    max-height: 60vh !important;
+  }
+
+  .notification__wrapper::before {
+    right: 35px !important;
+  }
+
+  .dropdown ul {
+    position: unset;
+    height: auto;
+    padding-top: 0;
+    background: none;
+  }
+}
+
+/* Smartphones (portrait) ----------- */
+@media (max-width: 480px) {
+  .nav-icons {
+    margin: 0 50px 0 0 !important;
+  }
+
+  .notification__dropdown, 
+  .notification__wrapper {
+    top: 120% !important;
+    right: -35px !important;
+    max-width: 90vw !important;
+    min-width: 90vw !important;
+    max-height: 60vh !important;
+    font-size: 13px !important;
+  }
+
+  .notification__wrapper::before {
+    right: 45px !important;
+  }
+
+  label.logo {
+    padding-left: 25px;
+    padding-right: 0;
+    font-size: 0;
+  }
+
+  nav .logo img {
+    padding-right: 15px;
+  }
+
+  .checkbtn, .closebtn {
+    margin-right: 25px;
+  }
+
+  #check:checked ~ .closebtn {
+    display: block;
+    transition: all 0.5s;
+    margin-right: 25px !important;
+  }
+
+  .banner {
+    padding-left: 50px;
+  }
+
+  .banner .text h1 {
+    font-size: 3em;
+  }
+
+  .banner .text h2 {
+    font-size: 1.2em;
+  }
+
+  .banner-half .text h2 {
+    width: 90%;
+    margin: auto;
+  }
+
+  .banner-half, .banner-half video {
+    height: 35vh;
+  }
+
+}
+
+@media (max-width: 320px) {
+  
 }
 
 
@@ -896,7 +962,7 @@ nav li a:hover {
   min-width: 500px;
   max-width: 500px;
   min-height: min-content;
-  max-height: 800px;
+  max-height: 500px;
 
   margin: 0;
 
@@ -905,7 +971,7 @@ nav li a:hover {
   top: 120%;
   right: -30px;
 
-  /* padding: 0px 15px; */
+  padding: 0px;
 
   border-radius: 16px;
 

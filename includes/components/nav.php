@@ -1,4 +1,4 @@
-<nav class="_nav">
+<nav class="_nav" id="navbar">
   <input type="checkbox" id="check" />
   <label for="check" class="checkbtn">
     <i class="fas fa-bars"></i>
@@ -42,7 +42,7 @@
       }
 
     ?>
-  <ul>
+  <ul class="main-list">
     <li id="goto"><a <?php echo setClass('index', 'index', 0);?> >Home</a></li>
     <!-- <li><a dest?>>Destinations</a></li> -->
     <li>
@@ -54,6 +54,7 @@
     <li>
       <a <?php echo setClass('about', 'about', 0);?>>About Us</a>
     </li>
+    <!-- <span id="nav-icons-set"> -->
     <?php 
     include __DIR__.'/../../backend/connect/dbCon.php';
       // if (isset($_SESSION['utype']) and $_SESSION['utype'] == 'user') {
@@ -62,15 +63,24 @@
       //         </li>';
       // }
       if (isset($_SESSION['isLoggedIn']) and $_SESSION['isLoggedIn'] == true) {
+        if (isset($_SESSION['utype']) and $_SESSION['utype'] != 'admin') {
+          echo "<li class='cht nav-icons'>
+                  <a " .setClass('chat-main', 'backend/chat/chatmain', 0)." style='padding: 13px 0;'><img style='width: 40px; height: 40px;' src='https://img.icons8.com/plasticine/100/null/sent.png'/></a>
+                </li>";
+        }
+
         $show_notification = "SELECT * FROM notification_tbl WHERE notification_to='$_SESSION[id]' ORDER BY notification_id DESC";
         $show_fresh = "SELECT * FROM notification_tbl WHERE notification_to='$_SESSION[id]' AND notification_status = 0 ORDER BY notification_id DESC";
         $result = mysqli_query($conn, $show_notification);
         $resultfresh = mysqli_query($conn, $show_fresh);
-        echo '<li class="notification" id="notification">
+        echo '<li class="notification nav-icons" id="notification">
                 <a style="padding: 13px 0;">
-                  <img style="width: 40px; height: 40px;" src="https://img.icons8.com/plasticine/100/null/appointment-reminders.png"/>
-                  <span>'.mysqli_num_rows($resultfresh).'</span>
-                </a>
+                  <img id="bell-icon" style="width: 40px; height: 40px;" src="https://img.icons8.com/plasticine/100/null/appointment-reminders.png"/>';
+        if (mysqli_num_rows($resultfresh) != 0) {
+          echo "<span id='notif_count'>".mysqli_num_rows($resultfresh)."</span>";
+        }
+
+        echo '</a>
                 <div class="notification__wrapper" id="notification__wrapper">
                 <ul class="notification__dropdown" id="notification__dropdown">';
       
@@ -80,9 +90,9 @@
                       echo  '<li>
                         <span>';
                         if($item['notification_status']==0)
-                        echo '<b class="highlight">'.$item['notification_category'].':</b> '.$item['notification_content'].'</span>
+                        echo '<b class="highlight">'.ucfirst($item['notification_category']).':</b> '.$item['notification_content'].'</span>
                       </li>';
-                        else   echo '<b>'.$item['notification_category'].':</b> '.$item['notification_content'].'</span>
+                        else   echo '<b>'.ucfirst($item['notification_category']).':</b> '.$item['notification_content'].'</span>
                         </li>';
                     
                     } 
@@ -94,14 +104,7 @@
              echo '</ul>
                    </div>
             </li>';
-        
-        
 
-        if (isset($_SESSION['utype']) and $_SESSION['utype'] != 'admin') {
-          echo "<li>
-                  <a " .setClass('chat-main', 'backend/chat/chatmain', 0)." style='padding: 13px 0;'><img style='width: 40px; height: 40px;' src='https://img.icons8.com/plasticine/100/null/sent.png'/></a>
-                </li>";
-        }
       }
     ?>
     
@@ -110,21 +113,22 @@
     
     if ($_SESSION['active'] == 'index') {
       if (isset($_SESSION['isLoggedIn']) and $_SESSION['isLoggedIn'] == true) {
-        echo "<li id='usericon'> <a id='modalOpen' style='padding: 13px 0;'>";
+        echo "<li class='usrlog nav-icons' id='usericon'> <a id='modalOpen' style='padding: 13px 0;'>";
       } else {
-        echo "<li id='goto'><a class='logn' style='padding: 13px 0;'>";
+        echo "<li class='usrlog nav-icons' id='goto'><a class='logn' style='padding: 13px 0;'>";
       }
     } else {
       if (isset($_SESSION['isLoggedIn']) and $_SESSION['isLoggedIn'] == true) {
-        echo "<li id='usericon'> <a class='logn' style='padding: 13px 0;'>";
+        echo "<li class='usrlog nav-icons' id='usericon'> <a class='logn' style='padding: 13px 0;'>";
       } else {
-        echo "<li> <a id='modalOpen'class='logn' style='padding: 13px 0;'>";
+        echo "<li class='usrlog nav-icons'> <a id='modalOpen'class='logn' style='padding: 13px 0;'>";
       }
     }
 
     ?>
     <!-- <img src="https://img.icons8.com/external-febrian-hidayat-gradient-febrian-hidayat/64/000000/external-user-user-interface-febrian-hidayat-gradient-febrian-hidayat.png" /></a></li> -->
     <img src="https://img.icons8.com/plasticine/100/null/test-account.png"/></a></li>
+    <!-- </span> -->
   </ul>
   <?php 
     $prefix = "";
@@ -172,16 +176,29 @@
   $usericon.on("click", function() {
     $dropdown.toggleClass("show");
   });
-  $(document).on('click', function (e) {
-    if ($("#usericon, #dropdown").has(e.target).length === 0) {
+  $(document).on('click', function (event) {
+    if ($("#usericon, #dropdown").has(event.target).length === 0) {
       $dropdown.removeClass("show");
     }
-  });
+  
+    if (!$(event.target).closest('#navbar ul').length && $("#navbar ul").css("right") == '0px' && $('#check').prop('checked') == true || $(event.target).closest('#notif-icon').length)  {
+      $('#check').prop('checked', false);
+      $(".nav-icons").css("opacity", "1");
+      $(".nav-icons").css("pointer-events", "none");
+    }
 
+    if (!$(event.target).closest('#notification__dropdown').length && $(event.target)[0] != $('#bell-icon')[0]) {
+      $("#notification__dropdown").removeClass("show");
+      $("#notification__wrapper").removeClass("show");
+    }
+  });
 
   $("#notification").on("click", () =>{
     $("#notification__dropdown").toggleClass("show");
     $("#notification__wrapper").toggleClass("show");
+    // Remove Unread Notif Count
+    $('#notif_count').css('display', 'none');
+    // $('#check').prop('checked', false);
   })
 
   $(document).ready(()=>{
@@ -194,6 +211,23 @@
         
       })
     })
+
+    $("#check").change(function() {
+      if(this.checked) {
+        $(".nav-icons").css("opacity", "0");
+        // $(".nav-icons").css("transition", "opacity .5s");
+        $(".nav-icons").css("pointer-events", "none");
+
+        $("#notification__dropdown").removeClass("show");
+        $("#notification__wrapper").removeClass("show");
+
+      } else {
+        $(".nav-icons").css("opacity", "1");
+        // $(".nav-icons").css("transition", "opacity .5s");
+        $(".nav-icons").css("pointer-events", "auto");
+
+      }
+    });
   })
   </script>
 </nav>

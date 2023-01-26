@@ -6,7 +6,8 @@ if (isset($_SESSION['isLoggedIn']) == false) {
 } 
 
 if (isset($_SESSION['token']) == false and isset($_SESSION['recovery-email']) == false){
-  header("Location: http://".$_SERVER['HTTP_HOST'] ."/Finals/index.php");
+  header("Location: http://".$_SERVER['HTTP_HOST'] ."/index.php");
+  // header("Location: http://".$_SERVER['HTTP_HOST'] ."/Finals/index.php");
   exit;
 }
 ?>

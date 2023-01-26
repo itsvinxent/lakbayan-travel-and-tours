@@ -106,17 +106,24 @@ if (isset($_POST['is_filtering']) and $_POST['is_filtering'] == 'true') {
       $has_cat = true;
     }
 
-    if (isset($_POST['availability']) and $_POST['availability'] != "a-all" and $_POST['availability'] != "") {
-      if ($_POST['availability'] == "a-available") {
+  } finally {
+    if (isset($_POST['availability']) and $_POST['availability'] != "") {
+      if (isset($_POST['availability']) and $_POST['availability'] != "a-all") {
         $avail_value = 0;
-      } else {
-        $avail_value = 1;
+  
+        if ($_POST['availability'] == "a-unlisted") {
+          $avail_value = 1;
+        } 
+  
+        $query_string .= get_prefix() . "(PK.is_deleted = '$avail_value' OR PK.packageStatus = '$avail_value')";
+        $has_previous_value = true;
+
       }
-      $query_string .= get_prefix() . "PK.is_deleted = '$avail_value' AND PK.packageStatus = '$avail_value'";
+    } else {
+      $query_string .= get_prefix() . "(PK.is_deleted = '0' OR PK.packageStatus = '0')";
       $has_previous_value = true;
     }
 
-  } finally {
     $query_string .= get_prefix() ."(packageImg_Name LIKE 'PCK-F%' OR packageImg_Name IS NULL) ";
     $query_string .= " GROUP BY AI.packageIDFrom, AI.packageImg_Name ";
     if (isset($_POST['searchbar']) and $_POST['searchbar'] == 'true') {
