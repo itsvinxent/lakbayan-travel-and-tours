@@ -1,4 +1,7 @@
 <?php
+require __DIR__.'/vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__."/../");
+$dotenv->load();
 
 // Function for displaying in the Main Package Page and the Travel Agency Profile Page (View Mode)
 function fetch_packages($query_string, $conn, $editmode, $limit, $page)
@@ -33,8 +36,8 @@ function fetch_packages($query_string, $conn, $editmode, $limit, $page)
                 <?php
                 // echo '<img src="data:image/jpg;base64,' . base64_encode($row['packageImg_Name']) . '" alt="" style="height: 160px;"/>';
                 if (isset($row['packageImg_Name'])){
-                    echo '<img src="assets/img/users/travelagent/'.$row['packageCreator'].'/package/'.$row['packageID'].'/img/'.$row['packageImg_Name'].'" alt=""/>';}
-                else echo '<img src="assets/img/Missing.jpeg" alt=""/>';
+                    echo '<img src="'.$_ENV['CLD_MEDIA_LINKS'].'assets/img/users/travelagent/'.$row['packageCreator'].'/package/'.$row['packageID'].'/img/'.$row['packageImg_Name'].'" alt=""/>';}
+                else echo '<img src="/assets/img/Missing.jpeg" alt=""/>';
                 // echo '<img src="users/travelagent/' .$row['packageCreator']. 'package/' .$row['packageID']. '//img//' . $row['packageImg_Name'] . " alt="" style="height: 160px;"/>';
                 ?>
             </div>
@@ -276,7 +279,7 @@ function fetch_bookingtbl($query_string, $conn) {
                     else if($row['bookingStatus'] == 'trip-sched' || $row['bookingStatus'] == 'refund-denied') echo "Scheduled";
                     else if($row['bookingStatus'] == 'cancelled') echo "Cancelled";
                     else if($row['bookingStatus'] == 'refunded') echo "Refunded";
-
+                    else echo "Refund Requested";
                 ?>
             </td>
             <td data-tab-target="#travel-order" style="cursor: pointer;" class="to_travel_order">
@@ -329,6 +332,7 @@ function fetch_package_by_id($package_qry, $categ_qry, $loc_qry, $img_qry, $inc_
     
     while ($inclusion = mysqli_fetch_assoc($qry_incl)) {
         $inc_array[] = $inclusion['packageInclusion'];
+        $_SESSION['INCLUSIONS_GOT'] = $inc_array;
     }
 
     $jsondata = json_encode(
@@ -419,4 +423,5 @@ if(isset($_POST['getData']) and $_POST['getData']=="ok") {
         }
     }
 }
+
 ?>

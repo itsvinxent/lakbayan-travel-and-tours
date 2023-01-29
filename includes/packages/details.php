@@ -290,7 +290,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                                 INNER JOIN package_tbl AS PK ON IQ.packageID = PK.packageID 
                                 WHERE PK.packageStartDate <= '{$row['packageEndDate']}' 
                                 AND PK.packageEndDate >= '{$row['packageStartDate']}'
-                                AND BK.bookingStatus = 'trip-sched'
+                                AND (BK.bookingStatus = 'trip-sched' OR BK.bookingStatus = 'refund-denied')
                                 AND IQ.id_user = {$_SESSION['id']}";
                       
                       $qry_interfere = mysqli_query($conn, $query);
@@ -562,7 +562,7 @@ if(isset($_SESSION['isLoggedIn']) == false) {
                 likePackage().then(function (data) {
                   $('#like-count').text(data+' people ')
                 });
-              }, 1000);
+              }, 200);
               
             })
            <?php } ?>

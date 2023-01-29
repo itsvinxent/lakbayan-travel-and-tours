@@ -12,7 +12,7 @@ function sendNotification($id, $category, $content){
     }else{
         $id = mysqli_real_escape_string($conn, $id);
         $category = mysqli_real_escape_string($conn, $category);
-        $content = mysqli_real_escape_string($conn, $content);
+        // $content = mysqli_real_escape_string($conn, $content);
 
         $sql_notification = "INSERT INTO notification_tbl (notification_to,
                                                         notification_content,

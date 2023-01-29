@@ -1,7 +1,7 @@
 <?php 
     if(isset($_POST["recovery-email"])){
         include __DIR__."/../connect/dbCon.php";
-        $email = $_POST["recovery-email"];
+        $email = mysqli_real_escape_string($conn, $_POST["recovery-email"]);
 
         $sql = mysqli_query($conn, "SELECT * FROM user_tbl WHERE email='$email'");
   	    $fetch = mysqli_fetch_assoc($sql);
@@ -30,16 +30,19 @@
             require "Mail/phpmailer/PHPMailerAutoload.php";
             $mail = new PHPMailer;
 
+            $dotenv = Dotenv\Dotenv::createImmutable(__DIR__."/../");
+            $dotenv->load();
+
             $mail->isSMTP();
-            $mail->Host='smtp.gmail.com';
-            $mail->Port=587;
+            $mail->Host='mail.lakbaysabayan.com';
+            $mail->Port=465;
             $mail->SMTPAuth=true;
-            $mail->SMTPSecure='tls';
+            $mail->SMTPSecure='ssl';
 
-            $mail->Username='lakbaysabayan@gmail.com';
-            $mail->Password='ezovwyqhjrximfas';
+            $mail->Username=$_ENV['MAIL_ADDRESS'];
+            $mail->Password=$_ENV['MAIL_PASS'];
 
-            $mail->setFrom('lakbaysabayan@gmail.com', 'Password Reset');
+            $mail->setFrom(''.$_ENV['MAIL_ADDRESS'].'', 'Password Reset');
             $mail->addAddress($email);
 
             $mail->isHTML(true);
@@ -48,7 +51,7 @@
 
             <h3>We have received a request to reset your password.</h3>
             <p>Kindly click the below link to continue.</p>
-            http://localhost/Finals/backend/auth/resetpass.php
+            https://www.lakbaysabayan.com/backend/auth/resetpass.php
             ";
 
             if(!$mail->send()){

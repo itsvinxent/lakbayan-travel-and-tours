@@ -34,10 +34,13 @@ if (isset($_SESSION['booking-stat']) == false) {
   include __DIR__.'/includes/components/nav.php';
   include __DIR__.'/includes/components/accountModal.php';
   include __DIR__.'/backend/connect/dbCon.php';
+  require __DIR__.'/backend/package/vendor/autoload.php';
+  $dotenv = Dotenv\Dotenv::createImmutable(__DIR__."/backend");
+  $dotenv->load();
   ?>
   <section class="sections packages" id="destinations">
     <div class="banner-half" style="height: 35vh;">
-      <video src="assets/media/sea.mp4" muted loop autoplay preload="auto" style="height: 35vh;"></video>
+      <video src="<?php echo $_ENV['AWS_MEDIA_LINKS']?>/media/falls.mp4" muted loop autoplay preload="auto" style="height: 35vh;"></video>
       <div class="text">
         <input type="text" name="search" id="search" autocomplete="off" placeholder="Where'd you wanna go?" class="field" />
         <span class="ico"><i class="fas fa-search"></i></span>

@@ -1,33 +1,32 @@
-
-    <?php 
-        if ($_SESSION['isLoggedIn'] == false) {
-            echo "<div class=\"modal-container\" id=\"modal_container\">
-            <div class='modal'>
-            <h1>Hey there!</h1>
-            <p>We're glad that you've chosen us for your travel needs. Create and Sign your account in now!</p>
-            <div class=\"buttons\">
-                <button id='modalLogin' class='modal-login'";
-            if($_SESSION['active'] == 's-dest' || $_SESSION['active'] == 's-pack') {
-                echo "onClick=\"location.href='../../index.php#login'\">Sign In Now</button>";
-            } else {
-                echo "onClick=\"location.href='index.php#login'\">Sign In Now</button>";
-            }
-            echo "<a id=\"modalClose\" class=\"btn\">Maybe next time</a> 
-                    </div>
-                    </div>
-                    </div>"; 
-            // echo "<script>
-            //         const close = document.getElementById('modalClose');
-            //         close.addEventListener('click', () => {
-            //             modal_container.classList.remove('show');
-            //         })
-            //     </script>";
-        } 
-        // else {
-        //     echo "<script>const modal_container = document.getElementById('dropdown');</script>";
-        // }
-
-    ?>
+<?php 
+    if ($_SESSION['isLoggedIn'] == false) {
+        echo "<div class=\"modal-container\" id=\"modal_container\">
+        <div class='modal'>
+        <h1>Hey there!</h1>
+        <p>We're glad that you've chosen us for your travel needs. Create and Sign your account in now!</p>
+        <div class=\"buttons\">
+            <button id='modalLogin' class='modal-login'";
+        if($_SESSION['active'] == 's-dest' || $_SESSION['active'] == 's-pack') {
+            echo "onClick=\"location.href='../../index.php#login'\">Sign In Now</button>";
+        } else {
+            echo "onClick=\"location.href='index.php#login'\">Sign In Now</button>";
+        }
+        echo "<a id=\"modalClose\" class=\"btn\">Maybe next time</a> 
+                </div>
+                </div>
+                </div>"; 
+        // echo "<script>
+        //         const close = document.getElementById('modalClose');
+        //         close.addEventListener('click', () => {
+        //             modal_container.classList.remove('show');
+        //         })
+        //     </script>";
+    } 
+    // else {
+    //     echo "<script>const modal_container = document.getElementById('dropdown');</script>";
+    // }
+    
+?>
 
 <script>
     // const open = document.getElementById('modalOpen');

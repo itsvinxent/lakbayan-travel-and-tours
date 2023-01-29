@@ -54,7 +54,7 @@ function multi_deletedb($conn, $data, $table, $idname, $id){
     }
 
     $name = implode(",", $name);
-    $value = implode(",", $value);
+    $value = implode(",", $value);  
 
     // echo '<br>'. $name. ' ' .$value;
 
@@ -62,9 +62,6 @@ function multi_deletedb($conn, $data, $table, $idname, $id){
     $sql = "DELETE FROM ".$table." WHERE ".$name."=".$value." AND ".$idname."=".$id."";
     // echo '<br>'.$sql;
 
-    
-    
-    
     if(mysqli_query($conn, $sql)){
 
     }

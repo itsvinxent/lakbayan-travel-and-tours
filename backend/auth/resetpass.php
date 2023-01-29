@@ -63,8 +63,8 @@ if (isset($_SESSION['token']) == false and isset($_SESSION['recovery-email']) ==
   <?php
   if (isset($_POST["reset"])) { 
     include __DIR__."/../connect/dbCon.php";
-    $psw = $_POST["password"];
-    $cpsw = $_POST["cpassword"];
+    $psw = mysqli_real_escape_string($conn, $_POST["password"]);
+    $cpsw = mysqli_real_escape_string($conn, $_POST["cpassword"]);
 
     if (trim($psw) == trim($cpsw)) {
       $token = $_SESSION['token'];

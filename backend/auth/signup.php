@@ -11,7 +11,8 @@
         END;
     } else {
         // Check if the email is existing
-        $isExisting = "SELECT id, email, is_verified FROM user_tbl WHERE email='$_POST[email]'";
+        $sendto = mysqli_real_escape_string($conn, $_POST['email']);
+        $isExisting = "SELECT id, email, is_verified FROM user_tbl WHERE email='$sendto'";
         $result = mysqli_fetch_row(mysqli_query($conn,$isExisting));
 
         
@@ -24,16 +25,18 @@
                 </script>
             END;
         } else {
-            $sendto = $_POST['email'];
-            $name = $_POST['lname'];
+            
+            $fname =  mysqli_real_escape_string($conn, $_POST['fname']);
+            $lname =  mysqli_real_escape_string($conn, $_POST['lname']);
             $date = new DateTime();
             $date_now = $date->format('y-m-d m:s');
 
             $verification = md5(rand(0, 1000));
-            $hash = password_hash($_POST['password'], PASSWORD_BCRYPT);
+           
 
+            $hash = password_hash(mysqli_real_escape_string($conn, $_POST['password']), PASSWORD_BCRYPT);
             $query = "INSERT INTO  user_tbl (`fname`, `lname`, `email`, `password`, `verification_code`) 
-            VALUES('$_POST[fname]', '$_POST[lname]', '$_POST[email]', '$hash', '$verification')";
+            VALUES('$fname', '$lname', '$sendto', '$hash', '$verification')";
 
             if (isset($result[0]) and $result[0] != 0 and $result[2] == '0') {
                 $query = "UPDATE  user_tbl SET `fname`='$_POST[fname]', `lname`='$_POST[lname]',
@@ -101,16 +104,20 @@
                 
                 $mail = new PHPMailer\PHPMailer\PHPMailer;
                 $mail->isSMTP();
-                $mail->Host='smtp.gmail.com';
-                $mail->Port=587;
+                $mail->Host='mail.lakbaysabayan.com';
+                $mail->Port=465;
                 $mail->SMTPAuth=true;
-                $mail->SMTPSecure='tls';
+                $mail->SMTPSecure='ssl';
     
                 $mail->Username=$mail_address;
                 $mail->Password=$mail_pass;
     
-                $mail->setFrom('lakbaysabayan@gmail.com', 'OTP Verification');
-                $mail->addAddress($_POST["email"]);
+                $mail->setFrom('no-reply@lakbaysabayan.com', 'OTP Verification');
+
+                $mail->addAddress($sendto);
+
+             
+
                 
                 $mail->isHTML(true);
                 $mail->Subject="LAKBAYAN VERIFICATION";
