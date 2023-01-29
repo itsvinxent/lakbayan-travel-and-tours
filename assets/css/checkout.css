@@ -39,7 +39,7 @@
   position: relative;
 }
 
-.previousPage {
+/* .previousPage {
   display: inline-flex;
   justify-content: left;
   align-items: center;
@@ -47,7 +47,7 @@
   color: black;
   font-weight: bold;
   cursor: pointer;
-}
+} */
 
 .closePage {
   display: flex;
@@ -133,9 +133,14 @@ input[type=text]{
   background: #1abc9c;
   text-transform: uppercase;
   position: absolute;
-  bottom: 20px;
+  bottom: 75px;
   font-weight: bold;
   cursor: pointer;
+}
+
+.back-btn {
+  background: #34495E;
+  bottom: 20px;
 }
 
 .table, .client-info {
@@ -215,5 +220,60 @@ legend {
   width: 50px;
   height: 50px;
   margin-right: 5px;
+}
+
+#m-closesummary {
+  display: none;
+}
+
+#closesummary {
+  display: block;
+}
+
+@media (max-width: 480px)  {
+  .model {
+    display: flex;
+    flex-direction: column;
+
+    width: 95vw !important;
+    height: 90vh !important;
+  }
+
+  .room {
+    height: 60% !important;
+    width: 100% !important;
+  }
+
+  .previousPage {
+    display: none;
+  }
+
+  .text-cover {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .payment {
+    width: 100% !important;
+  }
+
+  .text-cover .price {
+    display: none;
+  }
+
+  .text-cover .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  #m-closesummary {
+    font-size: 16px;
+    display: block;
+  }
+
+  #closesummary {
+    display: none;
+  }
 }
 

@@ -354,7 +354,7 @@ button:disabled {
   cursor: pointer;
 }
 
-.user-pref .pref-form-container label.active {
+.user-pref .pref-form-container .checklist label.active {
   border: solid 5px #1abc9c;
 }
 
@@ -502,7 +502,40 @@ button:disabled {
     width: 150px;
   }
 
-  
+  .user-pref .pref-form-container {
+    width: 80% !important;
+    height: 80% !important;
+    padding: 1rem;
+  }
+
+  .user-pref .pref-form-container .checklist label {
+    height: 110px !important;
+    margin-bottom: 10px !important;
+    width: 45% !important;
+  }
+
+  .user-pref .pref-form-container label img {
+    height: 90px !important;
+    width: 100% !important;
+  }
+
+  .user-pref .pref-form-container .btn-cont {
+    font-size: 14px;
+    justify-content: center;
+  }
+
+  .user-pref .pref-form-container .bot-cont {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .user-pref .pref-form-container p {
+    font-size: 13px;
+  }
+
+  .user-pref .pref-form-container label .text {
+    font-size: 15px;
+  }
 
 
 

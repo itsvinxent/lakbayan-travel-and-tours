@@ -324,6 +324,10 @@ if (isset($_SESSION['booking-stat']) == false) {
           <div id="output"></div>
           <span class="ico"><i class="fas fa-search"></i></span>
         </div> -->
+        <div class="filter-header">
+          <input type="checkbox" name="filter-en" id="filter-en" >
+          <label for="filter-en"><i class="fas fa-filter" style="font-size: 20px; color: #1ABC9C;"></i> Filters</label>
+        </div>
         <div class="card-container" id="card-container">
           <?php
           include_once __DIR__."/backend/package/packages_display.php";
@@ -494,14 +498,23 @@ if (isset($_SESSION['booking-stat']) == false) {
     });
     $(document).on('click', function(event) {
       var checkbox = document.getElementById('filter-en');
-      var menu = document.getElementById('mobile-filter-container');
+      // var menu = document.getElementById('mobile-filter-container');
 
-      if (!$(event.target).closest('#mobile-filter-container').length &
-        $('#mobile-filter-container').css('left') == '0px') {
-        checkbox.checked ^= 1;
+      if (!$(event.target).closest('#filter-container').length &
+        $('#filter-container').css('left') == '0px') {
+          $("#filter-container").css("left", "-100%");
+          $("#filter-en").prop('checked', false);
       }
 
 
+    });
+
+    $("#filter-en").change(function(){
+      if(this.checked) {
+        $("#filter-container").css("left", "0px");
+      } else {
+        $("#filter-container").css("left", "-100%");
+      }
     });
   </script>
 

@@ -161,6 +161,14 @@ body {
   color: white;
 }
 
+.packages-pages .left .row-inc {
+  padding: 15px 0; 
+}
+
+.packages-pages .left .row-inc .info {
+  margin: 5px 0;
+}
+
 .packages-pages .left h1 {
   font-size: 2rem;
   padding-bottom: 5px;
@@ -338,6 +346,154 @@ body {
 
 .rating-body .review-body {
   margin-top: 10px;
+}
+
+@media (max-width: 1024px) {
+  .header span i {
+    margin-left: 50px;
+  }
+
+  .packages-pages .left h2 {
+    font-size: 1rem !important;
+  }
+
+  .packages-pages .reservation .booking .book-btn {
+    font-size: 14px;
+    padding: 7px;
+  }
+
+  .ratings-container {
+    width: 90%;
+  }
+
+  .packages-pages .content {
+    display: flex;
+    gap: 10px;
+  }
+
+  .row-inc {
+    padding: 10px 0 !important;
+  }
+
+  .row-inc:first-child {
+    padding: 0 0 10px 0 !important;
+  }
+
+  .row-inc .info {
+    margin: 0 !important;
+  }
+
+}
+
+@media (max-width: 480px)  {
+  .packages-pages .content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 90vw;
+    max-width: unset;
+  }
+
+  .packages-pages .reservation {
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .packages-pages .reservation .contact {
+    padding: 12px !important;
+  }
+
+  .packages-pages .reservation .booking {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    padding: 12px !important;
+    padding-bottom: 20px !important;
+    margin: 0;
+
+    border-left: unset !important;
+    border-top: 1px solid black !important;
+  }
+
+  .packages-pages .content .left {
+    width: 90vw;
+    margin: auto;
+  }
+
+  .sml-txt {
+    margin: 0 auto 15px auto !important;
+  }
+
+  .packages-pages .snapshot {
+    max-width: 90vw;
+    padding: 10px !important;
+  }
+
+  .snapshot .box-container {
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 10px 0 !important;
+  }
+
+  .snapshot .box {
+    margin: 0 !important;
+    width: 150px !important;
+    height: 165px;
+    padding: 10px !important;
+    min-width: unset;
+  }
+
+  .snapshot .box p{
+    font-size: 13px;
+  }
+
+  .actual-rating {
+    width: 100%;
+  }
+
+  .ratings-selector {
+    flex-wrap: wrap !important;
+    justify-content: center;
+  }
+
+  .ratings-selector .availability-filter {
+    padding: 0 !important;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    
+    margin-top: 15px;
+  }
+
+  .ratings-selector .availability-filter span {
+    margin: 10px;
+  }
+
+  /* Booking Form Page #1 */
+  .booking-modal {
+    padding: 20px 10px !important;
+    width: 95vw !important;
+  }
+
+  .booking-modal h1 {
+    font-size: 20px !important;
+  }
+
+  .booking-modal .calendar {
+    display: none;
+  }
+
+  .booking-modal .main .form-label {
+    font-size: 14px;
+  }
+
+  .booking-modal .buttons {
+    gap: 20px;
+  }
+
 }
 
 i.fa-heart {

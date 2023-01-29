@@ -136,7 +136,8 @@
 
 @media (max-width: 480px) { 
   .slider, .slider img, .nav-manual, .nav-auto {
-    width: 380px !important;
+    /* width: 380px !important; */
+    width: 90vw !important;
   }
 
   .slider, .slider img {
